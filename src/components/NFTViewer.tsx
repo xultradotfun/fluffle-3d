@@ -1,3 +1,14 @@
+import VRMViewer from "./VRMViewer";
+import NFTTraits from "./NFTTraits";
+import type { NFTTrait } from "@/utils/nftLoader";
+
+interface NFTViewerProps {
+  id: string;
+  urls: string[];
+  traits: NFTTrait;
+  onRemove?: (id: string) => void;
+}
+
 export function NFTViewer({ id, urls, traits, onRemove }: NFTViewerProps) {
   return (
     <div className="group relative bg-card rounded-2xl overflow-hidden border border-border shadow-xl">
@@ -17,8 +28,10 @@ export function NFTViewer({ id, urls, traits, onRemove }: NFTViewerProps) {
             VRM Model
           </span>
         </div>
-        <div className="relative bg-background rounded-xl overflow-hidden shadow-inner">
-          <VRMViewer modelUrls={urls} />
+        <div className="relative bg-[#1a1a1a] rounded-xl overflow-hidden shadow-inner ring-1 ring-white/10">
+          <div className="aspect-square w-full">
+            <VRMViewer modelUrls={urls} />
+          </div>
         </div>
         <NFTTraits id={id} traits={traits} />
       </div>

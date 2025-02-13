@@ -2,7 +2,12 @@
 
 import { useEffect, useRef, useState, createContext, useContext } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import {
+  OrbitControls,
+  PerspectiveCamera,
+  Environment,
+  ContactShadows,
+} from "@react-three/drei";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { FBXLoader } from "three/addons/loaders/FBXLoader.js";
 import { VRMLoaderPlugin, VRM, VRMUtils } from "@pixiv/three-vrm";
@@ -135,13 +140,19 @@ function AnimationProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-// Add a global model cache
-const modelCache = new Map<string, Promise<VRM>>();
+// Modify the model cache to include progress callbacks
+interface CacheEntry {
+  promise: Promise<VRM>;
+  progress: number;
+}
+
+const modelCache = new Map<string, CacheEntry>();
 
 interface VRMModelProps {
   url: string;
   position?: [number, number, number];
   onLoaded?: () => void;
+  onProgress?: (progress: number) => void;
   isComplete?: boolean;
 }
 
@@ -149,6 +160,7 @@ function VRMModel({
   url,
   position = [0, 0, 0],
   onLoaded,
+  onProgress,
   isComplete,
 }: VRMModelProps) {
   const vrmRef = useRef<VRM>();
@@ -158,6 +170,7 @@ function VRMModel({
   const { currentClip } = useContext(AnimationContext);
   const hasInitialized = useRef(false);
 
+  // Add back animation effect
   useEffect(() => {
     if (currentClip && vrmRef.current && isComplete) {
       if (!mixerRef.current) {
@@ -180,28 +193,44 @@ function VRMModel({
 
     const loadModel = async () => {
       try {
-        let vrmPromise = modelCache.get(url);
+        let cacheEntry = modelCache.get(url);
 
-        if (!vrmPromise) {
-          vrmPromise = new Promise((resolve, reject) => {
-            const loader = new GLTFLoader();
-            loader.register((parser) => new VRMLoaderPlugin(parser));
-
-            loader.load(
-              url,
-              (gltf: GLTF) => {
-                resolve(gltf.userData.vrm);
-              },
-              (progress: { loaded: number; total: number }) =>
-                console.log(`Loading model ${url}...`, progress),
-              reject
-            );
+        if (!cacheEntry) {
+          let resolvePromise: (value: VRM) => void;
+          const promise = new Promise<VRM>((resolve) => {
+            resolvePromise = resolve;
           });
 
-          modelCache.set(url, vrmPromise);
+          cacheEntry = {
+            promise,
+            progress: 0,
+          };
+          modelCache.set(url, cacheEntry);
+
+          const loader = new GLTFLoader();
+          loader.register((parser) => new VRMLoaderPlugin(parser));
+
+          loader.load(
+            url,
+            (gltf: GLTF) => {
+              resolvePromise(gltf.userData.vrm);
+            },
+            (progress: { loaded: number; total: number }) => {
+              const progressValue = (progress.loaded / progress.total) * 100;
+              cacheEntry!.progress = progressValue;
+              onProgress?.(progressValue);
+            },
+            (error) => {
+              console.error(`Error loading ${url}:`, error);
+              modelCache.delete(url); // Remove failed loads from cache
+            }
+          );
+        } else {
+          // For cached models, immediately report their progress
+          onProgress?.(cacheEntry.progress);
         }
 
-        const vrm = await vrmPromise;
+        const vrm = await cacheEntry.promise;
         vrmRef.current = vrm;
 
         if (sceneRef.current) {
@@ -211,10 +240,12 @@ function VRMModel({
           sceneRef.current.add(vrm.scene);
           vrm.scene.rotation.y = Math.PI;
           vrm.scene.position.set(...position);
+          onProgress?.(100); // Ensure we report 100% when fully loaded
           onLoaded?.();
         }
       } catch (error) {
         console.error(`Error loading ${url}:`, error);
+        modelCache.delete(url); // Remove failed loads from cache
       }
     };
 
@@ -261,9 +292,16 @@ export default function VRMViewer({ modelUrls }: { modelUrls: string[] }) {
   const [completeCharacters, setCompleteCharacters] = useState<
     Record<string, boolean>
   >({});
+  const [loadingProgress, setLoadingProgress] = useState<
+    Record<string, number>
+  >({});
 
   const handleModelLoaded = (url: string) => {
     loadedModelsRef.current[url] = true;
+    setLoadingProgress((prev) => ({
+      ...prev,
+      [url]: 100, // Ensure progress is 100% when loaded
+    }));
 
     // Check if this completes a character
     const characterId = url.match(/ID\d+/)?.[0];
@@ -278,40 +316,143 @@ export default function VRMViewer({ modelUrls }: { modelUrls: string[] }) {
     }
   };
 
+  const handleProgress = (url: string, progress: number) => {
+    setLoadingProgress((prev) => ({
+      ...prev,
+      [url]: progress,
+    }));
+  };
+
   const isCharacterComplete = (url: string) => {
     const characterId = url.match(/ID\d+/)?.[0];
     return characterId ? completeCharacters[characterId] : false;
   };
 
+  // Calculate total loading progress
+  const totalProgress =
+    modelUrls.length > 0
+      ? Object.values(loadingProgress).reduce((acc, curr) => acc + curr, 0) /
+        modelUrls.length
+      : 0;
+
   return (
-    <div className="h-[400px] relative rounded-lg overflow-hidden bg-[#2a2a2a] shadow-lg">
-      <Canvas
-        camera={{
-          fov: 35,
-          near: 0.1,
-          far: 1000,
-          position: [0, 1.2, 2.5],
-        }}
-      >
+    <div className="relative w-full aspect-square">
+      {/* Loading Overlay */}
+      {totalProgress < 100 && (
+        <div className="absolute inset-0 z-10 bg-background/80 backdrop-blur-sm flex flex-col items-center justify-center">
+          <div className="w-32 h-32 relative">
+            <svg
+              className="animate-spin w-full h-full text-primary"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              />
+            </svg>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-lg font-bold text-primary">
+                {Math.round(totalProgress)}%
+              </span>
+            </div>
+          </div>
+          <p className="mt-4 text-foreground font-medium">
+            Loading 3D Model...
+          </p>
+        </div>
+      )}
+
+      {/* Camera Controls UI */}
+      <div className="absolute bottom-4 right-4 z-20 flex gap-2">
+        <button
+          className="p-2 bg-card/80 backdrop-blur-sm rounded-lg hover:bg-card transition-colors border border-border"
+          title="Reset Camera"
+          onClick={() => {
+            // Camera reset will be handled by OrbitControls ref
+          }}
+        >
+          <svg
+            className="w-5 h-5 text-foreground"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 10l-4 4l-4-4"
+            />
+          </svg>
+        </button>
+      </div>
+
+      <Canvas className="rounded-xl" shadows dpr={[1, 2]}>
         <AnimationProvider>
-          <color attach="background" args={["#2a2a2a"]} />
-          <ambientLight intensity={0.7} />
-          <directionalLight position={[1, 2, 2]} intensity={1} />
+          <color attach="background" args={["#1a1a1a"]} />
+          <fog attach="fog" args={["#1a1a1a", 5, 15]} />
+
+          <PerspectiveCamera
+            makeDefault
+            position={[0, 0.8, 3]}
+            fov={40}
+            near={0.1}
+            far={1000}
+          />
+
+          {/* Improved lighting */}
+          <ambientLight intensity={0.5} />
+          <directionalLight
+            position={[1, 2, 2]}
+            intensity={1.5}
+            castShadow
+            shadow-mapSize={[1024, 1024]}
+          />
+          <directionalLight
+            position={[-1, 0.5, -2]}
+            intensity={0.5}
+            color="#4060ff"
+          />
+
+          {/* Environment and shadows */}
+          <Environment preset="city" />
+          <ContactShadows
+            position={[0, -0.75, 0]}
+            opacity={0.65}
+            scale={10}
+            blur={2}
+            far={4}
+          />
+
           {modelUrls.map((url) => (
             <VRMModel
               key={url}
               url={url}
-              position={[0, -0.8, 0]}
+              position={[0, -0.75, 0]}
               onLoaded={() => handleModelLoaded(url)}
+              onProgress={(progress) => handleProgress(url, progress)}
               isComplete={isCharacterComplete(url)}
             />
           ))}
+
           <OrbitControls
-            minDistance={1.5}
-            maxDistance={4}
+            makeDefault
+            minDistance={2}
+            maxDistance={4.5}
             minPolarAngle={Math.PI / 4}
             maxPolarAngle={Math.PI / 2}
-            target={[0, 0.5, 0]}
+            target={[0, 0.3, 0]}
+            enableDamping
+            dampingFactor={0.05}
           />
         </AnimationProvider>
       </Canvas>
