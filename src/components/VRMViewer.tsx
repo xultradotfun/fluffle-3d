@@ -135,20 +135,31 @@ function AnimationProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
+// Add a global model cache
+const modelCache = new Map<string, Promise<VRM>>();
+
 interface VRMModelProps {
   url: string;
   position?: [number, number, number];
+  onLoaded?: () => void;
+  isComplete?: boolean;
 }
 
-function VRMModel({ url, position = [0, 0, 0] }: VRMModelProps) {
+function VRMModel({
+  url,
+  position = [0, 0, 0],
+  onLoaded,
+  isComplete,
+}: VRMModelProps) {
   const vrmRef = useRef<VRM>();
   const sceneRef = useRef<Group>(null);
   const mixerRef = useRef<AnimationMixer>();
   const clockRef = useRef(new Clock());
   const { currentClip } = useContext(AnimationContext);
+  const hasInitialized = useRef(false);
 
   useEffect(() => {
-    if (currentClip && vrmRef.current) {
+    if (currentClip && vrmRef.current && isComplete) {
       if (!mixerRef.current) {
         mixerRef.current = new AnimationMixer(vrmRef.current.scene);
       }
@@ -156,22 +167,43 @@ function VRMModel({ url, position = [0, 0, 0] }: VRMModelProps) {
       mixerRef.current.stopAllAction();
       const action = mixerRef.current.clipAction(currentClip);
       VRMUtils.rotateVRM0(vrmRef.current);
-      action.setEffectiveTimeScale(0.6); // Slow down the animation a bit
-      action.setLoop(LoopRepeat, Infinity); // Loop the animation indefinitely
-      action.clampWhenFinished = false; // Don't clamp at the end
+      action.setEffectiveTimeScale(0.6);
+      action.setLoop(LoopRepeat, Infinity);
+      action.clampWhenFinished = false;
       action.play();
     }
-  }, [currentClip]);
+  }, [currentClip, isComplete]);
 
   useEffect(() => {
-    const loader = new GLTFLoader();
-    loader.register((parser) => new VRMLoaderPlugin(parser));
+    if (hasInitialized.current) return;
+    hasInitialized.current = true;
 
-    loader.load(
-      url,
-      (gltf: GLTF) => {
-        const vrm = gltf.userData.vrm;
+    const loadModel = async () => {
+      try {
+        let vrmPromise = modelCache.get(url);
+
+        if (!vrmPromise) {
+          vrmPromise = new Promise((resolve, reject) => {
+            const loader = new GLTFLoader();
+            loader.register((parser) => new VRMLoaderPlugin(parser));
+
+            loader.load(
+              url,
+              (gltf: GLTF) => {
+                resolve(gltf.userData.vrm);
+              },
+              (progress: { loaded: number; total: number }) =>
+                console.log(`Loading model ${url}...`, progress),
+              reject
+            );
+          });
+
+          modelCache.set(url, vrmPromise);
+        }
+
+        const vrm = await vrmPromise;
         vrmRef.current = vrm;
+
         if (sceneRef.current) {
           while (sceneRef.current.children.length) {
             sceneRef.current.remove(sceneRef.current.children[0]);
@@ -179,19 +211,14 @@ function VRMModel({ url, position = [0, 0, 0] }: VRMModelProps) {
           sceneRef.current.add(vrm.scene);
           vrm.scene.rotation.y = Math.PI;
           vrm.scene.position.set(...position);
-
-          if (currentClip) {
-            mixerRef.current = new AnimationMixer(vrm.scene);
-            const action = mixerRef.current.clipAction(currentClip);
-            VRMUtils.rotateVRM0(vrm);
-            action.play();
-          }
+          onLoaded?.();
         }
-      },
-      (progress: { loaded: number; total: number }) =>
-        console.log(`Loading model ${url}...`, progress),
-      (error: unknown) => console.error(`Error loading ${url}:`, error)
-    );
+      } catch (error) {
+        console.error(`Error loading ${url}:`, error);
+      }
+    };
+
+    loadModel();
 
     return () => {
       if (mixerRef.current) {
@@ -214,7 +241,7 @@ function VRMModel({ url, position = [0, 0, 0] }: VRMModelProps) {
         });
       }
     };
-  }, [url, position, currentClip]);
+  }, [url]);
 
   useFrame(() => {
     if (mixerRef.current) {
@@ -230,6 +257,32 @@ function VRMModel({ url, position = [0, 0, 0] }: VRMModelProps) {
 }
 
 export default function VRMViewer({ modelUrls }: { modelUrls: string[] }) {
+  const loadedModelsRef = useRef<Record<string, boolean>>({});
+  const [completeCharacters, setCompleteCharacters] = useState<
+    Record<string, boolean>
+  >({});
+
+  const handleModelLoaded = (url: string) => {
+    loadedModelsRef.current[url] = true;
+
+    // Check if this completes a character
+    const characterId = url.match(/ID\d+/)?.[0];
+    if (characterId) {
+      const isComplete = modelUrls
+        .filter((modelUrl) => modelUrl.includes(characterId))
+        .every((modelUrl) => loadedModelsRef.current[modelUrl]);
+
+      if (isComplete) {
+        setCompleteCharacters((prev) => ({ ...prev, [characterId]: true }));
+      }
+    }
+  };
+
+  const isCharacterComplete = (url: string) => {
+    const characterId = url.match(/ID\d+/)?.[0];
+    return characterId ? completeCharacters[characterId] : false;
+  };
+
   return (
     <div className="h-[400px] relative rounded-lg overflow-hidden bg-[#2a2a2a] shadow-lg">
       <Canvas
@@ -245,7 +298,13 @@ export default function VRMViewer({ modelUrls }: { modelUrls: string[] }) {
           <ambientLight intensity={0.7} />
           <directionalLight position={[1, 2, 2]} intensity={1} />
           {modelUrls.map((url) => (
-            <VRMModel key={url} url={url} position={[0, -0.8, 0]} />
+            <VRMModel
+              key={url}
+              url={url}
+              position={[0, -0.8, 0]}
+              onLoaded={() => handleModelLoaded(url)}
+              isComplete={isCharacterComplete(url)}
+            />
           ))}
           <OrbitControls
             minDistance={1.5}
