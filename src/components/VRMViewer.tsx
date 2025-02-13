@@ -58,6 +58,9 @@ const BONE_MAP: Record<string, string> = {
   mixamorigRightToeBase: "RightToeBase",
 };
 
+// Add animation cache at the top with other constants
+const animationCache = new Map<string, AnimationClip>();
+
 function retargetAnimation(clip: AnimationClip): AnimationClip {
   // Filter out tracks that don't have corresponding VRM bones
   const validTracks = clip.tracks.filter((track) => {
@@ -82,46 +85,92 @@ function retargetAnimation(clip: AnimationClip): AnimationClip {
 interface AnimationContextType {
   currentClip: AnimationClip | null;
   setCurrentClip: (clip: AnimationClip) => void;
+  isLoadingAnimations: boolean;
 }
 
 const AnimationContext = createContext<AnimationContextType>({
   currentClip: null,
   setCurrentClip: () => {},
+  isLoadingAnimations: true,
 });
 
 function AnimationProvider({ children }: { children: React.ReactNode }) {
   const [currentClip, setCurrentClip] = useState<AnimationClip | null>(null);
   const [animationIndex, setAnimationIndex] = useState(0);
+  const [isLoadingAnimations, setIsLoadingAnimations] = useState(true);
   const animationsRef = useRef<AnimationClip[]>([]);
+  const loadingRef = useRef(false);
 
   useEffect(() => {
-    const fbxLoader = new FBXLoader();
-    let loadedCount = 0;
+    if (loadingRef.current) return;
+    loadingRef.current = true;
 
-    ANIMATIONS.forEach((animUrl, index) => {
-      fbxLoader.load(
-        animUrl,
-        (fbx) => {
-          if (fbx.animations.length > 0) {
-            const clip = fbx.animations[0];
-            clip.name = `animation_${index}`;
-            const retargetedClip = retargetAnimation(clip);
-            animationsRef.current[index] = retargetedClip;
-            loadedCount++;
+    const loadAnimations = async () => {
+      setIsLoadingAnimations(true);
+      const fbxLoader = new FBXLoader();
+      let loadedCount = 0;
 
-            if (loadedCount === ANIMATIONS.length) {
-              setCurrentClip(animationsRef.current[0]);
+      try {
+        await Promise.all(
+          ANIMATIONS.map((animUrl, index) => {
+            // Check cache first
+            const cachedAnimation = animationCache.get(animUrl);
+            if (cachedAnimation) {
+              animationsRef.current[index] = cachedAnimation;
+              loadedCount++;
+              if (loadedCount === ANIMATIONS.length) {
+                setCurrentClip(animationsRef.current[0]);
+                setIsLoadingAnimations(false);
+              }
+              return Promise.resolve();
             }
-          }
-        },
-        undefined,
-        (error) => console.error(`Error loading animation ${animUrl}:`, error)
-      );
-    });
+
+            // Load if not cached
+            return new Promise<void>((resolve, reject) => {
+              fbxLoader.load(
+                animUrl,
+                (fbx) => {
+                  if (fbx.animations.length > 0) {
+                    const clip = fbx.animations[0];
+                    clip.name = `animation_${index}`;
+                    const retargetedClip = retargetAnimation(clip);
+
+                    // Cache the animation
+                    animationCache.set(animUrl, retargetedClip);
+                    animationsRef.current[index] = retargetedClip;
+
+                    loadedCount++;
+                    if (loadedCount === ANIMATIONS.length) {
+                      setCurrentClip(animationsRef.current[0]);
+                      setIsLoadingAnimations(false);
+                    }
+                  }
+                  resolve();
+                },
+                undefined,
+                (error) => {
+                  console.error(`Error loading animation ${animUrl}:`, error);
+                  reject(error);
+                }
+              );
+            });
+          })
+        );
+      } catch (error) {
+        console.error("Error loading animations:", error);
+        setIsLoadingAnimations(false);
+      }
+    };
+
+    loadAnimations();
+
+    return () => {
+      loadingRef.current = false;
+    };
   }, []);
 
   useEffect(() => {
-    if (currentClip) {
+    if (currentClip && !isLoadingAnimations) {
       const duration = currentClip.duration;
       const timer = setTimeout(() => {
         const nextIndex = (animationIndex + 1) % ANIMATIONS.length;
@@ -131,10 +180,12 @@ function AnimationProvider({ children }: { children: React.ReactNode }) {
 
       return () => clearTimeout(timer);
     }
-  }, [currentClip, animationIndex]);
+  }, [currentClip, animationIndex, isLoadingAnimations]);
 
   return (
-    <AnimationContext.Provider value={{ currentClip, setCurrentClip }}>
+    <AnimationContext.Provider
+      value={{ currentClip, setCurrentClip, isLoadingAnimations }}
+    >
       {children}
     </AnimationContext.Provider>
   );
@@ -167,12 +218,12 @@ function VRMModel({
   const sceneRef = useRef<Group>(null);
   const mixerRef = useRef<AnimationMixer>();
   const clockRef = useRef(new Clock());
-  const { currentClip } = useContext(AnimationContext);
+  const { currentClip, isLoadingAnimations } = useContext(AnimationContext);
   const hasInitialized = useRef(false);
 
   // Add back animation effect
   useEffect(() => {
-    if (currentClip && vrmRef.current && isComplete) {
+    if (currentClip && vrmRef.current && isComplete && !isLoadingAnimations) {
       if (!mixerRef.current) {
         mixerRef.current = new AnimationMixer(vrmRef.current.scene);
       }
@@ -185,7 +236,7 @@ function VRMModel({
       action.clampWhenFinished = false;
       action.play();
     }
-  }, [currentClip, isComplete]);
+  }, [currentClip, isComplete, isLoadingAnimations]);
 
   useEffect(() => {
     if (hasInitialized.current) return;
