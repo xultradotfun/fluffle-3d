@@ -385,6 +385,10 @@ export default function VRMViewer({ modelUrls }: { modelUrls: string[] }) {
   >({});
   const controlsRef = useRef<any>(null);
 
+  // Define initial camera settings
+  const INITIAL_CAMERA_POSITION = [0, 0.8, 3] as const;
+  const INITIAL_TARGET_POSITION = [0, 0.3, 0] as const;
+
   const handleModelLoaded = (url: string) => {
     loadedModelsRef.current[url] = true;
     setLoadingProgress((prev) => ({
@@ -419,7 +423,10 @@ export default function VRMViewer({ modelUrls }: { modelUrls: string[] }) {
 
   const handleResetCamera = () => {
     if (controlsRef.current) {
-      controlsRef.current.reset();
+      // Reset camera position and target
+      controlsRef.current.object.position.set(...INITIAL_CAMERA_POSITION);
+      controlsRef.current.target.set(...INITIAL_TARGET_POSITION);
+      controlsRef.current.update();
     }
   };
 
@@ -484,7 +491,7 @@ export default function VRMViewer({ modelUrls }: { modelUrls: string[] }) {
 
           <PerspectiveCamera
             makeDefault
-            position={[0, 0.8, 3]}
+            position={INITIAL_CAMERA_POSITION}
             fov={40}
             near={0.1}
             far={1000}
@@ -532,7 +539,7 @@ export default function VRMViewer({ modelUrls }: { modelUrls: string[] }) {
             maxDistance={4.5}
             minPolarAngle={Math.PI / 4}
             maxPolarAngle={Math.PI / 2}
-            target={[0, 0.3, 0]}
+            target={INITIAL_TARGET_POSITION}
             enableDamping
             dampingFactor={0.05}
           />
