@@ -5,9 +5,9 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Fluffle 3D - VRM Model Viewer",
+  title: "Fluffle Tools - 3D Viewer, Analytics & PFP Generator",
   description:
-    "A web application for viewing VRM 3D models in an interactive environment",
+    "Many utilities for Fluffle NFT holders. View your NFTs in 3D, analyze rarity, generate unique profile pictures, and more!",
   icons: {
     icon: "/favicon.ico",
   },

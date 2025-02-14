@@ -1,13 +1,15 @@
-# Fluffle 3D - VRM Model Viewer
+# Fluffle Tools
 
-A web application built with Next.js and Three.js to visualize VRM 3D models. This project is optimized for deployment on Vercel.
+A comprehensive web application built with Next.js that provides various utilities for Fluffle NFT holders. This project is optimized for deployment on Vercel.
 
 ## Features
 
-- VRM model loading and visualization
-- Orbit controls for model interaction
-- Responsive design
-- Modern UI with Tailwind CSS
+- 3D Model Viewer with VRM support
+- Rarity Analytics Dashboard
+- Custom PFP Generator with background
+- Interactive UI with modern design
+- Support for all 5,000 Fluffle NFTs
+- Responsive layout for all devices
 
 ## Prerequisites
 
