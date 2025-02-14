@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NFTInput } from "@/components/nft/NFTInput";
 import { NFTCard } from "@/components/nft/NFTCard";
 import { Badge } from "@/components/ui/Badge";
@@ -22,6 +22,32 @@ export default function Home() {
   );
   const [viewers, setViewers] = useState<ViewerData[]>([]);
   const [error, setError] = useState("");
+
+  // Add effect to handle URL
+  useEffect(() => {
+    // Check initial hash
+    if (window.location.hash === "#stats") {
+      setActiveView("analytics");
+    }
+
+    // Listen for hash changes
+    const handleHashChange = () => {
+      setActiveView(window.location.hash === "#stats" ? "analytics" : "viewer");
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
+  // Update URL when view changes
+  const handleViewChange = (view: "viewer" | "analytics") => {
+    if (view === "analytics") {
+      window.history.replaceState(null, "", "/#stats");
+    } else {
+      window.history.replaceState(null, "", "/");
+    }
+    setActiveView(view);
+  };
 
   const handleNFTLoad = (id: string, urls: string[], traits: NFTTrait) => {
     setViewers((prev) => [
@@ -54,7 +80,7 @@ export default function Home() {
           <div className="flex items-center justify-between">
             <ViewSwitcher
               activeView={activeView}
-              onViewChange={setActiveView}
+              onViewChange={handleViewChange}
             />
           </div>
         </div>
