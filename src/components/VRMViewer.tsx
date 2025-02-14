@@ -346,12 +346,13 @@ export default function VRMViewer({ modelUrls }: { modelUrls: string[] }) {
   const [loadingProgress, setLoadingProgress] = useState<
     Record<string, number>
   >({});
+  const controlsRef = useRef<any>(null);
 
   const handleModelLoaded = (url: string) => {
     loadedModelsRef.current[url] = true;
     setLoadingProgress((prev) => ({
       ...prev,
-      [url]: 100, // Ensure progress is 100% when loaded
+      [url]: 100,
     }));
 
     // Check if this completes a character
@@ -377,6 +378,12 @@ export default function VRMViewer({ modelUrls }: { modelUrls: string[] }) {
   const isCharacterComplete = (url: string) => {
     const characterId = url.match(/ID\d+/)?.[0];
     return characterId ? completeCharacters[characterId] : false;
+  };
+
+  const handleResetCamera = () => {
+    if (controlsRef.current) {
+      controlsRef.current.reset();
+    }
   };
 
   // Calculate total loading progress
@@ -425,14 +432,12 @@ export default function VRMViewer({ modelUrls }: { modelUrls: string[] }) {
       {/* Camera Controls UI */}
       <div className="absolute bottom-4 right-4 z-20 flex gap-2">
         <button
-          className="p-2 bg-card/80 backdrop-blur-sm rounded-lg hover:bg-card transition-colors border border-border"
+          className="p-2 bg-white/5 backdrop-blur-sm rounded-lg hover:bg-white/10 transition-colors border border-white/10 hover:border-white/20"
           title="Reset Camera"
-          onClick={() => {
-            // Camera reset will be handled by OrbitControls ref
-          }}
+          onClick={handleResetCamera}
         >
           <svg
-            className="w-5 h-5 text-foreground"
+            className="w-5 h-5 text-[#ededed]"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -441,7 +446,7 @@ export default function VRMViewer({ modelUrls }: { modelUrls: string[] }) {
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth={2}
-              d="M15 10l-4 4l-4-4"
+              d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"
             />
           </svg>
         </button>
@@ -496,6 +501,7 @@ export default function VRMViewer({ modelUrls }: { modelUrls: string[] }) {
           ))}
 
           <OrbitControls
+            ref={controlsRef}
             makeDefault
             minDistance={2}
             maxDistance={4.5}

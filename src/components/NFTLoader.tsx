@@ -165,24 +165,36 @@ interface NFTViewerProps {
 
 export function NFTViewer({ id, urls, traits, onRemove }: NFTViewerProps) {
   return (
-    <div className="group relative bg-card rounded-2xl overflow-hidden border border-border shadow-xl">
+    <div className="group relative bg-[#111] rounded-xl overflow-hidden border border-white/10 transition-all hover:border-white/20 hover:shadow-lg">
       {onRemove && (
         <button
           onClick={() => onRemove(id)}
-          className="absolute -top-2 -right-2 z-20 w-8 h-8 flex items-center justify-center bg-destructive hover:bg-destructive/90 text-destructive-foreground text-lg rounded-full opacity-0 group-hover:opacity-100 transition-all duration-200 shadow-lg"
+          className="absolute top-3 right-3 z-20 p-1.5 rounded-full bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none"
           title="Remove NFT"
         >
-          ×
+          <svg
+            className="w-4 h-4 text-[#ededed]"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
         </button>
       )}
-      <div className="p-6">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-[#ededed]">NFT #{id}</h2>
-          <span className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full border border-primary/20">
+      <div className="p-5">
+        <div className="flex items-center justify-between mb-5">
+          <h2 className="text-lg font-bold text-[#ededed]">NFT #{id}</h2>
+          <span className="inline-flex items-center rounded-full bg-blue-500/15 px-2.5 py-0.5 text-xs font-semibold text-blue-400 ring-1 ring-blue-500/25">
             VRM Model
           </span>
         </div>
-        <div className="relative bg-background rounded-xl overflow-hidden shadow-inner">
+        <div className="relative bg-[#1a1a1a] rounded-lg overflow-hidden shadow-inner ring-1 ring-white/5">
           <div className="aspect-square w-full">
             <VRMViewer modelUrls={urls} />
           </div>
