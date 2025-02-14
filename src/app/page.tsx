@@ -134,7 +134,7 @@ export default function Home() {
             <>
               <div className="flex items-center justify-between mb-8 animate-fade-in">
                 <h2 className="text-2xl font-bold text-white">Your NFTs</h2>
-                <Badge variant="primary" size="md">
+                <Badge variant="default" size="md">
                   {viewers.length} loaded
                 </Badge>
               </div>
