@@ -15,12 +15,12 @@ export default function NFTViewer({
   onRemove,
 }: NFTViewerProps) {
   return (
-    <div className="group relative overflow-hidden rounded-xl bg-[#111] border border-white/10 transition-all hover:border-blue-500/50 hover:shadow-lg">
+    <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-b from-[#1a1a1a] to-[#111] border border-white/10 transition-all hover:border-blue-500/50 hover:shadow-[0_0_30px_-10px_rgba(59,130,246,0.5)]">
       {/* Dismiss Button */}
       {onRemove && (
         <button
           onClick={() => onRemove(id)}
-          className="absolute top-3 right-3 z-20 p-1.5 rounded-full bg-black/80 backdrop-blur-sm border border-white/10 hover:bg-black hover:border-blue-500/50 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none"
+          className="absolute top-4 right-4 z-20 p-2 rounded-xl bg-black/80 backdrop-blur-sm border border-white/10 hover:bg-black hover:border-blue-500/50 transition-all opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none"
           title="Remove NFT"
         >
           <svg
@@ -39,43 +39,56 @@ export default function NFTViewer({
         </button>
       )}
 
+      {/* Header Section */}
+      <div className="absolute top-0 left-0 right-0 z-10 p-4 bg-gradient-to-b from-black/80 to-transparent">
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-bold text-white">Character #{id}</h3>
+          <span className="inline-flex items-center rounded-full bg-blue-500/20 px-2.5 py-1 text-xs font-semibold text-blue-400 ring-1 ring-blue-500/30">
+            VRM Model
+          </span>
+        </div>
+      </div>
+
       {/* VRM Viewer Section */}
-      <div className="relative aspect-square w-full bg-[#1a1a1a]">
+      <div className="relative aspect-square w-full bg-gradient-radial from-[#1a1a1a] to-[#111]">
         <VRMViewer modelUrls={urls} />
       </div>
 
       {/* Traits Section */}
-      <div className="p-5 space-y-4 bg-gradient-to-b from-[#111]/50 to-[#111] border-t border-white/10">
-        {/* ID Section */}
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-bold text-[#ededed]">Character #{id}</h3>
-          <div className="flex items-center gap-2">
-            <span className="inline-flex items-center rounded-full bg-blue-500/15 px-2.5 py-0.5 text-xs font-semibold text-blue-400 ring-1 ring-blue-500/25">
-              VRM Model
-            </span>
-          </div>
+      <div className="p-4">
+        <div className="flex items-center justify-between mb-3">
+          <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wider">
+            Traits
+          </h4>
+          <span className="text-xs text-gray-500">
+            {
+              Object.keys(traits).filter((key) => key.endsWith("_display_name"))
+                .length
+            }{" "}
+            attributes
+          </span>
         </div>
 
-        {/* Traits Grid */}
-        <div className="grid grid-cols-2 gap-2.5">
+        <div className="divide-y divide-white/5">
           {Object.entries(traits)
             .filter(
-              ([key]) =>
-                !key.endsWith("_display_name") &&
-                key in traits &&
-                typeof traits[key as keyof NFTTrait] !== "number"
+              ([key, value]) =>
+                key.endsWith("_display_name") &&
+                typeof value === "string" &&
+                value !== "-1"
             )
             .map(([key, value]) => (
               <div
                 key={key}
-                className="flex flex-col rounded-lg bg-white/[0.03] p-3 border border-white/10 hover:border-white/20 transition-colors"
+                className="flex items-center justify-between py-2 first:pt-0 last:pb-0"
               >
-                <span className="text-xs font-medium text-blue-400 uppercase tracking-wide">
-                  {key.replace(/([A-Z])/g, " $1").trim()}
+                <span className="text-sm font-medium text-blue-400">
+                  {key
+                    .replace(/_display_name$/, "")
+                    .replace(/([A-Z])/g, " $1")
+                    .trim()}
                 </span>
-                <span className="mt-1 text-sm font-medium text-[#ededed] truncate">
-                  {value}
-                </span>
+                <span className="text-sm font-medium text-white">{value}</span>
               </div>
             ))}
         </div>
