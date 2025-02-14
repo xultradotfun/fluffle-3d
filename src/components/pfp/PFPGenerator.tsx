@@ -385,7 +385,7 @@ export function PFPGenerator() {
                       face_display_name: "",
                     });
                   }}
-                  className="w-full bg-gradient-to-br from-white/[0.03] to-white/[0.02] hover:from-white/[0.04] hover:to-white/[0.03] border border-white/5 hover:border-blue-500/30 focus:border-blue-500/30 focus:ring-2 focus:ring-blue-500/30 rounded-xl px-4 py-3 text-white placeholder:text-gray-500 transition-all"
+                  className="w-full bg-black/20 hover:bg-black/30 border border-white/5 hover:border-blue-500/30 focus:border-blue-500/30 focus:ring-2 focus:ring-blue-500/30 rounded-xl px-4 py-3 text-white placeholder:text-gray-500 transition-all"
                 />
                 {selectedNFT && (
                   <button
