@@ -478,20 +478,24 @@ export function PFPGenerator() {
                   className="w-full justify-center"
                   disabled={isLoading || !selectedNFT || !compositeImage}
                 >
-                  <svg
-                    className="w-4 h-4 mr-2"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
-                    />
-                  </svg>
-                  {isCopied ? "Copied!" : "Copy to Clipboard"}
+                  <div className="flex items-center justify-center w-[160px]">
+                    <svg
+                      className="w-4 h-4 mr-2 flex-shrink-0"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
+                      />
+                    </svg>
+                    <span className="flex-shrink-0">
+                      {isCopied ? "Copied!" : "Copy to Clipboard"}
+                    </span>
+                  </div>
                 </Button>
                 <Button
                   variant="secondary"
@@ -499,20 +503,22 @@ export function PFPGenerator() {
                   className="w-full justify-center"
                   disabled={isLoading || !selectedNFT || !compositeImage}
                 >
-                  <svg
-                    className="w-4 h-4 mr-2"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                    />
-                  </svg>
-                  Download PNG
+                  <div className="flex items-center justify-center w-[160px]">
+                    <svg
+                      className="w-4 h-4 mr-2 flex-shrink-0"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                      />
+                    </svg>
+                    <span className="flex-shrink-0">Download PNG</span>
+                  </div>
                 </Button>
               </div>
             </div>
