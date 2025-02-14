@@ -275,7 +275,7 @@ export function NFTInput({
                     } flex items-center gap-2`}
                   >
                     {loading ? (
-                      <LoadingSpinner size="sm" variant="white" />
+                      <LoadingSpinner size="sm" variant="default" />
                     ) : (
                       <>
                         <svg

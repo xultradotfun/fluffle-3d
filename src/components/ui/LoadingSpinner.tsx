@@ -1,13 +1,41 @@
 "use client";
 
 import { cn } from "@/utils/cn";
+import { cva, type VariantProps } from "class-variance-authority";
 
-interface LoadingSpinnerProps extends React.SVGAttributes<SVGElement> {}
+const spinnerVariants = cva("animate-spin", {
+  variants: {
+    variant: {
+      default: "text-white",
+      primary: "text-blue-400",
+      secondary: "text-gray-400",
+    },
+    size: {
+      default: "w-4 h-4",
+      sm: "w-3 h-3",
+      lg: "w-6 h-6",
+      xl: "w-8 h-8",
+    },
+  },
+  defaultVariants: {
+    variant: "default",
+    size: "default",
+  },
+});
 
-export function LoadingSpinner({ className, ...props }: LoadingSpinnerProps) {
+interface LoadingSpinnerProps
+  extends React.SVGAttributes<SVGElement>,
+    VariantProps<typeof spinnerVariants> {}
+
+export function LoadingSpinner({
+  className,
+  variant,
+  size,
+  ...props
+}: LoadingSpinnerProps) {
   return (
     <svg
-      className={cn("animate-spin", className)}
+      className={cn(spinnerVariants({ variant, size }), className)}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

@@ -336,7 +336,7 @@ export function TraitsAnalyticsDashboard() {
                               <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                               <div className="absolute bottom-1 left-1">
                                 <Badge
-                                  variant="primary"
+                                  variant="default"
                                   size="sm"
                                   className="shadow-lg text-xs"
                                 >
@@ -431,7 +431,7 @@ export function TraitsAnalyticsDashboard() {
                                     </div>
                                     <div className="flex-1 min-w-0">
                                       <div className="flex items-center justify-between mb-2">
-                                        <Badge variant="primary" size="sm">
+                                        <Badge variant="default" size="sm">
                                           #{outfit}
                                         </Badge>
                                         <span className="text-sm text-gray-400">

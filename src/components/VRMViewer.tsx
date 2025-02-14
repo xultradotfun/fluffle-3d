@@ -514,7 +514,7 @@ export default function VRMViewer({ modelUrls }: { modelUrls: string[] }) {
         <div className="absolute inset-0 z-10 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center">
           <div className="relative">
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 via-blue-500/10 to-blue-500/20 animate-pulse" />
-            <LoadingSpinner size="lg" variant="primary" className="w-12 h-12" />
+            <LoadingSpinner size="xl" variant="primary" />
           </div>
           <div className="mt-6 space-y-2 text-center">
             <p className="text-lg font-medium text-white">Loading 3D Model</p>
