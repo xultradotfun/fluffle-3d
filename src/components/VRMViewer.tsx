@@ -35,68 +35,105 @@ const ANIMATIONS = [
 ];
 
 const BONE_MAP: Record<string, string> = {
+  // Core body
   mixamorigHips: "Hips",
   mixamorigSpine: "Spine",
   mixamorigSpine1: "Spine1",
   mixamorigSpine2: "Spine2",
-  mixamorigNeck: "Neck",
-  mixamorigHead: "Head",
+
+  // Left arm and hand
   mixamorigLeftShoulder: "LeftShoulder",
   mixamorigLeftArm: "LeftArm",
   mixamorigLeftForeArm: "LeftForeArm",
   mixamorigLeftHand: "LeftHand",
+  mixamorigLeftHandThumb1: "LeftHandThumb",
+  mixamorigLeftHandThumb2: "LeftHandThumb1",
+  mixamorigLeftHandThumb3: "LeftHandThumb2",
+  mixamorigLeftHandIndex1: "LeftHandIndex",
+  mixamorigLeftHandIndex2: "LeftHandIndex1",
+  mixamorigLeftHandIndex3: "LeftHandIndex2",
+  mixamorigLeftHandMiddle1: "LeftHandMiddle",
+  mixamorigLeftHandMiddle2: "LeftHandMiddle1",
+  mixamorigLeftHandMiddle3: "LeftHandMiddle2",
+
+  // Right arm and hand
   mixamorigRightShoulder: "RightShoulder",
   mixamorigRightArm: "RightArm",
   mixamorigRightForeArm: "RightForeArm",
   mixamorigRightHand: "RightHand",
+  mixamorigRightHandThumb1: "RightHandThumb",
+  mixamorigRightHandThumb2: "RightHandThumb1",
+  mixamorigRightHandThumb3: "RightHandThumb2",
+  mixamorigRightHandIndex1: "RightHandIndex",
+  mixamorigRightHandIndex2: "RightHandIndex1",
+  mixamorigRightHandIndex3: "RightHandIndex2",
+  mixamorigRightHandMiddle1: "RightHandMiddle",
+  mixamorigRightHandMiddle2: "RightHandMiddle.001",
+  mixamorigRightHandMiddle3: "RightHandMiddle.002",
+
+  // Left leg
   mixamorigLeftUpLeg: "LeftUpLeg",
   mixamorigLeftLeg: "LeftLeg",
   mixamorigLeftFoot: "LeftFoot",
-  mixamorigLeftToeBase: "LeftToeBase",
+
+  // Right leg
   mixamorigRightUpLeg: "RightUpLeg",
   mixamorigRightLeg: "RightLeg",
   mixamorigRightFoot: "RightFoot",
-  mixamorigRightToeBase: "RightToeBase",
-  // Additional bones for attachments
-  mixamorigChest: "Chest",
-  mixamorigUpperChest: "UpperChest",
-  mixamorigLeftHandThumb1: "LeftHandThumb1",
-  mixamorigLeftHandThumb2: "LeftHandThumb2",
-  mixamorigLeftHandThumb3: "LeftHandThumb3",
-  mixamorigLeftHandIndex1: "LeftHandIndex1",
-  mixamorigLeftHandIndex2: "LeftHandIndex2",
-  mixamorigLeftHandIndex3: "LeftHandIndex3",
-  mixamorigLeftHandMiddle1: "LeftHandMiddle1",
-  mixamorigLeftHandMiddle2: "LeftHandMiddle2",
-  mixamorigLeftHandMiddle3: "LeftHandMiddle3",
-  mixamorigRightHandThumb1: "RightHandThumb1",
-  mixamorigRightHandThumb2: "RightHandThumb2",
-  mixamorigRightHandThumb3: "RightHandThumb3",
-  mixamorigRightHandIndex1: "RightHandIndex1",
-  mixamorigRightHandIndex2: "RightHandIndex2",
-  mixamorigRightHandIndex3: "RightHandIndex3",
-  mixamorigRightHandMiddle1: "RightHandMiddle1",
-  mixamorigRightHandMiddle2: "RightHandMiddle2",
-  mixamorigRightHandMiddle3: "RightHandMiddle3",
 };
 
 // Add animation cache at the top with other constants
 const animationCache = new Map<string, AnimationClip>();
 
 function retargetAnimation(clip: AnimationClip): AnimationClip {
-  // Don't filter out tracks, instead try to map all of them
-  const tracks = clip.tracks.map((track) => {
+  const unmappedBones = new Set<string>();
+  const validTracks = clip.tracks.filter((track) => {
+    const [boneName, propertyName] = track.name.split(".");
+
+    // Skip tracks for bones we know don't exist in our model
+    const skipBones = [
+      "LeftBreast",
+      "RightBreast",
+      "Backpack-bone",
+      "Backpack-zipper",
+      "LeftToeEnd",
+      "RightToeEnd",
+      "RightHandPinky4",
+    ];
+    if (skipBones.includes(boneName)) {
+      return false;
+    }
+
+    // If we have a mapping for this bone, include the track
+    const vrmBoneName = BONE_MAP[boneName];
+    if (vrmBoneName) {
+      return true;
+    }
+
+    // Track bones we couldn't map for debugging
+    unmappedBones.add(boneName);
+    return false;
+  });
+
+  const tracks = validTracks.map((track) => {
     const [boneName, ...propertyParts] = track.name.split(".");
     const vrmBoneName = BONE_MAP[boneName];
 
-    // If we have a mapping, use it. Otherwise keep the original name
-    // This ensures we don't lose any animation tracks
     const newTrack = track.clone();
-    if (vrmBoneName) {
-      newTrack.name = `${vrmBoneName}.${propertyParts.join(".")}`;
-    }
+    newTrack.name = `${vrmBoneName}.${propertyParts.join(".")}`;
     return newTrack;
   });
+
+  // Log unmapped bones once per animation with more context
+  if (unmappedBones.size > 0) {
+    console.debug(
+      `Animation "${clip.name}" has unmapped bones:`,
+      Array.from(unmappedBones).sort(),
+      `\nTotal tracks: ${clip.tracks.length}`,
+      `\nValid tracks: ${tracks.length}`,
+      `\nFiltered tracks: ${clip.tracks.length - tracks.length}`
+    );
+  }
 
   const retargetedClip = new AnimationClip(clip.name, clip.duration, tracks);
   return retargetedClip;
@@ -235,6 +272,7 @@ function VRMModel({
   isComplete,
 }: VRMModelProps) {
   const vrmRef = useRef<VRM>();
+  const gltfRef = useRef<GLTF>();
   const sceneRef = useRef<Group>(null);
   const mixerRef = useRef<AnimationMixer>();
   const clockRef = useRef(new Clock());
@@ -243,7 +281,7 @@ function VRMModel({
 
   // Animation and VRM update effect
   useEffect(() => {
-    if (currentClip && vrmRef.current && isComplete && !isLoadingAnimations) {
+    if (vrmRef.current && isComplete && !isLoadingAnimations) {
       // Ensure VRM is properly initialized
       VRMUtils.rotateVRM0(vrmRef.current);
 
@@ -256,12 +294,31 @@ function VRMModel({
       // Create new mixer on the root scene
       mixerRef.current = new AnimationMixer(vrmRef.current.scene);
 
-      // Apply the animation
-      const action = mixerRef.current.clipAction(currentClip);
-      action.setEffectiveTimeScale(0.6);
-      action.setLoop(LoopRepeat, Infinity);
-      action.clampWhenFinished = false;
-      action.play();
+      // Check for built-in VRM animations first
+      const gltf = gltfRef.current;
+      const animations = gltf?.animations;
+      if (animations && animations.length > 0) {
+        console.log("Found built-in VRM animations:", animations.length);
+        // Use the first VRM animation
+        const vrmClip = animations[0];
+        const action = mixerRef.current.clipAction(vrmClip);
+        action.setEffectiveTimeScale(1.0);
+        action.setLoop(LoopRepeat, Infinity);
+        action.clampWhenFinished = false;
+        action.play();
+      } else {
+        console.log(
+          "No built-in VRM animations found, using external animation"
+        );
+        // Fall back to external animation if available
+        if (currentClip) {
+          const action = mixerRef.current.clipAction(currentClip);
+          action.setEffectiveTimeScale(0.6);
+          action.setLoop(LoopRepeat, Infinity);
+          action.clampWhenFinished = false;
+          action.play();
+        }
+      }
 
       // Initialize physics after animation setup
       if (vrmRef.current.springBoneManager) {
@@ -294,6 +351,9 @@ function VRMModel({
             url,
             async (gltf: GLTF) => {
               const vrm = gltf.userData.vrm;
+              // Store the GLTF reference
+              gltfRef.current = gltf;
+
               // Initialize VRM immediately after load
               VRMUtils.rotateVRM0(vrm);
               if (vrm.humanoid) {
@@ -302,6 +362,16 @@ function VRMModel({
               if (vrm.springBoneManager) {
                 vrm.springBoneManager.reset();
               }
+
+              // Log animation info
+              if (gltf.animations?.length > 0) {
+                console.log("VRM animations found:", {
+                  count: gltf.animations.length,
+                  names: gltf.animations.map((a) => a.name),
+                  durations: gltf.animations.map((a) => a.duration),
+                });
+              }
+
               resolvePromise(vrm);
             },
             (progress: { loaded: number; total: number }) => {
