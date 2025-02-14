@@ -116,7 +116,7 @@ export function NFTInput({ onLoad, onError }: NFTLoaderProps) {
               onChange={(e) => setNftIds(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="e.g. 979, 1426, 2000"
-              className="w-full bg-card border border-input rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-50"
+              className="w-full bg-card border border-input rounded-xl px-4 py-3 text-[#ededed] placeholder:text-muted-foreground/50 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all disabled:opacity-50"
               disabled={loading}
             />
             {loading && (
@@ -177,7 +177,7 @@ export function NFTViewer({ id, urls, traits, onRemove }: NFTViewerProps) {
       )}
       <div className="p-6">
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-foreground">NFT #{id}</h2>
+          <h2 className="text-xl font-bold text-[#ededed]">NFT #{id}</h2>
           <span className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full border border-primary/20">
             VRM Model
           </span>

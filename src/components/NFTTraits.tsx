@@ -22,10 +22,10 @@ export default function NFTTraits({ traits }: NFTTraitsProps) {
   return (
     <div className="mt-6 space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-foreground">Traits</h3>
+        <h3 className="text-lg font-semibold text-[#ededed]">Traits</h3>
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-primary" />
-          <span className="text-sm text-muted-foreground">
+          <span className="w-2 h-2 rounded-full bg-blue-500" />
+          <span className="text-sm text-gray-400">
             {traitsList.length} attributes
           </span>
         </div>
@@ -34,12 +34,10 @@ export default function NFTTraits({ traits }: NFTTraitsProps) {
         {traitsList.map(({ name, value }) => (
           <div
             key={name}
-            className="bg-card/50 rounded-xl p-3 border border-border hover:border-border/80 transition-all hover:bg-card"
+            className="bg-white/[0.03] rounded-xl p-3 border border-white/10 hover:border-white/20 transition-all hover:bg-white/[0.05]"
           >
-            <div className="text-muted-foreground text-sm font-medium mb-1">
-              {name}
-            </div>
-            <div className="text-foreground font-medium truncate">{value}</div>
+            <div className="text-blue-400 text-sm font-medium mb-1">{name}</div>
+            <div className="text-[#ededed] font-medium truncate">{value}</div>
           </div>
         ))}
       </div>
