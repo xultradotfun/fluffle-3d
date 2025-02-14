@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { NFTInput, NFTViewer } from "@/components/NFTLoader";
+import { NFTInput } from "@/components/nft/NFTInput";
+import { NFTCard } from "@/components/nft/NFTCard";
 import Hero from "@/components/Hero";
 import type { NFTTrait } from "@/utils/nftLoader";
 
@@ -69,7 +70,7 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {viewers.map(({ id, urls, traits, timestamp }) => (
-                <NFTViewer
+                <NFTCard
                   key={`${id}-${timestamp}`}
                   id={id}
                   urls={urls}
