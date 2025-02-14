@@ -8,6 +8,7 @@ interface ViewerData {
   id: string;
   urls: string[];
   traits: NFTTrait;
+  timestamp: number;
 }
 
 export default function Home() {
@@ -15,7 +16,10 @@ export default function Home() {
   const [error, setError] = useState("");
 
   const handleNFTLoad = (id: string, urls: string[], traits: NFTTrait) => {
-    setViewers((prev) => [...prev, { id, urls, traits }]);
+    setViewers((prev) => [
+      ...prev,
+      { id, urls, traits, timestamp: Date.now() },
+    ]);
     setError("");
   };
 
@@ -23,8 +27,12 @@ export default function Home() {
     setError(error);
   };
 
-  const handleRemoveViewer = (id: string) => {
-    setViewers((prev) => prev.filter((viewer) => viewer.id !== id));
+  const handleRemoveViewer = (id: string, timestamp?: number) => {
+    setViewers((prev) =>
+      prev.filter(
+        (viewer) => !(viewer.id === id && viewer.timestamp === timestamp)
+      )
+    );
   };
 
   return (
@@ -73,13 +81,13 @@ export default function Home() {
               </span>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {viewers.map(({ id, urls, traits }) => (
+              {viewers.map(({ id, urls, traits, timestamp }) => (
                 <NFTViewer
-                  key={id}
+                  key={`${id}-${timestamp}`}
                   id={id}
                   urls={urls}
                   traits={traits}
-                  onRemove={handleRemoveViewer}
+                  onRemove={() => handleRemoveViewer(id, timestamp)}
                 />
               ))}
             </div>
