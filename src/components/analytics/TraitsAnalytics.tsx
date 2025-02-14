@@ -319,11 +319,12 @@ export function TraitsAnalyticsDashboard() {
                       className="group relative p-4 rounded-xl bg-white/[0.02] hover:bg-white/[0.04] border border-white/5 hover:border-blue-500/20 transition-all duration-200"
                     >
                       <div className="flex items-center gap-4">
-                        {/* Image Preview - Left side for all traits */}
-                        {selectedCategoryData?.isOptionalItem && !isNoItem && (
-                          <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-black/20 ring-1 ring-white/10 group-hover:ring-blue-500/20 transition-all flex-shrink-0">
-                            {trait.trait_number !== undefined &&
-                            selectedCategoryData.name !== "Tribe" ? (
+                        {/* Image Preview - Only for Ear, Face, Head */}
+                        {selectedCategoryData?.isOptionalItem &&
+                          !isNoItem &&
+                          selectedCategoryData.name !== "Tribe" &&
+                          trait.trait_number !== undefined && (
+                            <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-black/20 ring-1 ring-white/10 group-hover:ring-blue-500/20 transition-all flex-shrink-0">
                               <img
                                 src={`https://hologramxyz.s3.us-east-1.amazonaws.com/partnerships/MEGAETH/2d/thumbnails/${selectedCategoryData.name.toLowerCase()}/${
                                   trait.trait_number
@@ -335,25 +336,7 @@ export function TraitsAnalyticsDashboard() {
                                     "none";
                                 }}
                               />
-                            ) : (
-                              <div className="w-full h-full flex items-center justify-center">
-                                <svg
-                                  className="w-8 h-8 text-blue-400/50"
-                                  fill="none"
-                                  viewBox="0 0 24 24"
-                                  stroke="currentColor"
-                                >
-                                  <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={1.5}
-                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                                  />
-                                </svg>
-                              </div>
-                            )}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                            {trait.trait_number !== undefined && (
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
                               <div className="absolute bottom-1 left-1">
                                 <Badge
                                   variant="primary"
@@ -363,11 +346,10 @@ export function TraitsAnalyticsDashboard() {
                                   #{trait.trait_number}
                                 </Badge>
                               </div>
-                            )}
-                          </div>
-                        )}
+                            </div>
+                          )}
 
-                        {/* Trait Information - Center */}
+                        {/* Trait Information */}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
                             <span
@@ -407,7 +389,7 @@ export function TraitsAnalyticsDashboard() {
                         </div>
                       </div>
 
-                      {/* Outfit Distribution - Below for tribe traits */}
+                      {/* Outfit Distribution - Special handling for tribe traits */}
                       {!isNoItem && extendedTrait.outfitDistribution && (
                         <div className="mt-4 pt-4 border-t border-white/10">
                           <div className="flex items-center gap-2 mb-3">
@@ -434,38 +416,40 @@ export function TraitsAnalyticsDashboard() {
                               ({ outfit, count, percentage }) => (
                                 <div
                                   key={outfit}
-                                  className="flex items-center gap-3 p-2 rounded-lg bg-black/20 border border-white/5"
+                                  className="group relative p-3 rounded-xl bg-white/[0.02] hover:bg-white/[0.04] border border-white/5 hover:border-blue-500/20 transition-all duration-200"
                                 >
-                                  <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-black/40 ring-1 ring-white/10">
-                                    <img
-                                      src={`https://hologramxyz.s3.us-east-1.amazonaws.com/partnerships/MEGAETH/2d/thumbnails/clothes/${outfit}.png`}
-                                      alt={`Outfit ${outfit}`}
-                                      className="w-full h-full object-cover"
-                                      onError={(e) => {
-                                        (
-                                          e.target as HTMLImageElement
-                                        ).style.display = "none";
-                                      }}
-                                    />
-                                  </div>
-                                  <div className="flex-1 min-w-0">
-                                    <div className="flex items-center justify-between mb-1.5">
-                                      <Badge
-                                        variant="primary"
-                                        size="sm"
-                                        className="text-xs"
-                                      >
-                                        #{outfit}
-                                      </Badge>
-                                      <span className="text-xs text-gray-400">
-                                        {percentage.toFixed(1)}%
-                                      </span>
-                                    </div>
-                                    <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
-                                      <div
-                                        className="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-400"
-                                        style={{ width: `${percentage}%` }}
+                                  <div className="flex items-center gap-3">
+                                    <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-black/20 ring-1 ring-white/10 group-hover:ring-blue-500/20 transition-all flex-shrink-0">
+                                      <img
+                                        src={`https://hologramxyz.s3.us-east-1.amazonaws.com/partnerships/MEGAETH/2d/thumbnails/clothes/${outfit}.png`}
+                                        alt={`Outfit ${outfit}`}
+                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                        onError={(e) => {
+                                          (
+                                            e.target as HTMLImageElement
+                                          ).style.display = "none";
+                                        }}
                                       />
+                                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                      <div className="flex items-center justify-between mb-2">
+                                        <Badge variant="primary" size="sm">
+                                          #{outfit}
+                                        </Badge>
+                                        <span className="text-sm text-gray-400">
+                                          {percentage.toFixed(1)}%
+                                        </span>
+                                      </div>
+                                      <div className="text-xs text-gray-400 mb-1.5">
+                                        {count.toLocaleString()} NFTs
+                                      </div>
+                                      <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                                        <div
+                                          className="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-400"
+                                          style={{ width: `${percentage}%` }}
+                                        />
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
