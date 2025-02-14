@@ -56,25 +56,44 @@ const BONE_MAP: Record<string, string> = {
   mixamorigRightLeg: "RightLeg",
   mixamorigRightFoot: "RightFoot",
   mixamorigRightToeBase: "RightToeBase",
+  // Additional bones for attachments
+  mixamorigChest: "Chest",
+  mixamorigUpperChest: "UpperChest",
+  mixamorigLeftHandThumb1: "LeftHandThumb1",
+  mixamorigLeftHandThumb2: "LeftHandThumb2",
+  mixamorigLeftHandThumb3: "LeftHandThumb3",
+  mixamorigLeftHandIndex1: "LeftHandIndex1",
+  mixamorigLeftHandIndex2: "LeftHandIndex2",
+  mixamorigLeftHandIndex3: "LeftHandIndex3",
+  mixamorigLeftHandMiddle1: "LeftHandMiddle1",
+  mixamorigLeftHandMiddle2: "LeftHandMiddle2",
+  mixamorigLeftHandMiddle3: "LeftHandMiddle3",
+  mixamorigRightHandThumb1: "RightHandThumb1",
+  mixamorigRightHandThumb2: "RightHandThumb2",
+  mixamorigRightHandThumb3: "RightHandThumb3",
+  mixamorigRightHandIndex1: "RightHandIndex1",
+  mixamorigRightHandIndex2: "RightHandIndex2",
+  mixamorigRightHandIndex3: "RightHandIndex3",
+  mixamorigRightHandMiddle1: "RightHandMiddle1",
+  mixamorigRightHandMiddle2: "RightHandMiddle2",
+  mixamorigRightHandMiddle3: "RightHandMiddle3",
 };
 
 // Add animation cache at the top with other constants
 const animationCache = new Map<string, AnimationClip>();
 
 function retargetAnimation(clip: AnimationClip): AnimationClip {
-  // Filter out tracks that don't have corresponding VRM bones
-  const validTracks = clip.tracks.filter((track) => {
-    const [boneName] = track.name.split(".");
-    return BONE_MAP[boneName];
-  });
-
-  // Retarget the valid tracks
-  const tracks = validTracks.map((track) => {
+  // Don't filter out tracks, instead try to map all of them
+  const tracks = clip.tracks.map((track) => {
     const [boneName, ...propertyParts] = track.name.split(".");
     const vrmBoneName = BONE_MAP[boneName];
 
+    // If we have a mapping, use it. Otherwise keep the original name
+    // This ensures we don't lose any animation tracks
     const newTrack = track.clone();
-    newTrack.name = `${vrmBoneName}.${propertyParts.join(".")}`;
+    if (vrmBoneName) {
+      newTrack.name = `${vrmBoneName}.${propertyParts.join(".")}`;
+    }
     return newTrack;
   });
 
@@ -221,27 +240,36 @@ function VRMModel({
   const { currentClip, isLoadingAnimations } = useContext(AnimationContext);
   const hasInitialized = useRef(false);
 
-  // Add back animation effect
+  // Animation and VRM update effect
   useEffect(() => {
     if (currentClip && vrmRef.current && isComplete && !isLoadingAnimations) {
-      if (!mixerRef.current) {
-        mixerRef.current = new AnimationMixer(vrmRef.current.scene);
+      // Ensure VRM is properly initialized
+      VRMUtils.rotateVRM0(vrmRef.current);
+
+      // Reset the mixer to ensure clean state
+      if (mixerRef.current) {
+        mixerRef.current.stopAllAction();
+        mixerRef.current.uncacheRoot(vrmRef.current.scene);
       }
 
-      mixerRef.current.stopAllAction();
+      // Create new mixer on the root scene
+      mixerRef.current = new AnimationMixer(vrmRef.current.scene);
+
+      // Apply the animation
       const action = mixerRef.current.clipAction(currentClip);
-      VRMUtils.rotateVRM0(vrmRef.current);
       action.setEffectiveTimeScale(0.6);
       action.setLoop(LoopRepeat, Infinity);
       action.clampWhenFinished = false;
       action.play();
+
+      // Initialize physics after animation setup
+      if (vrmRef.current.springBoneManager) {
+        vrmRef.current.springBoneManager.reset();
+      }
     }
   }, [currentClip, isComplete, isLoadingAnimations]);
 
   useEffect(() => {
-    if (hasInitialized.current) return;
-    hasInitialized.current = true;
-
     const loadModel = async () => {
       try {
         let cacheEntry = modelCache.get(url);
@@ -263,8 +291,17 @@ function VRMModel({
 
           loader.load(
             url,
-            (gltf: GLTF) => {
-              resolvePromise(gltf.userData.vrm);
+            async (gltf: GLTF) => {
+              const vrm = gltf.userData.vrm;
+              // Initialize VRM immediately after load
+              VRMUtils.rotateVRM0(vrm);
+              if (vrm.humanoid) {
+                vrm.humanoid.resetPose();
+              }
+              if (vrm.springBoneManager) {
+                vrm.springBoneManager.reset();
+              }
+              resolvePromise(vrm);
             },
             (progress: { loaded: number; total: number }) => {
               const progressValue = (progress.loaded / progress.total) * 100;
@@ -273,11 +310,10 @@ function VRMModel({
             },
             (error) => {
               console.error(`Error loading ${url}:`, error);
-              modelCache.delete(url); // Remove failed loads from cache
+              modelCache.delete(url);
             }
           );
         } else {
-          // For cached models, immediately report their progress
           onProgress?.(cacheEntry.progress);
         }
 
@@ -291,12 +327,12 @@ function VRMModel({
           sceneRef.current.add(vrm.scene);
           vrm.scene.rotation.y = Math.PI;
           vrm.scene.position.set(...position);
-          onProgress?.(100); // Ensure we report 100% when fully loaded
+          onProgress?.(100);
           onLoaded?.();
         }
       } catch (error) {
         console.error(`Error loading ${url}:`, error);
-        modelCache.delete(url); // Remove failed loads from cache
+        modelCache.delete(url);
       }
     };
 
@@ -326,12 +362,12 @@ function VRMModel({
   }, [url]);
 
   useFrame(() => {
+    const delta = clockRef.current.getDelta();
     if (mixerRef.current) {
-      const delta = clockRef.current.getDelta();
       mixerRef.current.update(delta);
     }
     if (vrmRef.current) {
-      vrmRef.current.update(clockRef.current.getDelta());
+      vrmRef.current.update(delta);
     }
   });
 
