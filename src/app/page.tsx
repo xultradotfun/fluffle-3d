@@ -43,6 +43,9 @@ export default function Home() {
   const handleViewChange = (view: "viewer" | "analytics") => {
     if (view === "analytics") {
       window.history.replaceState(null, "", "/#stats");
+      // Clear loaded NFTs when switching to analytics
+      setViewers([]);
+      setError("");
     } else {
       window.history.replaceState(null, "", "/");
     }

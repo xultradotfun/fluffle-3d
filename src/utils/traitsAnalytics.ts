@@ -178,11 +178,35 @@ export async function fetchTraitsAnalytics(): Promise<TraitsAnalytics> {
 }
 
 export function calculateTraitRarity(trait: TraitMetadata): string {
-  if (trait.rarity < 1) return "Legendary";
-  if (trait.rarity < 5) return "Epic";
-  if (trait.rarity < 15) return "Rare";
-  if (trait.rarity < 30) return "Uncommon";
-  return "Common";
+  // Calculate rarity based on percentile ranges
+  if (trait.rarity <= 2) return "Legendary"; // Bottom 2%
+  if (trait.rarity <= 8) return "Epic"; // Next 6%
+  if (trait.rarity <= 20) return "Rare"; // Next 12%
+  if (trait.rarity <= 40) return "Uncommon"; // Next 20%
+  return "Common"; // Remaining 60%
+}
+
+// Helper function to calculate rarity distribution for a category
+export function calculateCategoryRarityDistribution(
+  traits: TraitMetadata[]
+): Record<string, number> {
+  const totalTraits = traits.length;
+  const sortedRarities = traits.map((t) => t.rarity).sort((a, b) => a - b);
+
+  // Calculate percentile thresholds
+  const thresholds = {
+    legendary: sortedRarities[Math.floor(totalTraits * 0.02)], // 2nd percentile
+    epic: sortedRarities[Math.floor(totalTraits * 0.08)], // 8th percentile
+    rare: sortedRarities[Math.floor(totalTraits * 0.2)], // 20th percentile
+    uncommon: sortedRarities[Math.floor(totalTraits * 0.4)], // 40th percentile
+  };
+
+  // Count traits in each rarity category
+  return traits.reduce((acc, trait) => {
+    const rarity = calculateTraitRarity(trait);
+    acc[rarity] = (acc[rarity] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
 }
 
 export function getRarityColor(rarity: string): string {
@@ -197,5 +221,20 @@ export function getRarityColor(rarity: string): string {
       return "text-green-400";
     default:
       return "text-gray-400";
+  }
+}
+
+export function getRarityGradient(rarity: string): string {
+  switch (rarity) {
+    case "Legendary":
+      return "bg-gradient-to-r from-yellow-500 to-yellow-400";
+    case "Epic":
+      return "bg-gradient-to-r from-purple-500 to-purple-400";
+    case "Rare":
+      return "bg-gradient-to-r from-blue-500 to-blue-400";
+    case "Uncommon":
+      return "bg-gradient-to-r from-green-500 to-green-400";
+    default:
+      return "bg-gradient-to-r from-gray-500 to-gray-400";
   }
 }

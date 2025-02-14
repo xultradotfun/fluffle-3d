@@ -11,6 +11,8 @@ import {
   type TraitsAnalytics,
   type TraitCategory,
   type TraitMetadata,
+  calculateCategoryRarityDistribution,
+  getRarityGradient,
 } from "@/utils/traitsAnalytics";
 
 interface ExtendedTraitMetadata extends TraitMetadata {
@@ -107,12 +109,10 @@ export function TraitsAnalyticsDashboard() {
       Common: 0,
     };
 
-    category.traits.forEach((trait) => {
-      const rarity = calculateTraitRarity(trait);
-      distribution[rarity as keyof typeof distribution]++;
-    });
-
-    return distribution;
+    const categoryDistribution = calculateCategoryRarityDistribution(
+      category.traits
+    );
+    return { ...distribution, ...categoryDistribution };
   };
 
   const getTotalTraits = () => {
@@ -198,9 +198,6 @@ export function TraitsAnalyticsDashboard() {
                 </p>
                 <p className="text-2xl font-bold text-white mt-1">
                   {getTotalTraits()}
-                </p>
-                <p className="text-xs text-gray-400 mt-1">
-                  ~{getAverageTraitsPerCategory()} per category
                 </p>
               </div>
               <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center">
@@ -502,56 +499,58 @@ export function TraitsAnalyticsDashboard() {
           </Card>
 
           {/* Rarity Distribution Card */}
-          <Card>
+          <Card className="h-fit">
             <CardContent className="p-6">
-              <h3 className="text-lg font-semibold text-white mb-6">
+              <h3 className="text-lg font-semibold text-white mb-4">
                 Rarity Breakdown
               </h3>
 
               {selectedCategoryData && (
-                <div className="space-y-4">
-                  {Object.entries(
-                    getRarityDistribution(selectedCategoryData)
-                  ).map(([rarity, count]) => (
-                    <div key={rarity} className="space-y-2">
-                      <div className="flex items-center justify-between">
-                        <span
-                          className={`text-sm font-medium ${getRarityColor(
-                            rarity
-                          )}`}
-                        >
-                          {rarity}
-                        </span>
-                        <span className="text-sm text-gray-400">
-                          {count} traits
-                        </span>
+                <div className="space-y-3">
+                  {Object.entries(getRarityDistribution(selectedCategoryData))
+                    .filter(([_, count]) => count > 0)
+                    .map(([rarity, count]) => (
+                      <div key={rarity} className="space-y-1.5">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <span
+                              className={`text-sm font-medium ${getRarityColor(
+                                rarity
+                              )}`}
+                            >
+                              {rarity}
+                            </span>
+                            <span className="text-xs text-gray-500">
+                              {(
+                                (count / selectedCategoryData.traits.length) *
+                                100
+                              ).toFixed(1)}
+                              %
+                            </span>
+                          </div>
+                          <span className="text-sm text-gray-400">
+                            {count} trait{count !== 1 ? "s" : ""}
+                          </span>
+                        </div>
+                        <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                          <div
+                            className={`h-full rounded-full ${getRarityGradient(
+                              rarity
+                            )}`}
+                            style={{
+                              width: `${
+                                (count / selectedCategoryData.traits.length) *
+                                100
+                              }%`,
+                            }}
+                          />
+                        </div>
                       </div>
-                      <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
-                        <div
-                          className={`h-full rounded-full ${
-                            rarity === "Legendary"
-                              ? "bg-gradient-to-r from-yellow-500 to-yellow-400"
-                              : rarity === "Epic"
-                              ? "bg-gradient-to-r from-purple-500 to-purple-400"
-                              : rarity === "Rare"
-                              ? "bg-gradient-to-r from-blue-500 to-blue-400"
-                              : rarity === "Uncommon"
-                              ? "bg-gradient-to-r from-green-500 to-green-400"
-                              : "bg-gradient-to-r from-gray-500 to-gray-400"
-                          }`}
-                          style={{
-                            width: `${
-                              (count / selectedCategoryData.traits.length) * 100
-                            }%`,
-                          }}
-                        />
-                      </div>
-                    </div>
-                  ))}
+                    ))}
                 </div>
               )}
 
-              <div className="mt-6 pt-6 border-t border-white/10">
+              <div className="mt-4 pt-4 border-t border-white/10">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-sm">
                     <span className="text-gray-400">Average Rarity</span>
