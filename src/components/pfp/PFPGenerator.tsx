@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Card } from "@/components/ui/Card";
-import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
-import { NFTInput } from "@/components/nft/NFTInput";
+import { NFTBadge } from "./NFTBadge";
+import { PreviewCard } from "./PreviewCard";
+import { InputCard } from "./InputCard";
 import type { NFTTrait } from "@/utils/nftLoader";
 
 type ZoomLevel = "full" | "bust";
@@ -229,303 +228,28 @@ export function PFPGenerator() {
           </div>
         </div>
         <div className="flex-shrink-0">
-          {selectedNFT ? (
-            <Badge variant="primary" size="md" className="animate-fade-in glow">
-              NFT #{selectedNFT.id} Selected
-            </Badge>
-          ) : (
-            <Badge variant="secondary" size="md">
-              No NFT Selected
-            </Badge>
-          )}
+          <NFTBadge selectedId={selectedNFT?.id} />
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Preview Card */}
-        <Card className="backdrop-blur-sm bg-white/[0.02] border-white/5 hover:border-white/10 transition-colors">
-          <div className="p-6 min-h-[600px]">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
-                  <svg
-                    className="w-4 h-4 text-blue-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-white">Preview</h3>
-                  <p className="text-sm text-gray-400">
-                    Your generated PFP with background
-                  </p>
-                </div>
-              </div>
-            </div>
+        <PreviewCard canvasRef={canvasRef} isLoading={isLoading} />
 
-            <div className="relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-white/[0.02] to-white/[0.01] border border-white/5">
-              <canvas
-                ref={canvasRef}
-                className="absolute inset-0 w-full h-full"
-              />
-              {isLoading && (
-                <div className="absolute inset-0 flex items-center justify-center backdrop-blur-sm bg-black/30">
-                  <div className="flex flex-col items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 p-2 animate-pulse">
-                      <svg
-                        className="w-full h-full text-blue-400"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                        />
-                      </svg>
-                    </div>
-                    <span className="text-sm text-blue-400 font-medium animate-pulse">
-                      Generating PFP...
-                    </span>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        </Card>
-
-        {/* Input and Actions Card */}
-        <Card className="backdrop-blur-sm bg-white/[0.02] border-white/5 hover:border-white/10 transition-colors">
-          <div className="p-6 min-h-[600px]">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center">
-                  <svg
-                    className="w-4 h-4 text-green-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-lg font-semibold text-white">
-                    Enter NFT ID
-                  </h3>
-                  <p className="text-sm text-gray-400">
-                    Type your Fluffle NFT ID below
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              {/* Simple Input */}
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Enter NFT ID (0-4999)"
-                  value={selectedNFT?.id || ""}
-                  onChange={(e) => {
-                    const value = e.target.value.trim();
-                    // Clear if empty
-                    if (!value) {
-                      handleClear();
-                      return;
-                    }
-                    // Validate input
-                    const num = parseInt(value);
-                    if (isNaN(num) || num < 0 || num > 4999) {
-                      setError(
-                        "Please enter a valid NFT ID between 0 and 4999"
-                      );
-                      return;
-                    }
-                    // Load NFT
-                    handleNFTLoad(value, [], {
-                      tribe: -1,
-                      skin: -1,
-                      hair: -1,
-                      eyeball: -1,
-                      eyeliner: -1,
-                      eyebrow: -1,
-                      head: -1,
-                      ear: -1,
-                      face: -1,
-                      tribe_display_name: "",
-                      skin_display_name: "",
-                      hair_display_name: "",
-                      eyeball_display_name: "",
-                      eyeliner_display_name: "",
-                      eyebrow_display_name: "",
-                      head_display_name: "",
-                      ear_display_name: "",
-                      face_display_name: "",
-                    });
-                  }}
-                  className="w-full bg-black/20 hover:bg-black/30 border border-white/5 hover:border-blue-500/30 focus:border-blue-500/30 focus:ring-2 focus:ring-blue-500/30 rounded-xl px-4 py-3 text-white placeholder:text-gray-500 transition-all"
-                />
-                {selectedNFT && (
-                  <button
-                    onClick={handleClear}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg hover:bg-white/10 transition-colors group"
-                    title="Clear NFT ID"
-                  >
-                    <svg
-                      className="w-4 h-4 text-gray-400 group-hover:text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M6 18L18 6M6 6l12 12"
-                      />
-                    </svg>
-                  </button>
-                )}
-              </div>
-
-              {/* Zoom Controls */}
-              <div className="flex items-center gap-2 p-1 bg-gradient-to-br from-white/[0.03] to-white/[0.02] rounded-lg border border-white/5">
-                <button
-                  onClick={() => handleZoomChange("full")}
-                  className={`flex-1 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
-                    zoomLevel === "full"
-                      ? "bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-400"
-                      : "text-gray-400 hover:text-white hover:bg-white/5"
-                  }`}
-                >
-                  Full Body
-                </button>
-                <button
-                  onClick={() => handleZoomChange("bust")}
-                  className={`flex-1 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
-                    zoomLevel === "bust"
-                      ? "bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-400"
-                      : "text-gray-400 hover:text-white hover:bg-white/5"
-                  }`}
-                >
-                  Bust
-                </button>
-              </div>
-
-              {/* Quick Actions */}
-              <div className="flex justify-center">
-                <button
-                  onClick={() => {
-                    const random = Math.floor(Math.random() * 5000).toString();
-                    handleNFTLoad(random, [], {
-                      tribe: -1,
-                      skin: -1,
-                      hair: -1,
-                      eyeball: -1,
-                      eyeliner: -1,
-                      eyebrow: -1,
-                      head: -1,
-                      ear: -1,
-                      face: -1,
-                      tribe_display_name: "",
-                      skin_display_name: "",
-                      hair_display_name: "",
-                      eyeball_display_name: "",
-                      eyeliner_display_name: "",
-                      eyebrow_display_name: "",
-                      head_display_name: "",
-                      ear_display_name: "",
-                      face_display_name: "",
-                    });
-                  }}
-                  className="px-4 py-2 rounded-lg bg-gradient-to-br from-white/[0.03] to-white/[0.02] hover:from-white/[0.04] hover:to-white/[0.03] border border-white/5 hover:border-blue-500/30 transition-all group text-center"
-                >
-                  <span className="text-sm font-medium text-gray-400 group-hover:text-white">
-                    Try Random NFT
-                  </span>
-                </button>
-              </div>
-
-              {error && (
-                <div className="rounded-lg bg-red-500/10 border border-red-500/30 px-4 py-3 text-sm text-red-400 animate-shake">
-                  {error}
-                </div>
-              )}
-
-              <div className="space-y-4 pt-4 border-t border-white/5">
-                <Button
-                  onClick={handleCopyToClipboard}
-                  className="w-full justify-center glow"
-                  disabled={isLoading || !selectedNFT || !compositeImage}
-                >
-                  <div className="flex items-center justify-center w-[160px]">
-                    <svg
-                      className="w-4 h-4 mr-2 flex-shrink-0"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
-                      />
-                    </svg>
-                    <span className="flex-shrink-0">
-                      {isCopied ? "Copied!" : "Copy to Clipboard"}
-                    </span>
-                  </div>
-                </Button>
-                <Button
-                  variant="secondary"
-                  onClick={handleDownload}
-                  className="w-full justify-center glow"
-                  disabled={isLoading || !selectedNFT || !compositeImage}
-                >
-                  <div className="flex items-center justify-center w-[160px]">
-                    <svg
-                      className="w-4 h-4 mr-2 flex-shrink-0"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                      />
-                    </svg>
-                    <span className="flex-shrink-0">Download PNG</span>
-                  </div>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </Card>
+        {/* Input Card */}
+        <InputCard
+          selectedNFT={selectedNFT}
+          error={error}
+          isLoading={isLoading}
+          isCopied={isCopied}
+          zoomLevel={zoomLevel}
+          compositeImage={compositeImage}
+          onNFTLoad={handleNFTLoad}
+          onClear={handleClear}
+          onZoomChange={handleZoomChange}
+          onCopyToClipboard={handleCopyToClipboard}
+          onDownload={handleDownload}
+        />
       </div>
     </div>
   );
