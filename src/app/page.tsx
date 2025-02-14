@@ -6,6 +6,7 @@ import { NFTCard } from "@/components/nft/NFTCard";
 import { Badge } from "@/components/ui/Badge";
 import { ViewSwitcher } from "@/components/ViewSwitcher";
 import { TraitsAnalyticsDashboard } from "@/components/analytics/TraitsAnalytics";
+import { PFPGenerator } from "@/components/pfp/PFPGenerator";
 import Hero from "@/components/Hero";
 import type { NFTTrait } from "@/utils/nftLoader";
 
@@ -17,7 +18,7 @@ interface ViewerData {
 }
 
 export default function Home() {
-  const [activeView, setActiveView] = useState<"viewer" | "analytics">(
+  const [activeView, setActiveView] = useState<"viewer" | "analytics" | "pfp">(
     "viewer"
   );
   const [viewers, setViewers] = useState<ViewerData[]>([]);
@@ -26,13 +27,23 @@ export default function Home() {
   // Add effect to handle URL
   useEffect(() => {
     // Check initial hash
-    if (window.location.hash === "#stats") {
+    const hash = window.location.hash;
+    if (hash === "#rarities") {
       setActiveView("analytics");
+    } else if (hash === "#pfp") {
+      setActiveView("pfp");
     }
 
     // Listen for hash changes
     const handleHashChange = () => {
-      setActiveView(window.location.hash === "#stats" ? "analytics" : "viewer");
+      const hash = window.location.hash;
+      if (hash === "#rarities") {
+        setActiveView("analytics");
+      } else if (hash === "#pfp") {
+        setActiveView("pfp");
+      } else {
+        setActiveView("viewer");
+      }
     };
 
     window.addEventListener("hashchange", handleHashChange);
@@ -40,10 +51,15 @@ export default function Home() {
   }, []);
 
   // Update URL when view changes
-  const handleViewChange = (view: "viewer" | "analytics") => {
+  const handleViewChange = (view: "viewer" | "analytics" | "pfp") => {
     if (view === "analytics") {
-      window.history.replaceState(null, "", "/#stats");
+      window.history.replaceState(null, "", "/#rarities");
       // Clear loaded NFTs when switching to analytics
+      setViewers([]);
+      setError("");
+    } else if (view === "pfp") {
+      window.history.replaceState(null, "", "/#pfp");
+      // Clear loaded NFTs when switching to PFP generator
       setViewers([]);
       setError("");
     } else {
@@ -78,9 +94,9 @@ export default function Home() {
       <Hero />
 
       {/* View Switcher */}
-      <div className="relative -mt-4 z-20">
+      <div className="relative z-20 mb-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-center">
             <ViewSwitcher
               activeView={activeView}
               onViewChange={handleViewChange}
@@ -91,7 +107,7 @@ export default function Home() {
 
       {/* Form Section - Only show in viewer mode */}
       {activeView === "viewer" && (
-        <section className="relative -mt-4 z-10">
+        <section className="relative z-10">
           <div className="mx-auto max-w-xl px-4 sm:px-6 lg:px-8">
             <div className="overflow-hidden rounded-xl bg-white/5 shadow-lg ring-1 ring-white/10 backdrop-blur-lg transition-all hover:bg-white/[0.07] hover:ring-white/20">
               <div className="p-4">
@@ -160,27 +176,12 @@ export default function Home() {
               </p>
             </div>
           )
-        ) : (
+        ) : activeView === "analytics" ? (
           <TraitsAnalyticsDashboard />
+        ) : (
+          <PFPGenerator />
         )}
       </section>
-
-      {/* Footer */}
-      <footer className="border-t border-white/10 py-8 bg-black/50 backdrop-blur-lg mt-auto">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center">
-            <span className="text-gray-400">Fluffle 3D Viewer</span>
-            <a
-              href="https://github.com/yourusername/your-repo"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-400 hover:text-white transition-colors"
-            >
-              GitHub
-            </a>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

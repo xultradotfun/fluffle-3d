@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { loadNFTModels } from "@/utils/nftLoader";
 import type { NFTTrait } from "@/utils/nftLoader";
 
@@ -9,9 +10,15 @@ interface NFTInputProps {
   onLoad?: (id: string, urls: string[], traits: NFTTrait) => void;
   onError?: (error: string) => void;
   loadedIds?: string[];
+  maxNFTs?: number;
 }
 
-export function NFTInput({ onLoad, onError, loadedIds = [] }: NFTInputProps) {
+export function NFTInput({
+  onLoad,
+  onError,
+  loadedIds = [],
+  maxNFTs,
+}: NFTInputProps) {
   const [nftIds, setNftIds] = useState("");
   const [loading, setLoading] = useState(false);
   const [isValid, setIsValid] = useState<boolean | null>(null);
@@ -30,6 +37,14 @@ export function NFTInput({ onLoad, onError, loadedIds = [] }: NFTInputProps) {
     const validIds: string[] = [];
     const duplicates: string[] = [];
     const seenIds = new Set<string>();
+
+    // Check if adding these IDs would exceed the maxNFTs limit
+    if (maxNFTs && loadedIds.length + ids.length > maxNFTs) {
+      errors.push(
+        `You can only load up to ${maxNFTs} NFT${maxNFTs === 1 ? "" : "s"}`
+      );
+      return { validIds, errors, duplicates };
+    }
 
     ids.forEach((id) => {
       // Check if it's a valid number
@@ -222,7 +237,7 @@ export function NFTInput({ onLoad, onError, loadedIds = [] }: NFTInputProps) {
                 onBlur={handleInputBlur}
                 placeholder="Enter NFT IDs (e.g. 979, 1426, 2000)"
                 disabled={loading}
-                className={`pl-12 pr-10 transition-all duration-200 bg-white/[0.03] hover:bg-white/[0.05] text-white placeholder:text-gray-500 ${
+                className={`pl-12 pr-24 transition-all duration-200 bg-white/[0.03] hover:bg-white/[0.05] text-white placeholder:text-gray-500 ${
                   isValid === true
                     ? "border-green-500/30 focus:ring-green-500/30"
                     : isValid === false
@@ -231,10 +246,10 @@ export function NFTInput({ onLoad, onError, loadedIds = [] }: NFTInputProps) {
                 }`}
               />
               {nftIds && (
-                <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
                   <button
                     onClick={() => setNftIds("")}
-                    className="p-1 rounded-full hover:bg-white/10 transition-colors group"
+                    className="p-1.5 rounded-lg hover:bg-white/10 transition-colors group"
                   >
                     <svg
                       className="w-4 h-4 text-gray-400 group-hover:text-white transition-colors"
@@ -249,6 +264,36 @@ export function NFTInput({ onLoad, onError, loadedIds = [] }: NFTInputProps) {
                         d="M6 18L18 6M6 6l12 12"
                       />
                     </svg>
+                  </button>
+                  <button
+                    onClick={handleLoadNFTs}
+                    disabled={loading || !nftIds.trim() || isValid === false}
+                    className={`px-3 py-1.5 rounded-lg font-medium text-sm transition-all ${
+                      loading || !nftIds.trim() || isValid === false
+                        ? "bg-white/5 text-gray-500"
+                        : "bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700"
+                    } flex items-center gap-2`}
+                  >
+                    {loading ? (
+                      <LoadingSpinner size="sm" variant="white" />
+                    ) : (
+                      <>
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                          />
+                        </svg>
+                        Load
+                      </>
+                    )}
                   </button>
                 </div>
               )}
@@ -367,14 +412,6 @@ export function NFTInput({ onLoad, onError, loadedIds = [] }: NFTInputProps) {
               <span>Separate multiple IDs with commas</span>
             </div>
           </div>
-          <Button
-            onClick={handleLoadNFTs}
-            disabled={loading || !nftIds.trim() || isValid === false}
-            isLoading={loading}
-            className="px-8"
-          >
-            Load
-          </Button>
         </div>
       </div>
     </div>
