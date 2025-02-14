@@ -1,24 +1,34 @@
-interface CardProps {
-  children: React.ReactNode;
-  className?: string;
-  isInteractive?: boolean;
-}
+"use client";
 
-export function Card({
-  children,
-  className = "",
-  isInteractive = false,
-}: CardProps) {
+import { type VariantProps, cva } from "class-variance-authority";
+import { cn } from "@/utils/cn";
+
+const cardVariants = cva(
+  "rounded-2xl border bg-card text-card-foreground shadow-sm transition-all duration-200",
+  {
+    variants: {
+      variant: {
+        default:
+          "bg-gradient-to-br from-white/[0.03] to-white/[0.01] border-white/5 hover:border-white/10",
+        glass:
+          "backdrop-blur-md bg-white/5 border-white/10 hover:border-white/20",
+        solid:
+          "bg-gradient-to-br from-blue-500/10 to-purple-500/10 border-blue-500/20 hover:border-blue-500/30",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  }
+);
+
+interface CardProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof cardVariants> {}
+
+export function Card({ className, variant, ...props }: CardProps) {
   return (
-    <div
-      className={`relative overflow-hidden rounded-2xl bg-gradient-to-b from-[#1a1a1a] to-[#111] border border-white/10 ${
-        isInteractive
-          ? "transition-all duration-300 hover:border-blue-500/50 hover:shadow-[0_0_30px_-10px_rgba(59,130,246,0.5)]"
-          : ""
-      } ${className}`}
-    >
-      {children}
-    </div>
+    <div className={cn(cardVariants({ variant }), className)} {...props} />
   );
 }
 

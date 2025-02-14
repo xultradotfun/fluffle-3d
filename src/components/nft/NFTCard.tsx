@@ -1,6 +1,5 @@
-import { Card, CardHeader, CardContent } from "@/components/ui/Card";
+import { Card } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
-import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import VRMViewer from "@/components/VRMViewer";
 import type { NFTTrait } from "@/utils/nftLoader";
 
@@ -13,16 +12,19 @@ interface NFTCardProps {
 
 export function NFTCard({ id, urls, traits, onRemove }: NFTCardProps) {
   return (
-    <Card isInteractive className="animate-fade-in">
+    <Card
+      variant="glass"
+      className="group relative animate-fade-in overflow-hidden"
+    >
       {/* Dismiss Button */}
       {onRemove && (
         <button
           onClick={() => onRemove(id)}
-          className="absolute top-4 right-4 z-20 p-2 rounded-xl bg-black/80 backdrop-blur-sm border border-white/10 hover:bg-black hover:border-blue-500/50 transition-all duration-200 opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none"
+          className="absolute top-4 right-4 z-20 p-2 rounded-xl bg-black/50 backdrop-blur-sm border border-white/10 hover:bg-black/70 hover:border-red-500/50 transition-all duration-200 opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none"
           title="Remove NFT"
         >
           <svg
-            className="w-4 h-4 text-gray-400 hover:text-blue-400 transition-colors"
+            className="w-4 h-4 text-gray-400 hover:text-red-400 transition-colors"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -38,35 +40,43 @@ export function NFTCard({ id, urls, traits, onRemove }: NFTCardProps) {
       )}
 
       {/* Header */}
-      <CardHeader className="animate-slide-down">
+      <div className="absolute top-0 left-0 right-0 z-10 p-4 bg-gradient-to-b from-black/80 via-black/50 to-transparent">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <h3 className="text-lg font-bold text-white">#{id}</h3>
-            <div className="h-4 w-[1px] bg-white/20"></div>
-            <span className="text-sm text-gray-400 font-medium">Fluffle</span>
+            <div className="flex items-center gap-2">
+              <h3 className="text-lg font-bold text-white">#{id}</h3>
+              <div className="h-4 w-[1px] bg-white/20"></div>
+              <span className="text-sm text-gray-400 font-medium">Fluffle</span>
+            </div>
           </div>
-          <Badge variant="primary" size="sm">
-            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+          <Badge variant="default" size="sm" className="shadow-xl">
+            <svg
+              className="w-3 h-3 mr-1"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
               <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5.5-2.5l7.51-3.49L17.5 6.5 9.99 9.99 6.5 17.5zm5.5-6.6c.61 0 1.1.49 1.1 1.1s-.49 1.1-1.1 1.1-1.1-.49-1.1-1.1.49-1.1 1.1-1.1z" />
             </svg>
             3D Model
           </Badge>
         </div>
-      </CardHeader>
+      </div>
 
       {/* VRM Viewer */}
-      <div className="relative aspect-square w-full bg-[radial-gradient(circle_at_center,#1a1a1a,#111)] group-hover:bg-[radial-gradient(circle_at_center,#1a1a1a,#0f0f0f)] transition-all duration-300">
+      <div className="relative aspect-square w-full bg-gradient-to-br from-black/40 to-black/60 group-hover:from-black/50 group-hover:to-black/70 transition-all duration-300">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.08),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(124,58,237,0.05),transparent)]" />
         <VRMViewer modelUrls={urls} />
-        <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-white/10"></div>
+        <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-white/10 group-hover:ring-white/20 transition-colors" />
       </div>
 
       {/* Traits */}
-      <CardContent className="bg-gradient-to-b from-black/50 to-transparent animate-slide-up">
-        <div className="flex items-center gap-2 mb-5">
+      <div className="p-4 bg-gradient-to-b from-black/50 to-transparent">
+        <div className="flex items-center gap-2 mb-4">
           <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
-          <Badge variant="secondary" size="sm">
+          <Badge variant="secondary" size="sm" className="shadow-lg">
             <svg
-              className="w-3.5 h-3.5 text-blue-400"
+              className="w-3.5 h-3.5 text-blue-400 mr-1"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -107,12 +117,14 @@ export function NFTCard({ id, urls, traits, onRemove }: NFTCardProps) {
                   </span>
                 </div>
                 <div className="ml-3 flex-shrink-0">
-                  <Badge>{value}</Badge>
+                  <Badge variant="default" size="sm" className="shadow-sm">
+                    {value}
+                  </Badge>
                 </div>
               </div>
             ))}
         </div>
-      </CardContent>
+      </div>
     </Card>
   );
 }

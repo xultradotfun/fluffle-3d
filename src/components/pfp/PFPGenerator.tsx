@@ -208,12 +208,14 @@ export function PFPGenerator() {
       {/* Header */}
       <div className="flex items-center justify-between h-[88px]">
         <div>
-          <h2 className="text-2xl font-bold text-white mb-2">PFP Generator</h2>
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-2">
+            PFP Generator
+          </h2>
           <div className="space-y-1">
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-300 text-sm">
               Create a custom profile picture with your Fluffle NFT.
             </p>
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-400 text-sm">
               Inspired by{" "}
               <a
                 href="https://twitter.com/juliencoppola"
@@ -228,7 +230,7 @@ export function PFPGenerator() {
         </div>
         <div className="flex-shrink-0">
           {selectedNFT ? (
-            <Badge variant="primary" size="md">
+            <Badge variant="primary" size="md" className="animate-fade-in glow">
               NFT #{selectedNFT.id} Selected
             </Badge>
           ) : (
@@ -241,11 +243,11 @@ export function PFPGenerator() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Preview Card */}
-        <Card>
+        <Card className="backdrop-blur-sm bg-white/[0.02] border-white/5 hover:border-white/10 transition-colors">
           <div className="p-6 min-h-[600px]">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-blue-500/10 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">
                   <svg
                     className="w-4 h-4 text-blue-400"
                     fill="none"
@@ -275,15 +277,15 @@ export function PFPGenerator() {
               </div>
             </div>
 
-            <div className="relative aspect-square rounded-xl overflow-hidden bg-white/5 border border-white/10">
+            <div className="relative aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-white/[0.02] to-white/[0.01] border border-white/5">
               <canvas
                 ref={canvasRef}
                 className="absolute inset-0 w-full h-full"
               />
               {isLoading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+                <div className="absolute inset-0 flex items-center justify-center backdrop-blur-sm bg-black/30">
                   <div className="flex flex-col items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-white/5 p-2 animate-pulse">
+                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 p-2 animate-pulse">
                       <svg
                         className="w-full h-full text-blue-400"
                         fill="none"
@@ -298,7 +300,7 @@ export function PFPGenerator() {
                         />
                       </svg>
                     </div>
-                    <span className="text-sm text-blue-400 font-medium">
+                    <span className="text-sm text-blue-400 font-medium animate-pulse">
                       Generating PFP...
                     </span>
                   </div>
@@ -309,11 +311,11 @@ export function PFPGenerator() {
         </Card>
 
         {/* Input and Actions Card */}
-        <Card>
+        <Card className="backdrop-blur-sm bg-white/[0.02] border-white/5 hover:border-white/10 transition-colors">
           <div className="p-6 min-h-[600px]">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center">
                   <svg
                     className="w-4 h-4 text-green-400"
                     fill="none"
@@ -383,7 +385,7 @@ export function PFPGenerator() {
                       face_display_name: "",
                     });
                   }}
-                  className="w-full bg-white/[0.03] hover:bg-white/[0.05] border border-white/10 hover:border-blue-500/30 focus:border-blue-500/30 focus:ring-2 focus:ring-blue-500/30 rounded-xl px-4 py-3 text-white placeholder:text-gray-500 transition-all"
+                  className="w-full bg-gradient-to-br from-white/[0.03] to-white/[0.02] hover:from-white/[0.04] hover:to-white/[0.03] border border-white/5 hover:border-blue-500/30 focus:border-blue-500/30 focus:ring-2 focus:ring-blue-500/30 rounded-xl px-4 py-3 text-white placeholder:text-gray-500 transition-all"
                 />
                 {selectedNFT && (
                   <button
@@ -409,12 +411,12 @@ export function PFPGenerator() {
               </div>
 
               {/* Zoom Controls */}
-              <div className="flex items-center gap-2 p-1 bg-white/5 rounded-lg border border-white/10">
+              <div className="flex items-center gap-2 p-1 bg-gradient-to-br from-white/[0.03] to-white/[0.02] rounded-lg border border-white/5">
                 <button
                   onClick={() => handleZoomChange("full")}
                   className={`flex-1 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
                     zoomLevel === "full"
-                      ? "bg-blue-500/20 text-blue-400"
+                      ? "bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-400"
                       : "text-gray-400 hover:text-white hover:bg-white/5"
                   }`}
                 >
@@ -424,7 +426,7 @@ export function PFPGenerator() {
                   onClick={() => handleZoomChange("bust")}
                   className={`flex-1 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
                     zoomLevel === "bust"
-                      ? "bg-blue-500/20 text-blue-400"
+                      ? "bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-400"
                       : "text-gray-400 hover:text-white hover:bg-white/5"
                   }`}
                 >
@@ -458,7 +460,7 @@ export function PFPGenerator() {
                       face_display_name: "",
                     });
                   }}
-                  className="px-4 py-2 rounded-lg bg-white/[0.03] hover:bg-white/[0.05] border border-white/10 hover:border-blue-500/30 transition-all group text-center"
+                  className="px-4 py-2 rounded-lg bg-gradient-to-br from-white/[0.03] to-white/[0.02] hover:from-white/[0.04] hover:to-white/[0.03] border border-white/5 hover:border-blue-500/30 transition-all group text-center"
                 >
                   <span className="text-sm font-medium text-gray-400 group-hover:text-white">
                     Try Random NFT
@@ -467,15 +469,15 @@ export function PFPGenerator() {
               </div>
 
               {error && (
-                <div className="rounded-lg bg-red-500/10 border border-red-500/30 px-4 py-3 text-sm text-red-400">
+                <div className="rounded-lg bg-red-500/10 border border-red-500/30 px-4 py-3 text-sm text-red-400 animate-shake">
                   {error}
                 </div>
               )}
 
-              <div className="space-y-4 pt-4 border-t border-white/10">
+              <div className="space-y-4 pt-4 border-t border-white/5">
                 <Button
                   onClick={handleCopyToClipboard}
-                  className="w-full justify-center"
+                  className="w-full justify-center glow"
                   disabled={isLoading || !selectedNFT || !compositeImage}
                 >
                   <div className="flex items-center justify-center w-[160px]">
@@ -500,7 +502,7 @@ export function PFPGenerator() {
                 <Button
                   variant="secondary"
                   onClick={handleDownload}
-                  className="w-full justify-center"
+                  className="w-full justify-center glow"
                   disabled={isLoading || !selectedNFT || !compositeImage}
                 >
                   <div className="flex items-center justify-center w-[160px]">
