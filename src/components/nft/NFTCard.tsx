@@ -1,5 +1,6 @@
 import { Card, CardHeader, CardContent } from "@/components/ui/Card";
 import { Badge } from "@/components/ui/Badge";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import VRMViewer from "@/components/VRMViewer";
 import type { NFTTrait } from "@/utils/nftLoader";
 
@@ -12,7 +13,7 @@ interface NFTCardProps {
 
 export function NFTCard({ id, urls, traits, onRemove }: NFTCardProps) {
   return (
-    <Card isInteractive>
+    <Card isInteractive className="animate-fade-in">
       {/* Dismiss Button */}
       {onRemove && (
         <button
@@ -37,7 +38,7 @@ export function NFTCard({ id, urls, traits, onRemove }: NFTCardProps) {
       )}
 
       {/* Header */}
-      <CardHeader>
+      <CardHeader className="animate-slide-down">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <h3 className="text-lg font-bold text-white">#{id}</h3>
@@ -60,7 +61,7 @@ export function NFTCard({ id, urls, traits, onRemove }: NFTCardProps) {
       </div>
 
       {/* Traits */}
-      <CardContent className="bg-gradient-to-b from-black/50 to-transparent">
+      <CardContent className="bg-gradient-to-b from-black/50 to-transparent animate-slide-up">
         <div className="flex items-center gap-2 mb-5">
           <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
           <Badge variant="secondary" size="sm">
@@ -84,10 +85,11 @@ export function NFTCard({ id, urls, traits, onRemove }: NFTCardProps) {
                 typeof value === "string" &&
                 value !== "-1"
             )
-            .map(([key, value]) => (
+            .map(([key, value], index) => (
               <div
                 key={key}
-                className="group/trait flex items-center px-3 py-2 rounded-lg bg-white/[0.02] hover:bg-white/[0.04] border border-white/5 hover:border-blue-500/20 transition-all duration-200"
+                className="group/trait flex items-center px-3 py-2 rounded-lg bg-white/[0.02] hover:bg-white/[0.04] border border-white/5 hover:border-blue-500/20 transition-all duration-200 animate-fade-in"
+                style={{ animationDelay: `${index * 50}ms` }}
               >
                 <div className="flex-1 min-w-0">
                   <span className="text-xs font-medium text-gray-400 group-hover/trait:text-blue-400 transition-colors break-words">

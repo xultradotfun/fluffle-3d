@@ -3,6 +3,9 @@
 import { useState } from "react";
 import { NFTInput } from "@/components/nft/NFTInput";
 import { NFTCard } from "@/components/nft/NFTCard";
+import { Badge } from "@/components/ui/Badge";
+import { ViewSwitcher } from "@/components/ViewSwitcher";
+import { TraitsAnalyticsDashboard } from "@/components/analytics/TraitsAnalytics";
 import Hero from "@/components/Hero";
 import type { NFTTrait } from "@/utils/nftLoader";
 
@@ -14,6 +17,9 @@ interface ViewerData {
 }
 
 export default function Home() {
+  const [activeView, setActiveView] = useState<"viewer" | "analytics">(
+    "viewer"
+  );
   const [viewers, setViewers] = useState<ViewerData[]>([]);
   const [error, setError] = useState("");
 
@@ -42,69 +48,91 @@ export default function Home() {
       {/* Hero Section */}
       <Hero />
 
-      {/* Form Section */}
-      <section className="relative -mt-4 z-10">
-        <div className="mx-auto max-w-xl px-4 sm:px-6 lg:px-8">
-          <div className="overflow-hidden rounded-xl bg-white/5 shadow-lg ring-1 ring-white/10 backdrop-blur-lg">
-            <div className="p-4">
-              <NFTInput onLoad={handleNFTLoad} onError={handleNFTError} />
-              {error && (
-                <div className="mt-4 rounded-lg bg-red-500/10 border border-red-500/30 px-4 py-3 text-sm text-red-400">
-                  {error}
-                </div>
-              )}
-            </div>
+      {/* View Switcher */}
+      <div className="relative -mt-4 z-20">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between">
+            <ViewSwitcher
+              activeView={activeView}
+              onViewChange={setActiveView}
+            />
           </div>
         </div>
-      </section>
+      </div>
+
+      {/* Form Section - Only show in viewer mode */}
+      {activeView === "viewer" && (
+        <section className="relative -mt-4 z-10">
+          <div className="mx-auto max-w-xl px-4 sm:px-6 lg:px-8">
+            <div className="overflow-hidden rounded-xl bg-white/5 shadow-lg ring-1 ring-white/10 backdrop-blur-lg transition-all hover:bg-white/[0.07] hover:ring-white/20">
+              <div className="p-4">
+                <NFTInput
+                  onLoad={handleNFTLoad}
+                  onError={handleNFTError}
+                  loadedIds={viewers.map((v) => v.id)}
+                />
+                {error && (
+                  <div className="mt-4 rounded-lg bg-red-500/10 border border-red-500/30 px-4 py-3 text-sm text-red-400 animate-slide-down">
+                    {error}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Content Section */}
       <section className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 py-12 flex-grow">
-        {viewers.length > 0 ? (
-          <>
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-bold text-white">Your NFTs</h2>
-              <span className="inline-flex items-center rounded-full bg-blue-500/10 px-4 py-1.5 text-sm text-blue-400 ring-1 ring-inset ring-blue-500/30">
-                {viewers.length} loaded
-              </span>
+        {activeView === "viewer" ? (
+          viewers.length > 0 ? (
+            <>
+              <div className="flex items-center justify-between mb-8 animate-fade-in">
+                <h2 className="text-2xl font-bold text-white">Your NFTs</h2>
+                <Badge variant="primary" size="md">
+                  {viewers.length} loaded
+                </Badge>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {viewers.map(({ id, urls, traits, timestamp }) => (
+                  <NFTCard
+                    key={`${id}-${timestamp}`}
+                    id={id}
+                    urls={urls}
+                    traits={traits}
+                    onRemove={() => handleRemoveViewer(id, timestamp)}
+                  />
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className="text-center py-16 animate-fade-in">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/5 mb-6 ring-1 ring-white/10">
+                <svg
+                  className="w-10 h-10 text-gray-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+                  />
+                </svg>
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-2">
+                No NFTs Loaded
+              </h3>
+              <p className="text-gray-400 max-w-sm mx-auto">
+                Enter a Fluffle NFT ID above to view its 3D model and traits.
+                You can load multiple NFTs at once.
+              </p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {viewers.map(({ id, urls, traits, timestamp }) => (
-                <NFTCard
-                  key={`${id}-${timestamp}`}
-                  id={id}
-                  urls={urls}
-                  traits={traits}
-                  onRemove={() => handleRemoveViewer(id, timestamp)}
-                />
-              ))}
-            </div>
-          </>
+          )
         ) : (
-          <div className="text-center py-16">
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/5 mb-6 ring-1 ring-white/10">
-              <svg
-                className="w-10 h-10 text-gray-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-                />
-              </svg>
-            </div>
-            <h3 className="text-xl font-semibold text-white mb-2">
-              No NFTs Loaded
-            </h3>
-            <p className="text-gray-400 max-w-sm mx-auto">
-              Enter a Fluffle NFT ID above to view its 3D model and traits. You
-              can load multiple NFTs at once.
-            </p>
-          </div>
+          <TraitsAnalyticsDashboard />
         )}
       </section>
 

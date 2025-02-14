@@ -32,7 +32,7 @@ in the json file test.json 1426 is
 we have 4 possible extra traits other than the main model we have to load
 
 {
-"ear": {
+"": {
 "model": "https://hologramxyz.s3.us-east-1.amazonaws.com/partnerships/MEGAETH/3d/ear/",
 "thumbnail": "https://hologramxyz.s3.us-east-1.amazonaws.com/partnerships/MEGAETH/2d/thumbnails/ear/"
 },
