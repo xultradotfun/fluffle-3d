@@ -46,7 +46,7 @@ export function PFPGenerator() {
     loadBgImage();
   }, []);
 
-  const generatePFP = async (nftId: string) => {
+  const generatePFP = async (nftId: string, currentZoom: ZoomLevel) => {
     try {
       setIsLoading(true);
       setError("");
@@ -82,7 +82,7 @@ export function PFPGenerator() {
 
       // Calculate dimensions based on zoom level
       let scale, y;
-      if (zoomLevel === "full") {
+      if (currentZoom === "full") {
         // For full body, fit the entire image while maintaining aspect ratio
         scale =
           Math.min(
@@ -102,7 +102,7 @@ export function PFPGenerator() {
       y = (canvas.height - thumbnail.height * scale) / 2;
 
       // Add offset for bust view to move image down
-      if (zoomLevel === "bust") {
+      if (currentZoom === "bust") {
         y += canvas.height * 0.1; // Move down by 10% of canvas height
       }
 
@@ -151,13 +151,15 @@ export function PFPGenerator() {
     setSelectedNFT({ id, traits });
     setCompositeImage(null);
     setError("");
-    await generatePFP(id);
+    await generatePFP(id, zoomLevel);
   };
 
   const handleClear = () => {
     setSelectedNFT(null);
     setCompositeImage(null);
     setError("");
+    // Reset zoom level to bust when clearing
+    setZoomLevel("bust");
     // Redraw background only
     if (canvasRef.current && bgImage) {
       const ctx = canvasRef.current.getContext("2d");
@@ -170,7 +172,7 @@ export function PFPGenerator() {
   const handleZoomChange = async (level: ZoomLevel) => {
     setZoomLevel(level);
     if (selectedNFT) {
-      await generatePFP(selectedNFT.id);
+      await generatePFP(selectedNFT.id, level);
     }
   };
 
