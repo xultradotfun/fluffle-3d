@@ -4,16 +4,31 @@
 
 @layer base {
   :root {
-    --background: 222 47% 11%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 0 0% 100%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
+    /* Light mode colors - clean modern look */
+    --background: 225 25% 95%; /* Light cool gray for background */
+    --foreground: 225 25% 20%; /* Dark gray for text */
+    --card: 0 0% 100%; /* Pure white for cards */
+    --card-foreground: 225 25% 20%; /* Dark gray for card text */
+    --border: 225 25% 90%; /* Light gray for borders */
+    --input: 225 25% 90%; /* Light gray for inputs */
+    --primary: 235 85% 65%; /* Bright blue for primary actions */
+    --primary-foreground: 0 0% 100%; /* White */
+    --muted: 225 25% 90%; /* Light gray for muted elements */
+    --muted-foreground: 225 25% 40%; /* Medium gray for muted text */
+  }
+
+  .dark {
+    /* Dark mode colors */
+    --background: 240 10% 4%; /* very dark gray */
+    --foreground: 0 0% 98%; /* off-white */
+    --card: 240 10% 4%; /* very dark gray */
+    --card-foreground: 0 0% 98%; /* off-white */
+    --border: 240 4% 16%; /* dark gray */
+    --input: 240 4% 16%; /* dark gray */
+    --primary: 217 91% 60%; /* blue */
+    --primary-foreground: 0 0% 100%; /* white */
+    --muted: 240 4% 16%; /* dark gray */
+    --muted-foreground: 240 5% 65%; /* light gray */
   }
 }
 
@@ -21,21 +36,35 @@
   * {
     @apply border-border;
   }
+
   body {
-    @apply bg-background text-foreground relative min-h-screen;
-    background: radial-gradient(
-        circle at top left,
-        rgb(17, 24, 39),
-        rgba(17, 24, 39, 0) 50%
-      ),
-      radial-gradient(
-        circle at top right,
-        rgb(76, 29, 149),
-        rgba(76, 29, 149, 0) 50%
-      ),
-      radial-gradient(at bottom left, rgb(30, 58, 138), rgba(30, 58, 138, 0)),
-      linear-gradient(to bottom right, rgb(17, 24, 39), rgb(10, 10, 20));
+    @apply bg-background text-foreground transition-colors duration-300;
   }
+}
+
+/* Light mode background effects */
+:root body {
+  background: linear-gradient(
+    to bottom right,
+    rgb(243, 244, 246),
+    rgb(249, 250, 251)
+  );
+}
+
+/* Dark mode background effects */
+.dark body {
+  background: radial-gradient(
+      circle at top left,
+      rgb(17, 24, 39),
+      rgba(17, 24, 39, 0) 50%
+    ),
+    radial-gradient(
+      circle at top right,
+      rgb(76, 29, 149),
+      rgba(76, 29, 149, 0) 50%
+    ),
+    radial-gradient(at bottom left, rgb(30, 58, 138), rgba(30, 58, 138, 0)),
+    linear-gradient(to bottom right, rgb(17, 24, 39), rgb(10, 10, 20));
 }
 
 /* Add a subtle noise texture overlay */
@@ -50,8 +79,32 @@ body::before {
   mix-blend-mode: overlay;
 }
 
-/* Add a subtle ambient glow effect */
-body::after {
+/* Add a subtle ambient glow effect - Light Mode */
+:root body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+      circle at 0% 0%,
+      rgba(99, 102, 241, 0.03),
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(124, 58, 237, 0.03),
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(59, 130, 246, 0.03),
+      transparent 50%
+    );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Add a subtle ambient glow effect - Dark Mode */
+.dark body::after {
   content: "";
   position: fixed;
   inset: 0;
@@ -74,59 +127,45 @@ body::after {
   z-index: 2;
 }
 
-/* Add a subtle glow effect to primary elements */
-.glow {
-  position: relative;
-}
-
-.glow::after {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  background: linear-gradient(to right, rgb(59, 130, 246), rgb(147, 51, 234));
-  border-radius: inherit;
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.glow:hover::after {
-  opacity: 0.5;
-}
-
-/* Add smooth transitions */
-* {
-  transition-property: background-color, border-color, color, fill, stroke;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
+/* Custom scrollbar - Light Mode */
+:root ::-webkit-scrollbar {
   width: 10px;
 }
 
-::-webkit-scrollbar-track {
+:root ::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+}
+
+:root ::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+}
+
+:root ::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+/* Custom scrollbar - Dark Mode */
+.dark ::-webkit-scrollbar {
+  width: 10px;
+}
+
+.dark ::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 5px;
 }
 
-::-webkit-scrollbar-thumb {
+.dark ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.1);
   border-radius: 5px;
 }
 
-::-webkit-scrollbar-thumb:hover {
+.dark ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.15);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Animations */
 @keyframes fade-in {
   from {
     opacity: 0;

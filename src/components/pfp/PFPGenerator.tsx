@@ -206,25 +206,29 @@ export function PFPGenerator() {
     <div className="space-y-8 animate-fade-in">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-2">
-            PFP Generator
-          </h2>
-          <div className="space-y-1">
-            <p className="text-gray-300 text-sm">
-              Create a custom profile picture with your Fluffle NFT.
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+              PFP Generator
+            </h2>
+            <p className="text-base text-gray-600 dark:text-gray-300">
+              Transform your Fluffle NFT into a beautiful profile picture with
+              our custom generator.
             </p>
-            <p className="text-gray-400 text-sm">
-              Inspired by{" "}
+          </div>
+          <div className="flex items-center gap-2 text-sm">
+            <div className="h-4 w-[1px] bg-gradient-to-b from-purple-200 to-pink-200 dark:from-purple-500/30 dark:to-pink-500/30"></div>
+            <span className="text-gray-500 dark:text-gray-400">
+              Design by{" "}
               <a
                 href="https://twitter.com/juliencoppola"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-400 hover:text-blue-300 transition-colors"
+                className="text-purple-600 dark:text-purple-400 hover:text-pink-600 dark:hover:text-pink-400 transition-colors"
               >
                 @juliencoppola
               </a>
-            </p>
+            </span>
           </div>
         </div>
         <div className="flex-shrink-0">

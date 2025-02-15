@@ -129,22 +129,24 @@ export function TraitsAnalyticsDashboard() {
   return (
     <div className="space-y-8 animate-fade-in">
       {/* Header */}
-      <h2 className="text-2xl font-bold text-white">Trait Analytics</h2>
+      <h2 className="text-2xl font-bold text-foreground">Trait Analytics</h2>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="bg-gradient-to-br from-blue-500/10 to-purple-500/10">
+        <Card className="bg-card dark:bg-gradient-to-br dark:from-blue-500/10 dark:to-purple-500/10 border border-border dark:border-white/10">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-400">Total NFTs</p>
-                <p className="text-2xl font-bold text-white mt-1">
+                <p className="text-sm font-medium text-muted-foreground">
+                  Total NFTs
+                </p>
+                <p className="text-2xl font-bold text-foreground mt-1">
                   {analytics.totalNFTs.toLocaleString()}
                 </p>
               </div>
-              <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center">
                 <svg
-                  className="w-5 h-5 text-blue-400"
+                  className="w-5 h-5 text-blue-600 dark:text-blue-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -161,18 +163,20 @@ export function TraitsAnalyticsDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-purple-500/10 to-pink-500/10">
+        <Card className="bg-card dark:bg-gradient-to-br dark:from-purple-500/10 dark:to-pink-500/10 border border-border dark:border-white/10">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-400">Categories</p>
-                <p className="text-2xl font-bold text-white mt-1">
+                <p className="text-sm font-medium text-muted-foreground">
+                  Categories
+                </p>
+                <p className="text-2xl font-bold text-foreground mt-1">
                   {analytics.categories.length}
                 </p>
               </div>
-              <div className="w-10 h-10 rounded-full bg-purple-500/10 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-purple-50 dark:bg-purple-500/10 flex items-center justify-center">
                 <svg
-                  className="w-5 h-5 text-purple-400"
+                  className="w-5 h-5 text-purple-600 dark:text-purple-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -189,20 +193,20 @@ export function TraitsAnalyticsDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-green-500/10 to-blue-500/10">
+        <Card className="bg-card dark:bg-gradient-to-br dark:from-green-500/10 dark:to-blue-500/10 border border-border dark:border-white/10">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-400">
+                <p className="text-sm font-medium text-muted-foreground">
                   Total Traits
                 </p>
-                <p className="text-2xl font-bold text-white mt-1">
+                <p className="text-2xl font-bold text-foreground mt-1">
                   {getTotalTraits()}
                 </p>
               </div>
-              <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-green-50 dark:bg-green-500/10 flex items-center justify-center">
                 <svg
-                  className="w-5 h-5 text-green-400"
+                  className="w-5 h-5 text-green-600 dark:text-green-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -219,24 +223,26 @@ export function TraitsAnalyticsDashboard() {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-yellow-500/10 to-orange-500/10">
+        <Card className="bg-card dark:bg-gradient-to-br dark:from-yellow-500/10 dark:to-orange-500/10 border border-border dark:border-white/10">
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-400">
+                <p className="text-sm font-medium text-muted-foreground">
                   Optional Items
                 </p>
-                <p className="text-2xl font-bold text-white mt-1">
+                <p className="text-2xl font-bold text-foreground mt-1">
                   {
                     analytics.categories.filter((cat) => cat.isOptionalItem)
                       .length
                   }
                 </p>
-                <p className="text-xs text-gray-400 mt-1">Ear, Face, Head</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Ear, Face, Head
+                </p>
               </div>
-              <div className="w-10 h-10 rounded-full bg-yellow-500/10 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-yellow-50 dark:bg-yellow-500/10 flex items-center justify-center">
                 <svg
-                  className="w-5 h-5 text-yellow-400"
+                  className="w-5 h-5 text-yellow-600 dark:text-yellow-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -263,7 +269,7 @@ export function TraitsAnalyticsDashboard() {
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               selectedCategory === category.name
                 ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/20"
-                : "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white"
+                : "bg-card dark:bg-white/5 text-muted-foreground hover:bg-accent dark:hover:bg-white/10 hover:text-foreground dark:hover:text-white border border-border dark:border-white/10"
             }`}
           >
             <div className="flex items-center gap-2">
@@ -280,14 +286,14 @@ export function TraitsAnalyticsDashboard() {
       {selectedCategoryData && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main Distribution Card */}
-          <Card className="lg:col-span-2">
+          <Card className="lg:col-span-2 bg-card dark:bg-transparent border border-border dark:border-white/10">
             <CardContent className="p-6">
               <div className="flex items-center justify-between mb-6">
                 <div>
-                  <h3 className="text-lg font-semibold text-white">
+                  <h3 className="text-lg font-semibold text-foreground">
                     {selectedCategoryData.name} Distribution
                   </h3>
-                  <p className="text-sm text-gray-400 mt-1">
+                  <p className="text-sm text-muted-foreground mt-1">
                     {selectedCategoryData.name === "Tribe"
                       ? `Optional item with ${selectedCategoryData.clothesVariants} clothing variations`
                       : selectedCategoryData.isOptionalItem
@@ -313,15 +319,14 @@ export function TraitsAnalyticsDashboard() {
                   return (
                     <div
                       key={trait.value}
-                      className="group relative p-4 rounded-xl bg-white/[0.02] hover:bg-white/[0.04] border border-white/5 hover:border-blue-500/20 transition-all duration-200"
+                      className="group relative p-4 rounded-xl bg-accent/50 dark:bg-white/[0.02] hover:bg-accent dark:hover:bg-white/[0.04] border border-border dark:border-white/5 hover:border-blue-500/20 transition-all duration-200"
                     >
                       <div className="flex items-center gap-4">
                         {/* Image Preview - Only for Ear, Face, Head */}
-                        {selectedCategoryData?.isOptionalItem &&
-                          !isNoItem &&
+                        {!isNoItem &&
                           selectedCategoryData.name !== "Tribe" &&
                           trait.trait_number !== undefined && (
-                            <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-black/20 ring-1 ring-white/10 group-hover:ring-blue-500/20 transition-all flex-shrink-0">
+                            <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-black/20 ring-1 ring-border dark:ring-white/10 group-hover:ring-blue-500/20 transition-all flex-shrink-0">
                               <img
                                 src={`https://hologramxyz.s3.us-east-1.amazonaws.com/partnerships/MEGAETH/2d/thumbnails/${selectedCategoryData.name.toLowerCase()}/${
                                   trait.trait_number
@@ -351,7 +356,9 @@ export function TraitsAnalyticsDashboard() {
                           <div className="flex items-center gap-2 mb-1">
                             <span
                               className={`text-sm font-medium truncate ${
-                                isNoItem ? "text-gray-400" : "text-white"
+                                isNoItem
+                                  ? "text-muted-foreground"
+                                  : "text-foreground"
                               }`}
                             >
                               {trait.value}
@@ -359,25 +366,25 @@ export function TraitsAnalyticsDashboard() {
                             <Badge
                               variant="secondary"
                               className={`${
-                                isNoItem ? "text-gray-400" : rarityColor
+                                isNoItem ? "text-muted-foreground" : rarityColor
                               } transition-colors shrink-0`}
                             >
                               {isNoItem ? "Base" : rarity}
                             </Badge>
                           </div>
                           <div className="flex items-center gap-3 mb-2">
-                            <span className="text-sm text-gray-400">
+                            <span className="text-sm text-muted-foreground">
                               {trait.count.toLocaleString()} NFTs
                             </span>
-                            <span className="text-sm font-medium text-gray-400">
+                            <span className="text-sm font-medium text-muted-foreground">
                               {trait.rarity.toFixed(2)}%
                             </span>
                           </div>
-                          <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                          <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
                             <div
                               className={`h-full rounded-full transition-all duration-500 ${
                                 isNoItem
-                                  ? "bg-gray-500/50"
+                                  ? "bg-muted-foreground/50"
                                   : "bg-gradient-to-r from-blue-500 to-blue-400"
                               }`}
                               style={{ width: `${trait.rarity}%` }}
@@ -388,10 +395,10 @@ export function TraitsAnalyticsDashboard() {
 
                       {/* Outfit Distribution - Special handling for tribe traits */}
                       {!isNoItem && extendedTrait.outfitDistribution && (
-                        <div className="mt-4 pt-4 border-t border-white/10">
+                        <div className="mt-4 pt-4 border-t border-border dark:border-white/10">
                           <div className="flex items-center gap-2 mb-3">
                             <svg
-                              className="w-4 h-4 text-blue-400"
+                              className="w-4 h-4 text-blue-600 dark:text-blue-400"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -403,7 +410,7 @@ export function TraitsAnalyticsDashboard() {
                                 d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
                               />
                             </svg>
-                            <span className="text-sm font-medium text-blue-400">
+                            <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
                               Outfit Variations (
                               {extendedTrait.outfitDistribution.length})
                             </span>
@@ -413,10 +420,10 @@ export function TraitsAnalyticsDashboard() {
                               ({ outfit, count, percentage }) => (
                                 <div
                                   key={outfit}
-                                  className="group relative p-3 rounded-xl bg-white/[0.02] hover:bg-white/[0.04] border border-white/5 hover:border-blue-500/20 transition-all duration-200"
+                                  className="group relative p-3 rounded-xl bg-accent/50 dark:bg-white/[0.02] hover:bg-accent dark:hover:bg-white/[0.04] border border-border dark:border-white/5 hover:border-blue-500/20 transition-all duration-200"
                                 >
                                   <div className="flex items-center gap-3">
-                                    <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-black/20 ring-1 ring-white/10 group-hover:ring-blue-500/20 transition-all flex-shrink-0">
+                                    <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-black/20 ring-1 ring-border dark:ring-white/10 group-hover:ring-blue-500/20 transition-all flex-shrink-0">
                                       <img
                                         src={`https://hologramxyz.s3.us-east-1.amazonaws.com/partnerships/MEGAETH/2d/thumbnails/clothes/${outfit}.png`}
                                         alt={`Outfit ${outfit}`}
@@ -434,14 +441,14 @@ export function TraitsAnalyticsDashboard() {
                                         <Badge variant="default" size="sm">
                                           #{outfit}
                                         </Badge>
-                                        <span className="text-sm text-gray-400">
+                                        <span className="text-sm text-muted-foreground">
                                           {percentage.toFixed(1)}%
                                         </span>
                                       </div>
-                                      <div className="text-xs text-gray-400 mb-1.5">
+                                      <div className="text-xs text-muted-foreground mb-1.5">
                                         {count.toLocaleString()} NFTs
                                       </div>
-                                      <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden">
+                                      <div className="h-1 w-full bg-muted rounded-full overflow-hidden">
                                         <div
                                           className="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-400"
                                           style={{ width: `${percentage}%` }}
@@ -463,9 +470,9 @@ export function TraitsAnalyticsDashboard() {
               {/* Tribe Clothes Distribution */}
               {selectedCategoryData.name === "Tribe" &&
                 selectedCategoryData.clothesDistribution && (
-                  <div className="mt-8 pt-8 border-t border-white/10">
+                  <div className="mt-8 pt-8 border-t border-border dark:border-white/10">
                     <div className="flex items-center justify-between mb-4">
-                      <h4 className="text-md font-semibold text-white">
+                      <h4 className="text-md font-semibold text-foreground">
                         Clothing Variations
                       </h4>
                       <Badge variant="secondary">
@@ -482,12 +489,12 @@ export function TraitsAnalyticsDashboard() {
                         .map(([variant, count]) => (
                           <div
                             key={variant}
-                            className="flex items-center justify-between p-2 rounded-lg bg-white/5"
+                            className="flex items-center justify-between p-2 rounded-lg bg-accent/50 dark:bg-white/5"
                           >
-                            <span className="text-sm text-gray-400">
+                            <span className="text-sm text-muted-foreground">
                               Variant {variant}
                             </span>
-                            <span className="text-sm font-medium text-white">
+                            <span className="text-sm font-medium text-foreground">
                               {count.toLocaleString()} NFTs
                             </span>
                           </div>
@@ -499,9 +506,9 @@ export function TraitsAnalyticsDashboard() {
           </Card>
 
           {/* Rarity Distribution Card */}
-          <Card className="h-fit">
+          <Card className="h-fit bg-card dark:bg-transparent border border-border dark:border-white/10">
             <CardContent className="p-6">
-              <h3 className="text-lg font-semibold text-white mb-4">
+              <h3 className="text-lg font-semibold text-foreground mb-4">
                 Rarity Breakdown
               </h3>
 
@@ -520,7 +527,7 @@ export function TraitsAnalyticsDashboard() {
                             >
                               {rarity}
                             </span>
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-muted-foreground">
                               {(
                                 (count / selectedCategoryData.traits.length) *
                                 100
@@ -528,11 +535,11 @@ export function TraitsAnalyticsDashboard() {
                               %
                             </span>
                           </div>
-                          <span className="text-sm text-gray-400">
+                          <span className="text-sm text-muted-foreground">
                             {count} trait{count !== 1 ? "s" : ""}
                           </span>
                         </div>
-                        <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                        <div className="h-1.5 w-full bg-muted rounded-full overflow-hidden">
                           <div
                             className={`h-full rounded-full ${getRarityGradient(
                               rarity
@@ -550,11 +557,13 @@ export function TraitsAnalyticsDashboard() {
                 </div>
               )}
 
-              <div className="mt-4 pt-4 border-t border-white/10">
+              <div className="mt-4 pt-4 border-t border-border dark:border-white/10">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-400">Average Rarity</span>
-                    <span className="text-white font-medium">
+                    <span className="text-muted-foreground">
+                      Average Rarity
+                    </span>
+                    <span className="text-foreground font-medium">
                       {(
                         selectedCategoryData.traits.reduce(
                           (acc, trait) => acc + trait.rarity,
@@ -565,8 +574,8 @@ export function TraitsAnalyticsDashboard() {
                     </span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-400">Rarest Trait</span>
-                    <span className="text-white font-medium">
+                    <span className="text-muted-foreground">Rarest Trait</span>
+                    <span className="text-foreground font-medium">
                       {selectedCategoryData.traits[0].value} (
                       {selectedCategoryData.traits[0].rarity.toFixed(2)}%)
                     </span>

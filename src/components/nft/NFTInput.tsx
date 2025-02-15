@@ -180,10 +180,12 @@ export function NFTInput({
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <h2 className="text-lg font-semibold text-white">Load NFTs</h2>
-            <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-white/5 border border-white/10">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+              Load NFTs
+            </h2>
+            <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-blue-50 dark:bg-white/5 border border-blue-200 dark:border-white/10">
               <svg
-                className="w-3.5 h-3.5 text-blue-400"
+                className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -195,7 +197,7 @@ export function NFTInput({
                   d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <span className="text-xs font-medium text-gray-400">
+              <span className="text-xs font-medium text-blue-700 dark:text-gray-400">
                 IDs: 0-4999
               </span>
             </div>
@@ -214,7 +216,9 @@ export function NFTInput({
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                 <svg
                   className={`w-5 h-5 transition-colors duration-200 ${
-                    isFocused ? "text-blue-400" : "text-gray-400"
+                    isFocused
+                      ? "text-blue-600 dark:text-blue-400"
+                      : "text-gray-400"
                   }`}
                   fill="none"
                   viewBox="0 0 24 24"
@@ -237,7 +241,7 @@ export function NFTInput({
                 onBlur={handleInputBlur}
                 placeholder="Enter NFT IDs (e.g. 979, 1426, 2000)"
                 disabled={loading}
-                className={`pl-12 pr-24 transition-all duration-200 bg-white/[0.03] hover:bg-white/[0.05] text-white placeholder:text-gray-500 ${
+                className={`pl-12 pr-24 transition-all duration-200 bg-white dark:bg-white/[0.03] hover:bg-gray-50 dark:hover:bg-white/[0.05] text-gray-900 dark:text-white placeholder:text-gray-500 ${
                   isValid === true
                     ? "border-green-500/30 focus:ring-green-500/30"
                     : isValid === false
@@ -249,10 +253,10 @@ export function NFTInput({
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
                   <button
                     onClick={() => setNftIds("")}
-                    className="p-1.5 rounded-lg hover:bg-white/10 transition-colors group"
+                    className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-white/10 transition-colors group"
                   >
                     <svg
-                      className="w-4 h-4 text-gray-400 group-hover:text-white transition-colors"
+                      className="w-4 h-4 text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -270,8 +274,8 @@ export function NFTInput({
                     disabled={loading || !nftIds.trim() || isValid === false}
                     className={`px-3 py-1.5 rounded-lg font-medium text-sm transition-all ${
                       loading || !nftIds.trim() || isValid === false
-                        ? "bg-white/5 text-gray-500"
-                        : "bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700"
+                        ? "bg-gray-100 dark:bg-white/5 text-gray-400 dark:text-gray-500"
+                        : "bg-gradient-to-r from-blue-500 to-indigo-500 text-white hover:from-blue-600 hover:to-indigo-600"
                     } flex items-center gap-2`}
                   >
                     {loading ? (
@@ -300,9 +304,9 @@ export function NFTInput({
             </div>
 
             {/* Info Note */}
-            <div className="flex items-start gap-2 px-2.5 py-1.5 mt-2 rounded-lg bg-blue-500/5 border border-blue-500/10">
+            <div className="flex items-start gap-2 px-2.5 py-1.5 mt-2 rounded-lg bg-blue-50 dark:bg-blue-500/5 border border-blue-200 dark:border-blue-500/10">
               <svg
-                className="w-3.5 h-3.5 text-blue-400 mt-0.5 flex-shrink-0"
+                className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -314,7 +318,7 @@ export function NFTInput({
                   d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <div className="text-[11px] leading-tight text-blue-300">
+              <div className="text-[11px] leading-tight text-blue-700 dark:text-blue-300">
                 Use Token ID from OpenSea/wallet, not the "#1234" in NFT name
               </div>
             </div>
@@ -322,15 +326,15 @@ export function NFTInput({
             {/* Suggestions Dropdown */}
             {showSuggestions && (
               <div
-                className="fixed z-50 left-0 right-0 mt-2 py-2 bg-black/90 backdrop-blur-xl rounded-xl border border-white/10 shadow-lg animate-fade-in max-h-[300px] overflow-y-auto"
+                className="fixed z-50 left-0 right-0 mt-2 py-2 bg-white dark:bg-black/90 backdrop-blur-xl rounded-xl border border-gray-200 dark:border-white/10 shadow-lg animate-fade-in max-h-[300px] overflow-y-auto"
                 style={{
-                  width: "calc(100% - 140px)", // Adjust for the Load button width + gap
+                  width: "calc(100% - 140px)",
                   top: "calc(100% + 8px)",
                 }}
               >
                 <div className="px-3 py-2">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-medium text-gray-400">
+                    <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
                       Quick Actions
                     </span>
                     <Badge variant="secondary" size="sm">
@@ -340,10 +344,10 @@ export function NFTInput({
                   <div className="space-y-1">
                     <button
                       onClick={() => handleSuggestionClick(getRandomNFTIds())}
-                      className="w-full text-left px-3 py-2 text-sm text-white hover:bg-white/5 rounded-lg transition-colors flex items-center gap-2 group"
+                      className="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 rounded-lg transition-colors flex items-center gap-2 group"
                     >
                       <svg
-                        className="w-4 h-4 text-blue-400 group-hover:text-blue-300 transition-colors"
+                        className="w-4 h-4 text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -365,10 +369,10 @@ export function NFTInput({
                     </button>
                     <button
                       onClick={() => handleSuggestionClick("0")}
-                      className="w-full text-left px-3 py-2 text-sm text-white hover:bg-white/5 rounded-lg transition-colors flex items-center gap-2 group"
+                      className="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 rounded-lg transition-colors flex items-center gap-2 group"
                     >
                       <svg
-                        className="w-4 h-4 text-blue-400 group-hover:text-blue-300 transition-colors"
+                        className="w-4 h-4 text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -384,10 +388,10 @@ export function NFTInput({
                     </button>
                     <button
                       onClick={() => handleSuggestionClick("4999")}
-                      className="w-full text-left px-3 py-2 text-sm text-white hover:bg-white/5 rounded-lg transition-colors flex items-center gap-2 group"
+                      className="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-50 dark:hover:bg-white/5 rounded-lg transition-colors flex items-center gap-2 group"
                     >
                       <svg
-                        className="w-4 h-4 text-blue-400 group-hover:text-blue-300 transition-colors"
+                        className="w-4 h-4 text-blue-600 dark:text-blue-400 group-hover:text-blue-700 dark:group-hover:text-blue-300 transition-colors"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -403,7 +407,7 @@ export function NFTInput({
                     </button>
                   </div>
                 </div>
-                <div className="px-3 pt-2 mt-2 border-t border-white/5">
+                <div className="px-3 pt-2 mt-2 border-t border-gray-100 dark:border-white/5">
                   <p className="text-xs text-gray-500">
                     {loadedIds.length > 0
                       ? `${loadedIds.length} NFT${

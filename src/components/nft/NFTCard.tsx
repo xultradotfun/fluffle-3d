@@ -14,17 +14,17 @@ export function NFTCard({ id, urls, traits, onRemove }: NFTCardProps) {
   return (
     <Card
       variant="glass"
-      className="group relative animate-fade-in overflow-hidden"
+      className="group relative animate-fade-in overflow-hidden bg-white dark:bg-white/[0.02] border-gray-200 dark:border-white/10"
     >
       {/* Dismiss Button */}
       {onRemove && (
         <button
           onClick={() => onRemove(id)}
-          className="absolute top-4 right-4 z-20 p-2 rounded-xl bg-black/50 backdrop-blur-sm border border-white/10 hover:bg-black/70 hover:border-red-500/50 transition-all duration-200 opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none"
+          className="absolute top-4 right-4 z-20 p-2 rounded-xl bg-white/80 dark:bg-black/50 backdrop-blur-sm border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-black/70 hover:border-red-500/50 transition-all duration-200 opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none"
           title="Remove NFT"
         >
           <svg
-            className="w-4 h-4 text-gray-400 hover:text-red-400 transition-colors"
+            className="w-4 h-4 text-gray-400 hover:text-red-500 transition-colors"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -40,13 +40,15 @@ export function NFTCard({ id, urls, traits, onRemove }: NFTCardProps) {
       )}
 
       {/* Header */}
-      <div className="absolute top-0 left-0 right-0 z-10 p-4 bg-gradient-to-b from-black/80 via-black/50 to-transparent">
+      <div className="absolute top-0 left-0 right-0 z-10 p-4 bg-gradient-to-b from-gray-900/80 via-gray-900/50 to-transparent dark:from-black/80 dark:via-black/50">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
               <h3 className="text-lg font-bold text-white">#{id}</h3>
               <div className="h-4 w-[1px] bg-white/20"></div>
-              <span className="text-sm text-gray-400 font-medium">Fluffle</span>
+              <span className="text-sm text-gray-300 dark:text-gray-400 font-medium">
+                Fluffle
+              </span>
             </div>
           </div>
           <Badge variant="default" size="sm" className="shadow-xl">
@@ -63,20 +65,20 @@ export function NFTCard({ id, urls, traits, onRemove }: NFTCardProps) {
       </div>
 
       {/* VRM Viewer */}
-      <div className="relative aspect-square w-full bg-gradient-to-br from-black/40 to-black/60 group-hover:from-black/50 group-hover:to-black/70 transition-all duration-300">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.08),transparent)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(124,58,237,0.05),transparent)]" />
+      <div className="relative aspect-square w-full bg-gradient-to-br from-gray-100 to-gray-50 dark:from-black/40 dark:to-black/60 group-hover:from-gray-50 group-hover:to-white dark:group-hover:from-black/50 dark:group-hover:to-black/70 transition-all duration-300">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.05),transparent)] dark:bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.08),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(124,58,237,0.03),transparent)] dark:bg-[radial-gradient(circle_at_center,rgba(124,58,237,0.05),transparent)]" />
         <VRMViewer modelUrls={urls} />
-        <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-white/10 group-hover:ring-white/20 transition-colors" />
+        <div className="absolute inset-0 pointer-events-none ring-1 ring-inset ring-gray-200 dark:ring-white/10 group-hover:ring-gray-300 dark:group-hover:ring-white/20 transition-colors" />
       </div>
 
       {/* Traits */}
-      <div className="p-4 bg-gradient-to-b from-black/50 to-transparent">
+      <div className="p-4 bg-gradient-to-b from-gray-50/80 via-white to-white dark:from-black/50 dark:via-transparent dark:to-transparent">
         <div className="flex items-center gap-2 mb-4">
-          <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+          <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-gray-200 to-transparent dark:via-white/10"></div>
           <Badge variant="secondary" size="sm" className="shadow-lg">
             <svg
-              className="w-3.5 h-3.5 text-blue-400 mr-1"
+              className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 mr-1"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -84,7 +86,7 @@ export function NFTCard({ id, urls, traits, onRemove }: NFTCardProps) {
             </svg>
             Traits
           </Badge>
-          <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
+          <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent via-gray-200 to-transparent dark:via-white/10"></div>
         </div>
 
         <div className="space-y-2">
@@ -98,11 +100,11 @@ export function NFTCard({ id, urls, traits, onRemove }: NFTCardProps) {
             .map(([key, value], index) => (
               <div
                 key={key}
-                className="group/trait flex items-center px-3 py-2 rounded-lg bg-white/[0.02] hover:bg-white/[0.04] border border-white/5 hover:border-blue-500/20 transition-all duration-200 animate-fade-in"
+                className="group/trait flex items-center px-3 py-2 rounded-lg bg-gray-50 hover:bg-gray-100 dark:bg-white/[0.02] dark:hover:bg-white/[0.04] border border-gray-200 dark:border-white/5 hover:border-blue-200 dark:hover:border-blue-500/20 transition-all duration-200 animate-fade-in"
                 style={{ animationDelay: `${index * 50}ms` }}
               >
                 <div className="flex-1 min-w-0">
-                  <span className="text-xs font-medium text-gray-400 group-hover/trait:text-blue-400 transition-colors break-words">
+                  <span className="text-xs font-medium text-gray-500 group-hover/trait:text-blue-600 dark:text-gray-400 dark:group-hover/trait:text-blue-400 transition-colors break-words">
                     {key
                       .replace(/_display_name$/, "")
                       .replace(/([A-Z])/g, " $1")

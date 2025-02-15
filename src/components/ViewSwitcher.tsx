@@ -5,13 +5,13 @@ interface ViewSwitcherProps {
 
 export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
   return (
-    <div className="flex items-center gap-2 p-1.5 bg-white/[0.02] rounded-xl border border-white/10 backdrop-blur-sm">
+    <div className="flex items-center gap-2 p-1.5 bg-white dark:bg-white/[0.02] rounded-xl border border-gray-200 dark:border-white/10 shadow-sm backdrop-blur-sm">
       <button
         onClick={() => onViewChange("viewer")}
         className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
           activeView === "viewer"
-            ? "bg-gradient-to-r from-blue-500/20 to-blue-500/10 text-blue-400 border border-blue-500/20"
-            : "text-gray-400 hover:text-white hover:bg-white/5"
+            ? "bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-600 border border-blue-200 dark:from-blue-500/20 dark:to-blue-500/10 dark:text-blue-400 dark:border-blue-500/20"
+            : "text-gray-500 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-white/5"
         }`}
       >
         <svg
@@ -33,8 +33,8 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
         onClick={() => onViewChange("analytics")}
         className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
           activeView === "analytics"
-            ? "bg-gradient-to-r from-purple-500/20 to-purple-500/10 text-purple-400 border border-purple-500/20"
-            : "text-gray-400 hover:text-white hover:bg-white/5"
+            ? "bg-gradient-to-r from-purple-50 to-pink-50 text-purple-600 border border-purple-200 dark:from-purple-500/20 dark:to-purple-500/10 dark:text-purple-400 dark:border-purple-500/20"
+            : "text-gray-500 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-white/5"
         }`}
       >
         <svg
@@ -56,8 +56,8 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
         onClick={() => onViewChange("pfp")}
         className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
           activeView === "pfp"
-            ? "bg-gradient-to-r from-green-500/20 to-green-500/10 text-green-400 border border-green-500/20"
-            : "text-gray-400 hover:text-white hover:bg-white/5"
+            ? "bg-gradient-to-r from-green-50 to-emerald-50 text-green-600 border border-green-200 dark:from-green-500/20 dark:to-green-500/10 dark:text-green-400 dark:border-green-500/20"
+            : "text-gray-500 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-white/5"
         }`}
       >
         <svg
@@ -79,8 +79,8 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
         onClick={() => onViewChange("metaverse")}
         className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
           activeView === "metaverse"
-            ? "bg-gradient-to-r from-pink-500/20 to-pink-500/10 text-pink-400 border border-pink-500/20"
-            : "text-gray-400 hover:text-white hover:bg-white/5"
+            ? "bg-gradient-to-r from-pink-50 to-rose-50 text-pink-600 border border-pink-200 dark:from-pink-500/20 dark:to-pink-500/10 dark:text-pink-400 dark:border-pink-500/20"
+            : "text-gray-500 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-white/5"
         }`}
       >
         <svg

@@ -101,7 +101,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-black">
+    <div className="flex min-h-screen flex-col">
       {/* Hero Section */}
       <Hero />
 
@@ -121,7 +121,7 @@ export default function Home() {
       {activeView === "viewer" && (
         <section className="relative z-10">
           <div className="mx-auto max-w-xl px-4 sm:px-6 lg:px-8">
-            <div className="overflow-hidden rounded-xl bg-white/5 shadow-lg ring-1 ring-white/10 backdrop-blur-lg transition-all hover:bg-white/[0.07] hover:ring-white/20">
+            <div className="overflow-hidden rounded-xl bg-card shadow-lg ring-1 ring-border backdrop-blur-lg transition-all hover:bg-card/80">
               <div className="p-4">
                 <NFTInput
                   onLoad={handleNFTLoad}
@@ -145,7 +145,9 @@ export default function Home() {
           viewers.length > 0 ? (
             <>
               <div className="flex items-center justify-between mb-8 animate-fade-in">
-                <h2 className="text-2xl font-bold text-white">Your NFTs</h2>
+                <h2 className="text-2xl font-bold text-foreground">
+                  Your NFTs
+                </h2>
                 <Badge variant="default" size="md">
                   {viewers.length} loaded
                 </Badge>
@@ -164,9 +166,9 @@ export default function Home() {
             </>
           ) : (
             <div className="text-center py-16 animate-fade-in">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white/5 mb-6 ring-1 ring-white/10">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-card mb-6 ring-1 ring-border">
                 <svg
-                  className="w-10 h-10 text-gray-400"
+                  className="w-10 h-10 text-muted-foreground"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -179,10 +181,10 @@ export default function Home() {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-2">
+              <h3 className="text-xl font-semibold text-foreground mb-2">
                 No NFTs Loaded
               </h3>
-              <p className="text-gray-400 max-w-sm mx-auto">
+              <p className="text-muted-foreground max-w-sm mx-auto">
                 Enter a Fluffle NFT ID above to view its 3D model and traits.
                 You can load multiple NFTs at once.
               </p>
