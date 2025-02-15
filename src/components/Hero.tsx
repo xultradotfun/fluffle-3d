@@ -1,12 +1,26 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 export default function Hero() {
   const [logoNumber, setLogoNumber] = useState("01");
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const preloadedImages = useRef<HTMLImageElement[]>([]);
 
+  // Preload all images on mount
   useEffect(() => {
-    // Initial random logo
+    // Create array of numbers 1-8 with padding
+    const numbers = Array.from({ length: 8 }, (_, i) =>
+      (i + 1).toString().padStart(2, "0")
+    );
+
+    // Preload each image
+    numbers.forEach((num) => {
+      const img = new Image();
+      img.src = `/icons/logo-${num}.png`;
+      preloadedImages.current.push(img);
+    });
+
+    // Set initial random logo
     const randomNum = Math.floor(Math.random() * 8 + 1)
       .toString()
       .padStart(2, "0");
@@ -21,8 +35,8 @@ export default function Hero() {
           .padStart(2, "0");
         setLogoNumber(nextNum);
         setIsTransitioning(false);
-      }, 100); // Faster transition
-    }, 1500); // Change every 1.5 seconds
+      }, 100);
+    }, 1500);
 
     return () => clearInterval(interval);
   }, [logoNumber]);
@@ -52,10 +66,16 @@ export default function Hero() {
                         : "scale-100 rotate-0 opacity-100"
                     }`}
                   >
-                    <img
-                      src={`/icons/logo-${logoNumber}.png`}
-                      alt="Fluffle Logo"
-                      className="w-10 h-10 sm:w-12 sm:h-12 object-contain brightness-0 dark:invert"
+                    <div
+                      style={{
+                        backgroundImage: `url(/icons/logo-${logoNumber}.png)`,
+                        backgroundSize: "contain",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat",
+                        width: "48px",
+                        height: "48px",
+                      }}
+                      className="brightness-0 dark:invert"
                     />
                   </div>
                 </div>
