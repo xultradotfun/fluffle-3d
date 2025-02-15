@@ -326,7 +326,7 @@ export function TraitsAnalyticsDashboard() {
                         {!isNoItem &&
                           selectedCategoryData.name !== "Tribe" &&
                           trait.trait_number !== undefined && (
-                            <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-black/20 ring-1 ring-border dark:ring-white/10 group-hover:ring-blue-500/20 transition-all flex-shrink-0">
+                            <div className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-white dark:from-black/40 dark:to-black/60 ring-1 ring-border dark:ring-white/10 group-hover:ring-blue-500/20 transition-all flex-shrink-0">
                               <img
                                 src={`https://hologramxyz.s3.us-east-1.amazonaws.com/partnerships/MEGAETH/2d/thumbnails/${selectedCategoryData.name.toLowerCase()}/${
                                   trait.trait_number
@@ -338,8 +338,8 @@ export function TraitsAnalyticsDashboard() {
                                     "none";
                                 }}
                               />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                              <div className="absolute bottom-1 left-1">
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none"></div>
+                              <div className="absolute bottom-2 left-2">
                                 <Badge
                                   variant="default"
                                   size="sm"
@@ -423,7 +423,7 @@ export function TraitsAnalyticsDashboard() {
                                   className="group relative p-3 rounded-xl bg-accent/50 dark:bg-white/[0.02] hover:bg-accent dark:hover:bg-white/[0.04] border border-border dark:border-white/5 hover:border-blue-500/20 transition-all duration-200"
                                 >
                                   <div className="flex items-center gap-3">
-                                    <div className="relative w-16 h-16 rounded-xl overflow-hidden bg-black/20 ring-1 ring-border dark:ring-white/10 group-hover:ring-blue-500/20 transition-all flex-shrink-0">
+                                    <div className="relative w-24 h-24 sm:w-32 sm:h-32 rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-white dark:from-black/40 dark:to-black/60 ring-1 ring-border dark:ring-white/10 group-hover:ring-blue-500/20 transition-all flex-shrink-0">
                                       <img
                                         src={`https://hologramxyz.s3.us-east-1.amazonaws.com/partnerships/MEGAETH/2d/thumbnails/clothes/${outfit}.png`}
                                         alt={`Outfit ${outfit}`}
@@ -434,7 +434,7 @@ export function TraitsAnalyticsDashboard() {
                                           ).style.display = "none";
                                         }}
                                       />
-                                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none"></div>
                                     </div>
                                     <div className="flex-1 min-w-0">
                                       <div className="flex items-center justify-between mb-2">
