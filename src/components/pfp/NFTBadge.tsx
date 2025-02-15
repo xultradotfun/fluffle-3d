@@ -32,11 +32,12 @@ export function NFTBadge({ selectedId }: NFTBadgeProps) {
     );
   }
 
+  // Only show on desktop (sm and up)
   return (
     <Badge
       variant="secondary"
       size="md"
-      className="bg-gray-50 dark:bg-white/5 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/10"
+      className="hidden sm:flex bg-gray-50 dark:bg-white/5 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/10"
     >
       <div className="flex items-center gap-1.5">
         <svg

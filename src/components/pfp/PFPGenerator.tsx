@@ -203,35 +203,34 @@ export function PFPGenerator() {
   };
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-6 sm:space-y-8 animate-fade-in">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="space-y-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6">
+        <div className="space-y-3 sm:space-y-4">
           <div className="space-y-2">
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+            <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
               PFP Generator
             </h2>
-            <p className="text-base text-gray-600 dark:text-gray-300">
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 max-w-lg">
               Transform your Fluffle NFT into a beautiful profile picture with
               our custom generator.
             </p>
           </div>
-          <div className="flex items-center gap-2 text-sm">
-            <div className="h-4 w-[1px] bg-gradient-to-b from-purple-200 to-pink-200 dark:from-purple-500/30 dark:to-pink-500/30"></div>
+          <div className="inline-flex items-center gap-2 text-xs sm:text-sm px-2 py-1 rounded-lg bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-500/10 dark:to-pink-500/10 border border-purple-100 dark:border-purple-500/10">
             <span className="text-gray-500 dark:text-gray-400">
               Design by{" "}
               <a
                 href="https://twitter.com/juliencoppola"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-purple-600 dark:text-purple-400 hover:text-pink-600 dark:hover:text-pink-400 transition-colors"
+                className="text-purple-600 dark:text-purple-400 hover:text-pink-600 dark:hover:text-pink-400 transition-colors font-medium"
               >
                 @juliencoppola
               </a>
             </span>
           </div>
         </div>
-        <div className="flex-shrink-0">
+        <div className="flex-shrink-0 hidden sm:block">
           <NFTBadge selectedId={selectedNFT?.id} />
         </div>
       </div>
