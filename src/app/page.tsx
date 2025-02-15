@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/Badge";
 import { ViewSwitcher } from "@/components/ViewSwitcher";
 import { TraitsAnalyticsDashboard } from "@/components/analytics/TraitsAnalytics";
 import { PFPGenerator } from "@/components/pfp/PFPGenerator";
+import { MetaverseTeaser } from "@/components/metaverse/MetaverseTeaser";
 import Hero from "@/components/Hero";
 import type { NFTTrait } from "@/utils/nftLoader";
 
@@ -18,9 +19,9 @@ interface ViewerData {
 }
 
 export default function Home() {
-  const [activeView, setActiveView] = useState<"viewer" | "analytics" | "pfp">(
-    "viewer"
-  );
+  const [activeView, setActiveView] = useState<
+    "viewer" | "analytics" | "pfp" | "metaverse"
+  >("viewer");
   const [viewers, setViewers] = useState<ViewerData[]>([]);
   const [error, setError] = useState("");
 
@@ -32,6 +33,8 @@ export default function Home() {
       setActiveView("analytics");
     } else if (hash === "#pfp") {
       setActiveView("pfp");
+    } else if (hash === "#metaverse") {
+      setActiveView("metaverse");
     }
 
     // Listen for hash changes
@@ -41,6 +44,8 @@ export default function Home() {
         setActiveView("analytics");
       } else if (hash === "#pfp") {
         setActiveView("pfp");
+      } else if (hash === "#metaverse") {
+        setActiveView("metaverse");
       } else {
         setActiveView("viewer");
       }
@@ -51,7 +56,9 @@ export default function Home() {
   }, []);
 
   // Update URL when view changes
-  const handleViewChange = (view: "viewer" | "analytics" | "pfp") => {
+  const handleViewChange = (
+    view: "viewer" | "analytics" | "pfp" | "metaverse"
+  ) => {
     if (view === "analytics") {
       window.history.replaceState(null, "", "/#rarities");
       // Clear loaded NFTs when switching to analytics
@@ -60,6 +67,11 @@ export default function Home() {
     } else if (view === "pfp") {
       window.history.replaceState(null, "", "/#pfp");
       // Clear loaded NFTs when switching to PFP generator
+      setViewers([]);
+      setError("");
+    } else if (view === "metaverse") {
+      window.history.replaceState(null, "", "/#metaverse");
+      // Clear loaded NFTs when switching to metaverse
       setViewers([]);
       setError("");
     } else {
@@ -178,6 +190,8 @@ export default function Home() {
           )
         ) : activeView === "analytics" ? (
           <TraitsAnalyticsDashboard />
+        ) : activeView === "metaverse" ? (
+          <MetaverseTeaser />
         ) : (
           <PFPGenerator />
         )}

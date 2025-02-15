@@ -1,6 +1,6 @@
 interface ViewSwitcherProps {
-  activeView: "viewer" | "analytics" | "pfp";
-  onViewChange: (view: "viewer" | "analytics" | "pfp") => void;
+  activeView: "viewer" | "analytics" | "pfp" | "metaverse";
+  onViewChange: (view: "viewer" | "analytics" | "pfp" | "metaverse") => void;
 }
 
 export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
@@ -74,6 +74,29 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
           />
         </svg>
         PFP Generator
+      </button>
+      <button
+        onClick={() => onViewChange("metaverse")}
+        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+          activeView === "metaverse"
+            ? "bg-gradient-to-r from-pink-500/20 to-pink-500/10 text-pink-400 border border-pink-500/20"
+            : "text-gray-400 hover:text-white hover:bg-white/5"
+        }`}
+      >
+        <svg
+          className="w-4 h-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+          />
+        </svg>
+        Metaverse
       </button>
     </div>
   );
