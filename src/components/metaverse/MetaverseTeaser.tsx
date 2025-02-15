@@ -17,9 +17,7 @@ export function MetaverseTeaser() {
           Play With Your Fluffle in 3D
         </h2>
         <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-          Your Fluffle is coming to life in the metaverse! Soon you'll be able
-          to play games, explore, and hang out with other Fluffles in immersive
-          3D worlds, powered by{" "}
+          Your Fluffle is coming to life in the metaverse! Login to{" "}
           <a
             href="https://hyperfy.io/"
             target="_blank"
@@ -27,8 +25,8 @@ export function MetaverseTeaser() {
             className="text-pink-600 dark:text-pink-400 hover:text-pink-500 dark:hover:text-pink-300 transition-colors border-b border-pink-200 dark:border-pink-400/30 hover:border-pink-400 dark:hover:border-pink-400"
           >
             Hyperfy
-          </a>
-          .
+          </a>{" "}
+          with your wallet that owns a Fluffle and the base model will appear in your avatar inventory. Wearables coming soon!
         </p>
 
         {/* Preview Video */}
@@ -46,7 +44,7 @@ export function MetaverseTeaser() {
                 poster="/hyperfy-preview-poster.jpg"
               >
                 <source
-                  src="https://cdn.discordapp.com/attachments/867523448447041599/1340365923223207987/hyperfy_megaeth.mp4?ex=67b2188a&is=67b0c70a&hm=c1b3248013a8b8b3041a92ff1db750cb06c8e35ed872f06811698cd9628a6982"
+                  src="https://cdn.discordapp.com/attachments/1111164047904215094/1340446449737007184/hyperfyio_megaeth.mp4?ex=67b26389&is=67b11209&hm=b1d8eb5b73a667a26cd3e0031a09f1889d6b39875cf47d5f9b170a59f586e1cf&"
                   type="video/mp4"
                 />
                 Your browser does not support the video tag.
