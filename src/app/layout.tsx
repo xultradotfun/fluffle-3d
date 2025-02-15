@@ -15,6 +15,20 @@ export const metadata: Metadata = {
     apple: [{ url: "/favicon.ico", sizes: "180x180" }],
   },
   manifest: "/manifest.json",
+  openGraph: {
+    title: "Fluffle Tools - 3D Viewer, Analytics & PFP Generator",
+    description:
+      "Many utilities for Fluffle NFT holders. View your NFTs in 3D, analyze rarity, generate unique profile pictures, and more!",
+    images: [{ url: "/socialpreview.jpg" }],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Fluffle Tools - 3D Viewer, Analytics & PFP Generator",
+    description:
+      "Many utilities for Fluffle NFT holders. View your NFTs in 3D, analyze rarity, generate unique profile pictures, and more!",
+    images: ["/socialpreview.jpg"],
+  },
 };
 
 export const viewport: Viewport = {
