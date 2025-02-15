@@ -46,7 +46,7 @@ export function MetaverseTeaser() {
                 poster="/hyperfy-preview-poster.jpg"
               >
                 <source
-                  src="https://cdn.discordapp.com/attachments/867523448447041599/1340267799976869900/hyperfy-preview.mp4?ex=67b1bd28&is=67b06ba8&hm=da49ffc22cf64dcee1c628a55c410f9228edd68d36331d9ed59e73c6a421e3c6"
+                  src="https://cdn.discordapp.com/attachments/867523448447041599/1340365923223207987/hyperfy_megaeth.mp4?ex=67b2188a&is=67b0c70a&hm=c1b3248013a8b8b3041a92ff1db750cb06c8e35ed872f06811698cd9628a6982"
                   type="video/mp4"
                 />
                 Your browser does not support the video tag.
