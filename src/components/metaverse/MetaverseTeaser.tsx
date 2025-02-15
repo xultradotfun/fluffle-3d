@@ -36,13 +36,14 @@ export function MetaverseTeaser() {
           <div className="absolute -inset-1 bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-blue-500/20 rounded-2xl blur-2xl opacity-50"></div>
           <div className="relative aspect-video rounded-2xl overflow-hidden bg-gradient-to-br from-white dark:from-white/[0.02] to-gray-50/80 dark:to-white/[0.01] border border-gray-200 dark:border-white/10 group hover:border-pink-500/30 dark:hover:border-pink-500/20 transition-all shadow-sm">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(236,72,153,0.08),transparent)] dark:bg-[radial-gradient(circle_at_center,rgba(236,72,153,0.05),transparent)]" />
-            <div className="relative w-full h-full">
+            <div className="absolute inset-0 flex items-center justify-center bg-black/5 dark:bg-black/20">
               <video
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="absolute inset-0 w-full h-full object-cover scale-[1.15] origin-center"
                 autoPlay
                 loop
                 muted
                 playsInline
+                poster="/hyperfy-preview-poster.jpg"
               >
                 <source
                   src="https://cdn.discordapp.com/attachments/867523448447041599/1340267799976869900/hyperfy-preview.mp4?ex=67b1bd28&is=67b06ba8&hm=da49ffc22cf64dcee1c628a55c410f9228edd68d36331d9ed59e73c6a421e3c6"
@@ -55,36 +56,23 @@ export function MetaverseTeaser() {
 
             {/* Coming Soon Badge */}
             <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-white/90 dark:bg-black/80 backdrop-blur-sm border border-gray-200 dark:border-white/10 hover:border-pink-500/30 dark:hover:border-pink-500/20 transition-all shadow-sm">
-                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-pink-50 to-purple-50 dark:from-pink-500/20 dark:to-purple-500/20 border border-pink-100 dark:border-pink-500/20 flex items-center justify-center">
-                  <svg
-                    className="w-4.5 h-4.5 text-pink-600 dark:text-pink-400"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-base font-semibold text-gray-900 dark:text-white">
-                    Metaverse Integration
-                  </h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Coming Soon
-                  </p>
-                </div>
+              <div className="flex items-center gap-2 px-3 py-2 rounded-xl bg-gradient-to-r from-white/90 to-white/80 dark:from-black/80 dark:to-black/70 backdrop-blur-sm border border-white/30 dark:border-white/10 shadow-sm">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-pink-500 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-pink-600"></span>
+                </span>
+                <span className="text-sm font-medium text-gray-800 dark:text-white">
+                  Coming Soon to{" "}
+                  <span className="bg-gradient-to-r from-pink-600 to-purple-600 dark:from-pink-500 dark:to-purple-500 bg-clip-text text-transparent">
+                    Hyperfy
+                  </span>
+                </span>
               </div>
               <a
                 href="https://hyperfy.io/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 dark:from-pink-500 dark:to-purple-500 text-white font-medium text-sm hover:from-pink-700 hover:to-purple-700 dark:hover:from-pink-600 dark:hover:to-purple-600 transition-all flex items-center gap-2 hover:gap-3 group/btn shadow-lg shadow-pink-500/20"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-medium text-sm transition-all group/btn shadow-sm"
               >
                 <span>Learn More</span>
                 <svg
