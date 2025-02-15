@@ -7,8 +7,8 @@ interface PreviewCardProps {
 
 export function PreviewCard({ canvasRef, isLoading }: PreviewCardProps) {
   return (
-    <Card className="backdrop-blur-sm bg-white/[0.02] border-white/5 hover:border-white/10 transition-colors">
-      <div className="p-6 min-h-[600px]">
+    <Card className="backdrop-blur-sm bg-white/[0.02] border-white/5 hover:border-white/10 transition-colors h-full">
+      <div className="p-4 lg:p-6 flex flex-col">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center">

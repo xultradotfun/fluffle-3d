@@ -205,7 +205,7 @@ export function PFPGenerator() {
   return (
     <div className="space-y-8 animate-fade-in">
       {/* Header */}
-      <div className="flex items-center justify-between h-[88px]">
+      <div className="flex items-center justify-between">
         <div>
           <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-2">
             PFP Generator
@@ -232,7 +232,7 @@ export function PFPGenerator() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr">
         {/* Preview Card */}
         <PreviewCard canvasRef={canvasRef} isLoading={isLoading} />
 
