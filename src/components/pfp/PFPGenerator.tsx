@@ -89,12 +89,12 @@ export function PFPGenerator() {
             canvas.height / thumbnail.height
           ) * 0.9; // 90% of the container to leave some padding
       } else {
-        // For bust view, zoom in 80% more but keep centered
+        // For bust view, zoom in more but keep centered
         scale =
           Math.min(
             canvas.width / thumbnail.width,
             canvas.height / thumbnail.height
-          ) * 1.8; // 80% zoom
+          ) * 2.2; // Increased zoom from 1.8 to 2.2
       }
 
       // Calculate y position (always centered vertically)
@@ -102,7 +102,7 @@ export function PFPGenerator() {
 
       // Add offset for bust view to move image down
       if (currentZoom === "bust") {
-        y += canvas.height * 0.1; // Move down by 10% of canvas height
+        y += canvas.height * 0.15; // Increased from 0.1 to 0.15 to move down more
       }
 
       // Calculate x position (always centered horizontally)
