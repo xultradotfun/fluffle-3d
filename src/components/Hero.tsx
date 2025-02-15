@@ -12,24 +12,39 @@ export default function Hero() {
       {/* Content */}
       <div className="mx-auto max-w-4xl px-4">
         <div className="relative flex flex-col items-center">
-          {/* Logo and Title */}
-          <div className="flex items-center gap-4 mb-6">
-            <div className="relative group">
-              <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-blue-500 to-indigo-500 opacity-20 blur transition group-hover:opacity-30 dark:from-blue-500 dark:to-indigo-500 dark:opacity-20" />
-              <div className="relative w-12 h-12 rounded-xl bg-white dark:bg-gradient-to-br dark:from-blue-500/20 dark:to-indigo-500/20 border border-blue-100 dark:border-white/[0.08] shadow-xl flex items-center justify-center text-2xl">
+          {/* Title Section */}
+          <div className="text-center space-y-6 mb-12">
+            {/* Logo and Title */}
+            <div className="inline-flex items-baseline gap-3">
+              <span className="text-5xl text-gray-900 dark:text-white [filter:grayscale(1)_brightness(0.1)] dark:[filter:grayscale(1)_brightness(2)] relative top-1">
                 🐰
-              </div>
+              </span>
+              <h1 className="text-5xl font-black tracking-tight bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-200 dark:to-gray-300 bg-clip-text text-transparent">
+                Fluffle Tools
+              </h1>
             </div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              Fluffle Tools
-            </h1>
-          </div>
 
-          {/* Description */}
-          <p className="text-lg text-gray-600 dark:text-gray-300 text-center max-w-2xl mb-8">
-            Many utilities for Fluffle NFT holders. View your NFTs in 3D,
-            analyze rarity, generate unique profile pictures, and more!
-          </p>
+            {/* Description */}
+            <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              Many utilities for{" "}
+              <span className="text-gray-900 dark:text-white font-medium">
+                Fluffle NFT
+              </span>{" "}
+              holders. View your NFTs in{" "}
+              <span className="text-gray-900 dark:text-white font-medium">
+                3D
+              </span>
+              , analyze{" "}
+              <span className="text-gray-900 dark:text-white font-medium">
+                rarity
+              </span>
+              , generate unique{" "}
+              <span className="text-gray-900 dark:text-white font-medium">
+                profile pictures
+              </span>
+              , and more!
+            </p>
+          </div>
 
           {/* Stats and Links */}
           <div className="flex flex-wrap items-center justify-center gap-4">
