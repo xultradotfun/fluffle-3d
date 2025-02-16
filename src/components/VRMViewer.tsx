@@ -454,6 +454,8 @@ export default function VRMViewer({ modelUrls }: { modelUrls: string[] }) {
     Record<string, number>
   >({});
   const controlsRef = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   // Define initial camera settings
   const INITIAL_CAMERA_POSITION = [0, 0.8, 3] as const;
@@ -500,6 +502,28 @@ export default function VRMViewer({ modelUrls }: { modelUrls: string[] }) {
     }
   };
 
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      containerRef.current?.requestFullscreen();
+      setIsFullscreen(true);
+    } else {
+      document.exitFullscreen();
+      setIsFullscreen(false);
+    }
+  };
+
+  // Listen for fullscreen change events
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => {
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+    };
+  }, []);
+
   // Calculate total loading progress
   const totalProgress =
     modelUrls.length > 0
@@ -508,7 +532,7 @@ export default function VRMViewer({ modelUrls }: { modelUrls: string[] }) {
       : 0;
 
   return (
-    <div className="relative w-full aspect-square">
+    <div ref={containerRef} className="relative w-full aspect-square">
       {/* Loading Overlay */}
       {totalProgress < 100 && (
         <div className="absolute inset-0 z-10 bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center">
@@ -533,6 +557,41 @@ export default function VRMViewer({ modelUrls }: { modelUrls: string[] }) {
 
       {/* Camera Controls UI */}
       <div className="absolute bottom-4 right-4 z-20 flex gap-2">
+        <button
+          className="p-2 bg-white/5 backdrop-blur-sm rounded-lg hover:bg-white/10 transition-colors border border-white/10 hover:border-white/20"
+          title="Toggle Fullscreen"
+          onClick={toggleFullscreen}
+        >
+          {isFullscreen ? (
+            <svg
+              className="w-5 h-5 text-[#ededed]"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          ) : (
+            <svg
+              className="w-5 h-5 text-[#ededed]"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 8V4m0 0h4M4 4l5 5m11-5V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 4h-4m4 0l-5-5"
+              />
+            </svg>
+          )}
+        </button>
         <button
           className="p-2 bg-white/5 backdrop-blur-sm rounded-lg hover:bg-white/10 transition-colors border border-white/10 hover:border-white/20"
           title="Reset Camera"
