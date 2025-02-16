@@ -95,18 +95,6 @@ export async function fetchTraitsAnalytics(): Promise<TraitsAnalytics> {
       });
     });
 
-    // Debug log tribe outfit distribution
-    console.log("Tribe Outfit Distribution:", tribeOutfitCounters);
-    console.log(
-      "Unique outfits per tribe:",
-      Object.fromEntries(
-        Object.entries(tribeOutfitSets).map(([tribe, outfits]) => [
-          tribe,
-          outfits.size,
-        ])
-      )
-    );
-
     // Convert counters to categories array
     const categories: TraitCategory[] = Object.entries(traitCounters).map(
       ([category, traits]) => {
