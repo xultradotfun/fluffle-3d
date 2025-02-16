@@ -36,7 +36,7 @@ export default function Hero() {
         setLogoNumber(nextNum);
         setIsTransitioning(false);
       }, 100);
-    }, 1500);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [logoNumber]);
@@ -55,67 +55,26 @@ export default function Hero() {
           {/* Title Section */}
           <div className="text-center space-y-6 mb-12">
             {/* Logo and Title */}
-            <div className="inline-flex flex-col sm:flex-row items-center gap-4">
-              <div className="relative group">
-                <div className="absolute -inset-0.5 rounded-full bg-gradient-to-r from-gray-900/20 to-gray-600/20 dark:from-white/20 dark:to-gray-300/20 blur-sm transition group-hover:blur"></div>
-                <div className="relative p-3 rounded-full bg-white/50 dark:bg-black/50 backdrop-blur-sm border border-gray-200 dark:border-gray-800 transition-all duration-200 hover:scale-105 hover:rotate-12">
-                  <div
-                    className={`transition-all duration-200 ${
-                      isTransitioning
-                        ? "scale-75 rotate-180 opacity-0"
-                        : "scale-100 rotate-0 opacity-100"
-                    }`}
-                  >
-                    <div
-                      style={{
-                        backgroundImage: `url(/icons/logo-${logoNumber}.png)`,
-                        backgroundSize: "contain",
-                        backgroundPosition: "center",
-                        backgroundRepeat: "no-repeat",
-                        width: "48px",
-                        height: "48px",
-                      }}
-                      className="brightness-0 dark:invert"
-                    />
-                  </div>
+            <div className="inline-flex items-center gap-4">
+              <div className="w-14 h-14 rounded-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm flex items-center justify-center">
+                <div
+                  className={`transition-all duration-150 ${
+                    isTransitioning
+                      ? "-rotate-180 scale-75 opacity-0"
+                      : "rotate-0 scale-100 opacity-100"
+                  }`}
+                >
+                  <img
+                    src={`/icons/logo-${logoNumber}.png`}
+                    alt="Fluffle Logo"
+                    className="w-9 h-9 object-contain brightness-0 dark:invert"
+                  />
                 </div>
               </div>
-              <h1 className="text-4xl sm:text-5xl font-black tracking-tight bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-200 dark:to-gray-300 bg-clip-text text-transparent">
+              <h1 className="text-5xl font-black tracking-tight bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-200 dark:to-gray-300 bg-clip-text text-transparent">
                 Fluffle Tools
               </h1>
             </div>
-
-            {/* Style 2: Floating effect with shadow */}
-            {/* <div className="inline-flex items-center gap-4">
-              <div className="relative transform hover:-translate-y-1 transition-transform duration-200">
-                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-white to-gray-100 dark:from-gray-800 dark:to-gray-900 shadow-lg flex items-center justify-center">
-                  <img
-                    src={`/icons/logo-${logoNumber}.png`}
-                    alt="Fluffle Logo"
-                    className="w-12 h-12 object-contain brightness-0 dark:invert"
-                  />
-                </div>
-              </div>
-              <h1 className="text-5xl font-black tracking-tight bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-200 dark:to-gray-300 bg-clip-text text-transparent">
-                Fluffle Tools
-              </h1>
-            </div> */}
-
-            {/* Style 3: Minimal with subtle ring */}
-            {/* <div className="inline-flex items-center gap-4">
-              <div className="relative">
-                <div className="w-14 h-14 rounded-full ring-1 ring-gray-200 dark:ring-gray-800 ring-offset-2 ring-offset-white dark:ring-offset-black flex items-center justify-center">
-                  <img
-                    src={`/icons/logo-${logoNumber}.png`}
-                    alt="Fluffle Logo"
-                    className="w-10 h-10 object-contain brightness-0 dark:invert"
-                  />
-                </div>
-              </div>
-              <h1 className="text-5xl font-black tracking-tight bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-200 dark:to-gray-300 bg-clip-text text-transparent">
-                Fluffle Tools
-              </h1>
-            </div> */}
 
             {/* Description */}
             <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
