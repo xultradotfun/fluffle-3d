@@ -12,11 +12,13 @@ interface InputCardProps {
   isCopied: boolean;
   zoomLevel: ZoomLevel;
   compositeImage: string | null;
+  includeBackground: boolean;
   onNFTLoad: (id: string, urls: string[], traits: NFTTrait) => void;
   onClear: () => void;
   onZoomChange: (level: ZoomLevel) => void;
   onCopyToClipboard: () => void;
   onDownload: () => void;
+  onBackgroundToggle: (include: boolean) => void;
 }
 
 export function InputCard({
@@ -26,11 +28,13 @@ export function InputCard({
   isCopied,
   zoomLevel,
   compositeImage,
+  includeBackground,
   onNFTLoad,
   onClear,
   onZoomChange,
   onCopyToClipboard,
   onDownload,
+  onBackgroundToggle,
 }: InputCardProps) {
   const handleRandomNFT = () => {
     const random = Math.floor(Math.random() * 5000).toString();
@@ -181,6 +185,37 @@ export function InputCard({
 
             {/* Zoom Controls */}
             <ZoomControls currentZoom={zoomLevel} onZoomChange={onZoomChange} />
+
+            {/* Add background toggle after zoom controls */}
+            {selectedNFT && (
+              <div className="flex items-center justify-between gap-4 px-4 py-3 border-t border-gray-100 dark:border-gray-800">
+                <span className="text-sm text-gray-600 dark:text-gray-300">
+                  Background
+                </span>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => onBackgroundToggle(true)}
+                    className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                      includeBackground
+                        ? "bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300"
+                        : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                    }`}
+                  >
+                    With
+                  </button>
+                  <button
+                    onClick={() => onBackgroundToggle(false)}
+                    className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                      !includeBackground
+                        ? "bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300"
+                        : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                    }`}
+                  >
+                    Without
+                  </button>
+                </div>
+              </div>
+            )}
 
             {/* Quick Actions */}
             <div className="flex justify-center">

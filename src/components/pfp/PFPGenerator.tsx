@@ -19,6 +19,7 @@ export function PFPGenerator() {
   const [isLoading, setIsLoading] = useState(false);
   const [zoomLevel, setZoomLevel] = useState<ZoomLevel>("bust");
   const [bgImage, setBgImage] = useState<HTMLImageElement | null>(null);
+  const [includeBackground, setIncludeBackground] = useState(true);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // Load background image on mount
@@ -45,7 +46,11 @@ export function PFPGenerator() {
     loadBgImage();
   }, []);
 
-  const generatePFP = async (nftId: string, currentZoom: ZoomLevel) => {
+  const generatePFP = async (
+    nftId: string,
+    currentZoom: ZoomLevel,
+    withBackground: boolean
+  ) => {
     try {
       setIsLoading(true);
       setError("");
@@ -62,53 +67,50 @@ export function PFPGenerator() {
 
       const thumbnail = await loadImage(thumbnailUrl);
 
-      // Ensure canvas and background are ready
-      if (!canvasRef.current || !bgImage) {
-        throw new Error("Canvas or background not initialized");
+      // Ensure canvas is ready
+      if (!canvasRef.current) {
+        throw new Error("Canvas not initialized");
       }
 
-      // Create canvas and draw images
+      // Create canvas and get context
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
       if (!ctx) {
         throw new Error("Failed to get canvas context");
       }
 
-      // Reset canvas and draw background
-      canvas.width = bgImage.width;
-      canvas.height = bgImage.height;
-      ctx.drawImage(bgImage, 0, 0);
+      // Set dimensions based on background preference
+      canvas.width = withBackground && bgImage ? bgImage.width : 1000;
+      canvas.height = withBackground && bgImage ? bgImage.height : 1000;
 
-      // Calculate dimensions based on zoom level
-      let scale, y;
-      if (currentZoom === "full") {
-        // For full body, fit the entire image while maintaining aspect ratio
-        scale =
-          Math.min(
-            canvas.width / thumbnail.width,
-            canvas.height / thumbnail.height
-          ) * 0.9; // 90% of the container to leave some padding
-      } else {
-        // For bust view, zoom in more but keep centered
-        scale =
-          Math.min(
-            canvas.width / thumbnail.width,
-            canvas.height / thumbnail.height
-          ) * 2.2; // Increased zoom from 1.8 to 2.2
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw background if requested
+      if (withBackground && bgImage) {
+        ctx.drawImage(bgImage, 0, 0);
       }
 
-      // Calculate y position (always centered vertically)
-      y = (canvas.height - thumbnail.height * scale) / 2;
+      // Calculate scale based on zoom and background
+      const baseScale = Math.min(
+        canvas.width / thumbnail.width,
+        canvas.height / thumbnail.height
+      );
 
-      // Add offset for bust view to move image down
-      if (currentZoom === "bust") {
-        y += canvas.height * 0.15; // Increased from 0.1 to 0.15 to move down more
-      }
+      const scale =
+        currentZoom === "full"
+          ? baseScale * (withBackground ? 0.9 : 1)
+          : baseScale * (withBackground ? 2.2 : 2.5);
 
-      // Calculate x position (always centered horizontally)
+      // Calculate positions
       const x = (canvas.width - thumbnail.width * scale) / 2;
+      let y = (canvas.height - thumbnail.height * scale) / 2;
 
-      // Draw thumbnail
+      if (currentZoom === "bust") {
+        y += canvas.height * (withBackground ? 0.15 : 0.2);
+      }
+
+      // Draw NFT
       ctx.drawImage(
         thumbnail,
         x,
@@ -117,7 +119,7 @@ export function PFPGenerator() {
         thumbnail.height * scale
       );
 
-      // Convert to data URL
+      // Update state
       const dataUrl = canvas.toDataURL("image/png");
       setCompositeImage(dataUrl);
     } catch (err) {
@@ -150,19 +152,24 @@ export function PFPGenerator() {
     setSelectedNFT({ id, traits });
     setCompositeImage(null);
     setError("");
-    await generatePFP(id, zoomLevel);
+    await generatePFP(id, zoomLevel, includeBackground);
   };
 
   const handleClear = () => {
     setSelectedNFT(null);
     setCompositeImage(null);
     setError("");
-    // Reset zoom level to bust when clearing
     setZoomLevel("bust");
-    // Redraw background only
-    if (canvasRef.current && bgImage) {
-      const ctx = canvasRef.current.getContext("2d");
-      if (ctx) {
+    setIncludeBackground(true);
+
+    // Clear canvas and reset to initial state
+    if (canvasRef.current) {
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      if (ctx && bgImage) {
+        canvas.width = bgImage.width;
+        canvas.height = bgImage.height;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(bgImage, 0, 0);
       }
     }
@@ -171,8 +178,15 @@ export function PFPGenerator() {
   const handleZoomChange = async (level: ZoomLevel) => {
     setZoomLevel(level);
     if (selectedNFT) {
-      await generatePFP(selectedNFT.id, level);
+      await generatePFP(selectedNFT.id, level, includeBackground);
     }
+  };
+
+  const handleBackgroundToggle = async (include: boolean) => {
+    if (!selectedNFT) return;
+
+    setIncludeBackground(include);
+    await generatePFP(selectedNFT.id, zoomLevel, include);
   };
 
   const handleCopyToClipboard = async () => {
@@ -247,11 +261,13 @@ export function PFPGenerator() {
           isCopied={isCopied}
           zoomLevel={zoomLevel}
           compositeImage={compositeImage}
+          includeBackground={includeBackground}
           onNFTLoad={handleNFTLoad}
           onClear={handleClear}
           onZoomChange={handleZoomChange}
           onCopyToClipboard={handleCopyToClipboard}
           onDownload={handleDownload}
+          onBackgroundToggle={handleBackgroundToggle}
         />
       </div>
     </div>
