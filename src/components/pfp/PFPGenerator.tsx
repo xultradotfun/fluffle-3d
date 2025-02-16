@@ -91,23 +91,25 @@ export function PFPGenerator() {
         ctx.drawImage(bgImage, 0, 0);
       }
 
-      // Calculate scale based on zoom and background
+      // Calculate base scale to fit the image
       const baseScale = Math.min(
         canvas.width / thumbnail.width,
         canvas.height / thumbnail.height
       );
 
+      // Apply zoom scaling - using same multipliers regardless of background
       const scale =
         currentZoom === "full"
-          ? baseScale * (withBackground ? 0.9 : 1)
-          : baseScale * (withBackground ? 2.2 : 2.5);
+          ? baseScale * 0.9 // Full body view
+          : baseScale * 2.2; // Bust view
 
       // Calculate positions
       const x = (canvas.width - thumbnail.width * scale) / 2;
       let y = (canvas.height - thumbnail.height * scale) / 2;
 
+      // Add offset for bust view - using same offset regardless of background
       if (currentZoom === "bust") {
-        y += canvas.height * (withBackground ? 0.15 : 0.2);
+        y += canvas.height * 0.15;
       }
 
       // Draw NFT
@@ -249,26 +251,30 @@ export function PFPGenerator() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-fr">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Preview Card */}
-        <PreviewCard canvasRef={canvasRef} isLoading={isLoading} />
+        <div className="h-fit">
+          <PreviewCard canvasRef={canvasRef} isLoading={isLoading} />
+        </div>
 
         {/* Input Card */}
-        <InputCard
-          selectedNFT={selectedNFT}
-          error={error}
-          isLoading={isLoading}
-          isCopied={isCopied}
-          zoomLevel={zoomLevel}
-          compositeImage={compositeImage}
-          includeBackground={includeBackground}
-          onNFTLoad={handleNFTLoad}
-          onClear={handleClear}
-          onZoomChange={handleZoomChange}
-          onCopyToClipboard={handleCopyToClipboard}
-          onDownload={handleDownload}
-          onBackgroundToggle={handleBackgroundToggle}
-        />
+        <div className="h-fit">
+          <InputCard
+            selectedNFT={selectedNFT}
+            error={error}
+            isLoading={isLoading}
+            isCopied={isCopied}
+            zoomLevel={zoomLevel}
+            compositeImage={compositeImage}
+            includeBackground={includeBackground}
+            onNFTLoad={handleNFTLoad}
+            onClear={handleClear}
+            onZoomChange={handleZoomChange}
+            onCopyToClipboard={handleCopyToClipboard}
+            onDownload={handleDownload}
+            onBackgroundToggle={handleBackgroundToggle}
+          />
+        </div>
       </div>
     </div>
   );
