@@ -1,27 +1,49 @@
 # Fluffle Tools
 
-A comprehensive web application built with Next.js that provides various utilities for Fluffle NFT holders. This project is optimized for deployment on Vercel.
+<div align="center">
+  <img src="/public/socialpreview.jpg" alt="Fluffle Tools Preview" width="600" />
+  <p>A comprehensive web application providing utilities for MegaETH Fluffle NFT holders.</p>
+</div>
 
-## Features
+<div align="center">
+  <a href="https://nextjs.org">
+    <img src="https://img.shields.io/badge/Next.js-13-black" alt="Next.js" />
+  </a>
+  <a href="https://www.typescriptlang.org">
+    <img src="https://img.shields.io/badge/TypeScript-5-blue" alt="TypeScript" />
+  </a>
+  <a href="https://tailwindcss.com">
+    <img src="https://img.shields.io/badge/Tailwind-3-38bdf8" alt="Tailwind CSS" />
+  </a>
+  <a href="https://threejs.org">
+    <img src="https://img.shields.io/badge/Three.js-Latest-black" alt="Three.js" />
+  </a>
+  <img src="https://img.shields.io/badge/License-Custom-red" alt="License" />
+</div>
 
-- 3D Model Viewer with VRM support
-- Rarity Analytics Dashboard
-- Custom PFP Generator with background
-- Interactive UI with modern design
-- Support for all 5,000 Fluffle NFTs
-- Responsive layout for all devices
+## ✨ Features
 
-## Prerequisites
+- **3D Model Viewer**: View your Fluffle in 3D with VRM support
+- **Rarity Analytics**: Comprehensive dashboard for trait rarity analysis
+- **PFP Generator**: Create custom profile pictures with background options
+- **Modern UI/UX**: Clean, responsive interface with dark mode support
+- **Full Collection Support**: Compatible with all 5,000 Fluffle NFTs
+- **Performance Optimized**: Fast loading and smooth animations
+
+## 🚀 Quick Start
+
+### Prerequisites
 
 - Node.js 18.x or later
 - npm 9.x or later
+- Git
 
-## Getting Started
+### Installation
 
 1. Clone the repository:
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/yourusername/fluffle-3d.git
 cd fluffle-3d
 ```
 
@@ -31,30 +53,68 @@ cd fluffle-3d
 npm install
 ```
 
-3. Run the development server:
+3. Start the development server:
 
 ```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-## Deploy on Vercel
+## 🛠 Technology Stack
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).
+- **Framework**: [Next.js 13](https://nextjs.org/) with App Router
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **3D Graphics**:
+  - [Three.js](https://threejs.org/)
+  - [@pixiv/three-vrm](https://github.com/pixiv/three-vrm)
+- **State Management**: React Hooks
+- **Deployment**: [Vercel](https://vercel.com)
+
+## 📦 Project Structure
+
+```
+fluffle-3d/
+├── src/
+│   ├── app/             # Next.js app router pages
+│   ├── components/      # React components
+│   │   ├── analytics/   # Analytics components
+│   │   ├── metaverse/   # 3D viewer components
+│   │   ├── pfp/         # PFP generator components
+│   │   └── ui/          # Shared UI components
+│   ├── utils/           # Utility functions
+│   └── styles/          # Global styles
+├── public/              # Static assets
+└── types/               # TypeScript type definitions
+```
+
+## 🚢 Deployment
+
+This project is optimized for deployment on Vercel:
 
 1. Push your code to a Git repository
-2. Import your repository on Vercel
-3. Vercel will automatically detect Next.js and configure the build settings
+2. Import your repository on [Vercel](https://vercel.com/new)
+3. Vercel will automatically detect Next.js and deploy
 
-## Technologies Used
+## 🤝 Contributing
 
-- [Next.js](https://nextjs.org/) - React framework
-- [Three.js](https://threejs.org/) - 3D graphics library
-- [@pixiv/three-vrm](https://github.com/pixiv/three-vrm) - VRM file loader and runtime
-- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
-- [TypeScript](https://www.typescriptlang.org/) - Type-safe JavaScript
+Contributions are welcome! Please check our [Contributing Guide](CONTRIBUTING.md) for details.
 
-## License
+## 📄 License
 
-MIT
+This project is protected under a custom license that allows viewing, using, and contributing to the original repository while restricting redistribution and commercial use. See the [LICENSE](LICENSE) file for details.
+
+Key points:
+
+- ✅ You can contribute to the project
+- ✅ You can use it for private, non-distributed purposes
+- ❌ You cannot redistribute it as a standalone application
+- ❌ You cannot create public derivative works
+- ❌ You cannot use it for commercial purposes without permission
+
+## 🔗 Links
+
+- [Website](https://fluffletools.com)
+- [OpenSea Collection](https://opensea.io/collection/megaeth-nft-1)
+- [Twitter](https://twitter.com/0x_ultra)

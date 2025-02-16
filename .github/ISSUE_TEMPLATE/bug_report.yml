@@ -1,0 +1,81 @@
+name: Bug Report
+description: Create a report to help us improve
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
+
+  - type: input
+    id: version
+    attributes:
+      label: Browser & Version
+      description: What browser and version are you using?
+      placeholder: "e.g. Chrome 120"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: nft_type
+    attributes:
+      label: NFT Type
+      description: Which NFT are you having issues with?
+      options:
+        - Regular Fluffle
+        - Special Edition
+        - Not NFT Related
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Also tell us what you expected to happen
+      placeholder: "Describe the bug..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: How can we reproduce this issue?
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. Scroll down to '...'
+        4. See error
+    validations:
+      required: true
+
+  - type: dropdown
+    id: feature
+    attributes:
+      label: Feature Area
+      description: Which feature area is affected?
+      options:
+        - 3D Viewer
+        - PFP Generator
+        - Rarity Analytics
+        - UI/Design
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Please copy and paste any relevant log output. This will be automatically formatted into code.
+      render: shell
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our contribution guidelines
+      options:
+        - label: I have checked that this issue hasn't already been reported
+          required: true
