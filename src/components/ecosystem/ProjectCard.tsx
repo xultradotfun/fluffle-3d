@@ -1,6 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+
+// Global cache for profile images across all ProjectCard instances
+const profileImageCache = new Map<string, string>();
 
 interface Project {
   name: string;
@@ -18,18 +21,34 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
-  const [profileImageUrl, setProfileImageUrl] = useState<string>(
-    `https://unavatar.io/twitter/${project.twitter}?fallback=false`
-  );
+  const [profileImageUrl, setProfileImageUrl] = useState<string>(() => {
+    // Try to get from cache first
+    return (
+      profileImageCache.get(project.twitter) ||
+      `https://unavatar.io/twitter/${project.twitter}?fallback=false`
+    );
+  });
   const [retryCount, setRetryCount] = useState(0);
+  const isMounted = useRef(true);
   const MAX_RETRIES = 3;
   const RETRY_DELAY = 1000; // 1 second delay between retries
+
+  useEffect(() => {
+    // Cleanup function to prevent memory leaks
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   const loadProfileImage = async () => {
     const img = new Image();
 
     return new Promise<void>((resolve, reject) => {
-      img.onload = () => resolve();
+      img.onload = () => {
+        // Only cache successful loads
+        profileImageCache.set(project.twitter, img.src);
+        resolve();
+      };
       img.onerror = () => reject();
       img.src = `https://unavatar.io/twitter/${
         project.twitter
@@ -38,6 +57,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
   };
 
   const handleImageError = async () => {
+    if (!isMounted.current) return;
+
     if (retryCount < MAX_RETRIES) {
       // Wait for the retry delay
       await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY));
@@ -45,20 +66,26 @@ export function ProjectCard({ project }: ProjectCardProps) {
       try {
         await loadProfileImage();
         // If successful, update the image URL with a cache buster
-        setProfileImageUrl(
-          `https://unavatar.io/twitter/${
+        if (isMounted.current) {
+          const newUrl = `https://unavatar.io/twitter/${
             project.twitter
-          }?fallback=false&t=${Date.now()}`
-        );
+          }?fallback=false&t=${Date.now()}`;
+          setProfileImageUrl(newUrl);
+          profileImageCache.set(project.twitter, newUrl);
+        }
       } catch {
         // If failed, increment retry count and try again
-        setRetryCount((prev) => prev + 1);
+        if (isMounted.current) {
+          setRetryCount((prev) => prev + 1);
+        }
       }
     } else {
-      // After all retries fail, fall back to initials
-      setProfileImageUrl(
-        `https://api.dicebear.com/7.x/initials/svg?seed=${project.name}`
-      );
+      // After all retries fail, fall back to initials and cache the fallback
+      const fallbackUrl = `https://api.dicebear.com/7.x/initials/svg?seed=${project.name}`;
+      if (isMounted.current) {
+        setProfileImageUrl(fallbackUrl);
+        profileImageCache.set(project.twitter, fallbackUrl);
+      }
     }
   };
 

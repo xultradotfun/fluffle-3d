@@ -27,13 +27,21 @@ export function EcosystemDashboard() {
     return ecosystemData.projects.filter((project) => project.megaMafia).length;
   };
 
-  const filteredProjects = ecosystemData.projects.filter((project) => {
-    const categoryMatch = selectedCategory
-      ? project.category === selectedCategory
-      : true;
-    const megaMafiaMatch = showMegaMafiaOnly ? project.megaMafia : true;
-    return categoryMatch && megaMafiaMatch;
-  });
+  const filteredProjects = ecosystemData.projects
+    .filter((project) => {
+      const categoryMatch = selectedCategory
+        ? project.category === selectedCategory
+        : true;
+      const megaMafiaMatch = showMegaMafiaOnly ? project.megaMafia : true;
+      return categoryMatch && megaMafiaMatch;
+    })
+    .sort((a, b) => {
+      // First sort by MegaMafia status
+      if (a.megaMafia && !b.megaMafia) return -1;
+      if (!a.megaMafia && b.megaMafia) return 1;
+      // Then sort alphabetically within each group
+      return a.name.localeCompare(b.name);
+    });
 
   return (
     <div className="space-y-12 animate-fade-in">
@@ -43,9 +51,7 @@ export function EcosystemDashboard() {
           Ecosystem Projects
         </h2>
         <p className="text-lg text-gray-600 dark:text-gray-300">
-          Discover the growing ecosystem of projects building on MegaETH. From
-          infrastructure and DeFi to gaming and AI, explore what's being created
-          by our community.
+          Discover the growing ecosystem of projects building on MegaETH.
         </p>
       </div>
 

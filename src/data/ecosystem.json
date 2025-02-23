@@ -81,7 +81,7 @@
       "twitter": "noise_xyz",
       "website": "https://noise.xyz",
       "description": "Discover and trade trends.",
-      "category": "Social",
+      "category": "DeFi",
       "megaMafia": true
     },
     {
@@ -134,6 +134,223 @@
       "description": "Real-time money markets on MegaETH.",
       "category": "DeFi",
       "megaMafia": true
+    },
+    {
+      "name": "Alien Rabbits",
+      "twitter": "AlienRabbitsNft",
+      "description": "A Community-Driven PFP on MegaETH Labs. High-Quality Art | Powered by Community. Explore the Universe with Elite Space Rabbits 🚀🐇",
+      "category": "NFT",
+      "megaMafia": false
+    },
+    {
+      "name": "Biomes",
+      "twitter": "biomesAW",
+      "website": "https://biomes.aw",
+      "discord": "https://discord.gg/4DFSYSvygB",
+      "description": "The First Autonomous World",
+      "category": "Gaming",
+      "megaMafia": false
+    },
+    {
+      "name": "Bright Union",
+      "twitter": "bright_union",
+      "website": "https://brightunion.io",
+      "description": "DeFi insurance aggregator consolidating coverage and liquidity solutions.",
+      "category": "DeFi",
+      "megaMafia": false
+    },
+    {
+      "name": "Bronto",
+      "twitter": "bronto_finance",
+      "description": "Building the native liquidity hub.",
+      "category": "DeFi",
+      "megaMafia": false
+    },
+    {
+      "name": "ComLayer",
+      "twitter": "comlayerdapp",
+      "description": "Secure, scalable Web3 communication. Multi-chain messaging with end-to-end encryption and advanced security features.",
+      "category": "Infrastructure",
+      "megaMafia": false
+    },
+    {
+      "name": "Kingdomly",
+      "twitter": "KingdomlyApp",
+      "website": "https://kingdomly.app",
+      "discord": "https://discord.gg/65ZRCVY59C",
+      "description": "An all in one NFT Dapp. Launch, mint, trade, bridge, and stake NFTs on Kingdomly 🏰",
+      "category": "NFT",
+      "megaMafia": false
+    },
+    {
+      "name": "Kontos Protocol",
+      "twitter": "Kontosio",
+      "website": "https://www.kontos.io",
+      "discord": "https://discord.com/invite/zecrey",
+      "description": "A zk-powered omnichain abstraction layer. Omnichain and Gas Abstraction. Powered by Zecrey Labs, backed by Binance Labs.",
+      "category": "Infrastructure",
+      "megaMafia": false
+    },
+    {
+      "name": "Mega Buddies",
+      "twitter": "mega_buddies",
+      "description": "Unique collectible characters who lives on the MegaETH",
+      "category": "NFT",
+      "megaMafia": false
+    },
+    {
+      "name": "Mega Cheetah",
+      "twitter": "mega_cheetahnft",
+      "discord": "https://discord.gg/5Fg5z3pZfV",
+      "description": "A Unique PFP NFT That Symbolizes Speed, Strength and Coalition Made By The Community For The Community On MegaETH Labs",
+      "category": "NFT",
+      "megaMafia": false
+    },
+    {
+      "name": "MegaBot",
+      "twitter": "Mega_BotETH",
+      "description": "Native high frequency trading bot & sniper on MegaETH Labs",
+      "category": "DeFi",
+      "megaMafia": false
+    },
+    {
+      "name": "MegaDex Labs",
+      "twitter": "megadex_labs",
+      "website": "https://megadex.app",
+      "description": "V3 concentrated liquidity and an AMM protocol ecosystem that hits different",
+      "category": "DeFi",
+      "megaMafia": false
+    },
+    {
+      "name": "MegaFrog",
+      "twitter": "Mega_Frogs",
+      "description": "🐸 Just a frog vibing in the lily pad of life 🌿✨ Ribbiting wisdom, swamp adventures, and the occasional leap of faith!",
+      "category": "NFT",
+      "megaMafia": false
+    },
+    {
+      "name": "MegaHub",
+      "twitter": "_MegaHub_",
+      "website": "http://megahub.live",
+      "description": "MegaETH ecosystem news and content, all in one place: curated insights & original content",
+      "category": "Community",
+      "megaMafia": false
+    },
+    {
+      "name": "MegaPunks",
+      "twitter": "MegaPunks_nft",
+      "description": "10000 Punks will be landed on MegaETH Labs soon.",
+      "category": "NFT",
+      "megaMafia": false
+    },
+    {
+      "name": "MegaRabbits",
+      "twitter": "MegaRabbitNFT",
+      "description": "A PFP NFT collection showcasing futuristic rabbits, blending nature and technology as they venture into the digital universe.",
+      "category": "NFT",
+      "megaMafia": false
+    },
+    {
+      "name": "Megaton",
+      "twitter": "0xmegaton",
+      "description": "A mysterious exchange built to save Ethereum.",
+      "category": "DeFi",
+      "megaMafia": true
+    },
+    {
+      "name": "Mekaeth",
+      "twitter": "mekaeth_xyz",
+      "description": "An experimental AI-based NFT collection, redefining the possibilities of NFTs with innovative features and approaches never seen before to bring new excitement to the world of NFTs.",
+      "category": "NFT",
+      "megaMafia": false
+    },
+    {
+      "name": "Newzilla",
+      "twitter": "MegaZillaNft",
+      "description": "An NFT collection on MegaETH inspired by strategic card games, offering unique digital assets with traits and utilities, unlocking gameplay opportunities and exclusive rewards.",
+      "category": "NFT",
+      "megaMafia": true
+    },
+    {
+      "name": "Paw",
+      "twitter": "MegaPaw_",
+      "description": "A community-driven NFT project that empowers holders with unique access and opportunities.",
+      "category": "NFT",
+      "megaMafia": true
+    },
+    {
+      "name": "Rabbit Mafia",
+      "twitter": "RabbitMafiaNFT",
+      "description": "A PFP NFT collection diving into the neon-lit underworld of MegaMafia, where rogue rabbits rule the streets with flair and firepower.",
+      "category": "NFT",
+      "megaMafia": false
+    },
+    {
+      "name": "RainMakr",
+      "twitter": "RainMakr_xyz",
+      "description": "An all-in-one launchpad with real yield designed for AI agents, memecoins, and top-tier projects",
+      "category": "DeFi",
+      "megaMafia": false
+    },
+    {
+      "name": "Ren",
+      "twitter": "renprotocol",
+      "description": "An interoperability protocol that enables Bitcoin holders to securely and trustlessly participate in DeFi.",
+      "category": "DeFi",
+      "megaMafia": false
+    },
+    {
+      "name": "StakeStone",
+      "twitter": "Stake_Stone",
+      "description": "An omnichain liquidity asset protocol building an adaptive staking network for liquid ETH / BTC.",
+      "category": "DeFi",
+      "megaMafia": false
+    },
+    {
+      "name": "StackUp",
+      "twitter": "usestackup",
+      "description": "A yield aggregator for MegaETH DeFi, optimizing returns by efficiently managing and allocating assets.",
+      "category": "DeFi",
+      "megaMafia": false
+    },
+    {
+      "name": "Yield Dot Fun",
+      "twitter": "yieldsdotfun",
+      "description": "A yield aggregator that hosts community vault competitions, enabling users to farm across multiple chains. AI agents create multichain strategies to optimize yields, delivering opportunities for degen users to maximize returns.",
+      "category": "DeFi",
+      "megaMafia": false
+    },
+    {
+      "name": "Battlefold",
+      "twitter": "Battlefold_hq",
+      "description": "A strategy guessing game",
+      "telegram": "https://t.me/battlefold",
+      "category": "Gaming",
+      "megaMafia": false
+    },
+    {
+      "name": "Dx Protocol",
+      "twitter": "0xDxProtocol",
+      "website": "https://dxprotocol.org",
+      "description": "A decentralized hosting network",
+      "category": "Infrastructure",
+      "megaMafia": false
+    },
+    {
+      "name": "MetaHop",
+      "twitter": "Meta_Hop",
+      "description": "OG PFP Collection",
+      "category": "NFT",
+      "discord": "https://discord.com/invite/metahop",
+      "megaMafia": false
+    },
+    {
+      "name": "RPS Live",
+      "twitter": "rps_live_gg",
+      "website": "https://www.rps.live",
+      "description": "A platform that brings AI to life",
+      "category": "AI",
+      "megaMafia": false
     }
   ]
 }
