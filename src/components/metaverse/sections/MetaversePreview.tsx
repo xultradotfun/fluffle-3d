@@ -14,7 +14,7 @@ export function MetaversePreview() {
             poster="/hyperfy-preview-poster.jpg"
           >
             <source
-              src="https://cdn.discordapp.com/attachments/1111164047904215094/1340446449737007184/hyperfyio_megaeth.mp4?ex=67b26389&is=67b11209&hm=b1d8eb5b73a667a26cd3e0031a09f1889d6b39875cf47d5f9b170a59f586e1cf&"
+              src="https://pub-927cd5b838324656be5da6179b2262de.r2.dev/hyperfyio_megaeth%20(1).mp4"
               type="video/mp4"
             />
             Your browser does not support the video tag.
