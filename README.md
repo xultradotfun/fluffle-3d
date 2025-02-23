@@ -61,6 +61,84 @@ npm run dev
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
+## 📝 Adding Projects to the Ecosystem
+
+Projects in the MegaETH ecosystem can be added to the platform by modifying `src/data/ecosystem.json`. Each project should follow this format:
+
+```json
+{
+  "name": "Project Name",
+  "twitter": "twitter_handle", // without @
+  "website": "https://project-website.com", // optional
+  "discord": "https://discord.gg/invite-code", // optional
+  "telegram": "https://t.me/group-name", // optional
+  "description": "A brief description of the project",
+  "category": "Category",
+  "megaMafia": false // true if it's a MegaMafia project
+}
+```
+
+### Categories
+
+Available categories:
+
+- `NFT`: NFT collections and marketplaces
+- `DeFi`: Decentralized finance projects
+- `Infrastructure`: Core blockchain infrastructure
+- `Community`: Community tools and platforms
+- `Gaming`: Gaming and metaverse projects
+
+### Example
+
+```json
+{
+  "name": "MegaDex Labs",
+  "twitter": "megadex_labs",
+  "website": "https://megadex.app",
+  "discord": "https://discord.gg/megadex",
+  "description": "V3 concentrated liquidity and an AMM protocol ecosystem that hits different",
+  "category": "DeFi",
+  "megaMafia": false
+}
+```
+
+### Guidelines
+
+1. **Project Name**:
+
+   - Use the official project name
+   - Maintain consistent capitalization
+
+2. **Social Links**:
+
+   - Twitter handle without the @ symbol
+   - Full URLs for website, Discord, and Telegram
+   - Only include active social channels
+
+3. **Description**:
+
+   - Keep it concise (1-2 sentences)
+   - Focus on the main value proposition
+   - Avoid excessive technical jargon
+
+4. **Category**:
+
+   - Choose the most relevant category
+   - Use existing categories when possible
+   - Contact maintainers if a new category is needed
+
+5. **MegaMafia Status**:
+   - Set `megaMafia` to `true` only for official MegaMafia projects
+   - When in doubt, set to `false`
+
+### Adding Your Project
+
+1. Fork the repository
+2. Add your project to `src/data/ecosystem.json`
+3. Maintain alphabetical order within the projects array
+4. Create a pull request with your changes
+5. Include any relevant social proof or verification
+
 ## 🛠 Technology Stack
 
 - **Framework**: [Next.js 13](https://nextjs.org/) with App Router
