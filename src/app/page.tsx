@@ -10,6 +10,7 @@ import { PFPGenerator } from "@/components/pfp/PFPGenerator";
 import { MetaverseTeaser } from "@/components/metaverse/MetaverseTeaser";
 import Hero from "@/components/Hero";
 import type { NFTTrait } from "@/utils/nftLoader";
+import { EcosystemDashboard } from "@/components/ecosystem/EcosystemDashboard";
 
 interface ViewerData {
   id: string;
@@ -20,7 +21,7 @@ interface ViewerData {
 
 export default function Home() {
   const [activeView, setActiveView] = useState<
-    "viewer" | "analytics" | "pfp" | "metaverse"
+    "viewer" | "analytics" | "pfp" | "metaverse" | "ecosystem"
   >("viewer");
   const [viewers, setViewers] = useState<ViewerData[]>([]);
   const [error, setError] = useState("");
@@ -35,6 +36,8 @@ export default function Home() {
       setActiveView("pfp");
     } else if (hash === "#metaverse") {
       setActiveView("metaverse");
+    } else if (hash === "#ecosystem") {
+      setActiveView("ecosystem");
     }
 
     // Listen for hash changes
@@ -46,6 +49,8 @@ export default function Home() {
         setActiveView("pfp");
       } else if (hash === "#metaverse") {
         setActiveView("metaverse");
+      } else if (hash === "#ecosystem") {
+        setActiveView("ecosystem");
       } else {
         setActiveView("viewer");
       }
@@ -57,7 +62,7 @@ export default function Home() {
 
   // Update URL when view changes
   const handleViewChange = (
-    view: "viewer" | "analytics" | "pfp" | "metaverse"
+    view: "viewer" | "analytics" | "pfp" | "metaverse" | "ecosystem"
   ) => {
     if (view === "analytics") {
       window.history.replaceState(null, "", "/#rarities");
@@ -72,6 +77,11 @@ export default function Home() {
     } else if (view === "metaverse") {
       window.history.replaceState(null, "", "/#metaverse");
       // Clear loaded NFTs when switching to metaverse
+      setViewers([]);
+      setError("");
+    } else if (view === "ecosystem") {
+      window.history.replaceState(null, "", "/#ecosystem");
+      // Clear loaded NFTs when switching to ecosystem
       setViewers([]);
       setError("");
     } else {
@@ -194,6 +204,8 @@ export default function Home() {
           <TraitsAnalyticsDashboard />
         ) : activeView === "metaverse" ? (
           <MetaverseTeaser />
+        ) : activeView === "ecosystem" ? (
+          <EcosystemDashboard />
         ) : (
           <PFPGenerator />
         )}

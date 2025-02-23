@@ -1,0 +1,139 @@
+{
+  "projects": [
+    {
+      "name": "Euphoria",
+      "twitter": "Euphoria_fi",
+      "website": "https://euphoria.finance",
+      "telegram": "https://t.me/euphoria_fi",
+      "description": "Where trading becomes an experience. Don't just believe in something - Feel something ✨ Powered by MegaETH Labs.",
+      "category": "DeFi",
+      "megaMafia": true
+    },
+    {
+      "name": "Autonomous World Engine",
+      "twitter": "awe_box",
+      "website": "https://awe.box",
+      "discord": "https://discord.gg/oncyber",
+      "description": "The engine to power the 3D internet—open, awe provoking, for everyone.",
+      "category": "Infrastructure",
+      "megaMafia": true
+    },
+    {
+      "name": "VoyageAI",
+      "twitter": "voyage_hq",
+      "description": "Infrastructure to power the AI-to-AI economy. Backed by a16z, Alliance DAO, and Solana Ventures.",
+      "category": "AI",
+      "megaMafia": true
+    },
+    {
+      "name": "Sweep",
+      "twitter": "trysweep",
+      "website": "https://sweep.gg",
+      "discord": "https://discord.gg/sweep",
+      "description": "Stake your favorite gamers, win money.",
+      "category": "Gaming",
+      "megaMafia": true
+    },
+    {
+      "name": "Avon",
+      "twitter": "avon_xyz",
+      "telegram": "https://t.me/avon_xyz",
+      "description": "Bringing Order Book Efficiency to Onchain Lending! Coming soon on MegaETH Labs.",
+      "category": "DeFi",
+      "megaMafia": true
+    },
+    {
+      "name": "Funes",
+      "twitter": "Funes_World",
+      "website": "https://funes.world",
+      "description": "Modelling the world. Funes is an online museum that collects, preserves, and curates 3D models of all human constructions.",
+      "category": "Culture",
+      "megaMafia": true
+    },
+    {
+      "name": "Nectar AI",
+      "twitter": "TryNectarAI",
+      "website": "https://nectar.ai",
+      "discord": "https://discord.gg/ZFfEAbgsHm",
+      "description": "Decentralized platform to bring your dream girl & fantasies to life in seconds.",
+      "category": "AI",
+      "megaMafia": true
+    },
+    {
+      "name": "Lemonade",
+      "twitter": "lemonade_events",
+      "website": "https://lemonade.social",
+      "discord": "https://t.me/lemonade_social",
+      "description": "Lemonade Stands made zesty with onchain events, community management & rewards!",
+      "category": "Community",
+      "megaMafia": true
+    },
+    {
+      "name": "Hop Network",
+      "twitter": "Hop_Network",
+      "website": "https://hop.network",
+      "description": "It's more than a VPN, it's a Portal to the open internet.",
+      "category": "Infrastructure",
+      "megaMafia": true
+    },
+    {
+      "name": "Noise",
+      "twitter": "noise_xyz",
+      "website": "https://noise.xyz",
+      "description": "Discover and trade trends.",
+      "category": "Social",
+      "megaMafia": true
+    },
+    {
+      "name": "Showdown",
+      "twitter": "Showdown_TCG",
+      "discord": "https://discord.gg/JWdRTRvFYN",
+      "description": "Poker reinvented by top ranked Hearthstone and Magic players.",
+      "category": "Gaming",
+      "megaMafia": true
+    },
+    {
+      "name": "Pump Party",
+      "twitter": "pumppartyapp",
+      "website": "https://pumpparty.com",
+      "description": "Season 1 coming soon.",
+      "category": "Gaming",
+      "megaMafia": true
+    },
+    {
+      "name": "Valhalla",
+      "twitter": "valhallaperps",
+      "website": "https://valhalla.exchange",
+      "discord": "https://discord.com/invite/valhallaperps",
+      "description": "The Perpetuals Exchange on MegaETH.",
+      "category": "DeFi",
+      "megaMafia": true
+    },
+    {
+      "name": "GTE",
+      "twitter": "GTE_XYZ",
+      "website": "https://gte.xyz",
+      "telegram": "https://discord.gg/gte-xyz",
+      "description": "GTE is the world's fastest decentralized trading venue. Backed by top institutions, market makers, and you.",
+      "category": "DeFi",
+      "megaMafia": true
+    },
+    {
+      "name": "CAP",
+      "twitter": "CapLabs_",
+      "website": "https://caplabs.io",
+      "discord": "https://discord.com/invite/JEWtg6TC8J",
+      "description": "Stablecoin protocol with credible financial guarantees. Built on Ethereum, accelerated by MegaETH Labs.",
+      "category": "DeFi",
+      "megaMafia": true
+    },
+    {
+      "name": "Teko",
+      "twitter": "tekofinance",
+      "website": "https://teko.finance",
+      "description": "Real-time money markets on MegaETH.",
+      "category": "DeFi",
+      "megaMafia": true
+    }
+  ]
+}
