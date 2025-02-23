@@ -42,7 +42,7 @@ export default function Hero() {
   }, [logoNumber]);
 
   return (
-    <section className="relative overflow-hidden py-12">
+    <section className="relative overflow-hidden py-8">
       {/* Background Effects */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-500/5 dark:to-indigo-500/5" />
@@ -53,7 +53,7 @@ export default function Hero() {
       <div className="mx-auto max-w-4xl px-4">
         <div className="relative flex flex-col items-center">
           {/* Title Section */}
-          <div className="text-center space-y-6 mb-12">
+          <div className="text-center space-y-6 mb-8">
             {/* Logo and Title */}
             <div className="inline-flex items-center gap-4">
               <div className="w-14 h-14 rounded-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm flex items-center justify-center">
