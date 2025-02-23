@@ -80,21 +80,13 @@ export default function Hero() {
             <p className="text-xl leading-relaxed text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               Utilities for{" "}
               <span className="text-gray-900 dark:text-white font-medium">
-                MegaETH Fluffle
+                MegaETH
               </span>{" "}
-              holders. View your NFTs in{" "}
+              enthusiasts and{" "}
               <span className="text-gray-900 dark:text-white font-medium">
-                3D
-              </span>
-              , analyze{" "}
-              <span className="text-gray-900 dark:text-white font-medium">
-                rarity
-              </span>
-              , generate unique{" "}
-              <span className="text-gray-900 dark:text-white font-medium">
-                profile pictures
-              </span>
-              , and more!
+                Fluffle
+              </span>{" "}
+              holders
             </p>
           </div>
 

@@ -2,7 +2,7 @@
 
 <div align="center">
   <img src="/public/socialpreview.jpg" alt="Fluffle Tools Preview" width="600" />
-  <p>A comprehensive web application providing utilities for MegaETH Fluffle NFT holders.</p>
+  <p>Utilities for MegaETH enthusiasts and Fluffle holders</p>
 </div>
 
 <div align="center">
