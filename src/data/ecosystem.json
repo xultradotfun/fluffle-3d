@@ -138,7 +138,7 @@
     {
       "name": "Alien Rabbits",
       "twitter": "AlienRabbitsNft",
-      "description": "A Community-Driven PFP on MegaETH Labs. High-Quality Art | Powered by Community. Explore the Universe with Elite Space Rabbits 🚀🐇",
+      "description": "A Community-Driven PFP on MegaETH Labs.",
       "category": "NFT",
       "megaMafia": false
     },
@@ -202,7 +202,7 @@
       "name": "Mega Cheetah",
       "twitter": "mega_cheetahnft",
       "discord": "https://discord.gg/5Fg5z3pZfV",
-      "description": "A Unique PFP NFT That Symbolizes Speed, Strength and Coalition Made By The Community For The Community On MegaETH Labs",
+      "description": "A Unique PFP NFT That Symbolizes Speed, Strength and Coalition",
       "category": "NFT",
       "megaMafia": false
     },
@@ -269,14 +269,14 @@
       "twitter": "MegaZillaNft",
       "description": "An NFT collection on MegaETH inspired by strategic card games, offering unique digital assets with traits and utilities, unlocking gameplay opportunities and exclusive rewards.",
       "category": "NFT",
-      "megaMafia": true
+      "megaMafia": false
     },
     {
       "name": "Paw",
       "twitter": "MegaPaw_",
       "description": "A community-driven NFT project that empowers holders with unique access and opportunities.",
       "category": "NFT",
-      "megaMafia": true
+      "megaMafia": false
     },
     {
       "name": "Rabbit Mafia",
