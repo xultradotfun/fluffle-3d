@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
+import { voteCache } from "@/lib/voteCache";
 
 const REQUIRED_SERVER_ID = "1219739501673451551";
 const VOTE_TYPES = ["up", "down"] as const;
@@ -98,6 +99,12 @@ function checkRateLimit(userId: string): boolean {
 
 export async function GET() {
   try {
+    // Check cache first
+    const cachedData = voteCache.get();
+    if (cachedData) {
+      return NextResponse.json(cachedData);
+    }
+
     // Get all projects with their votes
     const projects = (await prisma.project.findMany({
       include: {
@@ -135,6 +142,9 @@ export async function GET() {
         votes,
       };
     });
+
+    // Cache the response
+    voteCache.set(voteCounts);
 
     return NextResponse.json(voteCounts);
   } catch (error) {
@@ -291,6 +301,9 @@ export async function POST(request: Request) {
     const downvotes = votes.filter((v: VoteData) => v.type === "down").length;
     const userVote =
       votes.find((v: VoteData) => v.userId === userId)?.type || null;
+
+    // Invalidate the cache since votes have changed
+    voteCache.invalidate();
 
     return NextResponse.json({
       success: true,
