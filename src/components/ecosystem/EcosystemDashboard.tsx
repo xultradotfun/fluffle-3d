@@ -1,33 +1,67 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ecosystemData from "@/data/ecosystem.json";
 import { ProjectCard } from "./ProjectCard";
 
 export function EcosystemDashboard() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showMegaMafiaOnly, setShowMegaMafiaOnly] = useState(false);
+  const [projects, setProjects] = useState(ecosystemData.projects);
+
+  useEffect(() => {
+    const fetchVotes = async () => {
+      try {
+        const response = await fetch("/api/votes");
+        if (!response.ok) {
+          throw new Error("Failed to fetch votes");
+        }
+        const votesData = await response.json();
+
+        // Update projects with vote data
+        setProjects(
+          ecosystemData.projects.map((project) => {
+            const projectVotes = votesData.find(
+              (v: any) => v.twitter === project.twitter
+            )?.votes;
+            return {
+              ...project,
+              votes: projectVotes || {
+                upvotes: 0,
+                downvotes: 0,
+                userVote: null,
+              },
+            };
+          })
+        );
+      } catch (error) {
+        console.error("Failed to fetch votes:", error);
+      }
+    };
+
+    fetchVotes();
+  }, []);
 
   // Get unique categories and count projects per category
   const categories = Array.from(
-    new Set(ecosystemData.projects.map((project) => project.category))
+    new Set(projects.map((project) => project.category))
   ).sort();
 
   const getCategoryCount = (
     category: string,
     megaMafiaOnly: boolean = false
   ) => {
-    return ecosystemData.projects.filter(
+    return projects.filter(
       (project) =>
         project.category === category && (!megaMafiaOnly || project.megaMafia)
     ).length;
   };
 
   const getMegaMafiaCount = () => {
-    return ecosystemData.projects.filter((project) => project.megaMafia).length;
+    return projects.filter((project) => project.megaMafia).length;
   };
 
-  const filteredProjects = ecosystemData.projects
+  const filteredProjects = projects
     .filter((project) => {
       const categoryMatch = selectedCategory
         ? project.category === selectedCategory
@@ -112,9 +146,7 @@ export function EcosystemDashboard() {
                 selectedCategory === null ? "text-blue-200" : "text-gray-400"
               }`}
             >
-              {showMegaMafiaOnly
-                ? getMegaMafiaCount()
-                : ecosystemData.projects.length}
+              {showMegaMafiaOnly ? getMegaMafiaCount() : projects.length}
             </span>
           </div>
         </button>
