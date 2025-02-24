@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
-import { PrismaClient } from "@prisma/client";
 import { headers } from "next/headers";
 
 const REQUIRED_SERVER_ID = "1219739501673451551";
@@ -19,18 +18,22 @@ interface VoteCount {
   _count: number;
 }
 
-type Vote = {
-  id: string;
+interface Vote {
+  id: number;
   userId: string;
-  projectId: string;
-  type: VoteType;
-};
+  type: string;
+  projectId: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
-type ProjectWithVotes = {
-  id: string;
+interface Project {
+  id: number;
   name: string;
   votes: Vote[];
-};
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 // Rate limiting map: userId -> { timestamp: number, count: number }
 const rateLimits = new Map<string, { timestamp: number; count: number }>();
@@ -106,9 +109,9 @@ function checkRateLimit(userId: string): boolean {
 export async function GET() {
   try {
     // Get all projects with their votes
-    const projects = await prisma.project.findMany({
+    const projects = (await prisma.project.findMany({
       include: { votes: true },
-    });
+    })) as Project[];
 
     // Get user ID from cookies if available
     const cookieStore = cookies();
@@ -116,13 +119,11 @@ export async function GET() {
     const userId = userData ? JSON.parse(userData.value).id : null;
 
     // Format the response
-    const voteCounts = projects.map((project: ProjectWithVotes) => {
-      const upvotes = project.votes.filter((v: Vote) => v.type === "up").length;
-      const downvotes = project.votes.filter(
-        (v: Vote) => v.type === "down"
-      ).length;
+    const voteCounts = projects.map((project) => {
+      const upvotes = project.votes.filter((v) => v.type === "up").length;
+      const downvotes = project.votes.filter((v) => v.type === "down").length;
       const userVote = userId
-        ? project.votes.find((v: Vote) => v.userId === userId)?.type || null
+        ? project.votes.find((v) => v.userId === userId)?.type || null
         : null;
 
       return {
@@ -193,20 +194,20 @@ export async function POST(request: Request) {
     }
 
     // Get or create project
-    let project = await prisma.project.findUnique({
+    let project = (await prisma.project.findUnique({
       where: { name: projectName },
       include: { votes: true },
-    });
+    })) as Project | null;
 
     if (!project) {
-      project = await prisma.project.create({
+      project = (await prisma.project.create({
         data: { name: projectName },
         include: { votes: true },
-      });
+      })) as Project;
     }
 
     // Check if user has already voted
-    const existingVote = project.votes.find((v: Vote) => v.userId === userId);
+    const existingVote = project.votes.find((v) => v.userId === userId);
 
     if (existingVote) {
       if (existingVote.type === vote) {
