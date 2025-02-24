@@ -20,16 +20,15 @@ interface Project {
   votes?: {
     upvotes: number;
     downvotes: number;
-    userVotes: Record<string, "up" | "down">;
+    userVote: "up" | "down" | null;
   };
 }
 
 interface ProjectCardProps {
   project: Project;
-  onVoteSuccess?: () => void;
 }
 
-export function ProjectCard({ project, onVoteSuccess }: ProjectCardProps) {
+export function ProjectCard({ project }: ProjectCardProps) {
   const { user, login } = useDiscordAuth();
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [isVoting, setIsVoting] = useState(false);
@@ -38,12 +37,28 @@ export function ProjectCard({ project, onVoteSuccess }: ProjectCardProps) {
     downvotes: project.votes?.downvotes || 0,
   });
   const [userVote, setUserVote] = useState<"up" | "down" | null>(
-    user ? project.votes?.userVotes?.[user.id] || null : null
+    project.votes?.userVote || null
   );
   const [retryCount, setRetryCount] = useState(0);
   const isMounted = useRef(true);
   const MAX_RETRIES = 3;
   const RETRY_DELAY = 1000; // 1 second delay between retries
+
+  useEffect(() => {
+    // Update votes and user vote when project.votes or user changes
+    if (project.votes) {
+      setVotes({
+        upvotes: project.votes.upvotes,
+        downvotes: project.votes.downvotes,
+      });
+      // Update user vote if user is logged in and has voted before
+      if (user && project.votes.userVote) {
+        setUserVote(project.votes.userVote);
+      } else {
+        setUserVote(null);
+      }
+    }
+  }, [project.votes, user]);
 
   useEffect(() => {
     // Cleanup function to prevent memory leaks
@@ -107,8 +122,41 @@ export function ProjectCard({ project, onVoteSuccess }: ProjectCardProps) {
       return;
     }
 
+    // Store previous state in case we need to revert
+    const previousVotes = { ...votes };
+    const previousUserVote = userVote;
+
     try {
       setIsVoting(true);
+
+      // Optimistically update the UI
+      if (previousUserVote === vote) {
+        // Removing vote
+        setVotes({
+          upvotes: vote === "up" ? votes.upvotes - 1 : votes.upvotes,
+          downvotes: vote === "down" ? votes.downvotes - 1 : votes.downvotes,
+        });
+        setUserVote(null);
+      } else {
+        // Adding or changing vote
+        setVotes({
+          upvotes:
+            vote === "up"
+              ? votes.upvotes + 1
+              : previousUserVote === "up"
+              ? votes.upvotes - 1
+              : votes.upvotes,
+          downvotes:
+            vote === "down"
+              ? votes.downvotes + 1
+              : previousUserVote === "down"
+              ? votes.downvotes - 1
+              : votes.downvotes,
+        });
+        setUserVote(vote);
+      }
+
+      // Make the actual API request
       const response = await fetch("/api/votes", {
         method: "POST",
         headers: {
@@ -127,13 +175,16 @@ export function ProjectCard({ project, onVoteSuccess }: ProjectCardProps) {
         throw new Error(data.error || "Failed to vote");
       }
 
+      // Update with actual server state
       setVotes({
         upvotes: data.votes.upvotes,
         downvotes: data.votes.downvotes,
       });
       setUserVote(data.votes.userVote);
-      onVoteSuccess?.();
     } catch (error) {
+      // Revert to previous state on error
+      setVotes(previousVotes);
+      setUserVote(previousUserVote);
       console.error("Failed to vote:", error);
       toast.error(error instanceof Error ? error.message : "Failed to vote");
     } finally {
@@ -207,21 +258,84 @@ export function ProjectCard({ project, onVoteSuccess }: ProjectCardProps) {
         </div>
 
         {/* Description */}
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 flex-grow">
           {project.description}
         </p>
 
-        {/* Voting Section */}
-        <div className="flex items-center gap-4 mb-4 p-2 rounded-lg bg-gray-50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5">
-          <div className="flex items-center gap-2">
+        {/* Footer: Links and Voting */}
+        <div className="flex items-end justify-between gap-4 mt-auto pt-4 border-t border-gray-200 dark:border-white/5">
+          {/* Links */}
+          <div className="flex flex-wrap items-center gap-2">
+            {project.website && (
+              <a
+                href={project.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg bg-gray-50 hover:bg-gray-100 dark:bg-white/5 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/20 transition-all group/link"
+              >
+                <svg
+                  className="w-4 h-4 transition-transform group-hover/link:scale-110"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                  />
+                </svg>
+                <span>Website</span>
+              </a>
+            )}
+            {project.discord && (
+              <a
+                href={project.discord}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg bg-[#5865F2]/5 hover:bg-[#5865F2]/10 text-[#5865F2] hover:text-[#5865F2] border border-[#5865F2]/20 hover:border-[#5865F2]/30 transition-all group/link"
+              >
+                <svg
+                  className="w-4 h-4 transition-transform group-hover/link:scale-110"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z" />
+                </svg>
+                <span>Discord</span>
+              </a>
+            )}
+            {project.telegram && (
+              <a
+                href={project.telegram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg bg-[#229ED9]/5 hover:bg-[#229ED9]/10 text-[#229ED9] hover:text-[#229ED9] border border-[#229ED9]/20 hover:border-[#229ED9]/30 transition-all group/link"
+              >
+                <svg
+                  className="w-4 h-4 transition-transform group-hover/link:scale-110"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M22.265 2.428a2.048 2.048 0 0 0-2.078-.324L2.266 9.339a2.043 2.043 0 0 0-.104 3.818l3.625 1.261c.215.074.445.075.66 0l6.73-2.345-5.379 3.205a1.058 1.058 0 0 0-.463.901v3.182c0 .89 1.037 1.375 1.725.808l2.274-1.864 3.038 1.057a2.039 2.039 0 0 0 2.44-.974l5.99-11.772a2.048 2.048 0 0 0-.537-2.188z" />
+                </svg>
+                <span>Telegram</span>
+              </a>
+            )}
+          </div>
+
+          {/* Voting Section */}
+          <div className="flex items-center gap-1.5 ml-auto">
             <button
               onClick={() => handleVote("up")}
               disabled={isVoting}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+              className={cn(
+                "flex items-center justify-center w-8 h-8 rounded-lg transition-all",
                 userVote === "up"
-                  ? "bg-green-500 text-white"
-                  : "bg-green-50 dark:bg-green-500/10 text-green-600 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-500/20"
-              }`}
+                  ? "bg-green-500 text-white shadow-lg shadow-green-500/20"
+                  : "hover:bg-green-50 dark:hover:bg-green-500/10 text-green-600 dark:text-green-400 border border-green-100 dark:border-green-500/20"
+              )}
             >
               <svg
                 className="w-4 h-4"
@@ -236,18 +350,29 @@ export function ProjectCard({ project, onVoteSuccess }: ProjectCardProps) {
                   d="M5 15l7-7 7 7"
                 />
               </svg>
-              <span>{votes.upvotes}</span>
+              <span className="sr-only">Upvote</span>
             </button>
-          </div>
-          <div className="flex items-center gap-2">
+            <span
+              className={cn(
+                "text-sm font-medium",
+                userVote === "up"
+                  ? "text-green-600 dark:text-green-400"
+                  : userVote === "down"
+                  ? "text-red-600 dark:text-red-400"
+                  : "text-gray-600 dark:text-gray-400"
+              )}
+            >
+              {votes.upvotes - votes.downvotes}
+            </span>
             <button
               onClick={() => handleVote("down")}
               disabled={isVoting}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+              className={cn(
+                "flex items-center justify-center w-8 h-8 rounded-lg transition-all",
                 userVote === "down"
-                  ? "bg-red-500 text-white"
-                  : "bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/20"
-              }`}
+                  ? "bg-red-500 text-white shadow-lg shadow-red-500/20"
+                  : "hover:bg-red-50 dark:hover:bg-red-500/10 text-red-600 dark:text-red-400 border border-red-100 dark:border-red-500/20"
+              )}
             >
               <svg
                 className="w-4 h-4"
@@ -262,77 +387,9 @@ export function ProjectCard({ project, onVoteSuccess }: ProjectCardProps) {
                   d="M19 9l-7 7-7-7"
                 />
               </svg>
-              <span>{votes.downvotes}</span>
+              <span className="sr-only">Downvote</span>
             </button>
           </div>
-          {!project.discord && (
-            <div className="ml-auto">
-              <span className="text-xs text-gray-500 dark:text-gray-400">
-                Join Discord to vote
-              </span>
-            </div>
-          )}
-        </div>
-
-        {/* Links */}
-        <div className="flex flex-wrap items-center gap-2">
-          {project.website && (
-            <a
-              href={project.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg bg-gray-50 hover:bg-gray-100 dark:bg-white/5 dark:hover:bg-white/10 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border border-gray-200 dark:border-white/10 hover:border-gray-300 dark:hover:border-white/20 transition-all group/link"
-            >
-              <svg
-                className="w-4 h-4 transition-transform group-hover/link:scale-110"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                />
-              </svg>
-              <span>Website</span>
-            </a>
-          )}
-          {project.discord && (
-            <a
-              href={project.discord}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg bg-[#5865F2]/5 hover:bg-[#5865F2]/10 text-[#5865F2] hover:text-[#5865F2] border border-[#5865F2]/20 hover:border-[#5865F2]/30 transition-all group/link"
-            >
-              <svg
-                className="w-4 h-4 transition-transform group-hover/link:scale-110"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z" />
-              </svg>
-              <span>Discord</span>
-            </a>
-          )}
-          {project.telegram && (
-            <a
-              href={project.telegram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-lg bg-[#229ED9]/5 hover:bg-[#229ED9]/10 text-[#229ED9] hover:text-[#229ED9] border border-[#229ED9]/20 hover:border-[#229ED9]/30 transition-all group/link"
-            >
-              <svg
-                className="w-4 h-4 transition-transform group-hover/link:scale-110"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M22.265 2.428a2.048 2.048 0 0 0-2.078-.324L2.266 9.339a2.043 2.043 0 0 0-.104 3.818l3.625 1.261c.215.074.445.075.66 0l6.73-2.345-5.379 3.205a1.058 1.058 0 0 0-.463.901v3.182c0 .89 1.037 1.375 1.725.808l2.274-1.864 3.038 1.057a2.039 2.039 0 0 0 2.44-.974l5.99-11.772a2.048 2.048 0 0 0-.537-2.188z" />
-              </svg>
-              <span>Telegram</span>
-            </a>
-          )}
         </div>
       </div>
     </div>
