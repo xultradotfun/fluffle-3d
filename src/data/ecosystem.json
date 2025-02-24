@@ -5,7 +5,7 @@
       "twitter": "Euphoria_fi",
       "website": "https://euphoria.finance",
       "telegram": "https://t.me/euphoria_fi",
-      "description": "Where trading becomes an experience. Don't just believe in something - Feel something ✨ Powered by MegaETH Labs.",
+      "description": "A mobile-first derivatives trading platform",
       "category": "DeFi",
       "megaMafia": true
     },
@@ -13,15 +13,15 @@
       "name": "Autonomous World Engine",
       "twitter": "awe_box",
       "website": "https://awe.box",
-      "discord": "https://discord.gg/oncyber",
-      "description": "The engine to power the 3D internet—open, awe provoking, for everyone.",
-      "category": "Infrastructure",
+      "discord": "https://discord.com/invite/oncyber",
+      "description": "An autonomous world engine to power 3D experience",
+      "category": "Gaming",
       "megaMafia": true
     },
     {
       "name": "VoyageAI",
       "twitter": "voyage_hq",
-      "description": "Infrastructure to power the AI-to-AI economy. Backed by a16z, Alliance DAO, and Solana Ventures.",
+      "description": "Building the infrastructure for the AI agents economy",
       "category": "AI",
       "megaMafia": true
     },
@@ -29,8 +29,8 @@
       "name": "Sweep",
       "twitter": "trysweep",
       "website": "https://sweep.gg",
-      "discord": "https://discord.gg/sweep",
-      "description": "Stake your favorite gamers, win money.",
+      "discord": "https://discord.com/invite/sweepgg",
+      "description": "A prediction market for streamers",
       "category": "Gaming",
       "megaMafia": true
     },
@@ -38,7 +38,7 @@
       "name": "Avon",
       "twitter": "avon_xyz",
       "telegram": "https://t.me/avon_xyz",
-      "description": "Bringing Order Book Efficiency to Onchain Lending! Coming soon on MegaETH Labs.",
+      "description": "A lending protocol based on a composable CLOB",
       "category": "DeFi",
       "megaMafia": true
     },
@@ -46,16 +46,15 @@
       "name": "Funes",
       "twitter": "Funes_World",
       "website": "https://funes.world",
-      "description": "Modelling the world. Funes is an online museum that collects, preserves, and curates 3D models of all human constructions.",
-      "category": "Culture",
+      "description": "An online museum for all human constructions",
+      "category": "Infrastructure",
       "megaMafia": true
     },
     {
-      "name": "Nectar AI",
+      "name": "NectarAI",
       "twitter": "TryNectarAI",
       "website": "https://nectar.ai",
-      "discord": "https://discord.gg/ZFfEAbgsHm",
-      "description": "Decentralized platform to bring your dream girl & fantasies to life in seconds.",
+      "description": "A platform focused on creating virtual companions",
       "category": "AI",
       "megaMafia": true
     },
@@ -63,16 +62,15 @@
       "name": "Lemonade",
       "twitter": "lemonade_events",
       "website": "https://lemonade.social",
-      "discord": "https://t.me/lemonade_social",
-      "description": "Lemonade Stands made zesty with onchain events, community management & rewards!",
+      "description": "An on-chain toolkit for creating events, managing communities",
       "category": "Community",
       "megaMafia": true
     },
     {
       "name": "Hop Network",
       "twitter": "Hop_Network",
-      "website": "https://hop.network",
-      "description": "It's more than a VPN, it's a Portal to the open internet.",
+      "website": "https://hopnetwork.xyz",
+      "description": "A fully on-chain VPN",
       "category": "Infrastructure",
       "megaMafia": true
     },
@@ -80,15 +78,15 @@
       "name": "Noise",
       "twitter": "noise_xyz",
       "website": "https://noise.xyz",
-      "description": "Discover and trade trends.",
+      "description": "Discover and trade trends",
       "category": "DeFi",
       "megaMafia": true
     },
     {
       "name": "Showdown",
       "twitter": "Showdown_TCG",
-      "discord": "https://discord.gg/JWdRTRvFYN",
-      "description": "Poker reinvented by top ranked Hearthstone and Magic players.",
+      "discord": "https://discord.com/invite/JWdRTRvFYN",
+      "description": "An on-chain and physical trading card game",
       "category": "Gaming",
       "megaMafia": true
     },
@@ -96,7 +94,7 @@
       "name": "Pump Party",
       "twitter": "pumppartyapp",
       "website": "https://pumpparty.com",
-      "description": "Season 1 coming soon.",
+      "description": "A live, interactive gameshow where users can win prizes",
       "category": "Gaming",
       "megaMafia": true
     },
@@ -105,7 +103,7 @@
       "twitter": "valhallaperps",
       "website": "https://valhalla.exchange",
       "discord": "https://discord.com/invite/valhallaperps",
-      "description": "The Perpetuals Exchange on MegaETH.",
+      "description": "A fully on-chain and composable perpetual DEX",
       "category": "DeFi",
       "megaMafia": true
     },
@@ -113,8 +111,8 @@
       "name": "GTE",
       "twitter": "GTE_XYZ",
       "website": "https://gte.xyz",
-      "telegram": "https://discord.gg/gte-xyz",
-      "description": "GTE is the world's fastest decentralized trading venue. Backed by top institutions, market makers, and you.",
+      "discord": "https://discord.gg/gte-xyz",
+      "description": "A CLOB and AMM DEX + DEX aggregator + launchpad",
       "category": "DeFi",
       "megaMafia": true
     },
@@ -123,7 +121,8 @@
       "twitter": "CapLabs_",
       "website": "https://caplabs.io",
       "discord": "https://discord.com/invite/JEWtg6TC8J",
-      "description": "Stablecoin protocol with credible financial guarantees. Built on Ethereum, accelerated by MegaETH Labs.",
+      "telegram": "https://t.me/stablecoinmafia",
+      "description": "A stablecoin engine to democratize sophiscated yield strategies",
       "category": "DeFi",
       "megaMafia": true
     },
@@ -131,14 +130,23 @@
       "name": "Teko",
       "twitter": "tekofinance",
       "website": "https://teko.finance",
-      "description": "Real-time money markets on MegaETH.",
+      "discord": "https://discord.gg/tByhhB8u",
+      "description": "A money market with leveraged strategies + margin trading",
       "category": "DeFi",
+      "megaMafia": true
+    },
+    {
+      "name": "RPS Live",
+      "twitter": "rps_live_gg",
+      "website": "https://rps.live",
+      "description": "Interactive and 24/7 AI agents streaming",
+      "category": "AI",
       "megaMafia": true
     },
     {
       "name": "Alien Rabbits",
       "twitter": "AlienRabbitsNft",
-      "description": "A Community-Driven PFP on MegaETH Labs.",
+      "description": "NFT collection",
       "category": "NFT",
       "megaMafia": false
     },
@@ -146,8 +154,8 @@
       "name": "Biomes",
       "twitter": "biomesAW",
       "website": "https://biomes.aw",
-      "discord": "https://discord.gg/4DFSYSvygB",
-      "description": "The First Autonomous World",
+      "discord": "https://discord.gg/pQbBfWHX",
+      "description": "An autonomous world. On-chain Minecraft",
       "category": "Gaming",
       "megaMafia": false
     },
@@ -155,21 +163,24 @@
       "name": "Bright Union",
       "twitter": "bright_union",
       "website": "https://brightunion.io",
-      "description": "DeFi insurance aggregator consolidating coverage and liquidity solutions.",
+      "discord": "https://discord.com/invite/RTyNDUjKqu",
+      "telegram": "https://t.me/brightunion",
+      "description": "Compare, buy, and manage insurance for DeFi assets",
       "category": "DeFi",
       "megaMafia": false
     },
     {
       "name": "Bronto",
       "twitter": "bronto_finance",
-      "description": "Building the native liquidity hub.",
+      "description": "A ve(3;3) DEX",
       "category": "DeFi",
       "megaMafia": false
     },
     {
       "name": "ComLayer",
       "twitter": "comlayerdapp",
-      "description": "Secure, scalable Web3 communication. Multi-chain messaging with end-to-end encryption and advanced security features.",
+      "discord": "https://discord.com/invite/nQf64NP7",
+      "description": "A communication layer for anonymous messaging and more",
       "category": "Infrastructure",
       "megaMafia": false
     },
@@ -178,23 +189,24 @@
       "twitter": "KingdomlyApp",
       "website": "https://kingdomly.app",
       "discord": "https://discord.gg/65ZRCVY59C",
-      "description": "An all in one NFT Dapp. Launch, mint, trade, bridge, and stake NFTs on Kingdomly 🏰",
+      "description": "An NFT marketplace and launchpad",
       "category": "NFT",
       "megaMafia": false
     },
     {
       "name": "Kontos Protocol",
       "twitter": "Kontosio",
-      "website": "https://www.kontos.io",
+      "website": "https://kontos.io",
       "discord": "https://discord.com/invite/zecrey",
-      "description": "A zk-powered omnichain abstraction layer. Omnichain and Gas Abstraction. Powered by Zecrey Labs, backed by Binance Labs.",
+      "telegram": "https://t.me/zecrey",
+      "description": "A ZK and omnichain abstraction layer",
       "category": "Infrastructure",
       "megaMafia": false
     },
     {
       "name": "Mega Buddies",
       "twitter": "mega_buddies",
-      "description": "Unique collectible characters who lives on the MegaETH",
+      "description": "NFT collection",
       "category": "NFT",
       "megaMafia": false
     },
@@ -202,14 +214,14 @@
       "name": "Mega Cheetah",
       "twitter": "mega_cheetahnft",
       "discord": "https://discord.gg/5Fg5z3pZfV",
-      "description": "A Unique PFP NFT That Symbolizes Speed, Strength and Coalition",
+      "description": "NFT collection",
       "category": "NFT",
       "megaMafia": false
     },
     {
       "name": "MegaBot",
       "twitter": "Mega_BotETH",
-      "description": "Native high frequency trading bot & sniper on MegaETH Labs",
+      "description": "Trading and sniping Telegram Bot",
       "category": "DeFi",
       "megaMafia": false
     },
@@ -217,14 +229,14 @@
       "name": "MegaDex Labs",
       "twitter": "megadex_labs",
       "website": "https://megadex.app",
-      "description": "V3 concentrated liquidity and an AMM protocol ecosystem that hits different",
+      "description": "A V3 concentrated liquidity AMM",
       "category": "DeFi",
       "megaMafia": false
     },
     {
       "name": "MegaFrog",
       "twitter": "Mega_Frogs",
-      "description": "🐸 Just a frog vibing in the lily pad of life 🌿✨ Ribbiting wisdom, swamp adventures, and the occasional leap of faith!",
+      "description": "NFT collection",
       "category": "NFT",
       "megaMafia": false
     },
@@ -239,92 +251,98 @@
     {
       "name": "MegaPunks",
       "twitter": "MegaPunks_nft",
-      "description": "10000 Punks will be landed on MegaETH Labs soon.",
+      "description": "NFT collection",
       "category": "NFT",
       "megaMafia": false
     },
     {
       "name": "MegaRabbits",
       "twitter": "MegaRabbitNFT",
-      "description": "A PFP NFT collection showcasing futuristic rabbits, blending nature and technology as they venture into the digital universe.",
+      "discord": "https://discord.com/invite/megarabbitchat",
+      "description": "NFT collection",
       "category": "NFT",
       "megaMafia": false
     },
     {
       "name": "Megaton",
       "twitter": "0xmegaton",
-      "description": "A mysterious exchange built to save Ethereum.",
+      "description": "An exchange built to save Ethereum",
       "category": "DeFi",
       "megaMafia": false
     },
     {
       "name": "Mekaeth",
       "twitter": "mekaeth_xyz",
-      "description": "An experimental AI-based NFT collection, redefining the possibilities of NFTs with innovative features and approaches never seen before to bring new excitement to the world of NFTs.",
+      "description": "NFT collection + AI agents",
       "category": "NFT",
       "megaMafia": false
     },
     {
       "name": "Newzilla",
       "twitter": "MegaZillaNft",
-      "description": "An NFT collection on MegaETH inspired by strategic card games, offering unique digital assets with traits and utilities, unlocking gameplay opportunities and exclusive rewards.",
+      "description": "NFT collection",
       "category": "NFT",
       "megaMafia": false
     },
     {
       "name": "Paw",
       "twitter": "MegaPaw_",
-      "description": "A community-driven NFT project that empowers holders with unique access and opportunities.",
+      "description": "NFT collection",
       "category": "NFT",
       "megaMafia": false
     },
     {
       "name": "Rabbit Mafia",
       "twitter": "RabbitMafiaNFT",
-      "description": "A PFP NFT collection diving into the neon-lit underworld of MegaMafia, where rogue rabbits rule the streets with flair and firepower.",
+      "description": "NFT collection",
       "category": "NFT",
       "megaMafia": false
     },
     {
       "name": "RainMakr",
       "twitter": "RainMakr_xyz",
-      "description": "An all-in-one launchpad with real yield designed for AI agents, memecoins, and top-tier projects",
+      "description": "A launchpad for AI agents, memecoins and top tier projects",
       "category": "DeFi",
       "megaMafia": false
     },
     {
       "name": "Ren",
       "twitter": "renprotocol",
-      "description": "An interoperability protocol that enables Bitcoin holders to securely and trustlessly participate in DeFi.",
+      "website": "https://renprotocol.org",
+      "discord": "https://discord.com/invite/wbnft7K38t",
+      "description": "An interoperability protocol for BTC holders to interact with DeFi",
       "category": "DeFi",
       "megaMafia": false
     },
     {
       "name": "StakeStone",
       "twitter": "Stake_Stone",
-      "description": "An omnichain liquidity asset protocol building an adaptive staking network for liquid ETH / BTC.",
+      "website": "https://stakestone.io",
+      "discord": "https://discord.com/invite/cswURCh8Nx",
+      "telegram": "https://t.me/+afYqz2KG_YNlNzNl",
+      "description": "Liquid staking for Ethereum and Bitcoin",
       "category": "DeFi",
       "megaMafia": false
     },
     {
       "name": "StackUp",
       "twitter": "usestackup",
-      "description": "A yield aggregator for MegaETH DeFi, optimizing returns by efficiently managing and allocating assets.",
+      "description": "A yield aggregator",
       "category": "DeFi",
       "megaMafia": false
     },
     {
       "name": "Yield Dot Fun",
       "twitter": "yieldsdotfun",
-      "description": "A yield aggregator that hosts community vault competitions, enabling users to farm across multiple chains. AI agents create multichain strategies to optimize yields, delivering opportunities for degen users to maximize returns.",
+      "description": "A multichain yield aggregator with AI agents",
       "category": "DeFi",
       "megaMafia": false
     },
     {
       "name": "Battlefold",
       "twitter": "Battlefold_hq",
-      "description": "A strategy guessing game",
       "telegram": "https://t.me/battlefold",
+      "description": "A strategy guessing game",
       "category": "Gaming",
       "megaMafia": false
     },
@@ -337,11 +355,24 @@
       "megaMafia": false
     },
     {
-      "name": "RPS Live",
-      "twitter": "rps_live_gg",
-      "website": "https://www.rps.live",
-      "description": "A platform that brings AI to life",
-      "category": "AI",
+      "name": "Digit Rabbits",
+      "twitter": "digitrabbits",
+      "description": "NFT collection",
+      "category": "NFT",
+      "megaMafia": false
+    },
+    {
+      "name": "Mega Babe",
+      "twitter": "MegaBabe_NFT",
+      "description": "NFT collection",
+      "category": "NFT",
+      "megaMafia": false
+    },
+    {
+      "name": "Mega Names",
+      "twitter": "mega_names",
+      "description": "Name Service (.mega)",
+      "category": "Infrastructure",
       "megaMafia": false
     }
   ]
