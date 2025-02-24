@@ -26,9 +26,10 @@ interface Project {
 
 interface ProjectCardProps {
   project: Project;
+  onVoteSuccess?: () => void;
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project, onVoteSuccess }: ProjectCardProps) {
   const { user, login } = useDiscordAuth();
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [isVoting, setIsVoting] = useState(false);
@@ -131,6 +132,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         downvotes: data.votes.downvotes,
       });
       setUserVote(data.votes.userVote);
+      onVoteSuccess?.();
     } catch (error) {
       console.error("Failed to vote:", error);
       toast.error(error instanceof Error ? error.message : "Failed to vote");
