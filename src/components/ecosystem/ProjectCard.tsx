@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { cn } from "@/lib/utils";
+import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
+import { toast } from "sonner";
 
 // Global cache for profile images across all ProjectCard instances
 const profileImageCache = new Map<string, string>();
@@ -14,6 +17,11 @@ interface Project {
   description: string;
   category: string;
   megaMafia: boolean;
+  votes?: {
+    upvotes: number;
+    downvotes: number;
+    userVotes: Record<string, "up" | "down">;
+  };
 }
 
 interface ProjectCardProps {
@@ -21,13 +29,16 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
-  const [profileImageUrl, setProfileImageUrl] = useState<string>(() => {
-    // Try to get from cache first
-    return (
-      profileImageCache.get(project.twitter) ||
-      `https://unavatar.io/twitter/${project.twitter}?fallback=false`
-    );
+  const { user, login } = useDiscordAuth();
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const [isVoting, setIsVoting] = useState(false);
+  const [votes, setVotes] = useState({
+    upvotes: project.votes?.upvotes || 0,
+    downvotes: project.votes?.downvotes || 0,
   });
+  const [userVote, setUserVote] = useState<"up" | "down" | null>(
+    user ? project.votes?.userVotes?.[user.id] || null : null
+  );
   const [retryCount, setRetryCount] = useState(0);
   const isMounted = useRef(true);
   const MAX_RETRIES = 3;
@@ -70,7 +81,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           const newUrl = `https://unavatar.io/twitter/${
             project.twitter
           }?fallback=false&t=${Date.now()}`;
-          setProfileImageUrl(newUrl);
+          setProfileImage(newUrl);
           profileImageCache.set(project.twitter, newUrl);
         }
       } catch {
@@ -83,9 +94,48 @@ export function ProjectCard({ project }: ProjectCardProps) {
       // After all retries fail, fall back to initials and cache the fallback
       const fallbackUrl = `https://api.dicebear.com/7.x/initials/svg?seed=${project.name}`;
       if (isMounted.current) {
-        setProfileImageUrl(fallbackUrl);
+        setProfileImage(fallbackUrl);
         profileImageCache.set(project.twitter, fallbackUrl);
       }
+    }
+  };
+
+  const handleVote = async (vote: "up" | "down") => {
+    if (!user) {
+      login();
+      return;
+    }
+
+    try {
+      setIsVoting(true);
+      const response = await fetch("/api/votes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          projectName: project.name,
+          vote,
+          userId: user.id,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to vote");
+      }
+
+      setVotes({
+        upvotes: data.votes.upvotes,
+        downvotes: data.votes.downvotes,
+      });
+      setUserVote(data.votes.userVote);
+    } catch (error) {
+      console.error("Failed to vote:", error);
+      toast.error(error instanceof Error ? error.message : "Failed to vote");
+    } finally {
+      setIsVoting(false);
     }
   };
 
@@ -100,7 +150,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <div className="flex items-start gap-4 mb-6">
           {/* Logo */}
           <img
-            src={profileImageUrl}
+            src={
+              profileImage ||
+              `https://unavatar.io/twitter/${project.twitter}?fallback=false`
+            }
             alt={`${project.name} Logo`}
             onError={handleImageError}
             className="w-14 h-14 rounded-xl bg-gray-100 dark:bg-gray-800 ring-1 ring-gray-200 dark:ring-gray-800 group-hover:ring-blue-500/30 dark:group-hover:ring-blue-500/30 transition-all object-cover"
@@ -152,9 +205,72 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </div>
 
         {/* Description */}
-        <p className="text-base text-gray-600 dark:text-gray-300 mb-6 flex-grow leading-relaxed">
+        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
           {project.description}
         </p>
+
+        {/* Voting Section */}
+        <div className="flex items-center gap-4 mb-4 p-2 rounded-lg bg-gray-50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => handleVote("up")}
+              disabled={isVoting}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                userVote === "up"
+                  ? "bg-green-500 text-white"
+                  : "bg-green-50 dark:bg-green-500/10 text-green-600 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-500/20"
+              }`}
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 15l7-7 7 7"
+                />
+              </svg>
+              <span>{votes.upvotes}</span>
+            </button>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => handleVote("down")}
+              disabled={isVoting}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+                userVote === "down"
+                  ? "bg-red-500 text-white"
+                  : "bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-500/20"
+              }`}
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+              <span>{votes.downvotes}</span>
+            </button>
+          </div>
+          {!project.discord && (
+            <div className="ml-auto">
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                Join Discord to vote
+              </span>
+            </div>
+          )}
+        </div>
 
         {/* Links */}
         <div className="flex flex-wrap items-center gap-2">

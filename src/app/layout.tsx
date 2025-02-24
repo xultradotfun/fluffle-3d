@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { Footer } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/react";
+import { DiscordAuthProvider } from "@/contexts/DiscordAuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -55,11 +56,13 @@ export default function RootLayout({
       <head />
       <body className={inter.className}>
         <ThemeProvider>
-          <div className="relative min-h-screen antialiased bg-background text-foreground">
-            <ThemeToggle />
-            {children}
-            <Footer />
-          </div>
+          <DiscordAuthProvider>
+            <div className="relative min-h-screen antialiased bg-background text-foreground">
+              <ThemeToggle />
+              {children}
+              <Footer />
+            </div>
+          </DiscordAuthProvider>
         </ThemeProvider>
         <Analytics />
       </body>
