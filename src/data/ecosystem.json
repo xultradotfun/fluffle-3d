@@ -255,7 +255,7 @@
       "twitter": "0xmegaton",
       "description": "A mysterious exchange built to save Ethereum.",
       "category": "DeFi",
-      "megaMafia": true
+      "megaMafia": false
     },
     {
       "name": "Mekaeth",
