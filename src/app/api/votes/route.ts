@@ -8,31 +8,21 @@ const VOTE_TYPES = ["up", "down"] as const;
 type VoteType = (typeof VOTE_TYPES)[number];
 
 interface VoteRequest {
-  projectName: string;
+  twitter: string;
   vote: VoteType;
   userId: string;
 }
 
-interface VoteCount {
-  type: string;
-  _count: number;
-}
-
-interface Vote {
-  id: number;
+interface VoteData {
   userId: string;
   type: string;
-  projectId: number;
-  createdAt: Date;
-  updatedAt: Date;
 }
 
-interface Project {
+interface ProjectData {
   id: number;
+  twitter: string;
   name: string;
-  votes: Vote[];
-  createdAt: Date;
-  updatedAt: Date;
+  votes: VoteData[];
 }
 
 // Rate limiting map: userId -> { timestamp: number, count: number }
@@ -110,29 +100,39 @@ export async function GET() {
   try {
     // Get all projects with their votes
     const projects = (await prisma.project.findMany({
-      include: { votes: true },
-    })) as Project[];
+      include: {
+        votes: {
+          select: {
+            userId: true,
+            type: true,
+          },
+        },
+      },
+    })) as ProjectData[];
 
     // Get user ID from cookies if available
     const cookieStore = cookies();
     const userData = cookieStore.get("discord_user");
     const userId = userData ? JSON.parse(userData.value).id : null;
 
-    // Format the response
-    const voteCounts = projects.map((project) => {
-      const upvotes = project.votes.filter((v) => v.type === "up").length;
-      const downvotes = project.votes.filter((v) => v.type === "down").length;
-      const userVote = userId
-        ? project.votes.find((v) => v.userId === userId)?.type || null
-        : null;
+    // Format the response with vote counts
+    const voteCounts = projects.map((project: ProjectData) => {
+      const votes = {
+        upvotes: project.votes.filter((vote: VoteData) => vote.type === "up")
+          .length,
+        downvotes: project.votes.filter(
+          (vote: VoteData) => vote.type === "down"
+        ).length,
+        userVote: userId
+          ? project.votes.find((vote: VoteData) => vote.userId === userId)
+              ?.type || null
+          : null,
+      };
 
       return {
+        twitter: project.twitter,
         name: project.name,
-        votes: {
-          upvotes,
-          downvotes,
-          userVote,
-        },
+        votes,
       };
     });
 
@@ -153,15 +153,74 @@ export async function POST(request: Request) {
 
     // Verify CSRF protection
     const origin = headersList.get("origin");
+    console.log("Request origin:", origin);
+    console.log("Expected origin:", process.env.NEXT_PUBLIC_BASE_URL);
+
     if (origin !== process.env.NEXT_PUBLIC_BASE_URL) {
+      console.log("Origin mismatch");
       return new NextResponse(JSON.stringify({ error: "Invalid origin" }), {
         status: 403,
         headers: { "Content-Type": "application/json" },
       });
     }
 
+    // Parse request body first
+    const body = await request.json();
+    console.log("Received request body:", body);
+
+    // Validate required fields
+    if (!body.twitter || !body.vote || !body.userId) {
+      console.log("Missing fields:", {
+        hasTwitter: !!body.twitter,
+        hasVote: !!body.vote,
+        hasUserId: !!body.userId,
+      });
+      return new NextResponse(
+        JSON.stringify({
+          error: "Missing required fields. Required: twitter, vote, userId",
+          received: {
+            twitter: body.twitter,
+            vote: body.vote,
+            userId: body.userId,
+          },
+        }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
+
+    const { twitter, vote, userId } = body as VoteRequest;
+    console.log("Parsed request data:", { twitter, vote, userId });
+
+    // Validate vote type
+    console.log("Validating vote type:", vote, "Valid types:", VOTE_TYPES);
+    if (!isValidVoteType(vote)) {
+      console.log("Invalid vote type");
+      return new NextResponse(
+        JSON.stringify({
+          error: "Invalid vote type",
+          received: vote,
+          validTypes: VOTE_TYPES,
+        }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+    }
+
     // Verify user authentication and server membership
     const user = await verifyUserAuth(cookieStore);
+
+    // Verify userId matches authenticated user
+    if (userId !== user.id) {
+      return new NextResponse(JSON.stringify({ error: "User ID mismatch" }), {
+        status: 403,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
 
     // Check rate limiting
     if (!checkRateLimit(user.id)) {
@@ -173,41 +232,27 @@ export async function POST(request: Request) {
       );
     }
 
-    // Parse and validate request body
-    const body: VoteRequest = await request.json();
-    const { projectName, vote, userId } = body;
-
-    // Validate vote type
-    if (!isValidVoteType(vote)) {
-      return new NextResponse(JSON.stringify({ error: "Invalid vote type" }), {
-        status: 400,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
-
-    // Verify userId matches authenticated user
-    if (userId !== user.id) {
-      return new NextResponse(JSON.stringify({ error: "User ID mismatch" }), {
-        status: 403,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
-
     // Get or create project
-    let project = (await prisma.project.findUnique({
-      where: { name: projectName },
+    let project = await prisma.project.findUnique({
+      where: { twitter },
       include: { votes: true },
-    })) as Project | null;
+    });
 
     if (!project) {
-      project = (await prisma.project.create({
-        data: { name: projectName },
+      // Create the project if it doesn't exist
+      project = await prisma.project.create({
+        data: {
+          twitter,
+          name: twitter, // Using twitter handle as name for now
+        },
         include: { votes: true },
-      })) as Project;
+      });
     }
 
     // Check if user has already voted
-    const existingVote = project.votes.find((v) => v.userId === userId);
+    const existingVote = project.votes.find(
+      (v: VoteData) => v.userId === userId
+    );
 
     if (existingVote) {
       if (existingVote.type === vote) {
@@ -234,23 +279,25 @@ export async function POST(request: Request) {
     }
 
     // Get updated vote counts
-    const voteCount = await prisma.vote.groupBy({
-      by: ["type"],
+    const votes = await prisma.vote.findMany({
       where: { projectId: project.id },
-      _count: true,
+      select: {
+        type: true,
+        userId: true,
+      },
     });
 
-    const upvotes =
-      voteCount.find((v: VoteCount) => v.type === "up")?._count ?? 0;
-    const downvotes =
-      voteCount.find((v: VoteCount) => v.type === "down")?._count ?? 0;
+    const upvotes = votes.filter((v: VoteData) => v.type === "up").length;
+    const downvotes = votes.filter((v: VoteData) => v.type === "down").length;
+    const userVote =
+      votes.find((v: VoteData) => v.userId === userId)?.type || null;
 
     return NextResponse.json({
       success: true,
       votes: {
         upvotes,
         downvotes,
-        userVote: vote,
+        userVote,
       },
     });
   } catch (error) {

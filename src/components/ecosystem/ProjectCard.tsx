@@ -114,7 +114,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          projectName: project.name,
+          twitter: project.twitter,
           vote,
           userId: user.id,
         }),

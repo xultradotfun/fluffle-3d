@@ -12,7 +12,8 @@ datasource db {
 
 model Project {
   id          Int      @id @default(autoincrement())
-  name        String   @unique
+  twitter     String   @unique
+  name        String
   votes       Vote[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
