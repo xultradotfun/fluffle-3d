@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Fluffle Tools",
-  description: "Utilities for MegaETH enthusiasts and Fluffle holders",
+  description: "Utilities for MegaETH explorers and Fluffle holders",
   icons: {
     icon: [{ url: "/favicon.ico", sizes: "any" }],
     apple: [{ url: "/favicon.ico", sizes: "180x180" }],
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   openGraph: {
     title: "Fluffle Tools",
-    description: "Utilities for MegaETH enthusiasts and Fluffle holders",
+    description: "Utilities for MegaETH explorers and Fluffle holders",
     images: [
       {
         url: "/socialpreview.jpg",
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Fluffle Tools",
-    description: "Utilities for MegaETH enthusiasts and Fluffle holders",
+    description: "Utilities for MegaETH explorers and Fluffle holders",
     images: ["/socialpreview.jpg"],
     creator: "@0x_ultra",
   },

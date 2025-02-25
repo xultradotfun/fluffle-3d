@@ -91,7 +91,8 @@ export function EcosystemDashboard() {
           Ecosystem Projects
         </h2>
         <p className="text-lg text-gray-600 dark:text-gray-300">
-          Discover the growing ecosystem of projects building on MegaETH.
+          Discover and vote on the growing ecosystem of projects building on
+          MegaETH
         </p>
       </div>
 

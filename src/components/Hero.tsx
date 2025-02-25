@@ -82,7 +82,7 @@ export default function Hero() {
               <span className="text-gray-900 dark:text-white font-medium">
                 MegaETH
               </span>{" "}
-              enthusiasts and{" "}
+              explorers and{" "}
               <span className="text-gray-900 dark:text-white font-medium">
                 Fluffle
               </span>{" "}

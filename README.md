@@ -2,7 +2,7 @@
 
 <div align="center">
   <img src="/public/socialpreview.jpg" alt="Fluffle Tools Preview" width="600" />
-  <p>Utilities for MegaETH enthusiasts and Fluffle holders</p>
+  <p>Utilities for MegaETH explorers and Fluffle holders</p>
 </div>
 
 <div align="center">
