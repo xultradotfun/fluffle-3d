@@ -1,12 +1,9 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
 import { toast } from "sonner";
-
-// Global cache for profile images across all ProjectCard instances
-const profileImageCache = new Map<string, string>();
 
 interface Project {
   name: string;
@@ -30,7 +27,6 @@ interface ProjectCardProps {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   const { user, login } = useDiscordAuth();
-  const [profileImage, setProfileImage] = useState<string | null>(null);
   const [isVoting, setIsVoting] = useState(false);
   const [votes, setVotes] = useState({
     upvotes: project.votes?.upvotes || 0,
@@ -39,10 +35,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const [userVote, setUserVote] = useState<"up" | "down" | null>(
     project.votes?.userVote || null
   );
-  const [retryCount, setRetryCount] = useState(0);
-  const isMounted = useRef(true);
-  const MAX_RETRIES = 3;
-  const RETRY_DELAY = 1000; // 1 second delay between retries
 
   useEffect(() => {
     // Update votes and user vote when project.votes or user changes
@@ -59,62 +51,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
       }
     }
   }, [project.votes, user]);
-
-  useEffect(() => {
-    // Cleanup function to prevent memory leaks
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
-
-  const loadProfileImage = async () => {
-    const img = new Image();
-
-    return new Promise<void>((resolve, reject) => {
-      img.onload = () => {
-        // Only cache successful loads
-        profileImageCache.set(project.twitter, img.src);
-        resolve();
-      };
-      img.onerror = () => reject();
-      img.src = `https://unavatar.io/twitter/${
-        project.twitter
-      }?fallback=false&t=${Date.now()}`; // Add cache buster
-    });
-  };
-
-  const handleImageError = async () => {
-    if (!isMounted.current) return;
-
-    if (retryCount < MAX_RETRIES) {
-      // Wait for the retry delay
-      await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY));
-
-      try {
-        await loadProfileImage();
-        // If successful, update the image URL with a cache buster
-        if (isMounted.current) {
-          const newUrl = `https://unavatar.io/twitter/${
-            project.twitter
-          }?fallback=false&t=${Date.now()}`;
-          setProfileImage(newUrl);
-          profileImageCache.set(project.twitter, newUrl);
-        }
-      } catch {
-        // If failed, increment retry count and try again
-        if (isMounted.current) {
-          setRetryCount((prev) => prev + 1);
-        }
-      }
-    } else {
-      // After all retries fail, fall back to initials and cache the fallback
-      const fallbackUrl = `https://api.dicebear.com/7.x/initials/svg?seed=${project.name}`;
-      if (isMounted.current) {
-        setProfileImage(fallbackUrl);
-        profileImageCache.set(project.twitter, fallbackUrl);
-      }
-    }
-  };
 
   const handleVote = async (vote: "up" | "down") => {
     if (!user) {
@@ -203,12 +139,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <div className="flex items-start gap-4 mb-6">
           {/* Logo */}
           <img
-            src={
-              profileImage ||
-              `https://unavatar.io/twitter/${project.twitter}?fallback=false`
-            }
+            src={`/avatars/${project.twitter}.jpg`}
             alt={`${project.name} Logo`}
-            onError={handleImageError}
             className="w-14 h-14 rounded-xl bg-gray-100 dark:bg-gray-800 ring-1 ring-gray-200 dark:ring-gray-800 group-hover:ring-blue-500/30 dark:group-hover:ring-blue-500/30 transition-all object-cover"
           />
 
