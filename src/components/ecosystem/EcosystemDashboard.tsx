@@ -7,6 +7,7 @@ import { ProjectCard } from "./ProjectCard";
 export function EcosystemDashboard() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showMegaMafiaOnly, setShowMegaMafiaOnly] = useState(false);
+  const [showNativeOnly, setShowNativeOnly] = useState(false);
   const [projects, setProjects] = useState(ecosystemData.projects);
 
   useEffect(() => {
@@ -61,13 +62,18 @@ export function EcosystemDashboard() {
     return projects.filter((project) => project.megaMafia).length;
   };
 
+  const getNativeCount = () => {
+    return projects.filter((project) => project.native).length;
+  };
+
   const filteredProjects = projects
     .filter((project) => {
       const categoryMatch = selectedCategory
         ? project.category === selectedCategory
         : true;
       const megaMafiaMatch = showMegaMafiaOnly ? project.megaMafia : true;
-      return categoryMatch && megaMafiaMatch;
+      const nativeMatch = showNativeOnly ? project.native : true;
+      return categoryMatch && megaMafiaMatch && nativeMatch;
     })
     .sort((a, b) => {
       // First sort by MegaMafia status
@@ -130,6 +136,53 @@ export function EcosystemDashboard() {
           </div>
         </button>
 
+        {/* Native Filter */}
+        <button
+          onClick={() => setShowNativeOnly(!showNativeOnly)}
+          className={`group relative px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
+            showNativeOnly
+              ? "bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-500 text-white shadow-lg ring-1 ring-white/20"
+              : "bg-white dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border border-gray-200 dark:border-white/10 hover:border-emerald-500/30 dark:hover:border-emerald-500/30 hover:bg-emerald-50/50 dark:hover:bg-emerald-500/10"
+          }`}
+        >
+          <div className="relative flex items-center gap-2">
+            {showNativeOnly && (
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.15),transparent)] rounded-full"></div>
+            )}
+            <svg
+              className={`w-4 h-4 ${
+                showNativeOnly
+                  ? "text-white"
+                  : "text-emerald-600 dark:text-emerald-400"
+              }`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+              />
+            </svg>
+            <span
+              className={`relative ${showNativeOnly ? "font-semibold" : ""}`}
+            >
+              Native
+            </span>
+            <span
+              className={`text-xs px-1.5 py-0.5 rounded-full ${
+                showNativeOnly
+                  ? "bg-white/20"
+                  : "bg-emerald-50 dark:bg-white/10 text-emerald-600 dark:text-emerald-400"
+              }`}
+            >
+              {getNativeCount()}
+            </span>
+          </div>
+        </button>
+
         {/* All Categories Button */}
         <button
           onClick={() => setSelectedCategory(null)}
@@ -146,7 +199,11 @@ export function EcosystemDashboard() {
                 selectedCategory === null ? "text-blue-200" : "text-gray-400"
               }`}
             >
-              {showMegaMafiaOnly ? getMegaMafiaCount() : projects.length}
+              {showMegaMafiaOnly
+                ? getMegaMafiaCount()
+                : showNativeOnly
+                ? getNativeCount()
+                : projects.length}
             </span>
           </div>
         </button>
