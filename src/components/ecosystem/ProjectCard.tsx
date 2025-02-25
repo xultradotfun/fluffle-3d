@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
 import { toast } from "sonner";
@@ -138,11 +139,17 @@ export function ProjectCard({ project }: ProjectCardProps) {
         {/* Header: Project Name, Logo, and Badges */}
         <div className="flex items-start gap-4 mb-6">
           {/* Logo */}
-          <img
-            src={`/avatars/${project.twitter}.jpg`}
-            alt={`${project.name} Logo`}
-            className="w-14 h-14 rounded-xl bg-gray-100 dark:bg-gray-800 ring-1 ring-gray-200 dark:ring-gray-800 group-hover:ring-blue-500/30 dark:group-hover:ring-blue-500/30 transition-all object-cover"
-          />
+          <div className="relative w-14 h-14 flex-shrink-0">
+            <Image
+              src={`/avatars/${project.twitter}.jpg`}
+              alt={`${project.name} Logo`}
+              width={56}
+              height={56}
+              className="rounded-xl bg-gray-100 dark:bg-gray-800 ring-1 ring-gray-200 dark:ring-gray-800 group-hover:ring-blue-500/30 dark:group-hover:ring-blue-500/30 transition-all object-cover"
+              priority={false}
+              loading="lazy"
+            />
+          </div>
 
           {/* Name and Badges */}
           <div className="flex-1 min-w-0">
@@ -154,11 +161,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 {project.megaMafia && (
                   <div className="relative flex-shrink-0">
                     <div className="w-5 h-5 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-1 shadow-sm ring-1 ring-white/20 group-hover:scale-110 transition-transform">
-                      <img
+                      <Image
                         src="/icons/logo-02.png"
                         alt="MegaMafia"
                         title="MegaMafia Project"
+                        width={20}
+                        height={20}
                         className="w-full h-full object-contain brightness-0 invert"
+                        priority={false}
                       />
                     </div>
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.3),transparent)] rounded-full blur-sm"></div>
