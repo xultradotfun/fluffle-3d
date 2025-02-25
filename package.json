@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "download-avatars": "ts-node scripts/download-avatars.ts"
+    "download-avatars": "ts-node --esm scripts/download-avatars.ts"
   },
   "dependencies": {
     "@pixiv/three-vrm": "^3.3.4",

@@ -1,14 +1,24 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as https from "https";
+import { fileURLToPath } from "url";
 import type { IncomingMessage } from "http";
 
-const AVATARS_DIR = path.join(process.cwd(), "public/avatars");
+interface Project {
+  twitter: string;
+  [key: string]: any; // Allow other properties
+}
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const PROJECT_ROOT = path.join(__dirname, "..");
+
+const AVATARS_DIR = path.join(PROJECT_ROOT, "public/avatars");
 
 // Read ecosystem.json file
 const ecosystemData = JSON.parse(
-  fs.readFileSync(path.join(__dirname, "../src/data/ecosystem.json"), "utf-8")
-);
+  fs.readFileSync(path.join(PROJECT_ROOT, "src/data/ecosystem.json"), "utf-8")
+) as { projects: Project[] };
 
 // Create avatars directory if it doesn't exist
 if (!fs.existsSync(AVATARS_DIR)) {
@@ -109,8 +119,27 @@ async function downloadImage(twitter: string): Promise<void> {
 async function main() {
   const projects = ecosystemData.projects;
 
+  // Filter projects that don't have images yet
+  const projectsNeedingImages = projects.filter((project) => {
+    const imagePath = path.join(AVATARS_DIR, `${project.twitter}.jpg`);
+    const exists = fs.existsSync(imagePath);
+    if (exists) {
+      console.log(`Image for ${project.twitter} already exists, skipping`);
+    }
+    return !exists;
+  });
+
+  if (projectsNeedingImages.length === 0) {
+    console.log("All project images are up to date!");
+    return;
+  }
+
+  console.log(
+    `Downloading images for ${projectsNeedingImages.length} projects...`
+  );
+
   // Download images sequentially to avoid rate limiting
-  for (const project of projects) {
+  for (const project of projectsNeedingImages) {
     try {
       await downloadImage(project.twitter);
       // Add a small delay between requests
@@ -119,6 +148,8 @@ async function main() {
       console.error(`Failed to process ${project.twitter}:`, error);
     }
   }
+
+  console.log("Finished downloading new images!");
 }
 
 main().catch(console.error);

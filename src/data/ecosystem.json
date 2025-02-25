@@ -656,6 +656,41 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false
+    },
+    {
+      "name": "Jackpot",
+      "twitter": "jackpot_game_",
+      "description": "Play fun games, high stakes high payouts, zero downside.",
+      "category": "Gaming",
+      "megaMafia": false,
+      "native": true
+    },
+    {
+      "name": "Summerstone",
+      "twitter": "summerstonexyz",
+      "website": "https://summerstone.xyz/",
+      "description": "Friendly Liquity fork on MegaETH.",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": true
+    },
+    {
+      "name": "Rarible",
+      "twitter": "rarible",
+      "website": "https://rarible.com/",
+      "description": "A marketplace for NFTs.",
+      "category": "NFT",
+      "megaMafia": false,
+      "native": false
+    },
+    {
+      "name": "XL",
+      "twitter": "XLmemeCom",
+      "website": "https://xlmeme.com/",
+      "description": "Memecoin launcher.",
+      "category": "Meme",
+      "megaMafia": false,
+      "native": false
     }
   ]
 }
