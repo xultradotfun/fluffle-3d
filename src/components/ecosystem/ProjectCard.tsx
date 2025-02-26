@@ -124,7 +124,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       if (!response.ok) {
         if (response.status === 429) {
           throw new Error(
-            "Rate limit exceeded. You can cast up to 15 votes every 5 minutes."
+            "Rate limit reached: You can cast up to 15 votes every 5 minutes. This helps prevent spam and ensures fair voting. Please try again later."
           );
         }
         throw new Error(data.error || "Failed to vote");
@@ -171,10 +171,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
       }
       console.error("Failed to vote:", error);
       if (error instanceof Error) {
-        if (error.message.includes("Rate limit exceeded")) {
-          toast.error(
-            "You've reached the voting limit. Please try again in 5 minutes."
-          );
+        if (error.message.includes("Rate limit")) {
+          toast.error(error.message, {
+            duration: 5000, // Show for 5 seconds since it's a longer message
+          });
         } else {
           toast.error(error.message);
         }
