@@ -151,6 +151,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
       const data = await response.json();
 
       if (!response.ok) {
+        if (response.status === 429) {
+          throw new Error(
+            "Rate limit exceeded. You can cast up to 15 votes every 5 minutes."
+          );
+        }
         throw new Error(data.error || "Failed to vote");
       }
 
@@ -196,7 +201,17 @@ export function ProjectCard({ project }: ProjectCardProps) {
         project.votes.breakdown = previousBreakdown;
       }
       console.error("Failed to vote:", error);
-      toast.error(error instanceof Error ? error.message : "Failed to vote");
+      if (error instanceof Error) {
+        if (error.message.includes("Rate limit exceeded")) {
+          toast.error(
+            "You've reached the voting limit. Please try again in 5 minutes."
+          );
+        } else {
+          toast.error(error.message);
+        }
+      } else {
+        toast.error("Failed to vote");
+      }
     } finally {
       setIsVoting(false);
     }
@@ -219,7 +234,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   };
 
   return (
-    <Tooltip.Provider delayDuration={0}>
+    <Tooltip.Provider delayDuration={0} skipDelayDuration={0}>
       <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white to-gray-50/80 dark:from-white/[0.02] dark:to-white/[0.01] border border-gray-200 dark:border-white/5 hover:border-blue-500/30 dark:hover:border-blue-500/20 transition-all">
         {/* Background Effects */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.08),transparent)] dark:bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.05),transparent)]" />
@@ -394,13 +409,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
                   </Tooltip.Trigger>
                   <Tooltip.Portal>
                     <Tooltip.Content
-                      className="z-50 bg-gray-900 text-white px-4 py-2.5 rounded-xl text-sm whitespace-pre shadow-xl border border-white/10"
+                      className="z-50 bg-gray-900 text-white px-4 py-2.5 rounded-xl text-sm whitespace-pre shadow-xl border border-white/10 select-none touch-none"
                       side="top"
                       sideOffset={5}
                       align="center"
+                      avoidCollisions={true}
+                      collisionPadding={16}
+                      sticky="partial"
                     >
                       <div className="font-medium mb-2 pb-2 border-b border-white/10">
-                        Role Breakdown
+                        Upvotes Breakdown
                       </div>
                       {getVoteBreakdownText("up") || "No votes yet"}
                       <Tooltip.Arrow className="fill-gray-900" />
@@ -444,13 +462,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
                   </Tooltip.Trigger>
                   <Tooltip.Portal>
                     <Tooltip.Content
-                      className="z-50 bg-gray-900 text-white px-4 py-2.5 rounded-xl text-sm whitespace-pre shadow-xl border border-white/10"
+                      className="z-50 bg-gray-900 text-white px-4 py-2.5 rounded-xl text-sm whitespace-pre shadow-xl border border-white/10 select-none touch-none"
                       side="top"
                       sideOffset={5}
                       align="center"
+                      avoidCollisions={true}
+                      collisionPadding={16}
+                      sticky="partial"
                     >
                       <div className="font-medium mb-2 pb-2 border-b border-white/10">
-                        Role Breakdown
+                        Downvotes Breakdown
                       </div>
                       {getVoteBreakdownText("down") || "No votes yet"}
                       <Tooltip.Arrow className="fill-gray-900" />

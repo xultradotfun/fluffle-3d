@@ -91,8 +91,8 @@ function checkRateLimit(userId: string): boolean {
     return true;
   }
 
-  // Allow max 10 votes per 5 minutes
-  if (userLimit.count >= 10) {
+  // Allow max 15 votes per 5 minutes
+  if (userLimit.count >= 15) {
     return false;
   }
 

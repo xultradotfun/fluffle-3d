@@ -6,6 +6,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { Footer } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/react";
 import { DiscordAuthProvider } from "@/contexts/DiscordAuthContext";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -65,6 +66,20 @@ export default function RootLayout({
           </DiscordAuthProvider>
         </ThemeProvider>
         <Analytics />
+        <Toaster
+          richColors
+          position="top-center"
+          expand={true}
+          toastOptions={{
+            style: {
+              background: "var(--card)",
+              color: "var(--card-foreground)",
+              border: "1px solid var(--border)",
+              backdropFilter: "blur(8px)",
+            },
+            className: "text-sm font-medium rounded-xl",
+          }}
+        />
       </body>
     </html>
   );
