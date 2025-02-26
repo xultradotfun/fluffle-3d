@@ -100,6 +100,7 @@ export function EcosystemDashboard() {
         getCategoryCount={getCategoryCount}
         getMegaMafiaCount={getMegaMafiaCount}
         getNativeCount={getNativeCount}
+        totalProjects={projects.length}
       />
 
       {/* Project Grid */}

@@ -9,6 +9,7 @@ interface FilterControlsProps {
   getCategoryCount: (category: string, megaMafiaOnly?: boolean) => number;
   getMegaMafiaCount: () => number;
   getNativeCount: () => number;
+  totalProjects: number;
 }
 
 export function FilterControls({
@@ -22,6 +23,7 @@ export function FilterControls({
   getCategoryCount,
   getMegaMafiaCount,
   getNativeCount,
+  totalProjects,
 }: FilterControlsProps) {
   return (
     <div className="flex flex-wrap items-center justify-center gap-3">
@@ -129,7 +131,7 @@ export function FilterControls({
               ? getMegaMafiaCount()
               : showNativeOnly
               ? getNativeCount()
-              : categories.length}
+              : totalProjects}
           </span>
         </div>
       </button>
