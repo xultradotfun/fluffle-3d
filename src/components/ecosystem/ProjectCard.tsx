@@ -41,7 +41,7 @@ export function ProjectCard({
   project,
   includeMiniethVotes,
 }: ProjectCardProps) {
-  const { isAuthenticated, user, login } = useDiscordAuth();
+  const { user, login } = useDiscordAuth();
   const [isVoting, setIsVoting] = useState(false);
   const [cooldown, setCooldown] = useState(false);
   const [votes, setVotes] = useState({
@@ -242,7 +242,7 @@ export function ProjectCard({
                 votes={votes}
                 userVote={userVote}
                 isVoting={isVoting}
-                canVote={isAuthenticated}
+                canVote={!!user?.canVote}
                 cooldown={cooldown}
                 onVote={handleVote}
                 includeMiniethVotes={includeMiniethVotes}
