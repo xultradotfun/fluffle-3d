@@ -43,12 +43,6 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden pt-8 pb-4">
-      {/* Background Effects */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-500/5 dark:to-indigo-500/5" />
-        <div className="absolute inset-y-0 right-1/2 bg-gradient-to-r from-blue-50 to-transparent dark:from-blue-500/5 dark:to-transparent" />
-      </div>
-
       {/* Content */}
       <div className="mx-auto max-w-4xl px-4">
         <div className="relative flex flex-col items-center">
