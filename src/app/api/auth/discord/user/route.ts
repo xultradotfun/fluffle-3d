@@ -40,7 +40,7 @@ export async function GET() {
     }
 
     // Get user data from database
-    const dbUser = await prisma.DiscordUser.findUnique({
+    const dbUser = await prisma.discordUser.findUnique({
       where: { id: user.id },
     });
 

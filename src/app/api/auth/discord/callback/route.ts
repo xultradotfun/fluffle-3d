@@ -110,7 +110,7 @@ export async function GET(request: Request) {
         });
 
         // Store or update user data in the database
-        await prisma.DiscordUser.upsert({
+        await prisma.discordUser.upsert({
           where: { id: userData.id },
           create: {
             id: userData.id,

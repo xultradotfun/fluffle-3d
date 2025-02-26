@@ -253,7 +253,7 @@ export async function POST(request: Request) {
     }
 
     // Get user data from database to check roles
-    const dbUser = await prisma.DiscordUser.findUnique({
+    const dbUser = await prisma.discordUser.findUnique({
       where: { id: userId },
     });
 
