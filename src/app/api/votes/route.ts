@@ -111,14 +111,7 @@ export async function GET() {
     // Get all projects with their votes
     const projects = await prisma.project.findMany({
       include: {
-        votes: {
-          select: {
-            userId: true,
-            type: true,
-            roleId: true,
-            roleName: true,
-          },
-        },
+        votes: true,
       },
     });
 
@@ -129,13 +122,18 @@ export async function GET() {
 
     // Format the response with vote counts and breakdown
     const voteCounts = projects.map((project) => {
-      const votesByRole = project.votes.reduce((acc, vote) => {
-        if (!acc[vote.roleName]) {
-          acc[vote.roleName] = { up: 0, down: 0 };
-        }
-        acc[vote.roleName][vote.type]++;
-        return acc;
-      }, {} as Record<string, { up: number; down: number }>);
+      const votesByRole = project.votes.reduce(
+        (acc: Record<string, { up: number; down: number }>, vote) => {
+          if (!acc[vote.roleName]) {
+            acc[vote.roleName] = { up: 0, down: 0 };
+          }
+          if (vote.type === "up" || vote.type === "down") {
+            acc[vote.roleName][vote.type]++;
+          }
+          return acc;
+        },
+        {}
+      );
 
       const votes = {
         upvotes: project.votes.filter((vote) => vote.type === "up").length,
