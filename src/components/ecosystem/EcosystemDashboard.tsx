@@ -5,12 +5,41 @@ import ecosystemData from "@/data/ecosystem.json";
 import { ProjectCard } from "./ProjectCard";
 import { EcosystemHeader } from "./EcosystemHeader";
 import { FilterControls } from "./FilterControls";
+import { SortSelector } from "./SortSelector";
+
+interface VoteBreakdown {
+  [roleName: string]: {
+    up: number;
+    down: number;
+  };
+}
+
+interface Project {
+  name: string;
+  twitter: string;
+  website?: string;
+  discord?: string;
+  telegram?: string;
+  description: string;
+  category: string;
+  megaMafia: boolean;
+  native: boolean;
+  votes?: {
+    upvotes: number;
+    downvotes: number;
+    userVote: "up" | "down" | null;
+    breakdown: VoteBreakdown;
+  };
+}
 
 export function EcosystemDashboard() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showMegaMafiaOnly, setShowMegaMafiaOnly] = useState(false);
   const [showNativeOnly, setShowNativeOnly] = useState(false);
-  const [projects, setProjects] = useState(ecosystemData.projects);
+  const [projects, setProjects] = useState<Project[]>(ecosystemData.projects);
+  const [sortMethod, setSortMethod] = useState<"alphabetical" | "score">(
+    "score"
+  );
 
   useEffect(() => {
     const fetchVotes = async () => {
@@ -33,6 +62,7 @@ export function EcosystemDashboard() {
                 upvotes: 0,
                 downvotes: 0,
                 userVote: null,
+                breakdown: {},
               },
             };
           })
@@ -68,6 +98,10 @@ export function EcosystemDashboard() {
     return projects.filter((project) => project.native).length;
   };
 
+  const getProjectScore = (project: Project) => {
+    return (project.votes?.upvotes || 0) - (project.votes?.downvotes || 0);
+  };
+
   const filteredProjects = projects
     .filter((project) => {
       const categoryMatch = selectedCategory
@@ -78,30 +112,65 @@ export function EcosystemDashboard() {
       return categoryMatch && megaMafiaMatch && nativeMatch;
     })
     .sort((a, b) => {
-      // First sort by MegaMafia status
-      if (a.megaMafia && !b.megaMafia) return -1;
-      if (!a.megaMafia && b.megaMafia) return 1;
-      // Then sort alphabetically within each group
-      return a.name.localeCompare(b.name);
+      if (sortMethod === "score") {
+        const scoreA = getProjectScore(a);
+        const scoreB = getProjectScore(b);
+        if (scoreB !== scoreA) {
+          return scoreB - scoreA; // Higher score first
+        }
+        // If scores are equal, fall back to alphabetical
+        return a.name.localeCompare(b.name);
+      } else {
+        // Default alphabetical sort
+        return a.name.localeCompare(b.name);
+      }
     });
 
   return (
     <div className="space-y-12 animate-fade-in">
       <EcosystemHeader />
 
-      <FilterControls
-        selectedCategory={selectedCategory}
-        setSelectedCategory={setSelectedCategory}
-        showMegaMafiaOnly={showMegaMafiaOnly}
-        setShowMegaMafiaOnly={setShowMegaMafiaOnly}
-        showNativeOnly={showNativeOnly}
-        setShowNativeOnly={setShowNativeOnly}
-        categories={categories}
-        getCategoryCount={getCategoryCount}
-        getMegaMafiaCount={getMegaMafiaCount}
-        getNativeCount={getNativeCount}
-        totalProjects={projects.length}
-      />
+      <div className="space-y-8">
+        {/* Controls Header */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+          <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
+              />
+            </svg>
+            <span>Filter & Sort</span>
+            <span className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400">
+              {filteredProjects.length} projects
+            </span>
+          </div>
+
+          <SortSelector sortMethod={sortMethod} onSortChange={setSortMethod} />
+        </div>
+
+        {/* Filter Controls */}
+        <FilterControls
+          selectedCategory={selectedCategory}
+          setSelectedCategory={setSelectedCategory}
+          showMegaMafiaOnly={showMegaMafiaOnly}
+          setShowMegaMafiaOnly={setShowMegaMafiaOnly}
+          showNativeOnly={showNativeOnly}
+          setShowNativeOnly={setShowNativeOnly}
+          categories={categories}
+          getCategoryCount={getCategoryCount}
+          getMegaMafiaCount={getMegaMafiaCount}
+          getNativeCount={getNativeCount}
+          totalProjects={projects.length}
+        />
+      </div>
 
       {/* Project Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
