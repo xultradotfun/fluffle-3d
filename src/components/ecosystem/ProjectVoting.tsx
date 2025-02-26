@@ -21,6 +21,7 @@ interface ProjectVotingProps {
   canVote: boolean;
   cooldown?: boolean;
   onVote: (vote: "up" | "down") => void;
+  includeMiniethVotes: boolean;
 }
 
 export function ProjectVoting({
@@ -30,8 +31,31 @@ export function ProjectVoting({
   canVote,
   cooldown,
   onVote,
+  includeMiniethVotes,
 }: ProjectVotingProps) {
   const [isMobileTooltipOpen, setIsMobileTooltipOpen] = useState(false);
+
+  const getFilteredVoteCounts = () => {
+    if (includeMiniethVotes || !votes.breakdown) {
+      return {
+        upvotes: votes.upvotes,
+        downvotes: votes.downvotes,
+      };
+    }
+
+    // Calculate filtered vote counts
+    let upvotes = 0;
+    let downvotes = 0;
+    for (const [role, counts] of Object.entries(votes.breakdown)) {
+      if (role.toLowerCase() !== "minieth") {
+        upvotes += counts.up;
+        downvotes += counts.down;
+      }
+    }
+    return { upvotes, downvotes };
+  };
+
+  const filteredVotes = getFilteredVoteCounts();
 
   const getVoteBreakdownText = (voteType: "up" | "down") => {
     if (!votes.breakdown)
@@ -43,6 +67,10 @@ export function ProjectVoting({
       .reverse()
       .map((role) => {
         const roleVotes = votes.breakdown![role.name] || { up: 0, down: 0 };
+        // Skip Minieth votes if they're excluded
+        if (!includeMiniethVotes && role.name.toLowerCase() === "minieth") {
+          return null;
+        }
         const count = voteType === "up" ? roleVotes.up : roleVotes.down;
         if (count === 0) return null;
         return (
@@ -83,6 +111,10 @@ export function ProjectVoting({
       .reverse()
       .map((role) => {
         const roleVotes = votes.breakdown![role.name] || { up: 0, down: 0 };
+        // Skip Minieth votes if they're excluded
+        if (!includeMiniethVotes && role.name.toLowerCase() === "minieth") {
+          return null;
+        }
         if (roleVotes.up === 0 && roleVotes.down === 0) return null;
         return (
           <div key={role.name} className="flex justify-between items-center">
@@ -122,7 +154,7 @@ export function ProjectVoting({
                 ${
                   userVote === "up"
                     ? "bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400"
-                    : "hover:bg-gray-100 dark:hover:bg-white/5"
+                    : "text-emerald-700/90 dark:text-emerald-400/90 hover:bg-emerald-50 dark:hover:bg-emerald-500/10"
                 }
                 ${
                   (isVoting || cooldown) &&
@@ -132,10 +164,11 @@ export function ProjectVoting({
             >
               <svg
                 className={`h-4 w-4 transition-transform ${
-                  userVote === "up" ? "fill-emerald-500" : "fill-none"
+                  userVote === "up"
+                    ? "fill-emerald-500"
+                    : "fill-none stroke-emerald-600/75 dark:stroke-emerald-400/75"
                 }`}
                 viewBox="0 0 24 24"
-                stroke="currentColor"
                 strokeWidth="2"
               >
                 <path
@@ -144,7 +177,7 @@ export function ProjectVoting({
                   d="M5 15l7-7 7 7"
                 />
               </svg>
-              <span>{votes.upvotes}</span>
+              <span>{filteredVotes.upvotes}</span>
             </button>
           </Tooltip.Trigger>
           <Tooltip.Portal>
@@ -179,7 +212,7 @@ export function ProjectVoting({
                 ${
                   userVote === "down"
                     ? "bg-red-500/10 text-red-600 dark:bg-red-500/20 dark:text-red-400"
-                    : "hover:bg-gray-100 dark:hover:bg-white/5"
+                    : "text-red-700/90 dark:text-red-400/90 hover:bg-red-50 dark:hover:bg-red-500/10"
                 }
                 ${
                   (isVoting || cooldown) &&
@@ -189,10 +222,11 @@ export function ProjectVoting({
             >
               <svg
                 className={`h-4 w-4 transition-transform ${
-                  userVote === "down" ? "fill-red-500" : "fill-none"
+                  userVote === "down"
+                    ? "fill-red-500"
+                    : "fill-none stroke-red-600/75 dark:stroke-red-400/75"
                 }`}
                 viewBox="0 0 24 24"
-                stroke="currentColor"
                 strokeWidth="2"
               >
                 <path
@@ -201,7 +235,7 @@ export function ProjectVoting({
                   d="M19 9l-7 7-7-7"
                 />
               </svg>
-              <span>{votes.downvotes}</span>
+              <span>{filteredVotes.downvotes}</span>
             </button>
           </Tooltip.Trigger>
           <Tooltip.Portal>

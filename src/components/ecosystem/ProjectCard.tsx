@@ -34,10 +34,14 @@ interface Project {
 
 interface ProjectCardProps {
   project: Project;
+  includeMiniethVotes: boolean;
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
-  const { user, login } = useDiscordAuth();
+export function ProjectCard({
+  project,
+  includeMiniethVotes,
+}: ProjectCardProps) {
+  const { isAuthenticated, user, login } = useDiscordAuth();
   const [isVoting, setIsVoting] = useState(false);
   const [cooldown, setCooldown] = useState(false);
   const [votes, setVotes] = useState({
@@ -238,8 +242,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
                 votes={votes}
                 userVote={userVote}
                 isVoting={isVoting}
-                canVote={user?.canVote || false}
+                canVote={isAuthenticated}
+                cooldown={cooldown}
                 onVote={handleVote}
+                includeMiniethVotes={includeMiniethVotes}
               />
             </div>
           </div>
