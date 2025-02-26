@@ -39,6 +39,7 @@ interface ProjectCardProps {
 export function ProjectCard({ project }: ProjectCardProps) {
   const { user, login } = useDiscordAuth();
   const [isVoting, setIsVoting] = useState(false);
+  const [cooldown, setCooldown] = useState(false);
   const [votes, setVotes] = useState({
     upvotes: project.votes?.upvotes || 0,
     downvotes: project.votes?.downvotes || 0,
@@ -74,6 +75,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
       return;
     }
 
+    if (cooldown) {
+      toast.error("Please wait a moment before voting again");
+      return;
+    }
+
     const previousVotes = { ...votes };
     const previousUserVote = userVote;
     const previousBreakdown = votes.breakdown
@@ -82,17 +88,31 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
     try {
       setIsVoting(true);
+      setCooldown(true);
+
+      // Start cooldown timer
+      setTimeout(() => {
+        setCooldown(false);
+      }, 1000); // 1 second cooldown
 
       let upvoteChange = 0;
       let downvoteChange = 0;
 
-      if (previousUserVote === "up") {
-        upvoteChange--;
-      } else if (previousUserVote === "down") {
-        downvoteChange--;
-      }
+      // If clicking the same vote type, remove the vote
+      if (previousUserVote === vote) {
+        if (vote === "up") {
+          upvoteChange = -1;
+        } else {
+          downvoteChange = -1;
+        }
+      } else {
+        // If changing vote type or adding new vote
+        if (previousUserVote === "up") {
+          upvoteChange--;
+        } else if (previousUserVote === "down") {
+          downvoteChange--;
+        }
 
-      if (previousUserVote !== vote) {
         if (vote === "up") {
           upvoteChange++;
         } else {
@@ -144,6 +164,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         project.votes.breakdown = data.breakdown;
       }
 
+      // Refresh all votes to ensure consistency
       fetch("/api/votes")
         .then((res) => res.json())
         .then((votesData) => {

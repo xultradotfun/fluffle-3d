@@ -319,26 +319,31 @@ export async function POST(request: Request) {
 
     if (existingVote) {
       if (existingVote.type === vote) {
-        return new NextResponse(
-          JSON.stringify({ error: "You have already voted for this project" }),
-          { status: 400, headers: { "Content-Type": "application/json" } }
-        );
-      }
-
-      // Update existing vote with new role info
-      await prisma.vote.update({
-        where: {
-          userId_projectId: {
-            userId: userId,
-            projectId: project.id,
+        // Delete the vote if clicking the same button
+        await prisma.vote.delete({
+          where: {
+            userId_projectId: {
+              userId: userId,
+              projectId: project.id,
+            },
           },
-        },
-        data: {
-          type: vote,
-          roleId: highestRole.id,
-          roleName: highestRole.name,
-        },
-      });
+        });
+      } else {
+        // Update existing vote with new type and role info
+        await prisma.vote.update({
+          where: {
+            userId_projectId: {
+              userId: userId,
+              projectId: project.id,
+            },
+          },
+          data: {
+            type: vote,
+            roleId: highestRole.id,
+            roleName: highestRole.name,
+          },
+        });
+      }
     } else {
       // Create new vote with role info
       await prisma.vote.create({
