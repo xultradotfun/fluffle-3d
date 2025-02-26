@@ -7,6 +7,7 @@ interface DiscordUser {
   username: string;
   discriminator: string;
   avatar: string;
+  canVote: boolean;
   guilds?: {
     id: string;
     name: string;

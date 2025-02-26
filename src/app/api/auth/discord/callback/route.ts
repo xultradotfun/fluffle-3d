@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { prisma } from "@/lib/prisma";
 
 const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID;
 const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET;
 const REDIRECT_URI = `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/discord/callback`;
+const REQUIRED_SERVER_ID = "1219739501673451551";
+const REQUIRED_ROLE_ID = "1227046192316285041";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -81,6 +84,54 @@ export async function GET(request: Request) {
     const guildsData = await guildsResponse.json();
     console.log("Guilds data fetched successfully");
 
+    // Check if user is in the required server
+    const isInServer = guildsData.some(
+      (guild: any) => guild.id === REQUIRED_SERVER_ID
+    );
+    let hasRequiredRole = false;
+
+    if (isInServer) {
+      // Get member data for the required server
+      const memberResponse = await fetch(
+        `https://discord.com/api/v10/guilds/${REQUIRED_SERVER_ID}/members/${userData.id}`,
+        {
+          headers: {
+            Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+          },
+        }
+      );
+
+      if (memberResponse.ok) {
+        const memberData = await memberResponse.json();
+        hasRequiredRole = memberData.roles.includes(REQUIRED_ROLE_ID);
+        console.log("Role check:", {
+          hasRequiredRole,
+          roles: memberData.roles,
+        });
+
+        // Store or update user data in the database
+        await prisma.DiscordUser.upsert({
+          where: { id: userData.id },
+          create: {
+            id: userData.id,
+            username: userData.username,
+            roles: memberData.roles,
+            lastUpdated: new Date(),
+          },
+          update: {
+            username: userData.username,
+            roles: memberData.roles,
+            lastUpdated: new Date(),
+          },
+        });
+      } else {
+        console.error(
+          "Failed to fetch member data:",
+          await memberResponse.text()
+        );
+      }
+    }
+
     // Create the response first
     const response = NextResponse.redirect(new URL("/#ecosystem", request.url));
 
@@ -89,6 +140,7 @@ export async function GET(request: Request) {
       id: userData.id,
       username: userData.username,
       guildIds: guildsData.map((g: any) => g.id),
+      hasRequiredRole,
     };
 
     // Set cookies with minimal data

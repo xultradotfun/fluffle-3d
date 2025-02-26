@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { prisma } from "@/lib/prisma";
 
 const REQUIRED_SERVER_ID = "1219739501673451551";
+const REQUIRED_ROLE_ID = "1227046192316285041";
 
 export async function GET() {
   try {
@@ -37,16 +39,29 @@ export async function GET() {
       throw new Error("Invalid user data format");
     }
 
-    // Check if user is in the required server
+    // Get user data from database
+    const dbUser = await prisma.DiscordUser.findUnique({
+      where: { id: user.id },
+    });
+
+    // Check if user is in the required server and has the required role
     const isServerMember = user.guildIds.includes(REQUIRED_SERVER_ID);
-    console.log("Server membership:", {
+    const hasRequiredRole = dbUser?.roles.includes(REQUIRED_ROLE_ID) ?? false;
+    const canVote = isServerMember && hasRequiredRole;
+
+    console.log("Authorization check:", {
       isServerMember,
+      hasRequiredRole,
+      canVote,
       requiredServer: REQUIRED_SERVER_ID,
+      requiredRole: REQUIRED_ROLE_ID,
+      storedRoles: dbUser?.roles,
     });
 
     return NextResponse.json({
       ...user,
-      canVote: isServerMember,
+      canVote,
+      roles: dbUser?.roles ?? [],
     });
   } catch (error) {
     console.error("Error processing user data:", error);

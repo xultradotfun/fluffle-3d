@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
 import { voteCache } from "@/lib/voteCache";
+import { getHighestRole } from "@/lib/constants";
 
 const REQUIRED_SERVER_ID = "1219739501673451551";
 const VOTE_TYPES = ["up", "down"] as const;
@@ -17,6 +18,8 @@ interface VoteRequest {
 interface VoteData {
   userId: string;
   type: string;
+  roleId: string;
+  roleName: string;
 }
 
 interface ProjectData {
@@ -106,34 +109,41 @@ export async function GET() {
     }
 
     // Get all projects with their votes
-    const projects = (await prisma.project.findMany({
+    const projects = await prisma.project.findMany({
       include: {
         votes: {
           select: {
             userId: true,
             type: true,
+            roleId: true,
+            roleName: true,
           },
         },
       },
-    })) as ProjectData[];
+    });
 
     // Get user ID from cookies if available
     const cookieStore = cookies();
     const userData = cookieStore.get("discord_user");
     const userId = userData ? JSON.parse(userData.value).id : null;
 
-    // Format the response with vote counts
-    const voteCounts = projects.map((project: ProjectData) => {
+    // Format the response with vote counts and breakdown
+    const voteCounts = projects.map((project) => {
+      const votesByRole = project.votes.reduce((acc, vote) => {
+        if (!acc[vote.roleName]) {
+          acc[vote.roleName] = { up: 0, down: 0 };
+        }
+        acc[vote.roleName][vote.type]++;
+        return acc;
+      }, {} as Record<string, { up: number; down: number }>);
+
       const votes = {
-        upvotes: project.votes.filter((vote: VoteData) => vote.type === "up")
-          .length,
-        downvotes: project.votes.filter(
-          (vote: VoteData) => vote.type === "down"
-        ).length,
+        upvotes: project.votes.filter((vote) => vote.type === "up").length,
+        downvotes: project.votes.filter((vote) => vote.type === "down").length,
         userVote: userId
-          ? project.votes.find((vote: VoteData) => vote.userId === userId)
-              ?.type || null
+          ? project.votes.find((vote) => vote.userId === userId)?.type || null
           : null,
+        breakdown: votesByRole,
       };
 
       return {
@@ -242,27 +252,72 @@ export async function POST(request: Request) {
       );
     }
 
+    // Get user data from database to check roles
+    const dbUser = await prisma.DiscordUser.findUnique({
+      where: { id: userId },
+    });
+
+    if (!dbUser) {
+      return new NextResponse(
+        JSON.stringify({ error: "User not found in database" }),
+        { status: 404, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    // Get the highest role for the user
+    const highestRole = getHighestRole(dbUser.roles);
+    if (!highestRole) {
+      return new NextResponse(
+        JSON.stringify({ error: "User does not have required roles" }),
+        { status: 403, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
     // Get or create project
     let project = await prisma.project.findUnique({
       where: { twitter },
-      include: { votes: true },
+      include: {
+        votes: {
+          select: {
+            id: true,
+            userId: true,
+            type: true,
+            roleId: true,
+            roleName: true,
+          },
+        },
+      },
     });
 
     if (!project) {
-      // Create the project if it doesn't exist
       project = await prisma.project.create({
         data: {
           twitter,
-          name: twitter, // Using twitter handle as name for now
+          name: twitter,
         },
-        include: { votes: true },
+        include: {
+          votes: {
+            select: {
+              id: true,
+              userId: true,
+              type: true,
+              roleId: true,
+              roleName: true,
+            },
+          },
+        },
       });
     }
 
     // Check if user has already voted
-    const existingVote = project.votes.find(
-      (v: VoteData) => v.userId === userId
-    );
+    const existingVote = await prisma.vote.findUnique({
+      where: {
+        userId_projectId: {
+          userId: userId,
+          projectId: project.id,
+        },
+      },
+    });
 
     if (existingVote) {
       if (existingVote.type === vote) {
@@ -272,56 +327,75 @@ export async function POST(request: Request) {
         );
       }
 
-      // Update existing vote
+      // Update existing vote with new role info
       await prisma.vote.update({
-        where: { id: existingVote.id },
-        data: { type: vote },
+        where: {
+          userId_projectId: {
+            userId: userId,
+            projectId: project.id,
+          },
+        },
+        data: {
+          type: vote,
+          roleId: highestRole.id,
+          roleName: highestRole.name,
+        },
       });
     } else {
-      // Create new vote
+      // Create new vote with role info
       await prisma.vote.create({
         data: {
           userId,
           type: vote,
           projectId: project.id,
+          roleId: highestRole.id,
+          roleName: highestRole.name,
         },
       });
     }
 
-    // Get updated vote counts
+    // Get updated vote counts with role breakdown
     const votes = await prisma.vote.findMany({
       where: { projectId: project.id },
       select: {
-        type: true,
         userId: true,
+        type: true,
+        roleId: true,
+        roleName: true,
       },
     });
 
-    const upvotes = votes.filter((v: VoteData) => v.type === "up").length;
-    const downvotes = votes.filter((v: VoteData) => v.type === "down").length;
-    const userVote =
-      votes.find((v: VoteData) => v.userId === userId)?.type || null;
+    // Calculate vote counts by role
+    type VoteType = "up" | "down";
+    const votesByRole = votes.reduce(
+      (acc: Record<string, { up: number; down: number }>, vote) => {
+        if (!acc[vote.roleName]) {
+          acc[vote.roleName] = { up: 0, down: 0 };
+        }
+        acc[vote.roleName][vote.type as VoteType]++;
+        return acc;
+      },
+      {}
+    );
+
+    const totalVotes = {
+      upvotes: votes.filter((v) => v.type === "up").length,
+      downvotes: votes.filter((v) => v.type === "down").length,
+      userVote: userId
+        ? votes.find((v) => v.userId === userId)?.type || null
+        : null,
+      breakdown: votesByRole,
+    };
 
     // Invalidate the cache since votes have changed
     voteCache.invalidate();
 
-    return NextResponse.json({
-      success: true,
-      votes: {
-        upvotes,
-        downvotes,
-        userVote,
-      },
-    });
+    return NextResponse.json(totalVotes);
   } catch (error) {
     console.error("Failed to process vote:", error);
-    const message =
-      error instanceof Error ? error.message : "Failed to process vote";
-    const status = message.includes("Not authenticated") ? 401 : 500;
-
-    return new NextResponse(JSON.stringify({ error: message }), {
-      status,
-      headers: { "Content-Type": "application/json" },
-    });
+    return new NextResponse(
+      JSON.stringify({ error: "Failed to process vote" }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
   }
 }
