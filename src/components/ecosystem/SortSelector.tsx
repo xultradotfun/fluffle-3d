@@ -1,24 +1,51 @@
 import { cn } from "@/lib/utils";
 
 interface SortSelectorProps {
-  sortMethod: "alphabetical" | "score";
-  onSortChange: (method: "alphabetical" | "score") => void;
+  sortMethod: {
+    type: "alphabetical" | "score";
+    direction: "asc" | "desc";
+  };
+  onSortChange: (method: {
+    type: "alphabetical" | "score";
+    direction: "asc" | "desc";
+  }) => void;
 }
 
 export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
+  const handleSortClick = (type: "alphabetical" | "score") => {
+    if (sortMethod.type === type) {
+      // Toggle direction if same type
+      onSortChange({
+        type,
+        direction: sortMethod.direction === "asc" ? "desc" : "asc",
+      });
+    } else {
+      // Set default direction for new type
+      onSortChange({
+        type,
+        direction: type === "alphabetical" ? "asc" : "desc",
+      });
+    }
+  };
+
   return (
     <div className="flex items-center gap-2 p-1.5 bg-white dark:bg-white/5 rounded-xl border border-gray-200 dark:border-white/10">
       <button
-        onClick={() => onSortChange("alphabetical")}
+        onClick={() => handleSortClick("alphabetical")}
         className={cn(
           "flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all",
-          sortMethod === "alphabetical"
+          sortMethod.type === "alphabetical"
             ? "bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-500/20 dark:to-blue-500/10 text-blue-600 dark:text-blue-400"
             : "text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5"
         )}
       >
         <svg
-          className="w-4 h-4"
+          className={cn(
+            "w-4 h-4 transition-transform",
+            sortMethod.type === "alphabetical" &&
+              sortMethod.direction === "desc" &&
+              "rotate-180"
+          )}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -34,16 +61,21 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
       </button>
 
       <button
-        onClick={() => onSortChange("score")}
+        onClick={() => handleSortClick("score")}
         className={cn(
           "flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition-all",
-          sortMethod === "score"
+          sortMethod.type === "score"
             ? "bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-500/20 dark:to-blue-500/10 text-blue-600 dark:text-blue-400"
             : "text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5"
         )}
       >
         <svg
-          className="w-4 h-4"
+          className={cn(
+            "w-4 h-4 transition-transform",
+            sortMethod.type === "score" &&
+              sortMethod.direction === "asc" &&
+              "rotate-180"
+          )}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"

@@ -37,9 +37,13 @@ export function EcosystemDashboard() {
   const [showMegaMafiaOnly, setShowMegaMafiaOnly] = useState(false);
   const [showNativeOnly, setShowNativeOnly] = useState(false);
   const [projects, setProjects] = useState<Project[]>(ecosystemData.projects);
-  const [sortMethod, setSortMethod] = useState<"alphabetical" | "score">(
-    "score"
-  );
+  const [sortMethod, setSortMethod] = useState<{
+    type: "alphabetical" | "score";
+    direction: "asc" | "desc";
+  }>({
+    type: "score",
+    direction: "desc",
+  });
 
   useEffect(() => {
     const fetchVotes = async () => {
@@ -112,17 +116,23 @@ export function EcosystemDashboard() {
       return categoryMatch && megaMafiaMatch && nativeMatch;
     })
     .sort((a, b) => {
-      if (sortMethod === "score") {
+      if (sortMethod.type === "score") {
         const scoreA = getProjectScore(a);
         const scoreB = getProjectScore(b);
         if (scoreB !== scoreA) {
-          return scoreB - scoreA; // Higher score first
+          return sortMethod.direction === "desc"
+            ? scoreB - scoreA // Higher score first
+            : scoreA - scoreB; // Lower score first
         }
         // If scores are equal, fall back to alphabetical
-        return a.name.localeCompare(b.name);
+        return sortMethod.direction === "desc"
+          ? b.name.localeCompare(a.name)
+          : a.name.localeCompare(b.name);
       } else {
-        // Default alphabetical sort
-        return a.name.localeCompare(b.name);
+        // Alphabetical sort
+        return sortMethod.direction === "desc"
+          ? b.name.localeCompare(a.name)
+          : a.name.localeCompare(b.name);
       }
     });
 
