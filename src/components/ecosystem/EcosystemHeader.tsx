@@ -1,4 +1,5 @@
 import * as Tooltip from "@radix-ui/react-tooltip";
+import Image from "next/image";
 import { useState } from "react";
 
 export function EcosystemHeader() {
@@ -15,10 +16,17 @@ export function EcosystemHeader() {
           <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto font-light">
             Discover and vote on the growing ecosystem of projects building on{" "}
             <span className="relative inline-block">
-              <span className="relative z-10 font-medium text-gray-900 dark:text-white">
-                MegaETH
+              <span className="relative z-10 inline-flex items-center">
+                <Image
+                  src="/megalogo.png"
+                  alt="MegaETH"
+                  width={140}
+                  height={28}
+                  className="h-6 sm:h-7 w-auto brightness-0 opacity-80 dark:opacity-100 dark:invert"
+                  priority
+                />
               </span>
-              <div className="absolute -inset-1 bg-gradient-to-r from-pink-100 via-purple-100 to-indigo-100 dark:from-pink-500/10 dark:via-purple-500/10 dark:to-indigo-500/10 opacity-75 blur-[2px] -z-0 rounded-lg" />
+              <div className="absolute -inset-y-2 -inset-x-3 bg-gradient-to-r from-pink-100 via-purple-100 to-indigo-100 dark:from-pink-500/10 dark:via-purple-500/10 dark:to-indigo-500/10 opacity-75 blur-lg -z-0 rounded-[28px]" />
             </span>
           </p>
         </div>
