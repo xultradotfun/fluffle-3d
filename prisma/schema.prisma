@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model DiscordUser {
+  id          String   @id
+  username    String
+  roles       String[]
+  lastUpdated DateTime @default(now())
+  votes       Vote[]   @relation("UserVotes")
+}
+
+model Project {
+  id        Int      @id @default(autoincrement())
+  twitter   String   @unique
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  votes     Vote[]
+}
+
+model Vote {
+  id        Int         @id @default(autoincrement())
+  userId    String
+  type      String
+  projectId Int
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  roleId    String
+  roleName  String
+  project   Project     @relation(fields: [projectId], references: [id])
+  user      DiscordUser @relation("UserVotes", fields: [userId], references: [id])
+
+  @@unique([userId, projectId])
+}

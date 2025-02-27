@@ -22,7 +22,7 @@ interface ViewerData {
 export default function Home() {
   const [activeView, setActiveView] = useState<
     "viewer" | "analytics" | "pfp" | "metaverse" | "ecosystem"
-  >("viewer");
+  >("ecosystem");
   const [viewers, setViewers] = useState<ViewerData[]>([]);
   const [error, setError] = useState("");
 
@@ -30,29 +30,31 @@ export default function Home() {
   useEffect(() => {
     // Check initial hash
     const hash = window.location.hash;
-    if (hash === "#rarities") {
+    if (hash === "#viewer") {
+      setActiveView("viewer");
+    } else if (hash === "#rarities") {
       setActiveView("analytics");
     } else if (hash === "#pfp") {
       setActiveView("pfp");
     } else if (hash === "#metaverse") {
       setActiveView("metaverse");
-    } else if (hash === "#ecosystem") {
+    } else {
       setActiveView("ecosystem");
     }
 
     // Listen for hash changes
     const handleHashChange = () => {
       const hash = window.location.hash;
-      if (hash === "#rarities") {
+      if (hash === "#viewer") {
+        setActiveView("viewer");
+      } else if (hash === "#rarities") {
         setActiveView("analytics");
       } else if (hash === "#pfp") {
         setActiveView("pfp");
       } else if (hash === "#metaverse") {
         setActiveView("metaverse");
-      } else if (hash === "#ecosystem") {
-        setActiveView("ecosystem");
       } else {
-        setActiveView("viewer");
+        setActiveView("ecosystem");
       }
     };
 
@@ -64,28 +66,26 @@ export default function Home() {
   const handleViewChange = (
     view: "viewer" | "analytics" | "pfp" | "metaverse" | "ecosystem"
   ) => {
-    if (view === "analytics") {
+    if (view === "viewer") {
+      window.history.replaceState(null, "", "/#viewer");
+      setViewers([]);
+      setError("");
+    } else if (view === "analytics") {
       window.history.replaceState(null, "", "/#rarities");
-      // Clear loaded NFTs when switching to analytics
       setViewers([]);
       setError("");
     } else if (view === "pfp") {
       window.history.replaceState(null, "", "/#pfp");
-      // Clear loaded NFTs when switching to PFP generator
       setViewers([]);
       setError("");
     } else if (view === "metaverse") {
       window.history.replaceState(null, "", "/#metaverse");
-      // Clear loaded NFTs when switching to metaverse
-      setViewers([]);
-      setError("");
-    } else if (view === "ecosystem") {
-      window.history.replaceState(null, "", "/#ecosystem");
-      // Clear loaded NFTs when switching to ecosystem
       setViewers([]);
       setError("");
     } else {
       window.history.replaceState(null, "", "/");
+      setViewers([]);
+      setError("");
     }
     setActiveView(view);
   };

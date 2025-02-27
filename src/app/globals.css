@@ -5,7 +5,7 @@
 @layer base {
   :root {
     /* Light mode colors - clean modern look */
-    --background: 225 25% 95%; /* Light cool gray for background */
+    --background: 0 0% 0% / 0; /* transparent background */
     --foreground: 225 25% 20%; /* Dark gray for text */
     --card: 0 0% 100%; /* Pure white for cards */
     --card-foreground: 225 25% 20%; /* Dark gray for card text */
@@ -19,7 +19,7 @@
 
   .dark {
     /* Dark mode colors */
-    --background: 240 10% 4%; /* very dark gray */
+    --background: 0 0% 0% / 0; /* transparent background */
     --foreground: 0 0% 98%; /* off-white */
     --card: 240 10% 4%; /* very dark gray */
     --card-foreground: 0 0% 98%; /* off-white */
@@ -33,12 +33,18 @@
 }
 
 @layer base {
-  * {
+  *:not(body) {
     @apply border-border;
   }
 
   body {
-    @apply bg-background text-foreground transition-colors duration-300;
+    @apply text-foreground transition-colors duration-300;
+  }
+}
+
+@layer utilities {
+  .bg-background {
+    background: transparent !important;
   }
 }
 
@@ -46,25 +52,30 @@
 :root body {
   background: linear-gradient(
     to bottom right,
-    rgb(243, 244, 246),
-    rgb(249, 250, 251)
+    rgb(254, 254, 255),
+    rgb(250, 251, 254)
   );
 }
 
 /* Dark mode background effects */
 .dark body {
-  background: radial-gradient(
+  background-color: rgb(5, 5, 8);
+  background-image: radial-gradient(
       circle at top left,
-      rgb(17, 24, 39),
-      rgba(17, 24, 39, 0) 50%
+      rgb(12, 12, 17),
+      rgba(12, 12, 17, 0) 70%
     ),
     radial-gradient(
       circle at top right,
-      rgb(76, 29, 149),
-      rgba(76, 29, 149, 0) 50%
+      rgb(17, 12, 22),
+      rgba(17, 12, 22, 0) 70%
     ),
-    radial-gradient(at bottom left, rgb(30, 58, 138), rgba(30, 58, 138, 0)),
-    linear-gradient(to bottom right, rgb(17, 24, 39), rgb(10, 10, 20));
+    radial-gradient(
+      circle at bottom left,
+      rgb(12, 15, 22),
+      rgba(12, 15, 22, 0) 70%
+    ),
+    linear-gradient(to bottom right, rgb(10, 10, 15), rgb(5, 5, 8));
 }
 
 /* Add a subtle noise texture overlay */
@@ -72,59 +83,71 @@ body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.05'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
   pointer-events: none;
-  opacity: 0.3;
-  z-index: 1;
+  opacity: 0.02;
+  z-index: -2;
   mix-blend-mode: overlay;
 }
 
-/* Add a subtle ambient glow effect - Light Mode */
+/* Add ambient glow effects - Light Mode */
 :root body::after {
   content: "";
   position: fixed;
   inset: 0;
   background: radial-gradient(
-      circle at 0% 0%,
-      rgba(99, 102, 241, 0.03),
+      120% 120% at 50% -20%,
+      rgba(79, 70, 229, 0.15),
       transparent 50%
     ),
     radial-gradient(
-      circle at 100% 0%,
-      rgba(124, 58, 237, 0.03),
+      70% 70% at 90% 20%,
+      rgba(236, 72, 153, 0.12),
       transparent 50%
     ),
     radial-gradient(
-      circle at 50% 100%,
-      rgba(59, 130, 246, 0.03),
+      80% 80% at -20% 50%,
+      rgba(52, 211, 153, 0.15),
+      transparent 50%
+    ),
+    radial-gradient(
+      60% 60% at 95% 90%,
+      rgba(139, 92, 246, 0.15),
       transparent 50%
     );
   pointer-events: none;
-  z-index: 2;
+  z-index: -1;
+  mix-blend-mode: multiply;
 }
 
-/* Add a subtle ambient glow effect - Dark Mode */
+/* Add ambient glow effects - Dark Mode */
 .dark body::after {
   content: "";
   position: fixed;
   inset: 0;
   background: radial-gradient(
-      circle at 0% 0%,
-      rgba(59, 130, 246, 0.08),
-      transparent 50%
+      80% 80% at 50% -20%,
+      rgba(30, 64, 175, 0.15),
+      transparent 100%
     ),
     radial-gradient(
-      circle at 100% 0%,
-      rgba(124, 58, 237, 0.08),
-      transparent 50%
+      50% 50% at 80% 10%,
+      rgba(112, 26, 117, 0.15),
+      transparent 100%
     ),
     radial-gradient(
-      circle at 50% 100%,
-      rgba(30, 64, 175, 0.08),
-      transparent 50%
+      60% 60% at -10% 50%,
+      rgba(13, 148, 136, 0.15),
+      transparent 100%
+    ),
+    radial-gradient(
+      40% 40% at 90% 90%,
+      rgba(67, 56, 202, 0.15),
+      transparent 100%
     );
   pointer-events: none;
-  z-index: 2;
+  z-index: -1;
+  mix-blend-mode: screen;
 }
 
 /* Custom scrollbar - Light Mode */

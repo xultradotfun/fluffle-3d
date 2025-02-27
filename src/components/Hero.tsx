@@ -42,13 +42,7 @@ export default function Hero() {
   }, [logoNumber]);
 
   return (
-    <section className="relative overflow-hidden py-8">
-      {/* Background Effects */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-500/5 dark:to-indigo-500/5" />
-        <div className="absolute inset-y-0 right-1/2 bg-gradient-to-r from-blue-50 to-transparent dark:from-blue-500/5 dark:to-transparent" />
-      </div>
-
+    <section className="relative overflow-hidden pt-8 pb-4">
       {/* Content */}
       <div className="mx-auto max-w-4xl px-4">
         <div className="relative flex flex-col items-center">
@@ -82,7 +76,7 @@ export default function Hero() {
               <span className="text-gray-900 dark:text-white font-medium">
                 MegaETH
               </span>{" "}
-              enthusiasts and{" "}
+              explorers and{" "}
               <span className="text-gray-900 dark:text-white font-medium">
                 Fluffle
               </span>{" "}
@@ -149,6 +143,11 @@ export default function Hero() {
                 </span>
               </a>
             </div>
+          </div>
+
+          {/* Decorative Divider */}
+          <div className="w-full max-w-4xl mx-auto mt-12">
+            <div className="h-[1px] bg-gradient-to-r from-transparent via-gray-200/80 dark:via-white/10 to-transparent" />
           </div>
         </div>
       </div>

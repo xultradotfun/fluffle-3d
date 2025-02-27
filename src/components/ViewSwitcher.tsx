@@ -11,7 +11,35 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
       {/* Desktop View */}
       <div className="hidden sm:block fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
         <div className="flex items-center gap-2 p-1.5 bg-white dark:bg-gray-900/80 rounded-xl border border-gray-200 dark:border-white/10 shadow-lg backdrop-blur-sm max-w-[calc(100vw-2rem)] mx-auto">
-          {/* Fluffle Tools Group */}
+          {/* Ecosystem Section */}
+          <button
+            onClick={() => onViewChange("ecosystem")}
+            className={`flex items-center justify-start gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              activeView === "ecosystem"
+                ? "bg-gradient-to-r from-orange-50 to-amber-50 text-orange-600 border border-orange-200 dark:from-orange-500/20 dark:to-orange-500/10 dark:text-orange-400 dark:border-orange-500/20"
+                : "text-gray-500 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-white/5"
+            }`}
+          >
+            <svg
+              className="w-4 h-4 flex-shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+            <span className="flex-shrink-0">Ecosystem</span>
+          </button>
+
+          {/* Divider */}
+          <div className="w-px h-8 bg-gray-200 dark:bg-white/10" />
+
+          {/* Other Sections Group */}
           <div className="flex items-center gap-2">
             <button
               onClick={() => onViewChange("viewer")}
@@ -106,41 +134,44 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
               <span className="flex-shrink-0">Metaverse</span>
             </button>
           </div>
-
-          {/* Divider */}
-          <div className="w-px h-8 bg-gray-200 dark:bg-white/10" />
-
-          {/* Ecosystem Section */}
-          <button
-            onClick={() => onViewChange("ecosystem")}
-            className={`flex items-center justify-start gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-              activeView === "ecosystem"
-                ? "bg-gradient-to-r from-orange-50 to-amber-50 text-orange-600 border border-orange-200 dark:from-orange-500/20 dark:to-orange-500/10 dark:text-orange-400 dark:border-orange-500/20"
-                : "text-gray-500 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-white/5"
-            }`}
-          >
-            <svg
-              className="w-4 h-4 flex-shrink-0"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"
-              />
-            </svg>
-            <span className="flex-shrink-0">Ecosystem</span>
-          </button>
         </div>
       </div>
 
       {/* Mobile Bottom Navigation */}
       <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 border-t border-gray-200 dark:border-white/10 pb-safe backdrop-blur-lg">
         <div className="flex items-center justify-around px-2 py-3">
-          {/* Fluffle Tools */}
+          {/* Ecosystem */}
+          <button
+            onClick={() => onViewChange("ecosystem")}
+            className={`flex flex-col items-center gap-1.5 p-2 rounded-xl transition-all ${
+              activeView === "ecosystem"
+                ? "bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-500/20 dark:to-orange-500/10 text-orange-600 dark:text-orange-400 shadow-sm"
+                : "text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5"
+            }`}
+          >
+            <div
+              className={`relative transition-transform duration-200 ${
+                activeView === "ecosystem" ? "scale-110" : ""
+              }`}
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+            </div>
+            <span className="text-xs font-medium">Ecosystem</span>
+          </button>
+
+          {/* Other Sections */}
           <button
             onClick={() => onViewChange("viewer")}
             className={`flex flex-col items-center gap-1.5 p-2 rounded-xl transition-all ${
@@ -256,35 +287,6 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
               </svg>
             </div>
             <span className="text-xs font-medium">Metaverse</span>
-          </button>
-          <button
-            onClick={() => onViewChange("ecosystem")}
-            className={`flex flex-col items-center gap-1.5 p-2 rounded-xl transition-all ${
-              activeView === "ecosystem"
-                ? "bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-500/20 dark:to-orange-500/10 text-orange-600 dark:text-orange-400 shadow-sm"
-                : "text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5"
-            }`}
-          >
-            <div
-              className={`relative transition-transform duration-200 ${
-                activeView === "ecosystem" ? "scale-110" : ""
-              }`}
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-            </div>
-            <span className="text-xs font-medium">Ecosystem</span>
           </button>
         </div>
       </div>
