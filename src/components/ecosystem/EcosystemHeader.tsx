@@ -6,17 +6,25 @@ export function EcosystemHeader() {
 
   return (
     <Tooltip.Provider delayDuration={300} skipDelayDuration={0}>
-      <div className="text-center max-w-2xl mx-auto">
-        <h2 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 dark:from-pink-400 dark:via-purple-400 dark:to-blue-400 bg-clip-text text-transparent mb-6">
-          Ecosystem Projects
-        </h2>
-        <p className="text-lg text-gray-600 dark:text-gray-300">
-          Discover and vote on the growing ecosystem of projects building on
-          MegaETH
-        </p>
+      <div className="text-center max-w-3xl mx-auto relative">
+        <div className="absolute inset-x-0 top-6 -bottom-6 bg-gradient-to-b from-pink-500/10 via-purple-500/5 to-transparent dark:from-pink-500/[0.07] dark:via-purple-500/[0.03] dark:to-transparent blur-2xl -z-10 rounded-[100%]" />
+        <div className="relative">
+          <h2 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 dark:from-pink-400 dark:via-purple-400 dark:to-indigo-400 bg-clip-text text-transparent mb-5 tracking-tight leading-[1.15]">
+            Ecosystem Projects
+          </h2>
+          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto font-light">
+            Discover and vote on the growing ecosystem of projects building on{" "}
+            <span className="relative inline-block">
+              <span className="relative z-10 font-medium text-gray-900 dark:text-white">
+                MegaETH
+              </span>
+              <div className="absolute -inset-1 bg-gradient-to-r from-pink-100 via-purple-100 to-indigo-100 dark:from-pink-500/10 dark:via-purple-500/10 dark:to-indigo-500/10 opacity-75 blur-[2px] -z-0 rounded-lg" />
+            </span>
+          </p>
+        </div>
 
         {/* Voting Explainer */}
-        <div className="mt-8 p-6 rounded-2xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5">
+        <div className="mt-8 p-5 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 text-left">
             <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/10 dark:from-blue-500/20 dark:to-blue-600/20 p-3 border border-blue-500/20 dark:border-blue-500/30">
               <svg
