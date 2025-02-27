@@ -87,11 +87,14 @@ export function EcosystemDashboard() {
 
   const getCategoryCount = (
     category: string,
-    megaMafiaOnly: boolean = false
+    megaMafiaOnly: boolean = false,
+    nativeOnly: boolean = false
   ) => {
     return projects.filter(
       (project) =>
-        project.category === category && (!megaMafiaOnly || project.megaMafia)
+        project.category === category &&
+        (!megaMafiaOnly || project.megaMafia) &&
+        (!nativeOnly || project.native)
     ).length;
   };
 

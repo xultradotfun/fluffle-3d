@@ -6,7 +6,11 @@ interface FilterControlsProps {
   showNativeOnly: boolean;
   setShowNativeOnly: (show: boolean) => void;
   categories: string[];
-  getCategoryCount: (category: string, megaMafiaOnly?: boolean) => number;
+  getCategoryCount: (
+    category: string,
+    megaMafiaOnly?: boolean,
+    nativeOnly?: boolean
+  ) => number;
   getMegaMafiaCount: () => number;
   getNativeCount: () => number;
   totalProjects: number;
@@ -159,7 +163,7 @@ export function FilterControls({
                     : "bg-blue-50 dark:bg-white/10 text-blue-600 dark:text-blue-400"
                 }`}
               >
-                {getCategoryCount(category, showMegaMafiaOnly)}
+                {getCategoryCount(category, showMegaMafiaOnly, showNativeOnly)}
               </span>
             </div>
           </button>
