@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { headers } from "next/headers";
 import { voteCache } from "@/lib/voteCache";
 import { getHighestRole } from "@/lib/constants";
+import { isAllowedBaseUrl } from "@/utils/baseUrl";
 
 const REQUIRED_SERVER_ID = "1219739501673451551";
 const VOTE_TYPES = ["up", "down"] as const;
@@ -174,7 +175,7 @@ export async function POST(request: Request) {
     console.log("Request origin:", origin);
     console.log("Expected origin:", process.env.NEXT_PUBLIC_BASE_URL);
 
-    if (origin !== process.env.NEXT_PUBLIC_BASE_URL) {
+    if (!origin || !isAllowedBaseUrl(origin)) {
       console.log("Origin mismatch");
       return new NextResponse(JSON.stringify({ error: "Invalid origin" }), {
         status: 403,

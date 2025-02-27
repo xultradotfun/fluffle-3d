@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
+import { getBaseUrl } from "@/utils/baseUrl";
 
 const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID;
-const REDIRECT_URI = `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/discord/callback`;
+const REDIRECT_URI = `${getBaseUrl()}/api/auth/discord/callback`;
 
 export async function GET() {
   if (!DISCORD_CLIENT_ID) {

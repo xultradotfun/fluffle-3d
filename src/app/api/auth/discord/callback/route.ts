@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
+import { getBaseUrl } from "@/utils/baseUrl";
 
 const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID;
 const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET;
-const REDIRECT_URI = `${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/discord/callback`;
+const REDIRECT_URI = `${getBaseUrl()}/api/auth/discord/callback`;
 const REQUIRED_SERVER_ID = "1219739501673451551";
 const REQUIRED_ROLE_ID = "1227046192316285041";
 
