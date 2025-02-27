@@ -1,9 +1,11 @@
 import * as Tooltip from "@radix-ui/react-tooltip";
 import Image from "next/image";
 import { useState } from "react";
+import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
 
 export function EcosystemHeader() {
   const [tooltipOpen, setTooltipOpen] = useState(false);
+  const { user, logout } = useDiscordAuth();
 
   return (
     <Tooltip.Provider delayDuration={300} skipDelayDuration={0}>
@@ -289,6 +291,32 @@ export function EcosystemHeader() {
                   </svg>{" "}
                   icon to filter them out.
                 </span>
+                {user && (
+                  <>
+                    <br />
+                    <button
+                      onClick={logout}
+                      className="mt-2 px-2.5 py-1 text-xs rounded-lg bg-gray-50 dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] hover:border-blue-200 dark:hover:border-blue-500/20 transition-colors"
+                    >
+                      <span className="flex items-center gap-1.5">
+                        <svg
+                          className="w-3 h-3"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                          />
+                        </svg>
+                        Reset Discord connection
+                      </span>
+                    </button>
+                  </>
+                )}
               </p>
             </div>
           </div>
