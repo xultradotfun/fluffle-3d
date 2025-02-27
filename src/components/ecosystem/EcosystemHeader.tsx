@@ -265,6 +265,7 @@ export function EcosystemHeader() {
                 </Tooltip.Root>{" "}
                 - hover over vote counts to see the breakdown.
                 <br />
+                <br />
                 <span className="text-gray-500 dark:text-gray-400">
                   MiniETH votes are included by default - use the{" "}
                   <svg
