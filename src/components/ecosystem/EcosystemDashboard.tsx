@@ -6,6 +6,7 @@ import { ProjectCard } from "./ProjectCard";
 import { EcosystemHeader } from "./EcosystemHeader";
 import { FilterControls } from "./FilterControls";
 import { SortSelector } from "./SortSelector";
+import { calculateProjectScore } from "@/lib/utils";
 
 interface VoteBreakdown {
   [roleName: string]: {
@@ -108,20 +109,7 @@ export function EcosystemDashboard() {
 
   const getProjectScore = (project: Project) => {
     if (!project.votes) return 0;
-
-    if (!includeMiniethVotes && project.votes.breakdown) {
-      // Calculate score excluding minieth votes
-      let score = 0;
-      for (const [role, votes] of Object.entries(project.votes.breakdown)) {
-        if (role.toLowerCase() !== "minieth") {
-          score += votes.up - votes.down;
-        }
-      }
-      return score;
-    }
-
-    // Include all votes
-    return project.votes.upvotes - project.votes.downvotes;
+    return calculateProjectScore(project.votes);
   };
 
   const filteredProjects = projects
