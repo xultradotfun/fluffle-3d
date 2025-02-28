@@ -44,7 +44,6 @@ export function EcosystemDashboard() {
     type: "score",
     direction: "desc",
   });
-  const [includeMiniethVotes, setIncludeMiniethVotes] = useState(true);
 
   useEffect(() => {
     const fetchVotes = async () => {
@@ -109,19 +108,16 @@ export function EcosystemDashboard() {
   const getProjectScore = (project: Project) => {
     if (!project.votes) return 0;
 
-    if (!includeMiniethVotes && project.votes.breakdown) {
-      // Calculate score excluding minieth votes
-      let score = 0;
+    // Always calculate score excluding minieth votes
+    let score = 0;
+    if (project.votes.breakdown) {
       for (const [role, votes] of Object.entries(project.votes.breakdown)) {
         if (role.toLowerCase() !== "minieth") {
           score += votes.up - votes.down;
         }
       }
-      return score;
     }
-
-    // Include all votes
-    return project.votes.upvotes - project.votes.downvotes;
+    return score;
   };
 
   const filteredProjects = projects
@@ -181,12 +177,7 @@ export function EcosystemDashboard() {
             </span>
           </div>
 
-          <SortSelector
-            sortMethod={sortMethod}
-            onSortChange={setSortMethod}
-            includeMinieth={includeMiniethVotes}
-            onMiniethChange={setIncludeMiniethVotes}
-          />
+          <SortSelector sortMethod={sortMethod} onSortChange={setSortMethod} />
         </div>
 
         {/* Filter Controls */}
@@ -208,11 +199,7 @@ export function EcosystemDashboard() {
       {/* Project Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredProjects.map((project) => (
-          <ProjectCard
-            key={project.name}
-            project={project}
-            includeMiniethVotes={includeMiniethVotes}
-          />
+          <ProjectCard key={project.name} project={project} />
         ))}
       </div>
     </div>

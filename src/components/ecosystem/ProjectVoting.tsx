@@ -21,7 +21,6 @@ interface ProjectVotingProps {
   canVote: boolean;
   cooldown?: boolean;
   onVote: (vote: "up" | "down") => void;
-  includeMiniethVotes: boolean;
 }
 
 export function ProjectVoting({
@@ -31,28 +30,22 @@ export function ProjectVoting({
   canVote,
   cooldown,
   onVote,
-  includeMiniethVotes,
 }: ProjectVotingProps) {
   const [isMobileTooltipOpen, setIsMobileTooltipOpen] = useState(false);
 
   const getFilteredVoteCounts = () => {
-    if (includeMiniethVotes || !votes.breakdown) {
+    if (!votes.breakdown) {
       return {
-        upvotes: votes.upvotes,
-        downvotes: votes.downvotes,
+        upvotes: votes.upvotes || 0,
+        downvotes: votes.downvotes || 0,
       };
     }
 
-    // Calculate filtered vote counts
-    let upvotes = 0;
-    let downvotes = 0;
-    for (const [role, counts] of Object.entries(votes.breakdown)) {
-      if (role.toLowerCase() !== "minieth") {
-        upvotes += counts.up;
-        downvotes += counts.down;
-      }
-    }
-    return { upvotes, downvotes };
+    // Show all votes in the display
+    return {
+      upvotes: votes.upvotes,
+      downvotes: votes.downvotes,
+    };
   };
 
   const filteredVotes = getFilteredVoteCounts();
@@ -67,10 +60,6 @@ export function ProjectVoting({
       .reverse()
       .map((role) => {
         const roleVotes = votes.breakdown![role.name] || { up: 0, down: 0 };
-        // Skip Minieth votes if they're excluded
-        if (!includeMiniethVotes && role.name.toLowerCase() === "minieth") {
-          return null;
-        }
         const count = voteType === "up" ? roleVotes.up : roleVotes.down;
         if (count === 0) return null;
         return (
@@ -111,9 +100,7 @@ export function ProjectVoting({
       <div className="space-y-0.5">
         {breakdownLines}
         <div className="mt-3 pt-3 border-t border-gray-200/50 dark:border-white/[0.08] text-xs text-gray-500 dark:text-gray-400">
-          {includeMiniethVotes
-            ? "Showing all votes"
-            : "Excluding MiniETH votes"}
+          Note: Project sorting excludes MiniETH votes
         </div>
       </div>
     ) : (
@@ -131,10 +118,6 @@ export function ProjectVoting({
       .reverse()
       .map((role) => {
         const roleVotes = votes.breakdown![role.name] || { up: 0, down: 0 };
-        // Skip Minieth votes if they're excluded
-        if (!includeMiniethVotes && role.name.toLowerCase() === "minieth") {
-          return null;
-        }
         if (roleVotes.up === 0 && roleVotes.down === 0) return null;
         return (
           <div
@@ -165,9 +148,7 @@ export function ProjectVoting({
       <div className="space-y-0.5">
         {breakdownLines}
         <div className="mt-3 pt-3 border-t border-gray-200/50 dark:border-white/[0.08] text-xs text-gray-500 dark:text-gray-400">
-          {includeMiniethVotes
-            ? "Showing all votes"
-            : "Excluding MiniETH votes"}
+          Note: Project sorting excludes MiniETH votes
         </div>
       </div>
     ) : (
