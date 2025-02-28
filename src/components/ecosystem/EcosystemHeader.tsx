@@ -210,17 +210,6 @@ export function EcosystemHeader() {
                                 <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
                                   2
                                 </span>
-                                Original Mafia
-                              </p>
-                              <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
-                                Early members (pre-June 2024)
-                              </p>
-                            </div>
-                            <div>
-                              <p className="font-medium flex items-center">
-                                <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
-                                  3
-                                </span>
                                 Chubby Bunny
                               </p>
                               <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
@@ -230,12 +219,23 @@ export function EcosystemHeader() {
                             <div>
                               <p className="font-medium flex items-center">
                                 <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
-                                  4
+                                  3
                                 </span>
-                                MegaMind
+                                Megamind
                               </p>
                               <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
                                 Quiz score 80+
+                              </p>
+                            </div>
+                            <div>
+                              <p className="font-medium flex items-center">
+                                <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
+                                  4
+                                </span>
+                                Original Mafia
+                              </p>
+                              <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
+                                Early members (pre-June 2024)
                               </p>
                             </div>
                             <div>

@@ -17,27 +17,27 @@ export const ROLE_TIERS = [
   {
     id: DISCORD_ROLES.MEGALEVEL,
     name: "MegaLevel",
-    weight: 150,
-  },
-  {
-    id: DISCORD_ROLES.MEGAMIND,
-    name: "Megamind",
     weight: 200,
-  },
-  {
-    id: DISCORD_ROLES.CHUBBY_BUNNY,
-    name: "Chubby Bunny",
-    weight: 300,
   },
   {
     id: DISCORD_ROLES.ORIGINAL_MAFIA,
     name: "Original Mafia",
+    weight: 300,
+  },
+  {
+    id: DISCORD_ROLES.MEGAMIND,
+    name: "Megamind",
     weight: 400,
+  },
+  {
+    id: DISCORD_ROLES.CHUBBY_BUNNY,
+    name: "Chubby Bunny",
+    weight: 500,
   },
   {
     id: DISCORD_ROLES.BIG_SEQUENCER,
     name: "Big Sequencer Energy",
-    weight: 500,
+    weight: 600,
   },
 ] as const;
 
