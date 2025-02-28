@@ -34,290 +34,318 @@ export function EcosystemHeader() {
         </div>
 
         {/* Voting Explainer */}
-        <div className="mt-8 p-5 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 text-left">
-            <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/10 to-blue-600/10 dark:from-blue-500/20 dark:to-blue-600/20 p-3 border border-blue-500/20 dark:border-blue-500/30">
-              <svg
-                className="w-full h-full text-blue-600 dark:text-blue-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                />
-              </svg>
-            </div>
-            <div className="space-y-2">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white flex items-center gap-2">
-                Community Reputation Vote
-                <Tooltip.Root>
-                  <Tooltip.Trigger asChild>
-                    <button
-                      type="button"
-                      className="inline-flex items-center text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 touch-manipulation"
-                      aria-label="Learn more about community reputation voting"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <svg
-                        className="w-4 h-4"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M12 16V12"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                        <path
-                          d="M12 8H12.01"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </button>
-                  </Tooltip.Trigger>
-                  <Tooltip.Portal>
-                    <Tooltip.Content
-                      className="z-50 max-w-[320px] bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl px-5 py-4 rounded-xl text-sm text-gray-900 dark:text-gray-100 shadow-xl border border-gray-200/50 dark:border-white/[0.08] select-none touch-manipulation"
-                      side="top"
-                      sideOffset={5}
-                      align="center"
-                      onPointerDownOutside={(e) => e.preventDefault()}
-                    >
-                      <p className="font-medium text-base text-gray-900 dark:text-white">
-                        How can users identify malicious inhabitants in the
-                        permissionless Mega Civilization?
-                      </p>
-                      <p className="mt-3 leading-relaxed text-gray-600 dark:text-gray-300">
-                        We believe in the collective wisdom of the community -
-                        the voting system aims to organize signals from
-                        dedicated citizens of MegaETH to help you remain safe.
-                      </p>
-                      <div className="mt-3 flex items-center gap-4 pt-3 border-t border-gray-200/50 dark:border-white/[0.08]">
-                        <div className="flex items-center gap-2">
-                          <svg
-                            className="w-4 h-4 text-emerald-500"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                          >
-                            <path
-                              d="M5 15l7-7 7 7"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                          <span className="text-sm text-emerald-600 dark:text-emerald-400">
-                            Eagerness to interact
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <svg
-                            className="w-4 h-4 text-red-500"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                          >
-                            <path
-                              d="M19 9l-7 7-7-7"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                          <span className="text-sm text-red-600 dark:text-red-400">
-                            Signals caution
-                          </span>
-                        </div>
-                      </div>
-                      <Tooltip.Arrow className="fill-white/95 dark:fill-gray-900/95" />
-                    </Tooltip.Content>
-                  </Tooltip.Portal>
-                </Tooltip.Root>
-              </h3>
-              <p className="text-sm text-gray-600 dark:text-gray-300">
-                Join the{" "}
-                <a
-                  href="https://discord.com/invite/megaeth"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 dark:text-blue-400 hover:underline"
+        <div className="mt-6 space-y-3">
+          <div className="p-4 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm">
+            <div className="flex flex-row items-start gap-3 text-left">
+              <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/10 to-blue-600/10 dark:from-blue-500/20 dark:to-blue-600/20 p-2.5 border border-blue-500/20 dark:border-blue-500/30">
+                <svg
+                  className="w-full h-full text-blue-600 dark:text-blue-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                 >
-                  MegaETH Discord
-                </a>{" "}
-                and get the MiniETH role to vote. Higher roles have more{" "}
-                <Tooltip.Root open={tooltipOpen} onOpenChange={setTooltipOpen}>
-                  <Tooltip.Trigger asChild>
-                    <button
-                      type="button"
-                      className="inline-flex items-center text-blue-600 dark:text-blue-400 border-b border-dashed border-blue-600 dark:border-blue-400 cursor-help touch-manipulation"
-                      aria-label="View voting power explanation"
-                      onClick={() => setTooltipOpen(true)}
-                    >
-                      voting power
-                    </button>
-                  </Tooltip.Trigger>
-                  <Tooltip.Portal>
-                    <Tooltip.Content
-                      side="top"
-                      align="center"
-                      sideOffset={5}
-                      className="z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl px-4 py-3 rounded-xl text-sm text-gray-900 dark:text-gray-100 shadow-xl border border-gray-200/50 dark:border-white/[0.08] select-none touch-none max-w-sm"
-                      avoidCollisions={true}
-                      collisionPadding={16}
-                      sticky="partial"
-                      onPointerDownOutside={() => setTooltipOpen(false)}
-                    >
-                      <p className="font-semibold mb-2 pb-2 border-b border-gray-200/50 dark:border-white/[0.08]">
-                        Discord Roles (by voting power)
-                      </p>
-                      <div className="space-y-2">
-                        <div className="grid grid-cols-2 gap-x-4 gap-y-2">
-                          <div>
-                            <p className="font-medium flex items-center">
-                              <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
-                                1
-                              </span>
-                              Big Sequencer
-                            </p>
-                            <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
-                              Standout contributors
-                            </p>
-                          </div>
-                          <div>
-                            <p className="font-medium flex items-center">
-                              <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
-                                2
-                              </span>
-                              Original Mafia
-                            </p>
-                            <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
-                              Early members (pre-June 2024)
-                            </p>
-                          </div>
-                          <div>
-                            <p className="font-medium flex items-center">
-                              <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
-                                3
-                              </span>
-                              Chubby Bunny
-                            </p>
-                            <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
-                              Valued external voices
-                            </p>
-                          </div>
-                          <div>
-                            <p className="font-medium flex items-center">
-                              <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
-                                4
-                              </span>
-                              MegaMind
-                            </p>
-                            <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
-                              Quiz score 80+
-                            </p>
-                          </div>
-                          <div>
-                            <p className="font-medium flex items-center">
-                              <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
-                                5
-                              </span>
-                              MegaLevel
-                            </p>
-                            <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
-                              Active community members
-                            </p>
-                          </div>
-                          <div>
-                            <p className="font-medium flex items-center">
-                              <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
-                                6
-                              </span>
-                              MiniETH
-                            </p>
-                            <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
-                              Basic role after verification
-                            </p>
-                          </div>
-                        </div>
-                        <p className="text-xs text-gray-600 dark:text-gray-300 pt-1 border-t border-gray-200/50 dark:border-white/[0.08]">
-                          Higher roles have more voting power.
-                        </p>
-                      </div>
-                      <Tooltip.Arrow className="fill-white/90 dark:fill-gray-900/90" />
-                    </Tooltip.Content>
-                  </Tooltip.Portal>
-                </Tooltip.Root>{" "}
-                - hover over vote counts to see the breakdown.
-                <br />
-                <br />
-                <span className="text-gray-500 dark:text-gray-400">
-                  MiniETH votes are included by default - use the{" "}
-                  <svg
-                    className="w-3.5 h-3.5 inline-block -mt-0.5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>{" "}
-                  icon to filter them out.
-                </span>
-                {user && (
-                  <>
-                    <br />
-                    <button
-                      onClick={logout}
-                      className="mt-2 px-2.5 py-1 text-xs rounded-lg bg-gray-50 dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/10 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100/50 dark:hover:bg-white/[0.06] hover:border-blue-200 dark:hover:border-blue-500/20 transition-colors"
-                    >
-                      <span className="flex items-center gap-1.5">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                  />
+                </svg>
+              </div>
+              <div className="space-y-1.5 flex-1">
+                <h3 className="text-base font-medium text-gray-900 dark:text-white flex items-center gap-2">
+                  Community Reputation Vote
+                  <Tooltip.Root>
+                    <Tooltip.Trigger asChild>
+                      <button
+                        type="button"
+                        className="inline-flex items-center text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 touch-manipulation"
+                        aria-label="Learn more about community reputation voting"
+                        onClick={(e) => e.preventDefault()}
+                      >
                         <svg
-                          className="w-3 h-3"
-                          fill="none"
+                          className="w-4 h-4"
                           viewBox="0 0 24 24"
-                          stroke="currentColor"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
+                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                            stroke="currentColor"
+                            strokeWidth="2"
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                          />
+                          <path
+                            d="M12 16V12"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                          <path
+                            d="M12 8H12.01"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
                           />
                         </svg>
+                      </button>
+                    </Tooltip.Trigger>
+                    <Tooltip.Portal>
+                      <Tooltip.Content
+                        className="z-50 max-w-[320px] bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl px-5 py-4 rounded-xl text-sm text-gray-900 dark:text-gray-100 shadow-xl border border-gray-200/50 dark:border-white/[0.08] select-none touch-manipulation"
+                        side="top"
+                        sideOffset={5}
+                        align="center"
+                        onPointerDownOutside={(e) => e.preventDefault()}
+                      >
+                        <p className="font-medium text-base text-gray-900 dark:text-white">
+                          How can users identify malicious inhabitants in the
+                          permissionless Mega Civilization?
+                        </p>
+                        <p className="mt-3 leading-relaxed text-gray-600 dark:text-gray-300">
+                          We believe in the collective wisdom of the community -
+                          the voting system aims to organize signals from
+                          dedicated citizens of MegaETH to help you remain safe.
+                        </p>
+                        <div className="mt-3 flex items-center gap-4 pt-3 border-t border-gray-200/50 dark:border-white/[0.08]">
+                          <div className="flex items-center gap-2">
+                            <svg
+                              className="w-4 h-4 text-emerald-500"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                            >
+                              <path
+                                d="M5 15l7-7 7 7"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                            <span className="text-sm text-emerald-600 dark:text-emerald-400">
+                              Eagerness to interact
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <svg
+                              className="w-4 h-4 text-red-500"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                            >
+                              <path
+                                d="M19 9l-7 7-7-7"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                            <span className="text-sm text-red-600 dark:text-red-400">
+                              Signals caution
+                            </span>
+                          </div>
+                        </div>
+                        <Tooltip.Arrow className="fill-white/95 dark:fill-gray-900/95" />
+                      </Tooltip.Content>
+                    </Tooltip.Portal>
+                  </Tooltip.Root>
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
+                  Join the{" "}
+                  <a
+                    href="https://discord.com/invite/megaeth"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 dark:text-blue-400 hover:underline"
+                  >
+                    MegaETH Discord
+                  </a>{" "}
+                  and get the MiniETH role to vote. Higher roles have more{" "}
+                  <Tooltip.Root
+                    open={tooltipOpen}
+                    onOpenChange={setTooltipOpen}
+                  >
+                    <Tooltip.Trigger asChild>
+                      <button
+                        type="button"
+                        className="inline-flex items-center text-blue-600 dark:text-blue-400 border-b border-dashed border-blue-600 dark:border-blue-400 cursor-help touch-manipulation"
+                        aria-label="View voting power explanation"
+                        onClick={() => setTooltipOpen(true)}
+                      >
+                        voting power
+                      </button>
+                    </Tooltip.Trigger>
+                    <Tooltip.Portal>
+                      <Tooltip.Content
+                        side="top"
+                        align="center"
+                        sideOffset={5}
+                        className="z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-xl px-4 py-3 rounded-xl text-sm text-gray-900 dark:text-gray-100 shadow-xl border border-gray-200/50 dark:border-white/[0.08] select-none touch-none max-w-sm"
+                        avoidCollisions={true}
+                        collisionPadding={16}
+                        sticky="partial"
+                        onPointerDownOutside={() => setTooltipOpen(false)}
+                      >
+                        <p className="font-semibold mb-2 pb-2 border-b border-gray-200/50 dark:border-white/[0.08]">
+                          Discord Roles (by voting power)
+                        </p>
+                        <div className="space-y-2">
+                          <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                            <div>
+                              <p className="font-medium flex items-center">
+                                <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
+                                  1
+                                </span>
+                                Big Sequencer
+                              </p>
+                              <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
+                                Standout contributors
+                              </p>
+                            </div>
+                            <div>
+                              <p className="font-medium flex items-center">
+                                <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
+                                  2
+                                </span>
+                                Original Mafia
+                              </p>
+                              <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
+                                Early members (pre-June 2024)
+                              </p>
+                            </div>
+                            <div>
+                              <p className="font-medium flex items-center">
+                                <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
+                                  3
+                                </span>
+                                Chubby Bunny
+                              </p>
+                              <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
+                                Valued external voices
+                              </p>
+                            </div>
+                            <div>
+                              <p className="font-medium flex items-center">
+                                <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
+                                  4
+                                </span>
+                                MegaMind
+                              </p>
+                              <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
+                                Quiz score 80+
+                              </p>
+                            </div>
+                            <div>
+                              <p className="font-medium flex items-center">
+                                <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
+                                  5
+                                </span>
+                                MegaLevel
+                              </p>
+                              <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
+                                Active community members
+                              </p>
+                            </div>
+                            <div>
+                              <p className="font-medium flex items-center">
+                                <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
+                                  6
+                                </span>
+                                MiniETH
+                              </p>
+                              <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
+                                Basic role after verification
+                              </p>
+                            </div>
+                          </div>
+                          <p className="text-xs text-gray-600 dark:text-gray-300 pt-1 border-t border-gray-200/50 dark:border-white/[0.08]">
+                            Higher roles have more voting power.
+                          </p>
+                        </div>
+                        <Tooltip.Arrow className="fill-white/90 dark:fill-gray-900/90" />
+                      </Tooltip.Content>
+                    </Tooltip.Portal>
+                  </Tooltip.Root>{" "}
+                  - hover over vote counts to see the breakdown.
+                  <br />
+                  <br />
+                  <span className="text-gray-500 dark:text-gray-400">
+                    MiniETH votes are included by default - use the{" "}
+                    <svg
+                      className="w-3.5 h-3.5 inline-block -mt-0.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>{" "}
+                    icon to filter them out.
+                  </span>
+                  {user && (
+                    <>
+                      <br />
+                      <button
+                        onClick={logout}
+                        className="text-sm text-blue-600 dark:text-blue-400 hover:underline mt-2"
+                      >
                         Reset Discord connection
-                      </span>
-                    </button>
-                  </>
-                )}
-              </p>
+                      </button>
+                    </>
+                  )}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Project Application */}
+          <div className="p-4 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm">
+            <div className="flex flex-row items-start gap-3 text-left">
+              <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-500/20 dark:to-pink-500/20 p-2.5 border border-purple-500/20 dark:border-purple-500/30">
+                <svg
+                  className="w-full h-full text-purple-600 dark:text-purple-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                  />
+                </svg>
+              </div>
+              <div className="space-y-1.5 flex-1">
+                <h3 className="text-base font-medium text-gray-900 dark:text-white flex items-center gap-2">
+                  Add Your Project
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
+                  Building on MegaETH? Submit your project through our{" "}
+                  <a
+                    href="https://forms.gle/azBRst51mDecvG867"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-purple-600 dark:text-purple-400 hover:underline"
+                  >
+                    application form
+                  </a>{" "}
+                  to get listed in the ecosystem.
+                </p>
+              </div>
             </div>
           </div>
         </div>
