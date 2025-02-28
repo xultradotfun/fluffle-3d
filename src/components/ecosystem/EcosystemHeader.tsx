@@ -54,107 +54,14 @@ export function EcosystemHeader() {
               </div>
               <div className="space-y-1.5 flex-1">
                 <h3 className="text-base font-medium text-gray-900 dark:text-white flex items-center gap-2">
-                  Community Reputation Vote
-                  <Tooltip.Root>
-                    <Tooltip.Trigger asChild>
-                      <button
-                        type="button"
-                        className="inline-flex items-center text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 touch-manipulation"
-                        aria-label="Learn more about community reputation voting"
-                        onClick={(e) => e.preventDefault()}
-                      >
-                        <svg
-                          className="w-4 h-4"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M12 16V12"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                          <path
-                            d="M12 8H12.01"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          />
-                        </svg>
-                      </button>
-                    </Tooltip.Trigger>
-                    <Tooltip.Portal>
-                      <Tooltip.Content
-                        className="z-50 max-w-[320px] bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl px-5 py-4 rounded-xl text-sm text-gray-900 dark:text-gray-100 shadow-xl border border-gray-200/50 dark:border-white/[0.08] select-none touch-manipulation"
-                        side="top"
-                        sideOffset={5}
-                        align="center"
-                        onPointerDownOutside={(e) => e.preventDefault()}
-                      >
-                        <p className="font-medium text-base text-gray-900 dark:text-white">
-                          How can users identify malicious inhabitants in the
-                          permissionless Mega Civilization?
-                        </p>
-                        <p className="mt-3 leading-relaxed text-gray-600 dark:text-gray-300">
-                          We believe in the collective wisdom of the community -
-                          the voting system aims to organize signals from
-                          dedicated citizens of MegaETH to help you remain safe.
-                        </p>
-                        <div className="mt-3 flex items-center gap-4 pt-3 border-t border-gray-200/50 dark:border-white/[0.08]">
-                          <div className="flex items-center gap-2">
-                            <svg
-                              className="w-4 h-4 text-emerald-500"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                            >
-                              <path
-                                d="M5 15l7-7 7 7"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
-                            <span className="text-sm text-emerald-600 dark:text-emerald-400">
-                              Eagerness to interact
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <svg
-                              className="w-4 h-4 text-red-500"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                            >
-                              <path
-                                d="M19 9l-7 7-7-7"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
-                            <span className="text-sm text-red-600 dark:text-red-400">
-                              Signals caution
-                            </span>
-                          </div>
-                        </div>
-                        <Tooltip.Arrow className="fill-white/95 dark:fill-gray-900/95" />
-                      </Tooltip.Content>
-                    </Tooltip.Portal>
-                  </Tooltip.Root>
+                  MEGA Civilization is about to expand.
                 </h3>
                 <p className="text-sm text-gray-600 dark:text-gray-300">
-                  Join the{" "}
+                  Help fellow Fluffles organize signals from noise by casting
+                  your vote to support long-term builders.
+                  <br />
+                  <br />
+                  Go to the{" "}
                   <a
                     href="https://discord.com/invite/megaeth"
                     target="_blank"
@@ -163,7 +70,7 @@ export function EcosystemHeader() {
                   >
                     MegaETH Discord
                   </a>{" "}
-                  and get the MiniETH role to vote. Higher roles have more{" "}
+                  , get verified and{" "}
                   <Tooltip.Root
                     open={tooltipOpen}
                     onOpenChange={setTooltipOpen}
@@ -175,7 +82,7 @@ export function EcosystemHeader() {
                         aria-label="View voting power explanation"
                         onClick={() => setTooltipOpen(true)}
                       >
-                        voting power
+                        simply vote.
                       </button>
                     </Tooltip.Trigger>
                     <Tooltip.Portal>
@@ -269,23 +176,14 @@ export function EcosystemHeader() {
                       </Tooltip.Content>
                     </Tooltip.Portal>
                   </Tooltip.Root>{" "}
-                  - hover over vote counts to see the breakdown.
                   <br />
-                  <br />
-                  <span className="text-gray-500 dark:text-gray-400">
-                    All votes are shown in counts, but MiniETH votes are
-                    excluded from sorting to prioritize higher-tier roles.
-                  </span>
                   {user && (
-                    <>
-                      <br />
-                      <button
-                        onClick={logout}
-                        className="text-sm text-blue-600 dark:text-blue-400 hover:underline mt-2"
-                      >
-                        Reset Discord connection
-                      </button>
-                    </>
+                    <button
+                      onClick={logout}
+                      className="text-sm text-blue-600 dark:text-blue-400 hover:underline mt-2"
+                    >
+                      Reset Discord connection
+                    </button>
                   )}
                 </p>
               </div>
