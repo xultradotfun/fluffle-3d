@@ -5,10 +5,18 @@ interface FilterControlsProps {
     setShowMegaMafiaOnly: (show: boolean) => void
     showNativeOnly: boolean
     setShowNativeOnly: (show: boolean) => void
+    showMyVotesOnly: boolean
+    setShowMyVotesOnly: (show: boolean) => void
     categories: string[]
-    getCategoryCount: (category: string, megaMafiaOnly?: boolean, nativeOnly?: boolean) => number
+    getCategoryCount: (
+        category: string,
+        megaMafiaOnly?: boolean,
+        nativeOnly?: boolean,
+        showMyVotesOnly?: boolean,
+    ) => number
     getMegaMafiaCount: () => number
     getNativeCount: () => number
+    getUserVotedCount: () => number
     totalProjects: number
 }
 
@@ -19,10 +27,13 @@ export function FilterControls({
     setShowMegaMafiaOnly,
     showNativeOnly,
     setShowNativeOnly,
+    showMyVotesOnly,
+    setShowMyVotesOnly,
     categories,
     getCategoryCount,
     getMegaMafiaCount,
     getNativeCount,
+    getUserVotedCount,
     totalProjects,
 }: FilterControlsProps) {
     return (
@@ -34,6 +45,7 @@ export function FilterControls({
                     onClick={() => {
                         setShowMegaMafiaOnly(!showMegaMafiaOnly)
                         setShowNativeOnly(false)
+                        setShowMyVotesOnly(false)
                     }}
                     className={`group relative px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                         showMegaMafiaOnly
@@ -70,6 +82,7 @@ export function FilterControls({
                     onClick={() => {
                         setShowNativeOnly(!showNativeOnly)
                         setShowMegaMafiaOnly(false)
+                        setShowMyVotesOnly(false)
                     }}
                     className={`group relative px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                         showNativeOnly
@@ -110,6 +123,51 @@ export function FilterControls({
                         </span>
                     </div>
                 </button>
+
+                <button
+                    onClick={() => {
+                        setShowMyVotesOnly(!showMyVotesOnly)
+                        setShowMegaMafiaOnly(false)
+                        setShowNativeOnly(false)
+                    }}
+                    className={`group relative px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                        showMyVotesOnly
+                            ? "bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-500 text-white shadow-lg ring-1 ring-white/20"
+                            : "bg-white dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border border-gray-200 dark:border-white/10 hover:border-blue-500/30 dark:hover:border-blue-500/30 hover:bg-blue-50/50 dark:hover:bg-blue-500/10"
+                    }`}
+                >
+                    <div className="relative flex items-center gap-2">
+                        {showMyVotesOnly && (
+                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.15),transparent)] rounded-lg"></div>
+                        )}
+                        <svg
+                            className={`w-4 h-4 ${
+                                showMyVotesOnly ? "text-white" : "text-blue-600 dark:text-blue-400"
+                            }`}
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                            />
+                        </svg>
+
+                        <span className={showMyVotesOnly ? "font-semibold" : ""}>MyVote</span>
+                        <span
+                            className={`text-xs px-1.5 py-0.5 rounded-md ${
+                                showMyVotesOnly
+                                    ? "bg-white/20"
+                                    : "bg-blue-50 dark:bg-white/10 text-blue-600 dark:text-blue-400"
+                            }`}
+                        >
+                            {getUserVotedCount()}
+                        </span>
+                    </div>
+                </button>
             </div>
 
             {/* Category Filters */}
@@ -135,6 +193,8 @@ export function FilterControls({
                                 ? getMegaMafiaCount()
                                 : showNativeOnly
                                 ? getNativeCount()
+                                : showMyVotesOnly
+                                ? getUserVotedCount()
                                 : totalProjects}
                         </span>
                     </div>
@@ -159,7 +219,12 @@ export function FilterControls({
                                         : "bg-blue-50 dark:bg-white/10 text-blue-600 dark:text-blue-400"
                                 }`}
                             >
-                                {getCategoryCount(category, showMegaMafiaOnly, showNativeOnly)}
+                                {getCategoryCount(
+                                    category,
+                                    showMegaMafiaOnly,
+                                    showNativeOnly,
+                                    showMyVotesOnly,
+                                )}
                             </span>
                         </div>
                     </button>
