@@ -22,13 +22,8 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     if (typeof window !== "undefined") {
       const stored = localStorage.getItem("theme") as Theme | null;
       if (stored) return stored;
-
-      // Check system preference
-      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        return "dark";
-      }
     }
-    return "light"; // Default to light if no preference found
+    return "dark"; // Default to dark mode
   });
 
   // Handle theme changes
@@ -47,18 +42,6 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     setMounted(true);
     // Apply initial theme
     handleThemeChange(theme);
-
-    // Listen for system theme changes
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handleSystemThemeChange = (e: MediaQueryListEvent) => {
-      if (!localStorage.getItem("theme")) {
-        handleThemeChange(e.matches ? "dark" : "light");
-      }
-    };
-
-    mediaQuery.addEventListener("change", handleSystemThemeChange);
-    return () =>
-      mediaQuery.removeEventListener("change", handleSystemThemeChange);
   }, []);
 
   // Prevent flash of wrong theme
