@@ -700,6 +700,16 @@
       "category": "Community",
       "megaMafia": false,
       "native": true
+    },
+    {
+      "name": "Stork",
+      "twitter": "storkoracle",
+      "website": "https://www.stork.network/",
+      "discord": "https://discord.com/invite/storkoracle",
+      "description": "Oracle provider for on-chain data.",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false
     }
   ]
 }
