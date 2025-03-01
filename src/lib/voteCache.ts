@@ -1,15 +1,24 @@
-interface VoteData {
+interface ProjectVoteData {
   twitter: string;
   name: string;
   votes: {
     upvotes: number;
     downvotes: number;
     userVote: string | null;
+    breakdown: Record<string, { up: number; down: number }>;
+  };
+}
+
+interface VoteData {
+  projects: ProjectVoteData[];
+  stats: {
+    uniqueVoters: number;
+    totalVotes: number;
   };
 }
 
 interface CacheEntry {
-  data: VoteData[];
+  data: VoteData;
   timestamp: number;
 }
 
@@ -27,7 +36,7 @@ class VoteCache {
     return VoteCache.instance;
   }
 
-  public get(): VoteData[] | null {
+  public get(): VoteData | null {
     if (!this.cache) return null;
 
     // Check if cache has expired
@@ -39,7 +48,7 @@ class VoteCache {
     return this.cache.data;
   }
 
-  public set(data: VoteData[]): void {
+  public set(data: VoteData): void {
     this.cache = {
       data,
       timestamp: Date.now(),

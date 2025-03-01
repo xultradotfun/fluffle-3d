@@ -116,6 +116,14 @@ export async function GET() {
       },
     });
 
+    // Get unique voter count
+    const uniqueVoters = await prisma.vote.findMany({
+      select: {
+        userId: true,
+      },
+      distinct: ["userId"],
+    });
+
     // Get user ID from cookies if available
     const cookieStore = cookies();
     const userData = cookieStore.get("discord_user");
@@ -152,10 +160,21 @@ export async function GET() {
       };
     });
 
-    // Cache the response
-    voteCache.set(voteCounts);
+    const response = {
+      projects: voteCounts,
+      stats: {
+        uniqueVoters: uniqueVoters.length,
+        totalVotes: projects.reduce(
+          (acc, project) => acc + project.votes.length,
+          0
+        ),
+      },
+    };
 
-    return NextResponse.json(voteCounts);
+    // Cache the response
+    voteCache.set(response);
+
+    return NextResponse.json(response);
   } catch (error) {
     console.error("Failed to fetch votes:", error);
     return new NextResponse(

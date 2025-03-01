@@ -57,7 +57,7 @@ export function EcosystemDashboard() {
         // Update projects with vote data
         setProjects(
           ecosystemData.projects.map((project) => {
-            const projectVotes = votesData.find(
+            const projectVotes = votesData.projects.find(
               (v: any) => v.twitter === project.twitter
             )?.votes;
             return {

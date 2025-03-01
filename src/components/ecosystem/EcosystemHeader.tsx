@@ -1,11 +1,34 @@
 import * as Tooltip from "@radix-ui/react-tooltip";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
 
 export function EcosystemHeader() {
   const [tooltipOpen, setTooltipOpen] = useState(false);
   const { user, logout } = useDiscordAuth();
+  const [stats, setStats] = useState<{
+    totalVotes: number;
+    uniqueVoters: number;
+  } | null>(null);
+
+  useEffect(() => {
+    const fetchVoteStats = async () => {
+      try {
+        const response = await fetch("/api/votes");
+        if (!response.ok) throw new Error("Failed to fetch votes");
+        const data = await response.json();
+
+        setStats({
+          totalVotes: data.stats.totalVotes,
+          uniqueVoters: data.stats.uniqueVoters,
+        });
+      } catch (error) {
+        console.error("Failed to fetch vote stats:", error);
+      }
+    };
+
+    fetchVoteStats();
+  }, []);
 
   return (
     <Tooltip.Provider delayDuration={300} skipDelayDuration={0}>
@@ -28,9 +51,30 @@ export function EcosystemHeader() {
                   priority
                 />
               </span>
-              <div className="absolute -inset-y-2 -inset-x-3 bg-gradient-to-r from-pink-100 via-purple-100 to-indigo-100 dark:from-pink-500/10 dark:via-purple-500/10 dark:to-indigo-500/10 opacity-75 blur-lg -z-0 rounded-[28px]" />
+              <span className="absolute -inset-y-2 -inset-x-3 bg-gradient-to-r from-pink-100 via-purple-100 to-indigo-100 dark:from-pink-500/10 dark:via-purple-500/10 dark:to-indigo-500/10 opacity-75 blur-lg -z-0 rounded-[28px]" />
             </span>
           </p>
+
+          {stats && (
+            <div className="flex items-center justify-center gap-8 mt-8">
+              <div className="text-center">
+                <div className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-indigo-500 dark:from-pink-400 dark:to-indigo-400 bg-clip-text text-transparent">
+                  {stats.totalVotes.toLocaleString()}
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Total Votes
+                </div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-indigo-500 dark:from-pink-400 dark:to-indigo-400 bg-clip-text text-transparent">
+                  {stats.uniqueVoters.toLocaleString()}
+                </div>
+                <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Unique Voters
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Voting Explainer */}
@@ -54,7 +98,7 @@ export function EcosystemHeader() {
               </div>
               <div className="space-y-1.5 flex-1">
                 <h3 className="text-base font-medium text-gray-900 dark:text-white flex items-center gap-2">
-                  MEGA Civilization is about to expand.
+                  MEGA Civilization is about to expand
                 </h3>
                 <p className="text-sm text-gray-600 dark:text-gray-300">
                   Help fellow Fluffles organize signals from noise by casting
@@ -102,75 +146,75 @@ export function EcosystemHeader() {
                         <div className="space-y-2">
                           <div className="grid grid-cols-2 gap-x-4 gap-y-2">
                             <div>
-                              <p className="font-medium flex items-center">
+                              <div className="font-medium flex items-center">
                                 <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
                                   1
                                 </span>
                                 Big Sequencer
-                              </p>
-                              <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
+                              </div>
+                              <div className="text-xs text-gray-500 dark:text-gray-400 pl-7">
                                 Standout contributors
-                              </p>
+                              </div>
                             </div>
                             <div>
-                              <p className="font-medium flex items-center">
+                              <div className="font-medium flex items-center">
                                 <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
                                   2
                                 </span>
                                 Chubby Bunny
-                              </p>
-                              <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
+                              </div>
+                              <div className="text-xs text-gray-500 dark:text-gray-400 pl-7">
                                 Valued external voices
-                              </p>
+                              </div>
                             </div>
                             <div>
-                              <p className="font-medium flex items-center">
+                              <div className="font-medium flex items-center">
                                 <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
                                   3
                                 </span>
                                 Megamind
-                              </p>
-                              <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
+                              </div>
+                              <div className="text-xs text-gray-500 dark:text-gray-400 pl-7">
                                 Quiz score 80+
-                              </p>
+                              </div>
                             </div>
                             <div>
-                              <p className="font-medium flex items-center">
+                              <div className="font-medium flex items-center">
                                 <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
                                   4
                                 </span>
                                 Original Mafia
-                              </p>
-                              <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
+                              </div>
+                              <div className="text-xs text-gray-500 dark:text-gray-400 pl-7">
                                 Early members (pre-June 2024)
-                              </p>
+                              </div>
                             </div>
                             <div>
-                              <p className="font-medium flex items-center">
+                              <div className="font-medium flex items-center">
                                 <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
                                   5
                                 </span>
                                 MegaLevel
-                              </p>
-                              <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
+                              </div>
+                              <div className="text-xs text-gray-500 dark:text-gray-400 pl-7">
                                 Active community members
-                              </p>
+                              </div>
                             </div>
                             <div>
-                              <p className="font-medium flex items-center">
+                              <div className="font-medium flex items-center">
                                 <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
                                   6
                                 </span>
                                 MiniETH
-                              </p>
-                              <p className="text-xs text-gray-500 dark:text-gray-400 pl-7">
+                              </div>
+                              <div className="text-xs text-gray-500 dark:text-gray-400 pl-7">
                                 Basic role after verification
-                              </p>
+                              </div>
                             </div>
                           </div>
-                          <p className="text-xs text-gray-600 dark:text-gray-300 pt-1 border-t border-gray-200/50 dark:border-white/[0.08]">
+                          <div className="text-xs text-gray-600 dark:text-gray-300 pt-1 border-t border-gray-200/50 dark:border-white/[0.08]">
                             Higher roles have more voting power.
-                          </p>
+                          </div>
                         </div>
                         <Tooltip.Arrow className="fill-white/90 dark:fill-gray-900/90" />
                       </Tooltip.Content>
