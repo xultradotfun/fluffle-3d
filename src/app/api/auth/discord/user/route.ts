@@ -5,6 +5,8 @@ import { prisma } from "@/lib/prisma";
 const REQUIRED_SERVER_ID = "1219739501673451551";
 const REQUIRED_ROLE_ID = "1227046192316285041";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     const cookieStore = cookies();
