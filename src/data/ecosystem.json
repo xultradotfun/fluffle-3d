@@ -177,7 +177,8 @@
     {
       "name": "Bronto",
       "twitter": "bronto_finance",
-      "description": "A ve(3;3) DEX",
+      "website": "https://bronto.finance",
+      "description": "The native concentrated liquidity layer of MegaETH",
       "category": "DeFi",
       "megaMafia": false,
       "native": true
