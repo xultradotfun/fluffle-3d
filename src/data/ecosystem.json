@@ -21,17 +21,9 @@
       "native": true
     },
     {
-      "name": "VoyageAI",
-      "twitter": "voyage_hq",
-      "description": "Building the infrastructure for the AI agents economy",
-      "category": "AI",
-      "megaMafia": true,
-      "native": true
-    },
-    {
       "name": "Sweep",
       "twitter": "trysweep",
-      "website": "https://sweep.gg",
+      "website": "https://sweep.gg/?invite=talented-disappearance",
       "discord": "https://discord.com/invite/sweepgg",
       "description": "A prediction market for streamers",
       "category": "Gaming",
@@ -60,6 +52,7 @@
       "name": "NectarAI",
       "twitter": "TryNectarAI",
       "website": "https://nectar.ai",
+      "discord": "https://discord.com/invite/ZFfEAbgsHm",
       "description": "A platform focused on creating virtual companions",
       "category": "AI",
       "megaMafia": true,
@@ -95,6 +88,7 @@
     {
       "name": "Showdown",
       "twitter": "Showdown_TCG",
+      "website": "https://showdown.game",
       "discord": "https://discord.com/invite/JWdRTRvFYN",
       "description": "An on-chain and physical trading card game",
       "category": "Gaming",
@@ -144,19 +138,10 @@
     {
       "name": "Teko",
       "twitter": "tekofinance",
-      "website": "https://teko.finance",
+      "website": "https://teko.finance/waitlist?ref_id=LVLQHNJZQ",
       "discord": "https://discord.gg/tByhhB8u",
       "description": "A money market with leveraged strategies + margin trading",
       "category": "DeFi",
-      "megaMafia": true,
-      "native": true
-    },
-    {
-      "name": "RPS Live",
-      "twitter": "rps_live_gg",
-      "website": "https://rps.live",
-      "description": "Interactive and 24/7 AI agents streaming",
-      "category": "AI",
       "megaMafia": true,
       "native": true
     },

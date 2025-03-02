@@ -158,32 +158,34 @@ export function ProjectVoting({
 
   return (
     <div className="flex items-center gap-2">
-      <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10">
+      <div className="flex items-center gap-2">
         <Tooltip.Root>
           <Tooltip.Trigger asChild>
             <button
               onClick={() => onVote("up")}
               disabled={isVoting || cooldown}
-              className={`relative flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm font-medium transition-all
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium transition-all duration-200
                 ${
                   userVote === "up"
-                    ? "bg-emerald-500/10 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400"
-                    : "text-emerald-700/90 dark:text-emerald-400/90 hover:bg-emerald-50 dark:hover:bg-emerald-500/10"
+                    ? "bg-emerald-100 dark:bg-emerald-500/30 text-emerald-700 dark:text-emerald-300 ring-1 ring-emerald-500/30 dark:ring-emerald-500/50"
+                    : "bg-white dark:bg-white/[0.05] text-emerald-600/60 dark:text-emerald-400/60 shadow-[0_2px_4px_rgba(0,0,0,0.02)] dark:shadow-none hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-500/10"
                 }
                 ${
                   (isVoting || cooldown) &&
-                  "cursor-not-allowed opacity-50 hover:bg-transparent dark:hover:bg-transparent"
+                  "cursor-not-allowed opacity-50 hover:bg-white dark:hover:bg-white/[0.05]"
                 }
               `}
             >
               <svg
-                className={`h-4 w-4 transition-transform ${
+                className={`h-4 w-4 transition-transform duration-200 ${
                   userVote === "up"
-                    ? "fill-emerald-500"
-                    : "fill-none stroke-emerald-600/75 dark:stroke-emerald-400/75"
+                    ? "text-emerald-600 dark:text-emerald-300"
+                    : "text-emerald-500/60 dark:text-emerald-400/60"
                 }`}
                 viewBox="0 0 24 24"
-                strokeWidth="2"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1.75}
               >
                 <path
                   strokeLinecap="round"
@@ -191,7 +193,9 @@ export function ProjectVoting({
                   d="M5 15l7-7 7 7"
                 />
               </svg>
-              <span>{filteredVotes.upvotes}</span>
+              <span className="min-w-[1.5rem] text-center tabular-nums">
+                {filteredVotes.upvotes}
+              </span>
             </button>
           </Tooltip.Trigger>
           <Tooltip.Portal>
@@ -210,7 +214,7 @@ export function ProjectVoting({
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2"
+                  strokeWidth={1.75}
                 >
                   <path
                     strokeLinecap="round"
@@ -228,33 +232,33 @@ export function ProjectVoting({
           </Tooltip.Portal>
         </Tooltip.Root>
 
-        <div className="w-px h-4 bg-gray-200 dark:bg-white/10" />
-
         <Tooltip.Root>
           <Tooltip.Trigger asChild>
             <button
               onClick={() => onVote("down")}
               disabled={isVoting || cooldown}
-              className={`relative flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm font-medium transition-all
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium transition-all duration-200
                 ${
                   userVote === "down"
-                    ? "bg-red-500/10 text-red-600 dark:bg-red-500/20 dark:text-red-400"
-                    : "text-red-700/90 dark:text-red-400/90 hover:bg-red-50 dark:hover:bg-red-500/10"
+                    ? "bg-red-100 dark:bg-red-500/30 text-red-700 dark:text-red-300 ring-1 ring-red-500/30 dark:ring-red-500/50"
+                    : "bg-white dark:bg-white/[0.05] text-red-600/60 dark:text-red-400/60 shadow-[0_2px_4px_rgba(0,0,0,0.02)] dark:shadow-none hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50/50 dark:hover:bg-red-500/10"
                 }
                 ${
                   (isVoting || cooldown) &&
-                  "cursor-not-allowed opacity-50 hover:bg-transparent dark:hover:bg-transparent"
+                  "cursor-not-allowed opacity-50 hover:bg-white dark:hover:bg-white/[0.05]"
                 }
               `}
             >
               <svg
-                className={`h-4 w-4 transition-transform ${
+                className={`h-4 w-4 transition-transform duration-200 ${
                   userVote === "down"
-                    ? "fill-red-500"
-                    : "fill-none stroke-red-600/75 dark:stroke-red-400/75"
+                    ? "text-red-600 dark:text-red-300"
+                    : "text-red-500/60 dark:text-red-400/60"
                 }`}
                 viewBox="0 0 24 24"
-                strokeWidth="2"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1.75}
               >
                 <path
                   strokeLinecap="round"
@@ -262,7 +266,9 @@ export function ProjectVoting({
                   d="M19 9l-7 7-7-7"
                 />
               </svg>
-              <span>{filteredVotes.downvotes}</span>
+              <span className="min-w-[1.5rem] text-center tabular-nums">
+                {filteredVotes.downvotes}
+              </span>
             </button>
           </Tooltip.Trigger>
           <Tooltip.Portal>
@@ -281,7 +287,7 @@ export function ProjectVoting({
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2"
+                  strokeWidth={1.75}
                 >
                   <path
                     strokeLinecap="round"
@@ -308,7 +314,7 @@ export function ProjectVoting({
       >
         <Tooltip.Trigger asChild>
           <button
-            className="sm:hidden flex items-center justify-center w-8 h-8 rounded-lg bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 text-gray-500 dark:text-gray-400"
+            className="sm:hidden flex items-center justify-center w-9 h-9 rounded-xl bg-white dark:bg-white/[0.05] shadow-[0_2px_4px_rgba(0,0,0,0.02)] dark:shadow-none text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/[0.08] transition-all duration-200"
             aria-label="Vote breakdown"
             onClick={() => setIsMobileTooltipOpen(true)}
           >
@@ -333,7 +339,7 @@ export function ProjectVoting({
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="2"
+                strokeWidth={1.75}
               >
                 <path
                   strokeLinecap="round"
