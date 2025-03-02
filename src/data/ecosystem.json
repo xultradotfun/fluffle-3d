@@ -710,10 +710,20 @@
       "name": "ShinyEX",
       "twitter": "ShinyEX_",
       "website": "https://shinyex.xyz/",
-      "description": "Your favourite NFT Hub. ",
+      "description": "Your favourite NFT Hub.",
       "category": "NFT",
       "megaMafia": false,
       "native": true
+    },
+    {
+      "name": "Hyperfy",
+      "twitter": "hyperfy_io",
+      "website": "https://hyperfy.io/",
+      "discord": "https://discord.gg/TGtyTEWB2X",
+      "description": "An open source, multichain layer for immersive games and experiences.",
+      "category": "Gaming",
+      "megaMafia": false,
+      "native": false
     }
   ]
 }
