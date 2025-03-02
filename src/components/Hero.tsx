@@ -42,7 +42,7 @@ export default function Hero() {
 
     // Handle scroll
     const handleScroll = () => {
-      const scrollDownThreshold = 50;
+      const scrollDownThreshold = 20;
       const scrollUpThreshold = 20;
       const currentlyScrolled = isScrolled;
       const shouldBeScrolled =
@@ -67,13 +67,13 @@ export default function Hero() {
     <>
       {/* Placeholder to prevent content overlap */}
       <div
-        className={`w-full transition-all duration-300 ease-in-out ${
+        className={`w-full sm:transition-all sm:duration-300 sm:ease-in-out ${
           isScrolled ? "h-[48px]" : "h-[180px]"
         }`}
       />
 
       <section
-        className={`fixed top-0 left-0 right-0 z-30 transition-all duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 right-0 z-30 sm:transition-all sm:duration-300 sm:ease-in-out ${
           isScrolled
             ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg shadow-sm"
             : "bg-transparent"
@@ -87,7 +87,7 @@ export default function Hero() {
         {/* Content */}
         <div className="mx-auto max-w-4xl px-4 sm:px-6">
           <div
-            className={`relative flex flex-col items-center transition-all duration-300 ease-in-out ${
+            className={`relative flex flex-col items-center sm:transition-all sm:duration-300 sm:ease-in-out ${
               isScrolled ? "py-1" : "pt-6 pb-8"
             }`}
           >
@@ -102,12 +102,12 @@ export default function Hero() {
               {/* Logo and Title */}
               <div className="inline-flex items-center gap-3 flex-shrink-0 min-w-[200px]">
                 <div
-                  className={`transition-all duration-300 ${
+                  className={`sm:transition-all sm:duration-300 ${
                     isScrolled ? "w-8 h-8" : "w-12 h-12"
                   } rounded-xl bg-white dark:bg-gray-900 border border-gray-200/50 dark:border-gray-800/50 shadow-sm flex items-center justify-center`}
                 >
                   <div
-                    className={`transition-all duration-150 ${
+                    className={`sm:transition-all sm:duration-150 ${
                       isTransitioning
                         ? "-rotate-180 scale-75 opacity-0"
                         : "rotate-0 scale-100 opacity-100"
@@ -116,14 +116,14 @@ export default function Hero() {
                     <img
                       src={`/icons/logo-${logoNumber}.png`}
                       alt="Fluffle Logo"
-                      className={`transition-all duration-300 ${
+                      className={`sm:transition-all sm:duration-300 ${
                         isScrolled ? "w-5 h-5" : "w-8 h-8"
                       } object-contain brightness-0 dark:invert`}
                     />
                   </div>
                 </div>
                 <h1
-                  className={`transition-all duration-300 whitespace-nowrap ${
+                  className={`sm:transition-all sm:duration-300 whitespace-nowrap ${
                     isScrolled ? "text-2xl" : "text-4xl"
                   } font-black tracking-tight bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-200 dark:to-gray-300 bg-clip-text text-transparent`}
                 >
