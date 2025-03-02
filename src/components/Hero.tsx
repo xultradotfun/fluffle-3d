@@ -7,8 +7,10 @@ export default function Hero() {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const preloadedImages = useRef<HTMLImageElement[]>([]);
+  const lastScrollY = useRef(0);
+  const lastScrollTime = useRef(performance.now());
+  const animationFrameId = useRef<number>();
 
-  // Preload all images on mount
   useEffect(() => {
     // Create array of numbers 1-8 with padding
     const numbers = Array.from({ length: 8 }, (_, i) =>
@@ -40,28 +42,53 @@ export default function Hero() {
       }, 100);
     }, 2000);
 
-    // Handle scroll
-    const handleScroll = () => {
-      const scrollDownThreshold = 20;
-      const scrollUpThreshold = 20;
-      const currentlyScrolled = isScrolled;
-      const shouldBeScrolled =
-        window.scrollY >
-        (currentlyScrolled ? scrollUpThreshold : scrollDownThreshold);
+    // Scroll handling with RAF and velocity detection
+    const handleScrollWithRAF = () => {
+      const currentScrollY = window.scrollY;
+      const currentTime = performance.now();
+      const timeDelta = currentTime - lastScrollTime.current;
+      const scrollDelta = Math.abs(currentScrollY - lastScrollY.current);
 
-      if (shouldBeScrolled !== currentlyScrolled) {
+      // Calculate scroll velocity (px/ms)
+      const scrollVelocity = scrollDelta / timeDelta;
+
+      // Adjust thresholds based on scroll velocity
+      const velocityThreshold = 0.5; // px/ms
+      const isScrollingFast = scrollVelocity > velocityThreshold;
+
+      const scrollDownThreshold = isScrollingFast ? 30 : 50;
+      const scrollUpThreshold = isScrollingFast ? 10 : 20;
+
+      const shouldBeScrolled =
+        currentScrollY > (isScrolled ? scrollUpThreshold : scrollDownThreshold);
+
+      if (shouldBeScrolled !== isScrolled) {
         setIsScrolled(shouldBeScrolled);
       }
+
+      lastScrollY.current = currentScrollY;
+      lastScrollTime.current = currentTime;
     };
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Check initial scroll position
+    const onScroll = () => {
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
+      animationFrameId.current = requestAnimationFrame(handleScrollWithRAF);
+    };
 
+    window.addEventListener("scroll", onScroll, { passive: true });
+    handleScrollWithRAF(); // Check initial scroll position
+
+    // Cleanup function
     return () => {
       clearInterval(interval);
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", onScroll);
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+      }
     };
-  }, [logoNumber]);
+  }, [logoNumber, isScrolled]); // Include both dependencies
 
   return (
     <>
