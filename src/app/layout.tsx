@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Footer } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/react";
+import type { AnalyticsProps } from "@vercel/analytics/react";
 import { DiscordAuthProvider } from "@/contexts/DiscordAuthContext";
 import { Toaster } from "sonner";
 
@@ -63,7 +64,7 @@ export default function RootLayout({
             </div>
           </DiscordAuthProvider>
         </ThemeProvider>
-        <Analytics />
+        <Analytics mode="auto" />
         <Toaster
           richColors
           position="top-center"
