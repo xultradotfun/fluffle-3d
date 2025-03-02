@@ -5,14 +5,19 @@ interface FilterControlsProps {
   setShowMegaMafiaOnly: (show: boolean) => void;
   showNativeOnly: boolean;
   setShowNativeOnly: (show: boolean) => void;
+  voteFilter: "all" | "voted" | "not_voted";
+  setVoteFilter: (filter: "all" | "voted" | "not_voted") => void;
   categories: string[];
   getCategoryCount: (
     category: string,
     megaMafiaOnly?: boolean,
-    nativeOnly?: boolean
+    nativeOnly?: boolean,
+    voteFilter?: "all" | "voted" | "not_voted"
   ) => number;
   getMegaMafiaCount: () => number;
   getNativeCount: () => number;
+  getUserVotedCount: () => number;
+  getUserNotVotedCount: () => number;
   totalProjects: number;
 }
 
@@ -23,19 +28,27 @@ export function FilterControls({
   setShowMegaMafiaOnly,
   showNativeOnly,
   setShowNativeOnly,
+  voteFilter,
+  setVoteFilter,
   categories,
   getCategoryCount,
   getMegaMafiaCount,
   getNativeCount,
+  getUserVotedCount,
+  getUserNotVotedCount,
   totalProjects,
 }: FilterControlsProps) {
   return (
-    <div className="flex flex-col gap-4">
-      {/* Project Type Filters */}
+    <div className="flex flex-col gap-6">
+      {/* Row 1: Project Type Filters (MegaMafia/Native) */}
       <div className="flex flex-wrap items-center gap-2">
+        <div className="hidden sm:block w-[1px] h-6 bg-gray-200 dark:bg-white/10 mx-1" />
         {/* MegaMafia Filter */}
         <button
-          onClick={() => setShowMegaMafiaOnly(!showMegaMafiaOnly)}
+          onClick={() => {
+            setShowMegaMafiaOnly(!showMegaMafiaOnly);
+            setShowNativeOnly(false);
+          }}
           className={`group relative px-4 py-2 rounded-lg text-sm font-medium transition-all ${
             showMegaMafiaOnly
               ? "bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 text-white shadow-lg ring-1 ring-white/20"
@@ -72,7 +85,10 @@ export function FilterControls({
 
         {/* Native Filter */}
         <button
-          onClick={() => setShowNativeOnly(!showNativeOnly)}
+          onClick={() => {
+            setShowNativeOnly(!showNativeOnly);
+            setShowMegaMafiaOnly(false);
+          }}
           className={`group relative px-4 py-2 rounded-lg text-sm font-medium transition-all ${
             showNativeOnly
               ? "bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-500 text-white shadow-lg ring-1 ring-white/20"
@@ -116,38 +132,113 @@ export function FilterControls({
         </button>
       </div>
 
-      {/* Category Filters */}
+      {/* Row 2: Vote Status Filters */}
       <div className="flex flex-wrap items-center gap-2">
+        <div className="hidden sm:block w-[1px] h-6 bg-gray-200 dark:bg-white/10 mx-1" />
         <button
-          onClick={() => setSelectedCategory(null)}
+          onClick={() =>
+            setVoteFilter(voteFilter === "voted" ? "all" : "voted")
+          }
           className={`group relative px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-            selectedCategory === null
-              ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/20"
-              : "bg-white dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border border-gray-200 dark:border-white/10 hover:border-blue-500/30 dark:hover:border-blue-500/30 hover:bg-blue-50 dark:hover:bg-blue-500/10"
+            voteFilter === "voted"
+              ? "bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-500 text-white shadow-lg ring-1 ring-white/20"
+              : "bg-white dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border border-gray-200 dark:border-white/10 hover:border-blue-500/30 dark:hover:border-blue-500/30 hover:bg-blue-50/50 dark:hover:bg-blue-500/10"
           }`}
         >
           <div className="relative flex items-center gap-2">
-            <span>All</span>
+            {voteFilter === "voted" && (
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.15),transparent)] rounded-lg"></div>
+            )}
+            <svg
+              className={`w-4 h-4 ${
+                voteFilter === "voted"
+                  ? "text-white"
+                  : "text-blue-600 dark:text-blue-400"
+              }`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+            <span className={voteFilter === "voted" ? "font-semibold" : ""}>
+              Voted
+            </span>
             <span
               className={`text-xs px-1.5 py-0.5 rounded-md ${
-                selectedCategory === null
+                voteFilter === "voted"
                   ? "bg-white/20"
                   : "bg-blue-50 dark:bg-white/10 text-blue-600 dark:text-blue-400"
               }`}
             >
-              {showMegaMafiaOnly
-                ? getMegaMafiaCount()
-                : showNativeOnly
-                ? getNativeCount()
-                : totalProjects}
+              {getUserVotedCount()}
             </span>
           </div>
         </button>
 
+        <button
+          onClick={() =>
+            setVoteFilter(voteFilter === "not_voted" ? "all" : "not_voted")
+          }
+          className={`group relative px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+            voteFilter === "not_voted"
+              ? "bg-gradient-to-br from-orange-500 via-red-500 to-pink-500 text-white shadow-lg ring-1 ring-white/20"
+              : "bg-white dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white border border-gray-200 dark:border-white/10 hover:border-orange-500/30 dark:hover:border-orange-500/30 hover:bg-orange-50/50 dark:hover:bg-orange-500/10"
+          }`}
+        >
+          <div className="relative flex items-center gap-2">
+            {voteFilter === "not_voted" && (
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(249,115,22,0.15),transparent)] rounded-lg"></div>
+            )}
+            <svg
+              className={`w-4 h-4 ${
+                voteFilter === "not_voted"
+                  ? "text-white"
+                  : "text-orange-600 dark:text-orange-400"
+              }`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 11v6m0 0l-4-4m4 4l4-4M12 7V4"
+              />
+            </svg>
+            <span className={voteFilter === "not_voted" ? "font-semibold" : ""}>
+              Not Voted
+            </span>
+            <span
+              className={`text-xs px-1.5 py-0.5 rounded-md ${
+                voteFilter === "not_voted"
+                  ? "bg-white/20"
+                  : "bg-orange-50 dark:bg-white/10 text-orange-600 dark:text-orange-400"
+              }`}
+            >
+              {getUserNotVotedCount()}
+            </span>
+          </div>
+        </button>
+      </div>
+
+      {/* Row 3: Category Filters */}
+      <div className="flex flex-wrap items-center gap-2">
+        <div className="hidden sm:block w-[1px] h-6 bg-gray-200 dark:bg-white/10 mx-1" />
         {categories.map((category) => (
           <button
             key={category}
-            onClick={() => setSelectedCategory(category)}
+            onClick={() =>
+              setSelectedCategory(
+                selectedCategory === category ? null : category
+              )
+            }
             className={`group relative px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               selectedCategory === category
                 ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/20"
@@ -163,7 +254,12 @@ export function FilterControls({
                     : "bg-blue-50 dark:bg-white/10 text-blue-600 dark:text-blue-400"
                 }`}
               >
-                {getCategoryCount(category, showMegaMafiaOnly, showNativeOnly)}
+                {getCategoryCount(
+                  category,
+                  showMegaMafiaOnly,
+                  showNativeOnly,
+                  voteFilter
+                )}
               </span>
             </div>
           </button>

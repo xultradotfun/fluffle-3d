@@ -32,11 +32,18 @@ interface Project {
   };
 }
 
+type VoteFilter = "all" | "voted" | "not_voted";
+
 export function EcosystemDashboard() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showMegaMafiaOnly, setShowMegaMafiaOnly] = useState(false);
   const [showNativeOnly, setShowNativeOnly] = useState(false);
-  const [projects, setProjects] = useState<Project[]>(ecosystemData.projects);
+  const [voteFilter, setVoteFilter] = useState<VoteFilter>("all");
+  const [projects, setProjects] = useState<Project[]>(
+    ecosystemData.projects.map((project) => ({
+      ...project,
+    }))
+  );
   const [sortMethod, setSortMethod] = useState<{
     type: "alphabetical" | "score";
     direction: "asc" | "desc";
@@ -87,13 +94,18 @@ export function EcosystemDashboard() {
   const getCategoryCount = (
     category: string,
     megaMafiaOnly: boolean = false,
-    nativeOnly: boolean = false
+    nativeOnly: boolean = false,
+    voteFilter: VoteFilter = "all"
   ) => {
     return projects.filter(
       (project) =>
         project.category === category &&
         (!megaMafiaOnly || project.megaMafia) &&
-        (!nativeOnly || project.native)
+        (!nativeOnly || project.native) &&
+        (voteFilter === "all" ||
+          (voteFilter === "voted"
+            ? project.votes?.userVote !== null
+            : project.votes?.userVote === null))
     ).length;
   };
 
@@ -103,6 +115,18 @@ export function EcosystemDashboard() {
 
   const getNativeCount = () => {
     return projects.filter((project) => project.native).length;
+  };
+
+  const getUserVotedCount = () => {
+    return projects.filter(
+      (project) => project.votes && project.votes.userVote !== null
+    ).length;
+  };
+
+  const getUserNotVotedCount = () => {
+    return projects.filter(
+      (project) => !project.votes || project.votes.userVote === null
+    ).length;
   };
 
   const getProjectScore = (project: Project) => {
@@ -127,7 +151,12 @@ export function EcosystemDashboard() {
         : true;
       const megaMafiaMatch = showMegaMafiaOnly ? project.megaMafia : true;
       const nativeMatch = showNativeOnly ? project.native : true;
-      return categoryMatch && megaMafiaMatch && nativeMatch;
+      const userVoteMatch =
+        voteFilter === "all" ||
+        (voteFilter === "voted"
+          ? project.votes?.userVote !== null
+          : project.votes?.userVote === null);
+      return categoryMatch && megaMafiaMatch && nativeMatch && userVoteMatch;
     })
     .sort((a, b) => {
       if (sortMethod.type === "score") {
@@ -188,10 +217,14 @@ export function EcosystemDashboard() {
           setShowMegaMafiaOnly={setShowMegaMafiaOnly}
           showNativeOnly={showNativeOnly}
           setShowNativeOnly={setShowNativeOnly}
+          voteFilter={voteFilter}
+          setVoteFilter={setVoteFilter}
           categories={categories}
           getCategoryCount={getCategoryCount}
           getMegaMafiaCount={getMegaMafiaCount}
           getNativeCount={getNativeCount}
+          getUserVotedCount={getUserVotedCount}
+          getUserNotVotedCount={getUserNotVotedCount}
           totalProjects={projects.length}
         />
       </div>
