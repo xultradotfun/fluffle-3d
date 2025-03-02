@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import * as Tooltip from "@radix-ui/react-tooltip";
+import { useState } from "react";
 
 interface SortSelectorProps {
   sortMethod: {
@@ -13,6 +14,8 @@ interface SortSelectorProps {
 }
 
 export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
+  const [tooltipOpen, setTooltipOpen] = useState(false);
+
   const handleSortClick = (type: "alphabetical" | "score") => {
     if (sortMethod.type === type) {
       // Toggle direction if same type
@@ -99,13 +102,13 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
           </button>
         </div>
 
-        <Tooltip.Root>
+        <Tooltip.Root open={tooltipOpen} onOpenChange={setTooltipOpen}>
           <Tooltip.Trigger asChild>
             <button
               type="button"
-              className="p-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-white/[0.08] rounded transition-all"
+              className="p-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-white/[0.08] rounded transition-all touch-manipulation"
               aria-label="Learn more about score sorting"
-              onClick={(e) => e.preventDefault()}
+              onClick={() => setTooltipOpen(true)}
             >
               <svg
                 className="w-4 h-4"
@@ -139,10 +142,12 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
               side="top"
               align="center"
               sideOffset={5}
-              className="z-50 max-w-[320px] bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl px-4 py-3 rounded-lg text-sm text-gray-600 dark:text-gray-300 shadow-lg border border-gray-200/50 dark:border-white/[0.08] select-none"
+              className="z-50 max-w-[320px] bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl px-4 py-3 rounded-lg text-sm text-gray-600 dark:text-gray-300 shadow-lg border border-gray-200/50 dark:border-white/[0.08] select-none touch-none"
               avoidCollisions={true}
               collisionPadding={16}
               sticky="partial"
+              onPointerDownOutside={() => setTooltipOpen(false)}
+              onEscapeKeyDown={() => setTooltipOpen(false)}
             >
               <p className="leading-relaxed">
                 All votes are shown in counts, but MiniETH votes are excluded
