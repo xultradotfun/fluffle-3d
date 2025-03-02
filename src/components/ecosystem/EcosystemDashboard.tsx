@@ -185,55 +185,44 @@ export function EcosystemDashboard() {
 
       <div className="space-y-8">
         {/* Controls Header */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-          <div className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-300">
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
-              />
-            </svg>
-            <span>Filter & Sort</span>
-            <span className="px-1.5 py-0.5 rounded bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-400">
-              {filteredProjects.length} projects
-            </span>
-          </div>
+        <div className="flex flex-col gap-4">
+          {/* Filter Controls */}
+          <FilterControls
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            showMegaMafiaOnly={showMegaMafiaOnly}
+            setShowMegaMafiaOnly={setShowMegaMafiaOnly}
+            showNativeOnly={showNativeOnly}
+            setShowNativeOnly={setShowNativeOnly}
+            voteFilter={voteFilter}
+            setVoteFilter={setVoteFilter}
+            categories={categories}
+            getCategoryCount={getCategoryCount}
+            getMegaMafiaCount={getMegaMafiaCount}
+            getNativeCount={getNativeCount}
+            getUserVotedCount={getUserVotedCount}
+            getUserNotVotedCount={getUserNotVotedCount}
+            totalProjects={projects.length}
+          />
 
-          <SortSelector sortMethod={sortMethod} onSortChange={setSortMethod} />
+          {/* Results and Sort */}
+          <div className="flex items-center justify-between">
+            <div className="text-sm text-gray-600 dark:text-gray-300">
+              Showing {filteredProjects.length} projects
+            </div>
+            <SortSelector
+              sortMethod={sortMethod}
+              onSortChange={setSortMethod}
+            />
+          </div>
         </div>
 
-        {/* Filter Controls */}
-        <FilterControls
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-          showMegaMafiaOnly={showMegaMafiaOnly}
-          setShowMegaMafiaOnly={setShowMegaMafiaOnly}
-          showNativeOnly={showNativeOnly}
-          setShowNativeOnly={setShowNativeOnly}
-          voteFilter={voteFilter}
-          setVoteFilter={setVoteFilter}
-          categories={categories}
-          getCategoryCount={getCategoryCount}
-          getMegaMafiaCount={getMegaMafiaCount}
-          getNativeCount={getNativeCount}
-          getUserVotedCount={getUserVotedCount}
-          getUserNotVotedCount={getUserNotVotedCount}
-          totalProjects={projects.length}
-        />
-      </div>
-
-      {/* Project Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredProjects.map((project) => (
-          <ProjectCard key={project.name} project={project} />
-        ))}
+        {/* Project Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredProjects.map((project) => (
+            <ProjectCard key={project.name} project={project} />
+          ))}
+        </div>
       </div>
     </div>
   );
