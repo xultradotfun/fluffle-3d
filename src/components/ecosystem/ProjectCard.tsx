@@ -168,7 +168,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       fetch("/api/votes")
         .then((res) => res.json())
         .then((votesData) => {
-          const projectVotes = votesData.find(
+          const projectVotes = votesData.projects.find(
             (p: any) => p.twitter === project.twitter
           );
           if (projectVotes?.votes) {
