@@ -116,7 +116,9 @@ export function TraitsAnalyticsDashboard() {
       {selectedCategoryData && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <TraitDistribution category={selectedCategoryData} />
-          <RarityBreakdown category={selectedCategoryData} />
+          {selectedCategoryData.name !== "Merch" && (
+            <RarityBreakdown category={selectedCategoryData} />
+          )}
         </div>
       )}
     </div>

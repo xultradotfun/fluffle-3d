@@ -6,6 +6,7 @@ export interface TraitMetadata {
   rarity: number;
   count: number;
   trait_number?: number;
+  image?: string;
 }
 
 export interface TraitCategory {
@@ -22,6 +23,40 @@ export interface TraitsAnalytics {
 
 // Define which categories are optional items
 const OPTIONAL_ITEMS = new Set(["ear", "face", "head", "tribe"]);
+
+// Add merch items data
+const MERCH_ITEMS = [
+  {
+    name: "Cropped Tee",
+    category: "tops",
+    image:
+      "https://hologramxyz.s3.us-east-1.amazonaws.com/partnerships/MEGAETH/2d/thumbnails/merch/megaeth_t_cropped.png",
+  },
+  {
+    name: "Tee",
+    category: "tops",
+    image:
+      "https://hologramxyz.s3.us-east-1.amazonaws.com/partnerships/MEGAETH/2d/thumbnails/merch/megaeth_t.png",
+  },
+  {
+    name: "Measure Then Build Tee",
+    category: "tops",
+    image:
+      "https://hologramxyz.s3.us-east-1.amazonaws.com/partnerships/MEGAETH/2d/thumbnails/merch/mesure_then_build_t.png",
+  },
+  {
+    name: "Pans And Shoes",
+    category: "bottoms",
+    image:
+      "https://hologramxyz.s3.us-east-1.amazonaws.com/partnerships/MEGAETH/2d/thumbnails/merch/pants_and_shoes.png",
+  },
+  {
+    name: "World Computer Day Necklace",
+    category: "necklaces",
+    image:
+      "https://hologramxyz.s3.us-east-1.amazonaws.com/partnerships/MEGAETH/2d/thumbnails/merch/world_computer_day_necklace.png",
+  },
+];
 
 export async function fetchTraitsAnalytics(): Promise<TraitsAnalytics> {
   const TRAITS_METADATA_URL =
@@ -150,9 +185,24 @@ export async function fetchTraitsAnalytics(): Promise<TraitsAnalytics> {
       }
     );
 
+    // Add merch category
+    const merchCategory: TraitCategory = {
+      name: "Merch",
+      traits: MERCH_ITEMS.map((item) => ({
+        trait_type: "merch",
+        value: item.name,
+        count: 0, // Merch items don't have rarity
+        rarity: 0,
+        image: item.image,
+      })),
+      totalNFTs,
+      isOptionalItem: true,
+    };
+
     return {
-      categories: categories
+      categories: [...categories, merchCategory]
         .filter((cat) => {
+          if (cat.name === "Merch") return true;
           if (OPTIONAL_ITEMS.has(cat.name.toLowerCase())) return true;
           return cat.traits.some((t) => t.value !== "No Item");
         })
