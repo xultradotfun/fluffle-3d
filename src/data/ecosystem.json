@@ -710,6 +710,15 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false
+    },
+    {
+      "name": "MegaETH Times",
+      "twitter": "hyeon__dev",
+      "website": "https://www.megaeth-times.com/",
+      "description": "Check out the latest news on MegaETH.",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false
     }
   ]
 }
