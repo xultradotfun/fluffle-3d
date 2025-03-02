@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { Footer } from "@/components/Footer";
 import { Analytics } from "@vercel/analytics/react";
 import { DiscordAuthProvider } from "@/contexts/DiscordAuthContext";
@@ -59,7 +58,6 @@ export default function RootLayout({
         <ThemeProvider>
           <DiscordAuthProvider>
             <div className="relative min-h-screen antialiased bg-background text-foreground">
-              <ThemeToggle />
               {children}
               <Footer />
             </div>
