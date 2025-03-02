@@ -7,7 +7,7 @@
 
 <div align="center">
   <a href="https://nextjs.org">
-    <img src="https://img.shields.io/badge/Next.js-13-black" alt="Next.js" />
+    <img src="https://img.shields.io/badge/Next.js-14-black" alt="Next.js" />
   </a>
   <a href="https://www.typescriptlang.org">
     <img src="https://img.shields.io/badge/TypeScript-5-blue" alt="TypeScript" />
@@ -29,6 +29,8 @@
 - **Modern UI/UX**: Clean, responsive interface with dark mode support
 - **Full Collection Support**: Compatible with all 5,000 Fluffle NFTs
 - **Performance Optimized**: Fast loading and smooth animations
+- **Discord Integration**: Secure authentication and role-based access
+- **Responsive Design**: Optimized for both desktop and mobile experiences
 
 ## 🚀 Quick Start
 
@@ -37,6 +39,7 @@
 - Node.js 18.x or later
 - npm 9.x or later
 - Git
+- Discord application credentials (for auth features)
 
 ### Installation
 
@@ -53,13 +56,23 @@ cd fluffle-3d
 npm install
 ```
 
-3. Start the development server:
+3. Set up environment variables:
+
+Create a `.env` file with the following:
+
+```env
+DISCORD_CLIENT_ID=your_discord_client_id
+DISCORD_CLIENT_SECRET=your_discord_client_secret
+DATABASE_URL=your_database_url
+```
+
+4. Start the development server:
 
 ```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ## 📝 Adding Projects to the Ecosystem
 
@@ -74,9 +87,16 @@ Projects in the MegaETH ecosystem can be added to the platform by modifying `src
   "telegram": "https://t.me/group-name", // optional
   "description": "A brief description of the project",
   "category": "Category",
-  "megaMafia": false // true if it's a MegaMafia project
+  "megaMafia": false, // true if it's a MegaMafia project
+  "native": true // true if it's native to MegaETH ecosystem
 }
 ```
+
+### Project Requirements
+
+1. **Project Information**: All fields should be accurate and up-to-date
+2. **Avatar Image**: Add a square project logo/avatar to `/public/avatars/[twitter_handle].jpg`
+3. **Native Status**: Set `native` to `true` if the project was built specifically for MegaETH
 
 ### Categories
 
@@ -87,18 +107,21 @@ Available categories:
 - `Infrastructure`: Core blockchain infrastructure
 - `Community`: Community tools and platforms
 - `Gaming`: Gaming and metaverse projects
+- `AI`: Artificial Intelligence and agent projects
+- `Meme`: Meme coins and related projects
 
 ### Example
 
 ```json
 {
-  "name": "MegaDex Labs",
-  "twitter": "megadex_labs",
-  "website": "https://megadex.app",
-  "discord": "https://discord.gg/megadex",
-  "description": "V3 concentrated liquidity and an AMM protocol ecosystem that hits different",
+  "name": "Euphoria",
+  "twitter": "Euphoria_fi",
+  "website": "https://euphoria.finance",
+  "telegram": "https://t.me/euphoria_fi",
+  "description": "A mobile-first derivatives trading platform",
   "category": "DeFi",
-  "megaMafia": false
+  "megaMafia": true,
+  "native": true
 }
 ```
 
@@ -123,30 +146,34 @@ Available categories:
 
 4. **Category**:
 
-   - Choose the most relevant category
+   - Choose the most relevant category from the list above
    - Use existing categories when possible
    - Contact maintainers if a new category is needed
 
-5. **MegaMafia Status**:
+5. **Status Fields**:
    - Set `megaMafia` to `true` only for official MegaMafia projects
-   - When in doubt, set to `false`
+   - Set `native` to `true` for projects built specifically for MegaETH
+   - When in doubt about either field, set to `false`
 
 ### Adding Your Project
 
 1. Fork the repository
 2. Add your project to `src/data/ecosystem.json`
-3. Maintain alphabetical order within the projects array
-4. Create a pull request with your changes
-5. Include any relevant social proof or verification
+3. Add your project logo to `/public/avatars/[twitter_handle].jpg`
+4. Maintain alphabetical order within the projects array
+5. Create a pull request with your changes
+6. Include any relevant social proof or verification
 
 ## 🛠 Technology Stack
 
-- **Framework**: [Next.js 13](https://nextjs.org/) with App Router
+- **Framework**: [Next.js 14](https://nextjs.org/) with App Router
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **3D Graphics**:
   - [Three.js](https://threejs.org/)
   - [@pixiv/three-vrm](https://github.com/pixiv/three-vrm)
+- **Authentication**: Discord OAuth2
+- **Database**: Prisma with PostgreSQL
 - **State Management**: React Hooks
 - **Deployment**: [Vercel](https://vercel.com)
 
@@ -156,13 +183,18 @@ Available categories:
 fluffle-3d/
 ├── src/
 │   ├── app/             # Next.js app router pages
+│   │   ├── api/         # API routes including Discord auth
+│   │   └── (routes)/    # Application routes
 │   ├── components/      # React components
 │   │   ├── analytics/   # Analytics components
 │   │   ├── metaverse/   # 3D viewer components
 │   │   ├── pfp/         # PFP generator components
 │   │   └── ui/          # Shared UI components
+│   ├── lib/             # Shared libraries and utilities
+│   │   └── prisma.ts    # Database client
 │   ├── utils/           # Utility functions
 │   └── styles/          # Global styles
+├── prisma/              # Database schema and migrations
 ├── public/              # Static assets
 └── types/               # TypeScript type definitions
 ```
@@ -173,7 +205,11 @@ This project is optimized for deployment on Vercel:
 
 1. Push your code to a Git repository
 2. Import your repository on [Vercel](https://vercel.com/new)
-3. Vercel will automatically detect Next.js and deploy
+3. Set up the required environment variables:
+   - `DISCORD_CLIENT_ID`
+   - `DISCORD_CLIENT_SECRET`
+   - `DATABASE_URL`
+4. Vercel will automatically detect Next.js and deploy
 
 ## 🤝 Contributing
 
