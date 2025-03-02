@@ -34,21 +34,22 @@ export async function GET() {
       id: user.id,
       username: user.username,
       guildCount: user.guildIds?.length || 0,
+      roles: user.roles?.length || 0,
     });
 
     // Verify the data format
-    if (!user.id || !user.username || !Array.isArray(user.guildIds)) {
+    if (
+      !user.id ||
+      !user.username ||
+      !Array.isArray(user.guildIds) ||
+      !Array.isArray(user.roles)
+    ) {
       throw new Error("Invalid user data format");
     }
 
-    // Get user data from database
-    const dbUser = await prisma.discordUser.findUnique({
-      where: { id: user.id },
-    });
-
     // Check if user is in the required server and has the required role
     const isServerMember = user.guildIds.includes(REQUIRED_SERVER_ID);
-    const hasRequiredRole = dbUser?.roles.includes(REQUIRED_ROLE_ID) ?? false;
+    const hasRequiredRole = user.roles.includes(REQUIRED_ROLE_ID);
     const canVote = isServerMember && hasRequiredRole;
 
     console.log("Authorization check:", {
@@ -57,13 +58,12 @@ export async function GET() {
       canVote,
       requiredServer: REQUIRED_SERVER_ID,
       requiredRole: REQUIRED_ROLE_ID,
-      storedRoles: dbUser?.roles,
+      storedRoles: user.roles,
     });
 
     return NextResponse.json({
       ...user,
       canVote,
-      roles: dbUser?.roles ?? [],
     });
   } catch (error) {
     console.error("Error processing user data:", error);

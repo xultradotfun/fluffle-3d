@@ -90,6 +90,13 @@ export async function GET(request: Request) {
       (guild: any) => guild.id === REQUIRED_SERVER_ID
     );
     let hasRequiredRole = false;
+    let minimalUserData = {
+      id: userData.id,
+      username: userData.username,
+      guildIds: guildsData.map((g: any) => g.id),
+      hasRequiredRole: false,
+      roles: [],
+    };
 
     if (isInServer) {
       // Get member data for the required server
@@ -125,32 +132,40 @@ export async function GET(request: Request) {
             lastUpdated: new Date(),
           },
         });
+
+        // Store the roles for the minimal user data
+        minimalUserData = {
+          id: userData.id,
+          username: userData.username,
+          guildIds: guildsData.map((g: any) => g.id),
+          hasRequiredRole,
+          roles: memberData.roles,
+        };
       } else {
         console.error(
           "Failed to fetch member data:",
           await memberResponse.text()
         );
+        minimalUserData = {
+          id: userData.id,
+          username: userData.username,
+          guildIds: guildsData.map((g: any) => g.id),
+          hasRequiredRole: false,
+          roles: [],
+        };
       }
     }
 
     // Create the response first
     const response = NextResponse.redirect(new URL("/#ecosystem", request.url));
 
-    // Store minimal user data
-    const minimalUserData = {
-      id: userData.id,
-      username: userData.username,
-      guildIds: guildsData.map((g: any) => g.id),
-      hasRequiredRole,
-    };
-
     // Set cookies with minimal data
     response.cookies.set({
       name: "discord_access_token",
       value: tokenData.access_token,
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: true,
+      sameSite: "strict",
       maxAge: 60 * 60 * 24 * 7,
       path: "/",
     });
@@ -159,8 +174,8 @@ export async function GET(request: Request) {
       name: "discord_user",
       value: JSON.stringify(minimalUserData),
       httpOnly: true,
-      secure: false,
-      sameSite: "lax",
+      secure: true,
+      sameSite: "strict",
       maxAge: 60 * 60 * 24 * 7,
       path: "/",
     });
