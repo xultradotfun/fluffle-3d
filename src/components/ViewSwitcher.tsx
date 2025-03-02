@@ -1,152 +1,158 @@
+import { cn } from "@/lib/utils";
+import * as Popover from "@radix-ui/react-popover";
+import { useState } from "react";
+import {
+  Flower2,
+  Rabbit,
+  ChevronDown,
+  Box,
+  BarChart3,
+  Image,
+  Globe,
+  X,
+  FlaskConical,
+} from "lucide-react";
+
 interface ViewSwitcherProps {
-  activeView: "viewer" | "analytics" | "pfp" | "metaverse" | "ecosystem";
+  activeView:
+    | "viewer"
+    | "analytics"
+    | "pfp"
+    | "metaverse"
+    | "ecosystem"
+    | "testnet";
   onViewChange: (
-    view: "viewer" | "analytics" | "pfp" | "metaverse" | "ecosystem"
+    view: "viewer" | "analytics" | "pfp" | "metaverse" | "ecosystem" | "testnet"
   ) => void;
 }
 
 export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <>
       {/* Desktop View */}
       <div className="hidden sm:block fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
-        <div className="flex items-center gap-2 p-1.5 bg-white dark:bg-gray-900/80 rounded-xl border border-gray-200 dark:border-white/10 shadow-lg backdrop-blur-sm max-w-[calc(100vw-2rem)] mx-auto">
+        <div className="flex items-center gap-3 p-2 bg-white/60 dark:bg-gray-900/50 rounded-2xl border border-gray-200/20 dark:border-white/[0.08] shadow-lg backdrop-blur-lg max-w-[calc(100vw-2rem)] mx-auto">
           {/* Ecosystem Section */}
           <button
             onClick={() => onViewChange("ecosystem")}
-            className={`flex items-center justify-start gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+            className={`flex items-center justify-start gap-2.5 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
               activeView === "ecosystem"
-                ? "bg-gradient-to-r from-orange-50 to-amber-50 text-orange-600 border border-orange-200 dark:from-orange-500/20 dark:to-orange-500/10 dark:text-orange-400 dark:border-orange-500/20"
-                : "text-gray-500 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-white/5"
+                ? "bg-gradient-to-r from-orange-50/90 to-amber-50/90 text-orange-600 border border-orange-200/30 shadow-sm dark:from-orange-500/20 dark:to-orange-500/10 dark:text-orange-400 dark:border-orange-500/20"
+                : "text-gray-600 hover:text-gray-900 hover:bg-white/50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-white/[0.08]"
             }`}
           >
-            <svg
-              className="w-4 h-4 flex-shrink-0"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"
-              />
-            </svg>
+            <Flower2 className="w-4 h-4 flex-shrink-0" />
             <span className="flex-shrink-0">Ecosystem</span>
           </button>
 
-          {/* Divider */}
-          <div className="w-px h-8 bg-gray-200 dark:bg-white/10" />
+          {/* Testnet Section */}
+          <button
+            onClick={() => onViewChange("testnet")}
+            className={`flex items-center justify-start gap-2.5 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+              activeView === "testnet"
+                ? "bg-gradient-to-r from-violet-50 to-purple-50 text-violet-600 border border-violet-200/50 shadow-sm dark:from-violet-500/20 dark:to-violet-500/10 dark:text-violet-400 dark:border-violet-500/20"
+                : "text-gray-600 hover:text-gray-900 hover:bg-white/50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-white/[0.08]"
+            }`}
+          >
+            <FlaskConical className="w-4 h-4 flex-shrink-0" />
+            <span className="flex-shrink-0">Testnet</span>
+          </button>
 
-          {/* Other Sections Group */}
-          <div className="flex items-center gap-2">
+          {/* Divider */}
+          <div className="w-px h-8 bg-gray-200/70 dark:bg-white/[0.06] mx-1" />
+
+          {/* Fluffles Dropdown */}
+          <div className="group relative">
             <button
-              onClick={() => onViewChange("viewer")}
-              className={`flex items-center justify-start gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                activeView === "viewer"
-                  ? "bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-600 border border-blue-200 dark:from-blue-500/20 dark:to-blue-500/10 dark:text-blue-400 dark:border-blue-500/20"
-                  : "text-gray-500 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-white/5"
+              className={`flex items-center justify-start gap-2.5 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+                ["viewer", "analytics", "pfp", "metaverse"].includes(activeView)
+                  ? "bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-600 border border-blue-200/50 shadow-sm dark:from-blue-500/20 dark:to-blue-500/10 dark:text-blue-400 dark:border-blue-500/20"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-white/50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-white/[0.08]"
               }`}
             >
-              <svg
-                className="w-4 h-4 flex-shrink-0"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-                />
-              </svg>
-              <span className="flex-shrink-0">3D Viewer</span>
+              <Rabbit className="w-4 h-4 flex-shrink-0" />
+              <span className="flex-shrink-0">Fluffle Tools</span>
+              <ChevronDown className="w-4 h-4 ml-1 transition-transform duration-300 ease-in-out group-hover:rotate-180" />
             </button>
-            <button
-              onClick={() => onViewChange("analytics")}
-              className={`flex items-center justify-start gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                activeView === "analytics"
-                  ? "bg-gradient-to-r from-purple-50 to-indigo-50 text-purple-600 border border-purple-200 dark:from-purple-500/20 dark:to-purple-500/10 dark:text-purple-400 dark:border-purple-500/20"
-                  : "text-gray-500 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-white/5"
-              }`}
-            >
-              <svg
-                className="w-4 h-4 flex-shrink-0"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
-              <span className="flex-shrink-0">Rarities</span>
-            </button>
-            <button
-              onClick={() => onViewChange("pfp")}
-              className={`flex items-center justify-start gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                activeView === "pfp"
-                  ? "bg-gradient-to-r from-green-50 to-emerald-50 text-green-600 border border-green-200 dark:from-green-500/20 dark:to-green-500/10 dark:text-green-400 dark:border-green-500/20"
-                  : "text-gray-500 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-white/5"
-              }`}
-            >
-              <svg
-                className="w-4 h-4 flex-shrink-0"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
-              <span className="flex-shrink-0">PFP Generator</span>
-            </button>
-            <button
-              onClick={() => onViewChange("metaverse")}
-              className={`flex items-center justify-start gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
-                activeView === "metaverse"
-                  ? "bg-gradient-to-r from-pink-50 to-rose-50 text-pink-600 border border-pink-200 dark:from-pink-500/20 dark:to-pink-500/10 dark:text-pink-400 dark:border-pink-500/20"
-                  : "text-gray-500 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-400 dark:hover:text-white dark:hover:bg-white/5"
-              }`}
-            >
-              <svg
-                className="w-4 h-4 flex-shrink-0"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                />
-              </svg>
-              <span className="flex-shrink-0">Metaverse</span>
-            </button>
+
+            {/* Dropdown Menu */}
+            <div className="absolute invisible opacity-0 translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 ease-out z-50 w-60 p-2 bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl rounded-xl shadow-lg border border-gray-200/30 dark:border-white/[0.12] bottom-full left-1/2 -translate-x-1/2 mb-2">
+              <div className="relative space-y-1">
+                <button
+                  onClick={() => onViewChange("viewer")}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    activeView === "viewer"
+                      ? "bg-gradient-to-r from-blue-50/90 to-indigo-50/90 text-blue-600 shadow-sm dark:from-blue-500/20 dark:to-blue-500/10 dark:text-blue-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <Box className="w-4 h-4 flex-shrink-0" />
+                  <span className="flex-1 text-left">3D Viewer</span>
+                  {activeView === "viewer" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500 dark:bg-blue-400" />
+                  )}
+                </button>
+                <button
+                  onClick={() => onViewChange("analytics")}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    activeView === "analytics"
+                      ? "bg-gradient-to-r from-purple-50 to-indigo-50 text-purple-600 shadow-sm dark:from-purple-500/20 dark:to-purple-500/10 dark:text-purple-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <BarChart3 className="w-4 h-4 flex-shrink-0" />
+                  <span className="flex-1 text-left">Rarities</span>
+                  {activeView === "analytics" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-purple-500 dark:bg-purple-400" />
+                  )}
+                </button>
+                <button
+                  onClick={() => onViewChange("pfp")}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    activeView === "pfp"
+                      ? "bg-gradient-to-r from-green-50 to-emerald-50 text-green-600 shadow-sm dark:from-green-500/20 dark:to-green-500/10 dark:text-green-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <Image className="w-4 h-4 flex-shrink-0" />
+                  <span className="flex-1 text-left">PFP Generator</span>
+                  {activeView === "pfp" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 dark:bg-green-400" />
+                  )}
+                </button>
+                <button
+                  onClick={() => onViewChange("metaverse")}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    activeView === "metaverse"
+                      ? "bg-gradient-to-r from-pink-50 to-rose-50 text-pink-600 shadow-sm dark:from-pink-500/20 dark:to-pink-500/10 dark:text-pink-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <Globe className="w-4 h-4 flex-shrink-0" />
+                  <span className="flex-1 text-left">Metaverse</span>
+                  {activeView === "metaverse" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-pink-500 dark:bg-pink-400" />
+                  )}
+                </button>
+              </div>
+              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rotate-45 bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl border-b border-r border-gray-200/30 dark:border-white/[0.12]" />
+            </div>
           </div>
         </div>
       </div>
 
       {/* Mobile Bottom Navigation */}
-      <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/80 dark:bg-gray-900/80 border-t border-gray-200 dark:border-white/10 pb-safe backdrop-blur-lg">
+      <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/60 dark:bg-gray-900/50 border-t border-gray-200/20 dark:border-white/[0.08] pb-safe backdrop-blur-lg">
         <div className="flex items-center justify-around px-2 py-3">
           {/* Ecosystem */}
           <button
             onClick={() => onViewChange("ecosystem")}
-            className={`flex flex-col items-center gap-1.5 p-2 rounded-xl transition-all ${
+            className={`flex flex-col items-center gap-1.5 p-2 rounded-xl transition-all duration-200 ${
               activeView === "ecosystem"
                 ? "bg-gradient-to-r from-orange-50 to-amber-50 dark:from-orange-500/20 dark:to-orange-500/10 text-orange-600 dark:text-orange-400 shadow-sm"
-                : "text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5"
+                : "text-gray-600 dark:text-gray-300 hover:bg-white/50 dark:hover:bg-white/[0.08]"
             }`}
           >
             <div
@@ -154,142 +160,155 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                 activeView === "ecosystem" ? "scale-110" : ""
               }`}
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
+              <Flower2 className="w-5 h-5" />
             </div>
             <span className="text-xs font-medium">Ecosystem</span>
           </button>
 
-          {/* Other Sections */}
+          {/* Testnet */}
           <button
-            onClick={() => onViewChange("viewer")}
-            className={`flex flex-col items-center gap-1.5 p-2 rounded-xl transition-all ${
-              activeView === "viewer"
+            onClick={() => onViewChange("testnet")}
+            className={`flex flex-col items-center gap-1.5 p-2 rounded-xl transition-all duration-200 ${
+              activeView === "testnet"
+                ? "bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-500/20 dark:to-violet-500/10 text-violet-600 dark:text-violet-400 shadow-sm"
+                : "text-gray-600 dark:text-gray-300 hover:bg-white/50 dark:hover:bg-white/[0.08]"
+            }`}
+          >
+            <div
+              className={`relative transition-transform duration-200 ${
+                activeView === "testnet" ? "scale-110" : ""
+              }`}
+            >
+              <FlaskConical className="w-5 h-5" />
+            </div>
+            <span className="text-xs font-medium">Testnet</span>
+          </button>
+
+          {/* Fluffles Button (Mobile) */}
+          <button
+            onClick={() => setIsMobileMenuOpen(true)}
+            className={`flex flex-col items-center gap-1.5 p-2 rounded-xl transition-all duration-200 ${
+              ["viewer", "analytics", "pfp", "metaverse"].includes(activeView)
                 ? "bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-500/20 dark:to-blue-500/10 text-blue-600 dark:text-blue-400 shadow-sm"
-                : "text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5"
+                : "text-gray-600 dark:text-gray-300 hover:bg-white/50 dark:hover:bg-white/[0.08]"
             }`}
           >
-            <div
-              className={`relative transition-transform duration-200 ${
-                activeView === "viewer" ? "scale-110" : ""
-              }`}
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+            <div className="relative">
+              <div
+                className={`transition-transform duration-200 ${
+                  ["viewer", "analytics", "pfp", "metaverse"].includes(
+                    activeView
+                  )
+                    ? "scale-110"
+                    : ""
+                }`}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-                />
-              </svg>
+                <Rabbit className="w-5 h-5" />
+              </div>
+              <ChevronDown className="w-3 h-3 absolute -bottom-1 -right-1 bg-white dark:bg-gray-900 rounded-full shadow-sm" />
             </div>
-            <span className="text-xs font-medium">3D Viewer</span>
-          </button>
-          <button
-            onClick={() => onViewChange("analytics")}
-            className={`flex flex-col items-center gap-1.5 p-2 rounded-xl transition-all ${
-              activeView === "analytics"
-                ? "bg-gradient-to-r from-purple-50 to-indigo-50 dark:from-purple-500/20 dark:to-purple-500/10 text-purple-600 dark:text-purple-400 shadow-sm"
-                : "text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5"
-            }`}
-          >
-            <div
-              className={`relative transition-transform duration-200 ${
-                activeView === "analytics" ? "scale-110" : ""
-              }`}
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
-            </div>
-            <span className="text-xs font-medium">Rarities</span>
-          </button>
-          <button
-            onClick={() => onViewChange("pfp")}
-            className={`flex flex-col items-center gap-1.5 p-2 rounded-xl transition-all ${
-              activeView === "pfp"
-                ? "bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-500/20 dark:to-green-500/10 text-green-600 dark:text-green-400 shadow-sm"
-                : "text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5"
-            }`}
-          >
-            <div
-              className={`relative transition-transform duration-200 ${
-                activeView === "pfp" ? "scale-110" : ""
-              }`}
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
-            </div>
-            <span className="text-xs font-medium">PFP</span>
-          </button>
-          <button
-            onClick={() => onViewChange("metaverse")}
-            className={`flex flex-col items-center gap-1.5 p-2 rounded-xl transition-all ${
-              activeView === "metaverse"
-                ? "bg-gradient-to-r from-pink-50 to-rose-50 dark:from-pink-500/20 dark:to-pink-500/10 text-pink-600 dark:text-pink-400 shadow-sm"
-                : "text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5"
-            }`}
-          >
-            <div
-              className={`relative transition-transform duration-200 ${
-                activeView === "metaverse" ? "scale-110" : ""
-              }`}
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                />
-              </svg>
-            </div>
-            <span className="text-xs font-medium">Metaverse</span>
+            <span className="text-xs font-medium mt-0.5">Fluffle Tools</span>
           </button>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {isMobileMenuOpen && (
+        <div className="sm:hidden fixed inset-0 z-50 bg-black/10 dark:bg-black/20 backdrop-blur-sm">
+          <div
+            className="absolute inset-x-0 bottom-0 bg-white/90 dark:bg-gray-900/90 rounded-t-2xl shadow-lg backdrop-blur-2xl"
+            style={{ maxHeight: "calc(100vh - 4rem)" }}
+          >
+            <div className="flex items-center justify-between px-4 py-3.5 border-b border-gray-200/30 dark:border-white/[0.12]">
+              <div className="flex items-center gap-2.5">
+                <Rabbit className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                <span className="text-sm font-medium">Fluffle Tools</span>
+              </div>
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="p-2 -mr-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div
+              className="p-2 overflow-y-auto"
+              style={{ maxHeight: "calc(100vh - 8rem)" }}
+            >
+              <div className="space-y-1">
+                <button
+                  onClick={() => {
+                    onViewChange("viewer");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    activeView === "viewer"
+                      ? "bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-600 shadow-sm dark:from-blue-500/20 dark:to-blue-500/10 dark:text-blue-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <Box className="w-5 h-5 flex-shrink-0" />
+                  <span className="flex-1 text-left">3D Viewer</span>
+                  {activeView === "viewer" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-blue-500 dark:bg-blue-400" />
+                  )}
+                </button>
+                <button
+                  onClick={() => {
+                    onViewChange("analytics");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    activeView === "analytics"
+                      ? "bg-gradient-to-r from-purple-50 to-indigo-50 text-purple-600 shadow-sm dark:from-purple-500/20 dark:to-purple-500/10 dark:text-purple-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <BarChart3 className="w-5 h-5 flex-shrink-0" />
+                  <span className="flex-1 text-left">Rarities</span>
+                  {activeView === "analytics" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-purple-500 dark:bg-purple-400" />
+                  )}
+                </button>
+                <button
+                  onClick={() => {
+                    onViewChange("pfp");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    activeView === "pfp"
+                      ? "bg-gradient-to-r from-green-50 to-emerald-50 text-green-600 shadow-sm dark:from-green-500/20 dark:to-green-500/10 dark:text-green-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <Image className="w-5 h-5 flex-shrink-0" />
+                  <span className="flex-1 text-left">PFP Generator</span>
+                  {activeView === "pfp" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 dark:bg-green-400" />
+                  )}
+                </button>
+                <button
+                  onClick={() => {
+                    onViewChange("metaverse");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    activeView === "metaverse"
+                      ? "bg-gradient-to-r from-pink-50 to-rose-50 text-pink-600 shadow-sm dark:from-pink-500/20 dark:to-pink-500/10 dark:text-pink-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <Globe className="w-5 h-5 flex-shrink-0" />
+                  <span className="flex-1 text-left">Metaverse</span>
+                  {activeView === "metaverse" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-pink-500 dark:bg-pink-400" />
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
