@@ -95,7 +95,7 @@ export default function Hero() {
       {/* Placeholder to prevent content overlap */}
       <div
         className={`w-full sm:transition-all sm:duration-300 sm:ease-in-out ${
-          isScrolled ? "h-[48px]" : "h-[180px]"
+          isScrolled ? "h-[48px]" : "h-[220px] sm:h-[180px]"
         }`}
       />
 
@@ -310,7 +310,7 @@ export default function Hero() {
 
             {/* Decorative Divider - Only show when not scrolled */}
             {!isScrolled && (
-              <div className="w-full max-w-4xl mx-auto mt-4">
+              <div className="w-full max-w-4xl mx-auto mt-4 mb-2 sm:mb-0">
                 <div className="h-px bg-gradient-to-r from-transparent via-gray-200/80 dark:via-white/10 to-transparent" />
               </div>
             )}
