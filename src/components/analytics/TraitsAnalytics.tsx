@@ -88,7 +88,19 @@ export function TraitsAnalyticsDashboard() {
   return (
     <div className="space-y-8 animate-fade-in">
       {/* Header */}
-      <h2 className="text-2xl font-bold text-foreground">Trait Analytics</h2>
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10 border border-border dark:border-white/10 p-6 sm:p-8">
+        <div className="relative z-10">
+          <h2 className="text-3xl font-bold bg-gradient-to-br from-blue-500 to-purple-500 bg-clip-text text-transparent">
+            Rarity Analytics
+          </h2>
+          <p className="mt-2 text-muted-foreground max-w-2xl">
+            Explore trait distributions, rarity scores, and unique combinations
+            across the entire MegaETH collection. Discover what makes each NFT
+            special.
+          </p>
+        </div>
+        <div className="absolute inset-0 bg-grid-white/10 [mask-image:linear-gradient(0deg,transparent,black)] dark:[mask-image:linear-gradient(0deg,transparent,white)]" />
+      </div>
 
       {/* Stats Grid */}
       <StatsCards analytics={analytics} totalTraits={getTotalTraits()} />

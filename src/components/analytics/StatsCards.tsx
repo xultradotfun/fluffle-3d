@@ -8,21 +8,21 @@ interface StatsCardsProps {
 
 export function StatsCards({ analytics, totalTraits }: StatsCardsProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4">
       <Card className="bg-card dark:bg-gradient-to-br dark:from-blue-500/10 dark:to-purple-500/10 border border-border dark:border-white/10">
-        <CardContent className="p-6">
+        <CardContent className="p-3 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-muted-foreground">
+              <p className="text-xs sm:text-sm font-medium text-muted-foreground">
                 Total NFTs
               </p>
-              <p className="text-2xl font-bold text-foreground mt-1">
+              <p className="text-lg sm:text-2xl font-bold text-foreground mt-0.5 sm:mt-1">
                 {analytics.totalNFTs.toLocaleString()}
               </p>
             </div>
-            <div className="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-50 dark:bg-blue-500/10 flex items-center justify-center">
               <svg
-                className="w-5 h-5 text-blue-600 dark:text-blue-400"
+                className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -40,19 +40,19 @@ export function StatsCards({ analytics, totalTraits }: StatsCardsProps) {
       </Card>
 
       <Card className="bg-card dark:bg-gradient-to-br dark:from-purple-500/10 dark:to-pink-500/10 border border-border dark:border-white/10">
-        <CardContent className="p-6">
+        <CardContent className="p-3 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-muted-foreground">
+              <p className="text-xs sm:text-sm font-medium text-muted-foreground">
                 Categories
               </p>
-              <p className="text-2xl font-bold text-foreground mt-1">
+              <p className="text-lg sm:text-2xl font-bold text-foreground mt-0.5 sm:mt-1">
                 {analytics.categories.length}
               </p>
             </div>
-            <div className="w-10 h-10 rounded-full bg-purple-50 dark:bg-purple-500/10 flex items-center justify-center">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-purple-50 dark:bg-purple-500/10 flex items-center justify-center">
               <svg
-                className="w-5 h-5 text-purple-600 dark:text-purple-400"
+                className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600 dark:text-purple-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -70,19 +70,19 @@ export function StatsCards({ analytics, totalTraits }: StatsCardsProps) {
       </Card>
 
       <Card className="bg-card dark:bg-gradient-to-br dark:from-green-500/10 dark:to-blue-500/10 border border-border dark:border-white/10">
-        <CardContent className="p-6">
+        <CardContent className="p-3 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-muted-foreground">
+              <p className="text-xs sm:text-sm font-medium text-muted-foreground">
                 Total Traits
               </p>
-              <p className="text-2xl font-bold text-foreground mt-1">
+              <p className="text-lg sm:text-2xl font-bold text-foreground mt-0.5 sm:mt-1">
                 {totalTraits}
               </p>
             </div>
-            <div className="w-10 h-10 rounded-full bg-green-50 dark:bg-green-500/10 flex items-center justify-center">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-green-50 dark:bg-green-500/10 flex items-center justify-center">
               <svg
-                className="w-5 h-5 text-green-600 dark:text-green-400"
+                className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 dark:text-green-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -100,25 +100,25 @@ export function StatsCards({ analytics, totalTraits }: StatsCardsProps) {
       </Card>
 
       <Card className="bg-card dark:bg-gradient-to-br dark:from-yellow-500/10 dark:to-orange-500/10 border border-border dark:border-white/10">
-        <CardContent className="p-6">
+        <CardContent className="p-3 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-sm font-medium text-muted-foreground">
+              <p className="text-xs sm:text-sm font-medium text-muted-foreground">
                 Optional Items
               </p>
-              <p className="text-2xl font-bold text-foreground mt-1">
+              <p className="text-lg sm:text-2xl font-bold text-foreground mt-0.5 sm:mt-1">
                 {
                   analytics.categories.filter((cat) => cat.isOptionalItem)
                     .length
                 }
               </p>
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-[10px] sm:text-xs text-muted-foreground mt-0.5 sm:mt-1 hidden sm:block">
                 Ear, Face, Head
               </p>
             </div>
-            <div className="w-10 h-10 rounded-full bg-yellow-50 dark:bg-yellow-500/10 flex items-center justify-center">
+            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-yellow-50 dark:bg-yellow-500/10 flex items-center justify-center">
               <svg
-                className="w-5 h-5 text-yellow-600 dark:text-yellow-400"
+                className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-600 dark:text-yellow-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"

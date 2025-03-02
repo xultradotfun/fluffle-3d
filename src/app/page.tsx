@@ -134,7 +134,7 @@ export default function Home() {
 
       {/* Form Section - Only show in viewer mode */}
       {activeView === "viewer" && (
-        <section className="relative z-10">
+        <section className="relative z-10 pt-12 sm:pt-20">
           <div className="mx-auto max-w-xl px-4 sm:px-6 lg:px-8">
             <div className="overflow-hidden rounded-xl bg-card shadow-lg ring-1 ring-border backdrop-blur-lg transition-all hover:bg-card/80">
               <div className="p-4">
@@ -155,7 +155,7 @@ export default function Home() {
       )}
 
       {/* Content Section */}
-      <section className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 py-6 sm:py-12 pb-24 flex-grow">
+      <section className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 py-6 sm:py-12 pb-24 pt-12 sm:pt-20 flex-grow">
         {activeView === "viewer" ? (
           viewers.length > 0 ? (
             <>
