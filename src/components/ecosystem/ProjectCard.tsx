@@ -99,6 +99,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Cache-Control": "no-cache, no-store, must-revalidate",
+          Pragma: "no-cache",
+          Expires: "0",
         },
         body: JSON.stringify({
           twitter: project.twitter,
@@ -118,7 +121,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         throw new Error(data.error || "Failed to vote");
       }
 
-      // Only update state after successful API response
+      // Update state with the response data
       setVotes({
         upvotes: data.upvotes,
         downvotes: data.downvotes,
@@ -132,27 +135,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
         project.votes.userVote = data.userVote;
         project.votes.breakdown = data.breakdown;
       }
-
-      // Refresh all votes to ensure consistency
-      fetch("/api/votes")
-        .then((res) => res.json())
-        .then((votesData) => {
-          const projectVotes = votesData.projects.find(
-            (p: any) => p.twitter === project.twitter
-          );
-          if (projectVotes?.votes) {
-            setVotes({
-              upvotes: projectVotes.votes.upvotes,
-              downvotes: projectVotes.votes.downvotes,
-              breakdown: projectVotes.votes.breakdown,
-            });
-            setUserVote(projectVotes.votes.userVote);
-            if (project.votes) {
-              project.votes.breakdown = projectVotes.votes.breakdown;
-            }
-          }
-        })
-        .catch(console.error);
     } catch (error) {
       console.error("Failed to vote:", error);
       if (error instanceof Error) {
