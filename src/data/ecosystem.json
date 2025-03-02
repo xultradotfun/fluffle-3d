@@ -718,7 +718,7 @@
       "description": "Check out the latest news on MegaETH.",
       "category": "Infrastructure",
       "megaMafia": false,
-      "native": false
+      "native": true
     }
   ]
 }
