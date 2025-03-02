@@ -55,26 +55,24 @@ export function EcosystemHeader() {
             </span>
           </p>
 
-          {stats && (
-            <div className="flex items-center justify-center gap-8 mt-8">
-              <div className="text-center">
-                <div className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-indigo-500 dark:from-pink-400 dark:to-indigo-400 bg-clip-text text-transparent">
-                  {stats.totalVotes.toLocaleString()}
-                </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                  Total Votes
-                </div>
+          <div className="flex items-center justify-center gap-8 mt-8">
+            <div className="text-center">
+              <div className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-indigo-500 dark:from-pink-400 dark:to-indigo-400 bg-clip-text text-transparent">
+                {stats ? stats.totalVotes.toLocaleString() : "-"}
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-indigo-500 dark:from-pink-400 dark:to-indigo-400 bg-clip-text text-transparent">
-                  {stats.uniqueVoters.toLocaleString()}
-                </div>
-                <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                  Unique Voters
-                </div>
+              <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                Total Votes
               </div>
             </div>
-          )}
+            <div className="text-center">
+              <div className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-indigo-500 dark:from-pink-400 dark:to-indigo-400 bg-clip-text text-transparent">
+                {stats ? stats.uniqueVoters.toLocaleString() : "-"}
+              </div>
+              <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
+                Unique Voters
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Voting Explainer */}

@@ -30,22 +30,54 @@ interface ProjectData {
   votes: VoteData[];
 }
 
-// Rate limiting map: userId -> { timestamp: number, count: number }
-const rateLimits = new Map<string, { timestamp: number; count: number }>();
+// Constants for rate limiting
+const RATE_LIMIT = {
+  USER: {
+    MAX_VOTES: 15,
+    WINDOW_MS: 300000, // 5 minutes
+  },
+  IP: {
+    MAX_REQUESTS: 100,
+    WINDOW_MS: 300000, // 5 minutes
+  },
+  CLEANUP_INTERVAL_MS: 3600000, // 1 hour
+};
 
-// Clear old rate limit entries every hour
+// Rate limiting maps with expiry timestamps
+const userRateLimits = new Map<string, { count: number; expiresAt: number }>();
+const ipRateLimits = new Map<string, { count: number; expiresAt: number }>();
+
+// Clear expired rate limit entries
 setInterval(() => {
   const now = Date.now();
-  for (const [userId, data] of rateLimits.entries()) {
-    if (now - data.timestamp > 3600000) {
-      // 1 hour
-      rateLimits.delete(userId);
+  for (const [key, data] of userRateLimits.entries()) {
+    if (now >= data.expiresAt) {
+      userRateLimits.delete(key);
     }
   }
-}, 3600000);
+  for (const [key, data] of ipRateLimits.entries()) {
+    if (now >= data.expiresAt) {
+      ipRateLimits.delete(key);
+    }
+  }
+}, RATE_LIMIT.CLEANUP_INTERVAL_MS);
 
 function isValidVoteType(vote: string): vote is VoteType {
   return VOTE_TYPES.includes(vote as VoteType);
+}
+
+// Add Discord API verification
+async function verifyDiscordToken(accessToken: string): Promise<boolean> {
+  try {
+    const response = await fetch("https://discord.com/api/v10/users/@me", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    return response.ok;
+  } catch (error) {
+    return false;
+  }
 }
 
 async function verifyUserAuth(cookieStore: ReturnType<typeof cookies>) {
@@ -57,6 +89,12 @@ async function verifyUserAuth(cookieStore: ReturnType<typeof cookies>) {
   }
 
   try {
+    // Verify the access token is valid with Discord
+    const isValidToken = await verifyDiscordToken(accessToken.value);
+    if (!isValidToken) {
+      throw new Error("Invalid Discord token");
+    }
+
     const user = JSON.parse(userData.value);
 
     // Verify the user data format
@@ -71,29 +109,40 @@ async function verifyUserAuth(cookieStore: ReturnType<typeof cookies>) {
       );
     }
 
+    // Verify the user exists in our database and has the claimed ID
+    const dbUser = await prisma.discordUser.findUnique({
+      where: { id: user.id },
+      select: { id: true, username: true },
+    });
+
+    if (!dbUser) {
+      throw new Error("User not found in database");
+    }
+
+    // Verify the username matches to prevent ID spoofing
+    if (dbUser.username !== user.username) {
+      throw new Error("User data mismatch");
+    }
+
     return user;
   } catch (error) {
     throw new Error("Invalid user data");
   }
 }
 
-function checkRateLimit(userId: string): boolean {
+function checkUserRateLimit(userId: string): boolean {
   const now = Date.now();
-  const userLimit = rateLimits.get(userId);
+  const userLimit = userRateLimits.get(userId);
 
-  if (!userLimit) {
-    rateLimits.set(userId, { timestamp: now, count: 1 });
+  if (!userLimit || now >= userLimit.expiresAt) {
+    userRateLimits.set(userId, {
+      count: 1,
+      expiresAt: now + RATE_LIMIT.USER.WINDOW_MS,
+    });
     return true;
   }
 
-  // Reset count if more than 5 minutes have passed
-  if (now - userLimit.timestamp > 300000) {
-    rateLimits.set(userId, { timestamp: now, count: 1 });
-    return true;
-  }
-
-  // Allow max 15 votes per 5 minutes
-  if (userLimit.count >= 15) {
+  if (userLimit.count >= RATE_LIMIT.USER.MAX_VOTES) {
     return false;
   }
 
@@ -101,18 +150,82 @@ function checkRateLimit(userId: string): boolean {
   return true;
 }
 
+function checkIpRateLimit(ip: string): boolean {
+  const now = Date.now();
+  const ipLimit = ipRateLimits.get(ip);
+
+  if (!ipLimit || now >= ipLimit.expiresAt) {
+    ipRateLimits.set(ip, {
+      count: 1,
+      expiresAt: now + RATE_LIMIT.IP.WINDOW_MS,
+    });
+    return true;
+  }
+
+  if (ipLimit.count >= RATE_LIMIT.IP.MAX_REQUESTS) {
+    return false;
+  }
+
+  ipLimit.count++;
+  return true;
+}
+
+// Add input validation utilities
+function sanitizeTwitterHandle(handle: string): string {
+  return handle.trim().replace(/[^a-zA-Z0-9_]/g, "");
+}
+
+function validateVoteRequest(body: any): body is VoteRequest {
+  if (!body || typeof body !== "object") return false;
+
+  const { twitter, vote, userId } = body;
+
+  if (typeof twitter !== "string" || !twitter.trim()) return false;
+  if (typeof userId !== "string" || !userId.trim()) return false;
+  if (!isValidVoteType(vote)) return false;
+
+  // Additional validation rules
+  if (twitter.length > 50) return false; // Reasonable max length
+  if (userId.length > 30) return false; // Discord IDs are shorter
+
+  return true;
+}
+
+// Add security headers utility
+const securityHeaders = {
+  "Content-Security-Policy": "default-src 'self'",
+  "X-Content-Type-Options": "nosniff",
+  "X-Frame-Options": "DENY",
+  "X-XSS-Protection": "1; mode=block",
+  "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+  "Referrer-Policy": "strict-origin-when-cross-origin",
+};
+
 export async function GET() {
   try {
     // Check cache first
     const cachedData = voteCache.get();
     if (cachedData) {
-      return NextResponse.json(cachedData);
+      return NextResponse.json(cachedData, {
+        headers: {
+          "Cache-Control": "public, max-age=60, stale-while-revalidate=300",
+          "X-Cache": "HIT",
+          ...securityHeaders,
+        },
+      });
     }
 
     // Get all projects with their votes
     const projects = await prisma.project.findMany({
       include: {
-        votes: true,
+        votes: {
+          select: {
+            userId: true,
+            type: true,
+            roleId: true,
+            roleName: true,
+          },
+        },
       },
     });
 
@@ -174,12 +287,24 @@ export async function GET() {
     // Cache the response
     voteCache.set(response);
 
-    return NextResponse.json(response);
+    return NextResponse.json(response, {
+      headers: {
+        "Cache-Control": "public, max-age=60, stale-while-revalidate=300",
+        "X-Cache": "MISS",
+        ...securityHeaders,
+      },
+    });
   } catch (error) {
     console.error("Failed to fetch votes:", error);
     return new NextResponse(
       JSON.stringify({ error: "Failed to fetch votes" }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+          ...securityHeaders,
+        },
+      }
     );
   }
 }
@@ -189,84 +314,91 @@ export async function POST(request: Request) {
     const cookieStore = cookies();
     const headersList = headers();
 
-    // Verify CSRF protection
-    const origin = headersList.get("origin");
-    console.log("Request origin:", origin);
-    console.log("Expected origin:", process.env.NEXT_PUBLIC_BASE_URL);
+    // Get IP address
+    const forwardedFor = headersList.get("x-forwarded-for");
+    const ip = forwardedFor ? forwardedFor.split(",")[0] : "unknown";
 
-    if (!origin || !isAllowedBaseUrl(origin)) {
-      console.log("Origin mismatch");
-      return new NextResponse(JSON.stringify({ error: "Invalid origin" }), {
-        status: 403,
-        headers: { "Content-Type": "application/json" },
-      });
-    }
-
-    // Parse request body first
-    const body = await request.json();
-    console.log("Received request body:", body);
-
-    // Validate required fields
-    if (!body.twitter || !body.vote || !body.userId) {
-      console.log("Missing fields:", {
-        hasTwitter: !!body.twitter,
-        hasVote: !!body.vote,
-        hasUserId: !!body.userId,
-      });
+    // Check IP rate limit first
+    if (!checkIpRateLimit(ip)) {
       return new NextResponse(
         JSON.stringify({
-          error: "Missing required fields. Required: twitter, vote, userId",
-          received: {
-            twitter: body.twitter,
-            vote: body.vote,
-            userId: body.userId,
+          error: "Too many requests from this IP. Please try again later.",
+        }),
+        {
+          status: 429,
+          headers: {
+            "Content-Type": "application/json",
+            "Retry-After": "300",
           },
-        }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
         }
       );
     }
 
-    const { twitter, vote, userId } = body as VoteRequest;
-    console.log("Parsed request data:", { twitter, vote, userId });
+    // Enhanced CSRF protection
+    const origin = headersList.get("origin");
+    const referer = headersList.get("referer");
 
-    // Validate vote type
-    console.log("Validating vote type:", vote, "Valid types:", VOTE_TYPES);
-    if (!isValidVoteType(vote)) {
-      console.log("Invalid vote type");
+    if (!origin || !referer || !isAllowedBaseUrl(origin)) {
+      console.log("Security check failed:", { origin, referer });
       return new NextResponse(
-        JSON.stringify({
-          error: "Invalid vote type",
-          received: vote,
-          validTypes: VOTE_TYPES,
-        }),
-        {
-          status: 400,
-          headers: { "Content-Type": "application/json" },
-        }
+        JSON.stringify({ error: "Invalid request origin" }),
+        { status: 403, headers: { "Content-Type": "application/json" } }
       );
     }
 
-    // Verify user authentication and server membership
+    // Parse and validate request body
+    let body;
+    try {
+      body = await request.json();
+    } catch (e) {
+      return new NextResponse(
+        JSON.stringify({ error: "Invalid JSON payload" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    if (!validateVoteRequest(body)) {
+      return new NextResponse(
+        JSON.stringify({ error: "Invalid request format" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    // Sanitize inputs
+    const twitter = sanitizeTwitterHandle(body.twitter);
+    const { vote, userId } = body;
+
+    // Verify user authentication and server membership with enhanced security
     const user = await verifyUserAuth(cookieStore);
 
     // Verify userId matches authenticated user
     if (userId !== user.id) {
-      return new NextResponse(JSON.stringify({ error: "User ID mismatch" }), {
-        status: 403,
-        headers: { "Content-Type": "application/json" },
-      });
+      return new NextResponse(
+        JSON.stringify({
+          error: "User ID mismatch",
+          message:
+            "The provided user ID does not match your authenticated session.",
+        }),
+        {
+          status: 403,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
     }
 
-    // Check rate limiting
-    if (!checkRateLimit(user.id)) {
+    // Check user rate limit
+    if (!checkUserRateLimit(user.id)) {
       return new NextResponse(
         JSON.stringify({
           error: "Rate limit exceeded. Please try again later.",
         }),
-        { status: 429, headers: { "Content-Type": "application/json" } }
+        {
+          status: 429,
+          headers: {
+            "Content-Type": "application/json",
+            "Retry-After": "300",
+          },
+        }
       );
     }
 
@@ -291,106 +423,88 @@ export async function POST(request: Request) {
       );
     }
 
-    // Get or create project
-    let project = await prisma.project.findUnique({
-      where: { twitter },
-      include: {
-        votes: {
-          select: {
-            id: true,
-            userId: true,
-            type: true,
-            roleId: true,
-            roleName: true,
-          },
-        },
-      },
-    });
+    // Get or create project and handle vote in a single transaction
+    const result = await prisma.$transaction(async (tx) => {
+      let project = await tx.project.findUnique({
+        where: { twitter },
+        select: { id: true },
+      });
 
-    if (!project) {
-      project = await prisma.project.create({
-        data: {
-          twitter,
-          name: twitter,
-        },
-        include: {
-          votes: {
-            select: {
-              id: true,
-              userId: true,
-              type: true,
-              roleId: true,
-              roleName: true,
-            },
+      if (!project) {
+        project = await tx.project.create({
+          data: {
+            twitter,
+            name: twitter,
+          },
+          select: { id: true },
+        });
+      }
+
+      const existingVote = await tx.vote.findUnique({
+        where: {
+          userId_projectId: {
+            userId: userId,
+            projectId: project.id,
           },
         },
       });
-    }
 
-    // Check if user has already voted
-    const existingVote = await prisma.vote.findUnique({
-      where: {
-        userId_projectId: {
-          userId: userId,
-          projectId: project.id,
-        },
-      },
-    });
-
-    if (existingVote) {
-      if (existingVote.type === vote) {
-        // Delete the vote if clicking the same button
-        await prisma.vote.delete({
-          where: {
-            userId_projectId: {
-              userId: userId,
-              projectId: project.id,
+      if (existingVote) {
+        if (existingVote.type === vote) {
+          // Delete the vote if clicking the same button
+          await tx.vote.delete({
+            where: {
+              userId_projectId: {
+                userId: userId,
+                projectId: project.id,
+              },
             },
-          },
-        });
+          });
+        } else {
+          // Update existing vote with new type and role info
+          await tx.vote.update({
+            where: {
+              userId_projectId: {
+                userId: userId,
+                projectId: project.id,
+              },
+            },
+            data: {
+              type: vote,
+              roleId: highestRole.id,
+              roleName: highestRole.name,
+            },
+          });
+        }
       } else {
-        // Update existing vote with new type and role info
-        await prisma.vote.update({
-          where: {
-            userId_projectId: {
-              userId: userId,
-              projectId: project.id,
-            },
-          },
+        // Create new vote with role info
+        await tx.vote.create({
           data: {
+            userId,
             type: vote,
+            projectId: project.id,
             roleId: highestRole.id,
             roleName: highestRole.name,
           },
         });
       }
-    } else {
-      // Create new vote with role info
-      await prisma.vote.create({
-        data: {
-          userId,
-          type: vote,
-          projectId: project.id,
-          roleId: highestRole.id,
-          roleName: highestRole.name,
+
+      // Get updated vote counts with role breakdown in the same transaction
+      const votes = await tx.vote.findMany({
+        where: { projectId: project.id },
+        select: {
+          userId: true,
+          type: true,
+          roleId: true,
+          roleName: true,
         },
       });
-    }
 
-    // Get updated vote counts with role breakdown
-    const votes = await prisma.vote.findMany({
-      where: { projectId: project.id },
-      select: {
-        userId: true,
-        type: true,
-        roleId: true,
-        roleName: true,
-      },
+      return votes;
     });
 
     // Calculate vote counts by role
-    type VoteType = "up" | "down";
-    const votesByRole = votes.reduce(
+    const votesByRole = result.reduce(
       (acc: Record<string, { up: number; down: number }>, vote) => {
         if (!acc[vote.roleName]) {
           acc[vote.roleName] = { up: 0, down: 0 };
@@ -402,10 +516,10 @@ export async function POST(request: Request) {
     );
 
     const totalVotes = {
-      upvotes: votes.filter((v) => v.type === "up").length,
-      downvotes: votes.filter((v) => v.type === "down").length,
+      upvotes: result.filter((v) => v.type === "up").length,
+      downvotes: result.filter((v) => v.type === "down").length,
       userVote: userId
-        ? votes.find((v) => v.userId === userId)?.type || null
+        ? result.find((v) => v.userId === userId)?.type || null
         : null,
       breakdown: votesByRole,
     };
@@ -413,12 +527,22 @@ export async function POST(request: Request) {
     // Invalidate the cache since votes have changed
     voteCache.invalidate();
 
-    return NextResponse.json(totalVotes);
+    return NextResponse.json(totalVotes, {
+      headers: {
+        ...securityHeaders,
+      },
+    });
   } catch (error) {
     console.error("Failed to process vote:", error);
     return new NextResponse(
       JSON.stringify({ error: "Failed to process vote" }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+          ...securityHeaders,
+        },
+      }
     );
   }
 }
