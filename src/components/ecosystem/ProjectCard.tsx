@@ -95,38 +95,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
         setCooldown(false);
       }, 1000); // 1 second cooldown
 
-      let upvoteChange = 0;
-      let downvoteChange = 0;
-
-      // If clicking the same vote type, remove the vote
-      if (previousUserVote === vote) {
-        if (vote === "up") {
-          upvoteChange = -1;
-        } else {
-          downvoteChange = -1;
-        }
-      } else {
-        // If changing vote type or adding new vote
-        if (previousUserVote === "up") {
-          upvoteChange--;
-        } else if (previousUserVote === "down") {
-          downvoteChange--;
-        }
-
-        if (vote === "up") {
-          upvoteChange++;
-        } else {
-          downvoteChange++;
-        }
-      }
-
-      setVotes((prev) => ({
-        ...prev,
-        upvotes: prev.upvotes + upvoteChange,
-        downvotes: prev.downvotes + downvoteChange,
-      }));
-      setUserVote(previousUserVote === vote ? null : vote);
-
       const response = await fetch("/api/votes", {
         method: "POST",
         headers: {
@@ -150,6 +118,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         throw new Error(data.error || "Failed to vote");
       }
 
+      // Only update state after successful API response
       setVotes({
         upvotes: data.upvotes,
         downvotes: data.downvotes,
@@ -185,11 +154,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
         })
         .catch(console.error);
     } catch (error) {
-      setVotes(previousVotes);
-      setUserVote(previousUserVote);
-      if (project.votes && previousBreakdown) {
-        project.votes.breakdown = previousBreakdown;
-      }
       console.error("Failed to vote:", error);
       if (error instanceof Error) {
         if (error.message.includes("Rate limit")) {
