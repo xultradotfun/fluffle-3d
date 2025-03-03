@@ -724,6 +724,14 @@
       "category": "Gaming",
       "megaMafia": false,
       "native": false
+    },
+    {
+      "name": "Mega Rabbi",
+      "twitter": "mega_rabbi",
+      "description": "A free mint NFT collection.",
+      "category": "NFT",
+      "megaMafia": false,
+      "native": true
     }
   ]
 }
