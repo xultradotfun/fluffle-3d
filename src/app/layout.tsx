@@ -3,8 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Footer } from "@/components/Footer";
-import { Analytics } from "@vercel/analytics/react";
-import type { AnalyticsProps } from "@vercel/analytics/react";
+import { AnalyticsWrapper } from "@/components/analytics/AnalyticsWrapper";
 import { DiscordAuthProvider } from "@/contexts/DiscordAuthContext";
 import { Toaster } from "sonner";
 
@@ -64,7 +63,7 @@ export default function RootLayout({
             </div>
           </DiscordAuthProvider>
         </ThemeProvider>
-        <Analytics mode="auto" />
+        <AnalyticsWrapper />
         <Toaster
           richColors
           position="top-center"
