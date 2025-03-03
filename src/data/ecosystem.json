@@ -732,6 +732,44 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true
+    },
+    {
+      "name": "Covenant",
+      "twitter": "covenantFi",
+      "website": "https://covenant.finance/",
+      "discord": "https://discord.gg/uRdRKdaUbk",
+      "description": "Liquid, tradeable debt markets to borrow and lend against any tokenized asset.",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false
+    },
+    {
+      "name": "Guess.best",
+      "twitter": "playguessbest",
+      "website": "https://guess.best/?referralCode=gq8tk6v&refSource=copy",
+      "description": "Guessing what the world thinks, one choice at a time.",
+      "category": "Gaming",
+      "megaMafia": false,
+      "native": false
+    },
+    {
+      "name": "games.fun",
+      "twitter": "gamesdotfun",
+      "website": "https://games.fun/",
+      "description": "Social engagement platform based around mini-games, social interaction, questing, prizing, and more.",
+      "category": "Gaming",
+      "megaMafia": false,
+      "native": false
+    },
+    {
+      "name": "Bebop",
+      "twitter": "bebop_dex",
+      "website": "https://bebop.xyz/",
+      "discord": "https://discord.gg/bebop",
+      "description": "Seamless and efficient crypto trading for everyone.",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false
     }
   ]
 }
