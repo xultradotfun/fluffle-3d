@@ -34,9 +34,10 @@ interface Project {
 
 interface ProjectCardProps {
   project: Project;
+  isLoadingVotes: boolean;
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project, isLoadingVotes }: ProjectCardProps) {
   const { user, login } = useDiscordAuth();
   const [isVoting, setIsVoting] = useState(false);
   const [cooldown, setCooldown] = useState(false);
@@ -80,6 +81,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
       return;
     }
 
+    if (isLoadingVotes) {
+      toast.error("Please wait while votes are being loaded");
+      return;
+    }
+
     const previousVotes = { ...votes };
     const previousUserVote = userVote;
     const previousBreakdown = votes.breakdown
@@ -90,10 +96,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
       setIsVoting(true);
       setCooldown(true);
 
-      // Start cooldown timer
       setTimeout(() => {
         setCooldown(false);
-      }, 1000); // 1 second cooldown
+      }, 1000);
 
       const response = await fetch("/api/votes", {
         method: "POST",
@@ -121,7 +126,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
         throw new Error(data.error || "Failed to vote");
       }
 
-      // Update state with the response data
       setVotes({
         upvotes: data.upvotes,
         downvotes: data.downvotes,
@@ -140,7 +144,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       if (error instanceof Error) {
         if (error.message.includes("Rate limit")) {
           toast.error(error.message, {
-            duration: 5000, // Show for 5 seconds since it's a longer message
+            duration: 5000,
           });
         } else {
           toast.error(error.message);
@@ -155,7 +159,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
   return (
     <Tooltip.Provider delayDuration={0} skipDelayDuration={0}>
-      <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white to-gray-50/80 dark:from-white/[0.03] dark:to-white/[0.02] border border-gray-200 dark:border-white/5 hover:border-blue-500/30 dark:hover:border-blue-500/20 transition-all duration-300 shadow-sm hover:shadow-md dark:shadow-none dark:hover:shadow-blue-500/5">
+      <div
+        className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white to-gray-50/80 dark:from-white/[0.03] dark:to-white/[0.02] border border-gray-200 dark:border-white/5 hover:border-blue-500/30 dark:hover:border-blue-500/20 transition-all duration-300 shadow-sm hover:shadow-md dark:shadow-none dark:hover:shadow-blue-500/5 ${
+          isLoadingVotes ? "opacity-75" : ""
+        }`}
+      >
         {/* Enhanced Background Effects */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.08),transparent)] dark:bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.06),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.05),transparent)] dark:bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.04),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -183,7 +191,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               <ProjectVoting
                 votes={votes}
                 userVote={userVote}
-                isVoting={isVoting}
+                isVoting={isVoting || isLoadingVotes}
                 canVote={!!user?.canVote}
                 cooldown={cooldown}
                 onVote={handleVote}

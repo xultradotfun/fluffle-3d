@@ -6,6 +6,7 @@ import { ProjectCard } from "./ProjectCard";
 import { EcosystemHeader } from "./EcosystemHeader";
 import { FilterControls } from "./FilterControls";
 import { SortSelector } from "./SortSelector";
+import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
 
 interface VoteBreakdown {
   [roleName: string]: {
@@ -35,13 +36,21 @@ interface Project {
 type VoteFilter = "all" | "voted" | "not_voted";
 
 export function EcosystemDashboard() {
+  const { user } = useDiscordAuth();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showMegaMafiaOnly, setShowMegaMafiaOnly] = useState(false);
   const [showNativeOnly, setShowNativeOnly] = useState(false);
   const [voteFilter, setVoteFilter] = useState<VoteFilter>("all");
+  const [isLoadingVotes, setIsLoadingVotes] = useState(true);
   const [projects, setProjects] = useState<Project[]>(
     ecosystemData.projects.map((project) => ({
       ...project,
+      votes: {
+        upvotes: 0,
+        downvotes: 0,
+        userVote: null,
+        breakdown: {},
+      },
     }))
   );
   const [sortMethod, setSortMethod] = useState<{
@@ -53,15 +62,27 @@ export function EcosystemDashboard() {
   });
 
   useEffect(() => {
+    let isMounted = true;
+
     const fetchVotes = async () => {
       try {
-        const response = await fetch("/api/votes");
+        setIsLoadingVotes(true);
+        const response = await fetch("/api/votes", {
+          headers: {
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            Pragma: "no-cache",
+            Expires: "0",
+          },
+        });
+
         if (!response.ok) {
           throw new Error("Failed to fetch votes");
         }
+
         const votesData = await response.json();
 
-        // Update projects with vote data
+        if (!isMounted) return;
+
         setProjects(
           ecosystemData.projects.map((project) => {
             const projectVotes = votesData.projects.find(
@@ -80,11 +101,24 @@ export function EcosystemDashboard() {
         );
       } catch (error) {
         console.error("Failed to fetch votes:", error);
+      } finally {
+        if (isMounted) {
+          setIsLoadingVotes(false);
+        }
       }
     };
 
     fetchVotes();
-  }, []);
+
+    // Re-fetch votes when user changes
+    if (user) {
+      fetchVotes();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [user]);
 
   // Get unique categories and count projects per category
   const categories = Array.from(
@@ -209,6 +243,11 @@ export function EcosystemDashboard() {
           <div className="flex items-center justify-between">
             <div className="text-sm text-gray-600 dark:text-gray-300">
               Showing {filteredProjects.length} projects
+              {isLoadingVotes && (
+                <span className="ml-2 text-blue-500 dark:text-blue-400">
+                  Loading votes...
+                </span>
+              )}
             </div>
             <SortSelector
               sortMethod={sortMethod}
@@ -220,7 +259,11 @@ export function EcosystemDashboard() {
         {/* Project Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((project) => (
-            <ProjectCard key={project.name} project={project} />
+            <ProjectCard
+              key={project.name}
+              project={project}
+              isLoadingVotes={isLoadingVotes}
+            />
           ))}
         </div>
       </div>
