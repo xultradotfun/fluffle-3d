@@ -771,6 +771,15 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false
+    },
+    {
+      "name": "Mega Docs",
+      "twitter": "0xSolynor",
+      "website": "https://megaeth-co.gitbook.io/mega-docs",
+      "description": "Community docs for MegaETH: understand the tech, explore the ecosystem.",
+      "category": "Community",
+      "megaMafia": false,
+      "native": true
     }
   ]
 }
