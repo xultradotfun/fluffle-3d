@@ -3,9 +3,9 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Footer } from "@/components/Footer";
-import { AnalyticsWrapper } from "@/components/analytics/AnalyticsWrapper";
 import { DiscordAuthProvider } from "@/contexts/DiscordAuthContext";
 import { Toaster } from "sonner";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -63,7 +63,7 @@ export default function RootLayout({
             </div>
           </DiscordAuthProvider>
         </ThemeProvider>
-        <AnalyticsWrapper />
+        <GoogleAnalytics />
         <Toaster
           richColors
           position="top-center"
