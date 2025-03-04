@@ -53,11 +53,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script
-          defer
-          data-domain="fluffle.tools"
-          src="https://plausible.io/js/script.hash.outbound-links.js"
-        ></script>
+        <script defer data-domain="fluffle.tools" src="/js/script.js"></script>
         <script
           dangerouslySetInnerHTML={{
             __html: `window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`,

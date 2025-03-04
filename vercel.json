@@ -1,5 +1,15 @@
 {
   "buildCommand": "prisma generate && next build",
   "installCommand": "npm install",
-  "framework": "nextjs"
+  "framework": "nextjs",
+  "rewrites": [
+    {
+      "source": "/js/script.js",
+      "destination": "https://plausible.io/js/script.hash.outbound-links.js"
+    },
+    {
+      "source": "/api/event",
+      "destination": "https://plausible.io/api/event"
+    }
+  ]
 }
