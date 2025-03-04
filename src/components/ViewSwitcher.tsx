@@ -58,6 +58,9 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
           >
             <FlaskConical className="w-4 h-4 flex-shrink-0" />
             <span className="flex-shrink-0">Testnet</span>
+            <span className="flex-shrink-0 px-1.5 py-0.5 text-[10px] font-medium rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+              New
+            </span>
           </button>
 
           {/* Divider */}
@@ -180,6 +183,9 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
               }`}
             >
               <FlaskConical className="w-5 h-5" />
+              <span className="absolute -top-3.5 -right-6 px-1.5 py-0.5 text-[8px] font-medium rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 shadow-sm">
+                New
+              </span>
             </div>
             <span className="text-xs font-medium">Testnet</span>
           </button>
