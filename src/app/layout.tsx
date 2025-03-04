@@ -6,6 +6,7 @@ import { Footer } from "@/components/Footer";
 import { DiscordAuthProvider } from "@/contexts/DiscordAuthContext";
 import { Toaster } from "sonner";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import dynamic from "next/dynamic";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -46,6 +47,11 @@ export const viewport: Viewport = {
   initialScale: 1.0,
 };
 
+// Create a separate client component for tracking
+const PageTracker = dynamic(() => import("@/components/PageTracker"), {
+  ssr: false,
+});
+
 export default function RootLayout({
   children,
 }: {
@@ -63,6 +69,7 @@ export default function RootLayout({
             </div>
           </DiscordAuthProvider>
         </ThemeProvider>
+        <PageTracker />
         <GoogleAnalytics />
         <Toaster
           richColors
