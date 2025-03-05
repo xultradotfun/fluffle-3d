@@ -2,6 +2,7 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
+import { Rabbit } from "lucide-react";
 
 export function EcosystemHeader() {
   const [tooltipOpen, setTooltipOpen] = useState(false);
@@ -80,19 +81,7 @@ export function EcosystemHeader() {
           <div className="p-4 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm">
             <div className="flex flex-row items-start gap-3 text-left">
               <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/10 to-blue-600/10 dark:from-blue-500/20 dark:to-blue-600/20 p-2.5 border border-blue-500/20 dark:border-blue-500/30">
-                <svg
-                  className="w-full h-full text-blue-600 dark:text-blue-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                  />
-                </svg>
+                <Rabbit className="w-full h-full text-blue-600 dark:text-blue-400" />
               </div>
               <div className="space-y-1.5 flex-1">
                 <h3 className="text-base font-medium text-gray-900 dark:text-white flex items-center gap-2">
