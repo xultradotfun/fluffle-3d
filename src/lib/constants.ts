@@ -1,9 +1,10 @@
 export const DISCORD_ROLES = {
   MINIETH: "1227046192316285041",
   MEGALEVEL: "1245309734362288138",
+  ORIGINAL_MAFIA: "1254432472180064286",
+  FLUFFLE_HOLDER: "1333412653384728728",
   MEGAMIND: "1302317210160861185",
   CHUBBY_BUNNY: "1302277393616076811",
-  ORIGINAL_MAFIA: "1254432472180064286",
   BIG_SEQUENCER: "1234655118960365711",
 } as const;
 
@@ -25,19 +26,24 @@ export const ROLE_TIERS = [
     weight: 300,
   },
   {
+    id: DISCORD_ROLES.FLUFFLE_HOLDER,
+    name: "Fluffle Holder",
+    weight: 400,
+  },
+  {
     id: DISCORD_ROLES.MEGAMIND,
     name: "Megamind",
-    weight: 400,
+    weight: 500,
   },
   {
     id: DISCORD_ROLES.CHUBBY_BUNNY,
     name: "Chubby Bunny",
-    weight: 500,
+    weight: 600,
   },
   {
     id: DISCORD_ROLES.BIG_SEQUENCER,
     name: "Big Sequencer Energy",
-    weight: 600,
+    weight: 700,
   },
 ] as const;
 

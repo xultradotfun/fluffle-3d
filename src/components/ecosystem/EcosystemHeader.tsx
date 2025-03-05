@@ -170,6 +170,17 @@ export function EcosystemHeader() {
                                 <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
                                   4
                                 </span>
+                                Fluffle Holder
+                              </div>
+                              <div className="text-xs text-gray-500 dark:text-gray-400 pl-7">
+                                Users that own a Fluffle NFT
+                              </div>
+                            </div>
+                            <div>
+                              <div className="font-medium flex items-center">
+                                <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
+                                  5
+                                </span>
                                 Original Mafia
                               </div>
                               <div className="text-xs text-gray-500 dark:text-gray-400 pl-7">
@@ -179,7 +190,7 @@ export function EcosystemHeader() {
                             <div>
                               <div className="font-medium flex items-center">
                                 <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
-                                  5
+                                  6
                                 </span>
                                 MegaLevel
                               </div>
@@ -190,7 +201,7 @@ export function EcosystemHeader() {
                             <div>
                               <div className="font-medium flex items-center">
                                 <span className="inline-flex items-center justify-center w-5 h-5 mr-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-xs font-semibold text-blue-800 dark:text-blue-300">
-                                  6
+                                  7
                                 </span>
                                 MiniETH
                               </div>
