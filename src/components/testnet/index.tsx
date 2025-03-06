@@ -128,8 +128,14 @@ export function TestnetView() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <TabSection activeView={activeView} setActiveView={setActiveView} />
         <div className="animate-fade-in mt-6">
-          <div className="min-h-[400px]">
-            {activeView === "users" ? <UsersContent /> : <BuildersContent />}
+          <div className="relative">
+            <div className="absolute inset-0 opacity-0 pointer-events-none">
+              <UsersContent />
+              <BuildersContent />
+            </div>
+            <div className="relative">
+              {activeView === "users" ? <UsersContent /> : <BuildersContent />}
+            </div>
           </div>
         </div>
       </div>
