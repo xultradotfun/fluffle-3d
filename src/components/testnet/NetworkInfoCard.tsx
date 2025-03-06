@@ -12,11 +12,11 @@ export const NetworkInfoCard = ({
   onCopy,
   onAddToWallet,
 }: NetworkInfoCardProps) => (
-  <div className="max-w-2xl mx-auto p-5 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm shadow-xl">
+  <div className="max-w-2xl mx-auto p-4 rounded-lg bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm shadow-xl">
     {/* Header Section */}
-    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
       <div>
-        <h3 className="text-base font-semibold text-foreground">
+        <h3 className="text-sm font-semibold text-foreground">
           Network Information
         </h3>
         <p className="text-xs text-gray-600 dark:text-gray-400">
@@ -25,12 +25,12 @@ export const NetworkInfoCard = ({
       </div>
       <button
         onClick={onAddToWallet}
-        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-purple-500/10 hover:from-blue-500/20 hover:via-indigo-500/20 hover:to-purple-500/20 dark:from-blue-500/20 dark:via-indigo-500/20 dark:to-purple-500/20 dark:hover:from-blue-500/30 dark:hover:via-indigo-500/30 dark:hover:to-purple-500/30 border border-blue-500/20 hover:border-blue-500/30 dark:border-blue-500/30 dark:hover:border-blue-500/40 text-blue-700 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-all duration-300 text-sm font-medium shadow-sm hover:shadow-md backdrop-blur-sm group"
+        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-purple-500/10 hover:from-blue-500/20 hover:via-indigo-500/20 hover:to-purple-500/20 dark:from-blue-500/20 dark:via-indigo-500/20 dark:to-purple-500/20 dark:hover:from-blue-500/30 dark:hover:via-indigo-500/30 dark:hover:to-purple-500/30 border border-blue-500/20 hover:border-blue-500/30 dark:border-blue-500/30 dark:hover:border-blue-500/40 text-blue-700 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-all duration-300 text-xs font-medium shadow-sm hover:shadow-md backdrop-blur-sm group"
       >
-        <Rabbit className="w-4 h-4" />
+        <Rabbit className="w-3.5 h-3.5" />
         Add to Wallet
         <svg
-          className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5"
+          className="w-3 h-3 transition-transform duration-300 group-hover:translate-x-0.5"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -41,66 +41,66 @@ export const NetworkInfoCard = ({
       </button>
     </div>
 
-    <div className="grid gap-4">
+    <div className="grid gap-3">
       {/* Basic Network Info */}
-      <div className="grid grid-cols-2 gap-4">
-        <div className="p-3 rounded-lg bg-white/30 dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/5">
+      <div className="grid grid-cols-2 gap-3">
+        <div className="p-2 rounded-md bg-white/30 dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/5">
           <div className="text-xs font-medium text-gray-500 dark:text-gray-400">
             Network Name
           </div>
-          <div className="font-mono text-sm font-medium text-foreground mt-0.5">
+          <div className="font-mono text-xs font-medium text-foreground mt-0.5">
             {NETWORK_INFO.name}
           </div>
         </div>
-        <div className="p-3 rounded-lg bg-white/30 dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/5">
+        <div className="p-2 rounded-md bg-white/30 dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/5">
           <div className="text-xs font-medium text-gray-500 dark:text-gray-400">
             Chain ID
           </div>
-          <div className="font-mono text-sm font-medium text-foreground mt-0.5">
+          <div className="font-mono text-xs font-medium text-foreground mt-0.5">
             {NETWORK_INFO.chainId}
           </div>
         </div>
       </div>
 
       {/* Connection URLs */}
-      <div className="space-y-3">
-        <div className="p-3 rounded-lg bg-white/30 dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/5">
-          <div className="flex items-center justify-between mb-1.5">
+      <div className="space-y-2">
+        <div className="p-2 rounded-md bg-white/30 dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/5">
+          <div className="flex items-center justify-between mb-1">
             <div className="text-xs font-medium text-gray-500 dark:text-gray-400">
               RPC URL
             </div>
             <button
               onClick={() => onCopy(NETWORK_INFO.rpcUrl, "rpc")}
-              className="text-xs text-blue-500 hover:text-blue-600 font-medium px-2 py-0.5 rounded hover:bg-blue-500/5 transition-colors"
+              className="text-xs text-blue-500 hover:text-blue-600 font-medium px-1.5 py-0.5 rounded hover:bg-blue-500/5 transition-colors"
             >
               {showCopied === "rpc" ? "Copied!" : "Copy"}
             </button>
           </div>
-          <div className="font-mono text-xs text-foreground/90 truncate bg-white/50 dark:bg-white/[0.05] px-2.5 py-1.5 rounded border border-gray-200/50 dark:border-white/5">
+          <div className="font-mono text-xs text-foreground/90 truncate bg-white/50 dark:bg-white/[0.05] px-2 py-1 rounded border border-gray-200/50 dark:border-white/5">
             {NETWORK_INFO.rpcUrl}
           </div>
         </div>
 
-        <div className="p-3 rounded-lg bg-white/30 dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/5">
-          <div className="flex items-center justify-between mb-1.5">
+        <div className="p-2 rounded-md bg-white/30 dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/5">
+          <div className="flex items-center justify-between mb-1">
             <div className="text-xs font-medium text-gray-500 dark:text-gray-400">
               WebSocket URL
             </div>
             <button
               onClick={() => onCopy(NETWORK_INFO.wsUrl, "ws")}
-              className="text-xs text-blue-500 hover:text-blue-600 font-medium px-2 py-0.5 rounded hover:bg-blue-500/5 transition-colors"
+              className="text-xs text-blue-500 hover:text-blue-600 font-medium px-1.5 py-0.5 rounded hover:bg-blue-500/5 transition-colors"
             >
               {showCopied === "ws" ? "Copied!" : "Copy"}
             </button>
           </div>
-          <div className="font-mono text-xs text-foreground/90 truncate bg-white/50 dark:bg-white/[0.05] px-2.5 py-1.5 rounded border border-gray-200/50 dark:border-white/5">
+          <div className="font-mono text-xs text-foreground/90 truncate bg-white/50 dark:bg-white/[0.05] px-2 py-1 rounded border border-gray-200/50 dark:border-white/5">
             {NETWORK_INFO.wsUrl}
           </div>
         </div>
       </div>
 
       {/* Block Explorers */}
-      <div className="pt-3 mt-3 border-t border-gray-200/10">
+      <div className="pt-2 mt-2 border-t border-gray-200/10">
         <div className="flex items-center justify-between">
           <div className="text-xs font-medium text-gray-500 dark:text-gray-400">
             Block Explorers
@@ -114,7 +114,7 @@ export const NetworkInfoCard = ({
             >
               Performance
               <svg
-                className="w-3.5 h-3.5"
+                className="w-3 h-3"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -135,7 +135,7 @@ export const NetworkInfoCard = ({
             >
               Explorer
               <svg
-                className="w-3.5 h-3.5"
+                className="w-3 h-3"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
