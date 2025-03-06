@@ -1,5 +1,5 @@
 export const UsersContent = () => (
-  <div className="grid sm:grid-cols-2 gap-6">
+  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
     <div className="p-5 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm shadow-xl">
       <h3 className="text-lg font-semibold text-foreground mb-4">
         Get Started

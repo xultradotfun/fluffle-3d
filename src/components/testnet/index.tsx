@@ -70,7 +70,7 @@ export function TestnetView() {
 
         <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/[0.08] text-emerald-600 dark:text-emerald-400 text-xs font-medium mb-6 ring-1 ring-emerald-500/20">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          Live March 6th
+          Live Now
         </div>
 
         <h1 className="text-4xl sm:text-5xl font-bold mb-6 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 dark:from-pink-400 dark:via-purple-400 dark:to-indigo-400 bg-clip-text text-transparent tracking-tight">
@@ -110,27 +110,26 @@ export function TestnetView() {
             </div>
           </div>
         </div>
-
-        <NetworkInfoCard
-          showCopied={showCopied}
-          onCopy={handleCopy}
-          onAddToWallet={addToWallet}
-        />
       </div>
 
-      {/* Timeline and Tab Sections Side by Side */}
+      {/* Timeline and Network Info Side by Side */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="grid lg:grid-cols-[2fr_3fr] gap-12">
+        <div className="grid lg:grid-cols-[3fr_2fr] gap-8">
           <TimelineSection currentPhase={currentPhase} />
+          <NetworkInfoCard
+            showCopied={showCopied}
+            onCopy={handleCopy}
+            onAddToWallet={addToWallet}
+          />
+        </div>
+      </div>
 
-          {/* Tab Section */}
-          <div className="pt-[60px]">
-            <TabSection activeView={activeView} setActiveView={setActiveView} />
-
-            {/* Content Sections */}
-            <div className="animate-fade-in">
-              {activeView === "users" ? <UsersContent /> : <BuildersContent />}
-            </div>
+      {/* Tab Section with Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <TabSection activeView={activeView} setActiveView={setActiveView} />
+        <div className="animate-fade-in mt-6">
+          <div className="min-h-[400px]">
+            {activeView === "users" ? <UsersContent /> : <BuildersContent />}
           </div>
         </div>
       </div>
