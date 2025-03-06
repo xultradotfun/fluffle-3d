@@ -1,4 +1,4 @@
-import { TimelineEvent as TimelineEventType } from "../../types";
+import { TimelineEvent as TimelineEventType } from "./types";
 
 type TimelineEventProps = {
   event: TimelineEventType;
