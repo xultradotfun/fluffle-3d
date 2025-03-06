@@ -84,68 +84,68 @@ export function TestnetView() {
   };
 
   return (
-    <div className="py-16 space-y-24">
+    <div className="py-20 sm:py-24 space-y-32">
       {/* Hero Section */}
-      <div className="max-w-4xl mx-auto px-4 text-center relative">
-        <div className="absolute inset-x-0 top-6 -bottom-6 bg-gradient-to-b from-pink-500/10 via-purple-500/5 to-transparent dark:from-pink-500/[0.07] dark:via-purple-500/[0.03] dark:to-transparent blur-2xl -z-10 rounded-[100%]" />
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center relative">
+        <div className="absolute inset-x-0 top-6 -bottom-6 bg-gradient-to-b from-pink-500/10 via-purple-500/5 to-transparent dark:from-pink-500/[0.07] dark:via-purple-500/[0.03] dark:to-transparent blur-3xl -z-10 rounded-[100%]" />
 
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/[0.08] text-emerald-600 dark:text-emerald-400 text-sm font-medium mb-6">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/[0.08] text-emerald-600 dark:text-emerald-400 text-sm font-medium mb-8 ring-1 ring-emerald-500/20">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           Live March 6th
         </div>
 
-        <h1 className="text-4xl sm:text-5xl font-bold mb-6 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 dark:from-pink-400 dark:via-purple-400 dark:to-indigo-400 bg-clip-text text-transparent">
+        <h1 className="text-5xl sm:text-6xl font-bold mb-8 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 dark:from-pink-400 dark:via-purple-400 dark:to-indigo-400 bg-clip-text text-transparent tracking-tight">
           <span className="relative inline-block">
             <Image
               src="/megalogo.png"
               alt="MEGA"
-              width={140}
-              height={28}
-              className="h-8 sm:h-10 w-auto brightness-0 opacity-80 dark:opacity-100 dark:invert"
+              width={160}
+              height={32}
+              className="h-10 sm:h-12 w-auto brightness-0 opacity-80 dark:opacity-100 dark:invert"
               priority
             />
           </span>{" "}
           Testnet
         </h1>
 
-        <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto font-light">
+        <p className="text-xl sm:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
           Experience the future of Ethereum scaling with ultra-fast block times
           and high gas throughput
         </p>
 
-        <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
-          <div className="px-4 py-2 rounded-lg bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5">
-            <div className="text-2xl font-mono font-bold bg-gradient-to-r from-pink-500 to-indigo-500 dark:from-pink-400 dark:to-indigo-400 bg-clip-text text-transparent">
+        <div className="flex flex-wrap items-center justify-center gap-6 mb-16">
+          <div className="px-6 py-3 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 shadow-sm">
+            <div className="text-3xl font-mono font-bold bg-gradient-to-r from-pink-500 to-indigo-500 dark:from-pink-400 dark:to-indigo-400 bg-clip-text text-transparent">
               2 Ggas/block
             </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">
+            <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mt-1">
               Max Block Size
             </div>
           </div>
-          <div className="px-4 py-2 rounded-lg bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5">
-            <div className="text-2xl font-mono font-bold bg-gradient-to-r from-pink-500 to-indigo-500 dark:from-pink-400 dark:to-indigo-400 bg-clip-text text-transparent">
+          <div className="px-6 py-3 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 shadow-sm">
+            <div className="text-3xl font-mono font-bold bg-gradient-to-r from-pink-500 to-indigo-500 dark:from-pink-400 dark:to-indigo-400 bg-clip-text text-transparent">
               10ms
             </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">
+            <div className="text-sm font-medium text-gray-600 dark:text-gray-400 mt-1">
               Mini Block Time
             </div>
           </div>
         </div>
 
         {/* Network Information Card */}
-        <div className="max-w-2xl mx-auto p-6 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-            <h3 className="text-lg font-medium text-foreground">
+        <div className="max-w-2xl mx-auto p-8 rounded-2xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm shadow-xl">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-8">
+            <h3 className="text-xl font-semibold text-foreground">
               Network Information
             </h3>
             <button
               onClick={addToWallet}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-purple-500/10 hover:from-blue-500/20 hover:via-indigo-500/20 hover:to-purple-500/20 dark:from-blue-500/20 dark:via-indigo-500/20 dark:to-purple-500/20 dark:hover:from-blue-500/30 dark:hover:via-indigo-500/30 dark:hover:to-purple-500/30 border border-blue-500/20 hover:border-blue-500/30 dark:border-blue-500/30 dark:hover:border-blue-500/40 text-blue-700 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-all duration-300 text-sm font-medium shadow-sm hover:shadow backdrop-blur-sm group"
+              className="inline-flex items-center gap-3 px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-purple-500/10 hover:from-blue-500/20 hover:via-indigo-500/20 hover:to-purple-500/20 dark:from-blue-500/20 dark:via-indigo-500/20 dark:to-purple-500/20 dark:hover:from-blue-500/30 dark:hover:via-indigo-500/30 dark:hover:to-purple-500/30 border border-blue-500/20 hover:border-blue-500/30 dark:border-blue-500/30 dark:hover:border-blue-500/40 text-blue-700 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-all duration-300 text-sm font-medium shadow-sm hover:shadow-md backdrop-blur-sm group"
             >
               <Rabbit className="w-4 h-4" />
               Add to Wallet
               <svg
-                className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5"
+                className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -160,16 +160,16 @@ export function TestnetView() {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-[1fr,auto] gap-6 sm:gap-x-8">
+          <div className="grid grid-cols-1 sm:grid-cols-[1fr,auto] gap-8">
             <div>
-              <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+              <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
                 Network Name
               </div>
-              <div className="font-mono text-sm">MegaETH Testnet</div>
+              <div className="font-mono text-base">MegaETH Testnet</div>
             </div>
 
             <div>
-              <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center justify-between mb-2">
                 <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
                   RPC URL
                 </div>
@@ -177,25 +177,25 @@ export function TestnetView() {
                   onClick={() =>
                     handleCopy("https://carrot.megaeth.com/rpc", "rpc")
                   }
-                  className="text-xs text-blue-500 hover:text-blue-600"
+                  className="text-xs text-blue-500 hover:text-blue-600 font-medium"
                 >
                   {showCopied === "rpc" ? "Copied!" : "Copy"}
                 </button>
               </div>
-              <div className="font-mono text-sm truncate max-w-[280px]">
+              <div className="font-mono text-base truncate max-w-[280px]">
                 https://carrot.megaeth.com/rpc
               </div>
             </div>
 
             <div>
-              <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+              <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
                 Chain ID
               </div>
-              <div className="font-mono text-sm">6342</div>
+              <div className="font-mono text-base">6342</div>
             </div>
 
             <div>
-              <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center justify-between mb-2">
                 <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
                   WebSocket
                 </div>
@@ -203,26 +203,26 @@ export function TestnetView() {
                   onClick={() =>
                     handleCopy("wss://carrot.megaeth.com/ws", "ws")
                   }
-                  className="text-xs text-blue-500 hover:text-blue-600"
+                  className="text-xs text-blue-500 hover:text-blue-600 font-medium"
                 >
                   {showCopied === "ws" ? "Copied!" : "Copy"}
                 </button>
               </div>
-              <div className="font-mono text-sm truncate max-w-[280px]">
+              <div className="font-mono text-base truncate max-w-[280px]">
                 wss://carrot.megaeth.com/ws
               </div>
             </div>
 
-            <div className="col-span-1 sm:col-span-2">
-              <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+            <div className="col-span-1 sm:col-span-2 pt-2">
+              <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
                 Block Explorers
               </div>
-              <div className="space-y-1">
+              <div className="space-y-2">
                 <a
                   href="https://uptime.megaeth.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block text-sm text-blue-500 hover:text-blue-600"
+                  className="block text-base text-blue-500 hover:text-blue-600 font-medium hover:underline"
                 >
                   Performance Dashboard ↗
                 </a>
@@ -230,7 +230,7 @@ export function TestnetView() {
                   href="https://megaexplorer.xyz"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block text-sm text-blue-500 hover:text-blue-600"
+                  className="block text-base text-blue-500 hover:text-blue-600 font-medium hover:underline"
                 >
                   Community Explorer ↗
                 </a>
@@ -241,13 +241,13 @@ export function TestnetView() {
       </div>
 
       {/* Timeline and Tab Sections Side by Side */}
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="grid lg:grid-cols-[2fr_3fr] gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="grid lg:grid-cols-[2fr_3fr] gap-12">
           {/* Timeline Section */}
           <div>
-            <h2 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-3">
+            <h2 className="text-2xl font-semibold text-foreground mb-8 flex items-center gap-3">
               <svg
-                className="w-5 h-5 text-blue-500"
+                className="w-6 h-6 text-blue-500"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -261,12 +261,12 @@ export function TestnetView() {
               </svg>
               Launch Timeline
             </h2>
-            <div className="p-6 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm">
+            <div className="p-8 rounded-2xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm shadow-xl">
               <div className="relative pl-8 border-l-2 border-blue-500/20 dark:border-blue-500/30">
                 {timelineEvents.map((event, index) => (
                   <div
                     key={event.date}
-                    className="mb-8 last:mb-0 group relative hover:bg-blue-500/[0.02] rounded-lg transition-colors duration-200 -ml-8 pl-8 py-2"
+                    className="mb-10 last:mb-0 group relative hover:bg-blue-500/[0.02] rounded-lg transition-colors duration-200 -ml-8 pl-8 py-3"
                   >
                     <div className="absolute left-0 top-4 -translate-x-[9px] w-[18px] h-[18px] rounded-full bg-gradient-to-br from-blue-500/10 to-blue-600/10 dark:from-blue-500/20 dark:to-blue-600/20 border border-blue-500/30 dark:border-blue-500/40 group-hover:border-blue-500/50 transition-colors duration-200">
                       <div className="absolute inset-[3px] rounded-full bg-blue-500 group-hover:animate-pulse" />
@@ -274,16 +274,16 @@ export function TestnetView() {
                     <div className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-2 flex items-center gap-2">
                       {event.date}
                       {currentPhase === index && (
-                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-medium">
+                        <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 text-xs font-medium ring-1 ring-emerald-500/20">
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                           Current
                         </span>
                       )}
                     </div>
-                    <div className="font-semibold text-foreground mb-2 text-base">
+                    <div className="font-semibold text-foreground mb-2 text-lg">
                       {event.title}
                     </div>
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-base text-muted-foreground">
                       {event.description}
                     </div>
                   </div>
@@ -293,11 +293,11 @@ export function TestnetView() {
           </div>
 
           {/* Tab Section */}
-          <div className="pt-[52px]">
-            <div className="flex items-center gap-2 p-1 bg-white/60 dark:bg-white/[0.02] rounded-xl border border-gray-200/20 dark:border-white/[0.08] shadow-lg backdrop-blur-lg w-fit mb-8">
+          <div className="pt-[60px]">
+            <div className="flex items-center gap-2 p-1.5 bg-white/60 dark:bg-white/[0.02] rounded-xl border border-gray-200/20 dark:border-white/[0.08] shadow-lg backdrop-blur-lg w-fit mb-10">
               <button
                 onClick={() => setActiveView("users")}
-                className={`flex items-center justify-start gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`flex items-center justify-start gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                   activeView === "users"
                     ? "bg-gradient-to-r from-orange-50/90 to-amber-50/90 text-orange-600 border border-orange-200/30 shadow-sm dark:from-orange-500/20 dark:to-orange-500/10 dark:text-orange-400 dark:border-orange-500/20"
                     : "text-gray-600 hover:text-gray-900 hover:bg-white/50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-white/[0.08]"
@@ -320,7 +320,7 @@ export function TestnetView() {
               </button>
               <button
                 onClick={() => setActiveView("builders")}
-                className={`flex items-center justify-start gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                className={`flex items-center justify-start gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                   activeView === "builders"
                     ? "bg-gradient-to-r from-purple-50/90 to-pink-50/90 text-purple-600 border border-purple-200/30 shadow-sm dark:from-purple-500/20 dark:to-purple-500/10 dark:text-purple-400 dark:border-purple-500/20"
                     : "text-gray-600 hover:text-gray-900 hover:bg-white/50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-white/[0.08]"
@@ -346,29 +346,29 @@ export function TestnetView() {
             {/* Content Sections */}
             <div className="animate-fade-in">
               {activeView === "users" ? (
-                <div className="grid sm:grid-cols-2 gap-6">
-                  <div className="p-6 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm">
-                    <h3 className="text-lg font-medium text-foreground mb-4">
+                <div className="grid sm:grid-cols-2 gap-8">
+                  <div className="p-8 rounded-2xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm shadow-xl">
+                    <h3 className="text-xl font-semibold text-foreground mb-6">
                       Get Started
                     </h3>
-                    <ol className="space-y-4">
+                    <ol className="space-y-6">
                       <li className="flex gap-4">
-                        <span className="flex-none w-6 h-6 rounded-full bg-gradient-to-br from-blue-500/10 to-blue-600/10 dark:from-blue-500/20 dark:to-blue-600/20 text-blue-500 flex items-center justify-center text-sm font-medium border border-blue-500/20 dark:border-blue-500/30">
+                        <span className="flex-none w-8 h-8 rounded-full bg-gradient-to-br from-blue-500/10 to-blue-600/10 dark:from-blue-500/20 dark:to-blue-600/20 text-blue-500 flex items-center justify-center text-base font-medium border border-blue-500/20 dark:border-blue-500/30">
                           1
                         </span>
                         <div>
-                          <div className="font-medium text-foreground mb-1">
+                          <div className="font-medium text-foreground text-lg mb-2">
                             Join Discord
                           </div>
                           <a
                             href="https://discord.com/invite/megaeth"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-sm text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1"
+                            className="text-base text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1.5 font-medium"
                           >
                             Join MegaETH Discord
                             <svg
-                              className="w-3 h-3"
+                              className="w-4 h-4"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -384,22 +384,22 @@ export function TestnetView() {
                         </div>
                       </li>
                       <li className="flex gap-4">
-                        <span className="flex-none w-6 h-6 rounded-full bg-gradient-to-br from-blue-500/10 to-blue-600/10 dark:from-blue-500/20 dark:to-blue-600/20 text-blue-500 flex items-center justify-center text-sm font-medium border border-blue-500/20 dark:border-blue-500/30">
+                        <span className="flex-none w-8 h-8 rounded-full bg-gradient-to-br from-blue-500/10 to-blue-600/10 dark:from-blue-500/20 dark:to-blue-600/20 text-blue-500 flex items-center justify-center text-base font-medium border border-blue-500/20 dark:border-blue-500/30">
                           2
                         </span>
                         <div>
-                          <div className="font-medium text-foreground mb-1">
+                          <div className="font-medium text-foreground text-lg mb-2">
                             Register Wallet
                           </div>
                           <a
                             href="https://discord.com/channels/1219739501673451551/1322104558847266848"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-sm text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1"
+                            className="text-base text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1.5 font-medium"
                           >
                             Go to #wallet-registration
                             <svg
-                              className="w-3 h-3"
+                              className="w-4 h-4"
                               fill="none"
                               viewBox="0 0 24 24"
                               stroke="currentColor"
@@ -415,33 +415,33 @@ export function TestnetView() {
                         </div>
                       </li>
                       <li className="flex gap-4">
-                        <span className="flex-none w-6 h-6 rounded-full bg-gradient-to-br from-blue-500/10 to-blue-600/10 dark:from-blue-500/20 dark:to-blue-600/20 text-blue-500 flex items-center justify-center text-sm font-medium border border-blue-500/20 dark:border-blue-500/30">
+                        <span className="flex-none w-8 h-8 rounded-full bg-gradient-to-br from-blue-500/10 to-blue-600/10 dark:from-blue-500/20 dark:to-blue-600/20 text-blue-500 flex items-center justify-center text-base font-medium border border-blue-500/20 dark:border-blue-500/30">
                           3
                         </span>
                         <div>
-                          <div className="font-medium text-foreground">
+                          <div className="font-medium text-foreground text-lg mb-2">
                             Use /register
                           </div>
-                          <div className="text-sm text-muted-foreground">
+                          <div className="text-base text-muted-foreground">
                             Enter the command in Discord
                           </div>
                         </div>
                       </li>
                     </ol>
                   </div>
-                  <div className="p-6 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm">
-                    <h3 className="text-lg font-medium text-foreground mb-4">
+                  <div className="p-8 rounded-2xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm shadow-xl">
+                    <h3 className="text-xl font-semibold text-foreground mb-6">
                       Distribution Details
                     </h3>
-                    <div className="space-y-4 text-sm">
-                      <p className="text-gray-600 dark:text-gray-300">
+                    <div className="space-y-6 text-base">
+                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                         Testnet ETH will be distributed directly to registered
                         wallets starting March 10th.
                       </p>
-                      <div className="p-4 rounded-lg bg-gradient-to-br from-blue-500/5 to-blue-600/5 dark:from-blue-500/10 dark:to-blue-600/10 border border-blue-500/10 dark:border-blue-500/20">
-                        <div className="flex items-start gap-3 text-gray-600 dark:text-gray-300">
+                      <div className="p-5 rounded-xl bg-gradient-to-br from-blue-500/5 to-blue-600/5 dark:from-blue-500/10 dark:to-blue-600/10 border border-blue-500/10 dark:border-blue-500/20">
+                        <div className="flex items-start gap-4 text-gray-600 dark:text-gray-300">
                           <svg
-                            className="w-5 h-5 flex-none text-blue-500"
+                            className="w-6 h-6 flex-none text-blue-500"
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -453,7 +453,7 @@ export function TestnetView() {
                               d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                             />
                           </svg>
-                          <span>
+                          <span className="leading-relaxed">
                             Direct distribution helps prevent faucet issues and
                             ensures fair access to testnet ETH
                           </span>
@@ -463,9 +463,9 @@ export function TestnetView() {
                   </div>
                 </div>
               ) : (
-                <div className="p-6 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm">
-                  <div className="flex flex-row items-start gap-4">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-500/20 dark:to-pink-500/20 p-2.5 border border-purple-500/20 dark:border-purple-500/30">
+                <div className="p-8 rounded-2xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm shadow-xl">
+                  <div className="flex flex-row items-start gap-6">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-500/20 dark:to-pink-500/20 p-3 border border-purple-500/20 dark:border-purple-500/30">
                       <svg
                         className="w-full h-full text-purple-600 dark:text-purple-400"
                         fill="none"
@@ -480,11 +480,11 @@ export function TestnetView() {
                         />
                       </svg>
                     </div>
-                    <div className="space-y-2 flex-1">
-                      <h3 className="text-lg font-medium text-foreground">
+                    <div className="space-y-3 flex-1">
+                      <h3 className="text-xl font-semibold text-foreground">
                         Join MegaForge
                       </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-300">
+                      <p className="text-base text-gray-600 dark:text-gray-300 leading-relaxed">
                         Get early access and dedicated support for integrating
                         your app with MegaETH testnet.
                       </p>
@@ -492,11 +492,11 @@ export function TestnetView() {
                         href="https://forms.gle/iwPBVdCmzaYh5x837"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 transition-all text-sm font-medium shadow-sm group"
+                        className="inline-flex items-center gap-3 mt-4 px-6 py-2.5 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 transition-all text-base font-medium shadow-sm hover:shadow-md group"
                       >
                         Apply Now
                         <svg
-                          className="w-4 h-4 transition-transform group-hover:translate-x-1"
+                          className="w-5 h-5 transition-transform group-hover:translate-x-1"
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
