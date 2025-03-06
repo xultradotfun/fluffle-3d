@@ -8,7 +8,7 @@ import { ViewSwitcher } from "@/components/ViewSwitcher";
 import { TraitsAnalyticsDashboard } from "@/components/analytics/TraitsAnalytics";
 import { PFPGenerator } from "@/components/pfp/PFPGenerator";
 import { MetaverseTeaser } from "@/components/metaverse/MetaverseTeaser";
-import { TestnetView } from "@/components/TestnetView";
+import { TestnetView } from "@/components/testnet/index";
 import Hero from "@/components/Hero";
 import type { NFTTrait } from "@/utils/nftLoader";
 import { EcosystemDashboard } from "@/components/ecosystem/EcosystemDashboard";
