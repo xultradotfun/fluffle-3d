@@ -781,6 +781,17 @@
       "category": "Community",
       "megaMafia": false,
       "native": true
+    },
+    {
+      "name": "NFTs2Me",
+      "twitter": "nfts2me",
+      "website": "https://nfts2me.com/",
+      "discord": "https://discord.gg/Usmgxj2Msk",
+      "telegram": "https://t.me/nfts2me",
+      "description": "A user-friendly platform to create, deploy and manage your NFT collections on MegaETH.",
+      "category": "NFT",
+      "megaMafia": false,
+      "native": false
     }
   ]
 }
