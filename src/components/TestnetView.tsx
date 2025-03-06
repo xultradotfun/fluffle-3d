@@ -2,9 +2,20 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { Rabbit } from "lucide-react";
+
+// Add type declaration at the top of the file
+declare global {
+  interface Window {
+    ethereum?: {
+      request: (args: { method: string; params: any[] }) => Promise<any>;
+    };
+  }
+}
 
 export function TestnetView() {
   const [activeView, setActiveView] = useState<"users" | "builders">("users");
+  const [showCopied, setShowCopied] = useState<string | null>(null);
 
   const timelineEvents = [
     {
@@ -39,6 +50,39 @@ export function TestnetView() {
 
   const currentPhase = getCurrentPhase();
 
+  const handleCopy = async (text: string, type: string) => {
+    await navigator.clipboard.writeText(text);
+    setShowCopied(type);
+    setTimeout(() => setShowCopied(null), 2000);
+  };
+
+  const addToWallet = async () => {
+    if (typeof window.ethereum !== "undefined") {
+      try {
+        await window.ethereum.request({
+          method: "wallet_addEthereumChain",
+          params: [
+            {
+              chainId: "0x18C6", // 6342 in hex
+              chainName: "MegaETH Testnet",
+              nativeCurrency: {
+                name: "MegaETH Testnet Ether",
+                symbol: "ETH",
+                decimals: 18,
+              },
+              rpcUrls: ["https://carrot.megaeth.com/rpc"],
+              blockExplorerUrls: ["https://megaexplorer.xyz"],
+            },
+          ],
+        });
+      } catch (error) {
+        console.error("Failed to add network:", error);
+      }
+    } else {
+      console.error("MetaMask is not installed");
+    }
+  };
+
   return (
     <div className="py-16 space-y-24">
       {/* Hero Section */}
@@ -72,18 +116,125 @@ export function TestnetView() {
         <div className="flex flex-wrap items-center justify-center gap-4 mb-12">
           <div className="px-4 py-2 rounded-lg bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5">
             <div className="text-2xl font-mono font-bold bg-gradient-to-r from-pink-500 to-indigo-500 dark:from-pink-400 dark:to-indigo-400 bg-clip-text text-transparent">
-              1.68 Ggas/sec
+              2 Ggas/block
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400">
-              Performance
+              Max Block Size
             </div>
           </div>
           <div className="px-4 py-2 rounded-lg bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5">
             <div className="text-2xl font-mono font-bold bg-gradient-to-r from-pink-500 to-indigo-500 dark:from-pink-400 dark:to-indigo-400 bg-clip-text text-transparent">
-              15ms
+              10ms
             </div>
             <div className="text-sm text-gray-600 dark:text-gray-400">
-              Block Time
+              Mini Block Time
+            </div>
+          </div>
+        </div>
+
+        {/* Network Information Card */}
+        <div className="max-w-2xl mx-auto p-6 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <h3 className="text-lg font-medium text-foreground">
+              Network Information
+            </h3>
+            <button
+              onClick={addToWallet}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-500/10 via-indigo-500/10 to-purple-500/10 hover:from-blue-500/20 hover:via-indigo-500/20 hover:to-purple-500/20 dark:from-blue-500/20 dark:via-indigo-500/20 dark:to-purple-500/20 dark:hover:from-blue-500/30 dark:hover:via-indigo-500/30 dark:hover:to-purple-500/30 border border-blue-500/20 hover:border-blue-500/30 dark:border-blue-500/30 dark:hover:border-blue-500/40 text-blue-700 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-all duration-300 text-sm font-medium shadow-sm hover:shadow backdrop-blur-sm group"
+            >
+              <Rabbit className="w-4 h-4" />
+              Add to Wallet
+              <svg
+                className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-[1fr,auto] gap-6 sm:gap-x-8">
+            <div>
+              <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+                Network Name
+              </div>
+              <div className="font-mono text-sm">MegaETH Testnet</div>
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between mb-1">
+                <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                  RPC URL
+                </div>
+                <button
+                  onClick={() =>
+                    handleCopy("https://carrot.megaeth.com/rpc", "rpc")
+                  }
+                  className="text-xs text-blue-500 hover:text-blue-600"
+                >
+                  {showCopied === "rpc" ? "Copied!" : "Copy"}
+                </button>
+              </div>
+              <div className="font-mono text-sm truncate max-w-[280px]">
+                https://carrot.megaeth.com/rpc
+              </div>
+            </div>
+
+            <div>
+              <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+                Chain ID
+              </div>
+              <div className="font-mono text-sm">6342</div>
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between mb-1">
+                <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                  WebSocket
+                </div>
+                <button
+                  onClick={() =>
+                    handleCopy("wss://carrot.megaeth.com/ws", "ws")
+                  }
+                  className="text-xs text-blue-500 hover:text-blue-600"
+                >
+                  {showCopied === "ws" ? "Copied!" : "Copy"}
+                </button>
+              </div>
+              <div className="font-mono text-sm truncate max-w-[280px]">
+                wss://carrot.megaeth.com/ws
+              </div>
+            </div>
+
+            <div className="col-span-1 sm:col-span-2">
+              <div className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+                Block Explorers
+              </div>
+              <div className="space-y-1">
+                <a
+                  href="https://uptime.megaeth.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-sm text-blue-500 hover:text-blue-600"
+                >
+                  Performance Dashboard ↗
+                </a>
+                <a
+                  href="https://megaexplorer.xyz"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-sm text-blue-500 hover:text-blue-600"
+                >
+                  Community Explorer ↗
+                </a>
+              </div>
             </div>
           </div>
         </div>
