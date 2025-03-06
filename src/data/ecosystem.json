@@ -8,7 +8,8 @@
       "description": "A mobile-first derivatives trading platform",
       "category": "DeFi",
       "megaMafia": true,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Autonomous World Engine",
@@ -18,7 +19,8 @@
       "description": "An autonomous world engine to power 3D experience",
       "category": "Gaming",
       "megaMafia": true,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Sweep",
@@ -28,7 +30,8 @@
       "description": "A prediction market for streamers",
       "category": "Gaming",
       "megaMafia": true,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Avon",
@@ -37,7 +40,8 @@
       "description": "A lending protocol based on a composable CLOB",
       "category": "DeFi",
       "megaMafia": true,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Funes",
@@ -46,7 +50,8 @@
       "description": "An online museum for all human constructions",
       "category": "Infrastructure",
       "megaMafia": true,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "NectarAI",
@@ -56,7 +61,8 @@
       "description": "A platform focused on creating virtual companions",
       "category": "AI",
       "megaMafia": true,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Lemonade",
@@ -65,7 +71,8 @@
       "description": "An on-chain toolkit for creating events, managing communities",
       "category": "Community",
       "megaMafia": true,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Hop Network",
@@ -74,7 +81,8 @@
       "description": "A fully on-chain VPN",
       "category": "Infrastructure",
       "megaMafia": true,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Noise",
@@ -83,7 +91,8 @@
       "description": "Discover and trade trends",
       "category": "DeFi",
       "megaMafia": true,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Showdown",
@@ -93,7 +102,8 @@
       "description": "An on-chain and physical trading card game",
       "category": "Gaming",
       "megaMafia": true,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Pump Party",
@@ -102,7 +112,8 @@
       "description": "A live, interactive gameshow where users can win prizes",
       "category": "Gaming",
       "megaMafia": true,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Valhalla",
@@ -112,7 +123,8 @@
       "description": "A fully on-chain and composable perpetual DEX",
       "category": "DeFi",
       "megaMafia": true,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "GTE",
@@ -122,7 +134,8 @@
       "description": "The world’s fastest decentralized exchange.",
       "category": "DeFi",
       "megaMafia": true,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "CAP",
@@ -133,7 +146,8 @@
       "description": "A stablecoin engine to democratize sophiscated yield strategies",
       "category": "DeFi",
       "megaMafia": true,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Teko",
@@ -143,7 +157,8 @@
       "description": "A money market with leveraged strategies + margin trading",
       "category": "DeFi",
       "megaMafia": true,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Alien Rabbits",
@@ -151,7 +166,8 @@
       "description": "NFT collection",
       "category": "NFT",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Biomes",
@@ -161,7 +177,8 @@
       "description": "An autonomous world. On-chain Minecraft",
       "category": "Gaming",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Bright Union",
@@ -172,7 +189,8 @@
       "description": "Compare, buy, and manage insurance for DeFi assets",
       "category": "DeFi",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Bronto",
@@ -181,7 +199,8 @@
       "description": "The native concentrated liquidity layer of MegaETH",
       "category": "DeFi",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "ComLayer",
@@ -190,7 +209,8 @@
       "description": "A communication layer for anonymous messaging and more",
       "category": "Infrastructure",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Kingdomly",
@@ -200,7 +220,8 @@
       "description": "An NFT marketplace and launchpad",
       "category": "NFT",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Kontos Protocol",
@@ -211,7 +232,8 @@
       "description": "A ZK and omnichain abstraction layer",
       "category": "Infrastructure",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Mega Buddies",
@@ -219,7 +241,8 @@
       "description": "NFT collection",
       "category": "NFT",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Mega Cheetah",
@@ -228,7 +251,8 @@
       "description": "NFT collection",
       "category": "NFT",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "MegaBot",
@@ -236,7 +260,8 @@
       "description": "Trading and sniping Telegram Bot",
       "category": "DeFi",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "MegaDex Labs",
@@ -245,7 +270,8 @@
       "description": "A V3 concentrated liquidity AMM",
       "category": "DeFi",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "MegaFrog",
@@ -253,7 +279,8 @@
       "description": "NFT collection",
       "category": "NFT",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "MegaHub",
@@ -262,7 +289,8 @@
       "description": "MegaETH ecosystem news and content, all in one place: curated insights & original content",
       "category": "Community",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "MegaPunks",
@@ -270,7 +298,8 @@
       "description": "NFT collection",
       "category": "NFT",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "MegaRabbits",
@@ -279,7 +308,8 @@
       "description": "NFT collection",
       "category": "NFT",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Megaton",
@@ -287,7 +317,8 @@
       "description": "An exchange built to save Ethereum",
       "category": "DeFi",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Mekaeth",
@@ -295,7 +326,8 @@
       "description": "NFT collection + AI agents",
       "category": "NFT",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Newzilla",
@@ -303,7 +335,8 @@
       "description": "NFT collection",
       "category": "NFT",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Paw",
@@ -311,7 +344,8 @@
       "description": "NFT collection",
       "category": "NFT",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Rabbit Mafia",
@@ -319,7 +353,8 @@
       "description": "NFT collection",
       "category": "NFT",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "RainMakr",
@@ -327,7 +362,8 @@
       "description": "A launchpad for AI agents, memecoins and top tier projects",
       "category": "AI",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Ren",
@@ -337,7 +373,8 @@
       "description": "An interoperability protocol for BTC holders to interact with DeFi",
       "category": "DeFi",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "StakeStone",
@@ -348,7 +385,8 @@
       "description": "Liquid staking for Ethereum and Bitcoin",
       "category": "DeFi",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "StackUp",
@@ -356,7 +394,8 @@
       "description": "A yield aggregator",
       "category": "DeFi",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Yield Dot Fun",
@@ -364,7 +403,8 @@
       "description": "A multichain yield aggregator with AI agents",
       "category": "DeFi",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Battlefold",
@@ -373,7 +413,8 @@
       "description": "A strategy guessing game",
       "category": "Gaming",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Dx Protocol",
@@ -382,7 +423,8 @@
       "description": "A decentralized hosting network",
       "category": "Infrastructure",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Digit Rabbits",
@@ -390,7 +432,8 @@
       "description": "NFT collection",
       "category": "NFT",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Mega Babe",
@@ -398,7 +441,8 @@
       "description": "NFT collection",
       "category": "NFT",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Mega Names",
@@ -406,7 +450,8 @@
       "description": "Name Service (.mega)",
       "category": "Infrastructure",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "MAI",
@@ -415,7 +460,8 @@
       "description": "AI agents for predictive markets and DeFi.",
       "category": "AI",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Chainbills",
@@ -425,7 +471,8 @@
       "description": "A cross-chain crypto payment gateway.",
       "category": "Infrastructure",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Stryke",
@@ -436,7 +483,8 @@
       "description": "An options trading platform.",
       "category": "DeFi",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "3700 (Eternal AI)",
@@ -445,7 +493,8 @@
       "description": "A Peer-to-Peer Autonomous Agent Protocol.",
       "category": "AI",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Brickbank",
@@ -456,7 +505,8 @@
       "description": "Stablecoin yield through RWA.",
       "category": "DeFi",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Shogun",
@@ -467,7 +517,8 @@
       "description": "Trade any token on any chain from one bot.",
       "category": "DeFi",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Magpie Protocol",
@@ -478,7 +529,8 @@
       "description": "Aggregation infra for DEXs, LSTs and chains.",
       "category": "Infrastructure",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Ajna",
@@ -488,7 +540,8 @@
       "description": "Peer to pool, oracleless, permissionless lending protocol.",
       "category": "DeFi",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "tBTC",
@@ -499,7 +552,8 @@
       "description": "BTC wrapper for DeFi composability.",
       "category": "DeFi",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Yelay",
@@ -509,7 +563,8 @@
       "description": "A yield aggregator and optimizer.",
       "category": "DeFi",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "PERQ",
@@ -520,7 +575,8 @@
       "description": "A yield aggregator and optimizer.",
       "category": "DeFi",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Wysdom",
@@ -529,7 +585,8 @@
       "description": "All-in-one Notion-like platform for Web3 research & development.",
       "category": "Infrastructure",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Orange Finance",
@@ -539,7 +596,8 @@
       "description": "Liquidity Management Protocol for LPDfi.",
       "category": "DeFi",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Blockend",
@@ -548,7 +606,8 @@
       "description": "Infrastructure, tools and APIs for a simpler Web3.",
       "category": "Infrastructure",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "XR One",
@@ -559,7 +618,8 @@
       "description": "PvP Web3 games.",
       "category": "Gaming",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Jones DAO",
@@ -569,7 +629,8 @@
       "description": "Exotic DeFi strategies and v3 ALMs.",
       "category": "DeFi",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Lanca",
@@ -579,7 +640,8 @@
       "description": "Fast and decentralized cross chain transactions.",
       "category": "Infrastructure",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Mellow",
@@ -589,7 +651,8 @@
       "description": "A platform for creation of permissionless onchain structured products.",
       "category": "DeFi",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "PistachioFi",
@@ -600,7 +663,8 @@
       "description": "The personal finance app to passively earn yield.",
       "category": "DeFi",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Gearbox Protocol",
@@ -611,7 +675,8 @@
       "description": "A permissionless credit layer app.",
       "category": "DeFi",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Kaiju Finance",
@@ -621,7 +686,8 @@
       "description": "Lending for spending.",
       "category": "DeFi",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Sirio",
@@ -630,7 +696,8 @@
       "description": "The unified Web3 Experience Hub.",
       "category": "Infrastructure",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Zeru",
@@ -641,7 +708,8 @@
       "description": "A 100% onchain decentralized credit economy.",
       "category": "DeFi",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Jackpot",
@@ -649,7 +717,8 @@
       "description": "Play fun games, high stakes high payouts, zero downside.",
       "category": "Gaming",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Summerstone",
@@ -658,7 +727,8 @@
       "description": "Friendly Liquity fork on MegaETH.",
       "category": "DeFi",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Rarible",
@@ -667,7 +737,8 @@
       "description": "A marketplace for NFTs.",
       "category": "NFT",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "XL",
@@ -676,7 +747,8 @@
       "description": "Memecoin launcher.",
       "category": "Meme",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Fluffle Tools xultra.fun",
@@ -685,7 +757,8 @@
       "description": "The website you are browsing right now kek.",
       "category": "Community",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Stork",
@@ -695,7 +768,8 @@
       "description": "Oracle provider for on-chain data.",
       "category": "Infrastructure",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "MegaETH Times",
@@ -704,7 +778,8 @@
       "description": "Check out the latest news on MegaETH.",
       "category": "Community",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "ShinyEX",
@@ -714,7 +789,8 @@
       "description": "Your favourite NFT Hub.",
       "category": "NFT",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Hyperfy",
@@ -724,15 +800,17 @@
       "description": "An open source, multichain layer for immersive games and experiences.",
       "category": "Gaming",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
-      "name": "Mega Rabbi",
-      "twitter": "mega_rabbi",
+      "name": "Meganacci",
+      "twitter": "meganacci",
       "description": "A free mint NFT collection.",
       "category": "NFT",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "Covenant",
@@ -742,7 +820,8 @@
       "description": "Liquid, tradeable debt markets to borrow and lend against any tokenized asset.",
       "category": "DeFi",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Guess.best",
@@ -752,7 +831,8 @@
       "description": "Guessing what the world thinks, one choice at a time.",
       "category": "Gaming",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "games.fun",
@@ -761,7 +841,8 @@
       "description": "Social engagement platform based around mini-games, social interaction, questing, prizing, and more.",
       "category": "Gaming",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Bebop",
@@ -771,7 +852,8 @@
       "description": "Seamless and efficient crypto trading for everyone.",
       "category": "DeFi",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     },
     {
       "name": "Mega Docs",
@@ -780,7 +862,8 @@
       "description": "Community docs for MegaETH: understand the tech, explore the ecosystem.",
       "category": "Community",
       "megaMafia": false,
-      "native": true
+      "native": true,
+      "testnet": false
     },
     {
       "name": "NFTs2Me",
@@ -791,7 +874,8 @@
       "description": "A user-friendly platform to create, deploy and manage your NFT collections on MegaETH.",
       "category": "NFT",
       "megaMafia": false,
-      "native": false
+      "native": false,
+      "testnet": false
     }
   ]
 }
