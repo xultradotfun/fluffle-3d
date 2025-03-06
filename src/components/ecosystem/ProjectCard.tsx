@@ -180,14 +180,15 @@ export function ProjectCard({ project, isLoadingVotes }: ProjectCardProps) {
             {project.description}
           </p>
 
-          <div className="flex items-end justify-between gap-4 mt-auto pt-4 border-t border-gray-200/80 dark:border-white/[0.06]">
-            <ProjectLinks
-              website={project.website}
-              discord={project.discord}
-              telegram={project.telegram}
-            />
-
-            <div className="flex items-center gap-3 ml-auto">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-auto pt-4 border-t border-gray-200/80 dark:border-white/[0.06]">
+            <div className="flex items-center gap-3">
+              <ProjectLinks
+                website={project.website}
+                discord={project.discord}
+                telegram={project.telegram}
+              />
+            </div>
+            <div className="flex-shrink-0 self-end sm:self-auto">
               <ProjectVoting
                 votes={votes}
                 userVote={userVote}
