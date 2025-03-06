@@ -1,7 +1,7 @@
 "use client";
 
 import { type VariantProps, cva } from "class-variance-authority";
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils";
 
 const cardVariants = cva(
   "rounded-2xl border bg-card text-card-foreground shadow-sm transition-all duration-200",
