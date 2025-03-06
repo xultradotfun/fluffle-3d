@@ -199,7 +199,7 @@ export default function Hero() {
                   </a>
 
                   <a
-                    href="https://twitter.com/0x_ultra"
+                    href="https://x.com/intent/follow?screen_name=0x_ultra"
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`flex items-center gap-1.5 sm:gap-2 transition-all duration-300 ${
@@ -273,7 +273,7 @@ export default function Hero() {
                     </span>
                   </a>
                   <a
-                    href="https://twitter.com/0x_ultra"
+                    href="https://x.com/intent/follow?screen_name=0x_ultra"
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`flex items-center gap-1.5 sm:gap-2 transition-all duration-300 ${
