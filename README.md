@@ -231,4 +231,4 @@ Key points:
 
 - [Website](https://fluffletools.com)
 - [OpenSea Collection](https://opensea.io/collection/megaeth-nft-1)
-- [Twitter](https://twitter.com/0x_ultra)
+- [Twitter](https://x.com/0x_ultra)

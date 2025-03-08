@@ -58,7 +58,7 @@ export function ProjectHeader({
             {category}
           </span>
           <a
-            href={`https://twitter.com/${twitter}`}
+            href={`https://x.com/${twitter}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"

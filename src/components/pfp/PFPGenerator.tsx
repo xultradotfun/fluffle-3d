@@ -236,7 +236,7 @@ export function PFPGenerator() {
             <span className="text-gray-500 dark:text-gray-400">
               Design by{" "}
               <a
-                href="https://twitter.com/juliencoppola"
+                href="https://x.com/juliencoppola"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-purple-600 dark:text-purple-400 hover:text-pink-600 dark:hover:text-pink-400 transition-colors font-medium"
