@@ -876,6 +876,16 @@
       "megaMafia": false,
       "native": false,
       "testnet": false
+    },
+    {
+      "name": "Gasyard",
+      "twitter": "gasyardfi",
+      "discord": "https://discord.gg/VRWHZwPmbK",
+      "description": "Intent-based, cross-VM bridge enabling fast, seamless asset transfers across EVM, Solana & more.",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
     }
   ]
 }
