@@ -886,6 +886,17 @@
       "megaMafia": false,
       "native": false,
       "testnet": false
+    },
+    {
+      "name": "ITS",
+      "twitter": "megatruther",
+      "website": "https://www.imaginethesmell.xyz/",
+      "telegram": "https://t.me/+UQIoB7pviIxjYjFk",
+      "description": "MULTIPLE INTELLIGENCE OPERATIVES ARE TRIANGULATING ON YOUR LOCATION. IF YOU DON'T HAVE A PROXY ATTACHED WITH RDP CONNECTION YOU ARE NOW A TARGET.",
+      "category": "Gaming",
+      "megaMafia": false,
+      "native": true,
+      "testnet": false
     }
   ]
 }
