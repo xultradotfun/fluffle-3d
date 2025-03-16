@@ -21,6 +21,13 @@ import {
   AnimationClip,
   Clock,
   LoopRepeat,
+  Bone,
+  SkinnedMesh,
+  Skeleton,
+  MeshToonMaterial,
+  TextureLoader,
+  KeyframeTrack,
+  AnimationAction,
 } from "three";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 
@@ -85,77 +92,50 @@ const BONE_MAP: Record<string, string> = {
 // Add animation cache at the top with other constants
 const animationCache = new Map<string, AnimationClip>();
 
-function retargetAnimation(clip: AnimationClip): AnimationClip {
-  const unmappedBones = new Set<string>();
-  const validTracks = clip.tracks.filter((track) => {
-    const [boneName, propertyName] = track.name.split(".");
+function retargetAnimation(
+  clip: AnimationClip,
+  boneCache: BoneCache
+): AnimationClip {
+  const tracks = clip.tracks
+    .filter((track) => {
+      const [boneName] = track.name.split(".");
+      return BONE_MAP[boneName] !== undefined;
+    })
+    .map((track) => {
+      const [boneName, ...propertyParts] = track.name.split(".");
+      const vrmBone = boneCache.mapAnimationBone(boneName);
 
-    // Skip tracks for bones we know don't exist in our model
-    const skipBones = [
-      "LeftBreast",
-      "RightBreast",
-      "Backpack-bone",
-      "Backpack-zipper",
-      "LeftToeEnd",
-      "RightToeEnd",
-      "RightHandPinky4",
-    ];
-    if (skipBones.includes(boneName)) {
-      return false;
-    }
+      if (!vrmBone) return null;
 
-    // If we have a mapping for this bone, include the track
-    const vrmBoneName = BONE_MAP[boneName];
-    if (vrmBoneName) {
-      return true;
-    }
+      const newTrack = track.clone();
+      newTrack.name = `${vrmBone.name}.${propertyParts.join(".")}`;
+      return newTrack;
+    })
+    .filter((track): track is KeyframeTrack => track !== null);
 
-    // Track bones we couldn't map for debugging
-    unmappedBones.add(boneName);
-    return false;
-  });
-
-  const tracks = validTracks.map((track) => {
-    const [boneName, ...propertyParts] = track.name.split(".");
-    const vrmBoneName = BONE_MAP[boneName];
-
-    const newTrack = track.clone();
-    newTrack.name = `${vrmBoneName}.${propertyParts.join(".")}`;
-    return newTrack;
-  });
-
-  // Log unmapped bones once per animation with more context
-  if (unmappedBones.size > 0) {
-    console.debug(
-      `Animation "${clip.name}" has unmapped bones:`,
-      Array.from(unmappedBones).sort(),
-      `\nTotal tracks: ${clip.tracks.length}`,
-      `\nValid tracks: ${tracks.length}`,
-      `\nFiltered tracks: ${clip.tracks.length - tracks.length}`
-    );
-  }
-
-  const retargetedClip = new AnimationClip(clip.name, clip.duration, tracks);
-  return retargetedClip;
+  return new AnimationClip(clip.name, clip.duration, tracks);
 }
 
+// Modify AnimationContextType to include raw animations
 interface AnimationContextType {
   currentClip: AnimationClip | null;
   setCurrentClip: (clip: AnimationClip) => void;
   isLoadingAnimations: boolean;
+  rawAnimations: AnimationClip[];
 }
 
 const AnimationContext = createContext<AnimationContextType>({
   currentClip: null,
   setCurrentClip: () => {},
   isLoadingAnimations: true,
+  rawAnimations: [],
 });
 
 function AnimationProvider({ children }: { children: React.ReactNode }) {
   const [currentClip, setCurrentClip] = useState<AnimationClip | null>(null);
   const [animationIndex, setAnimationIndex] = useState(0);
   const [isLoadingAnimations, setIsLoadingAnimations] = useState(true);
-  const animationsRef = useRef<AnimationClip[]>([]);
+  const [rawAnimations, setRawAnimations] = useState<AnimationClip[]>([]);
   const loadingRef = useRef(false);
 
   useEffect(() => {
@@ -166,23 +146,11 @@ function AnimationProvider({ children }: { children: React.ReactNode }) {
       setIsLoadingAnimations(true);
       const fbxLoader = new FBXLoader();
       let loadedCount = 0;
+      const animations: AnimationClip[] = [];
 
       try {
         await Promise.all(
           ANIMATIONS.map((animUrl, index) => {
-            // Check cache first
-            const cachedAnimation = animationCache.get(animUrl);
-            if (cachedAnimation) {
-              animationsRef.current[index] = cachedAnimation;
-              loadedCount++;
-              if (loadedCount === ANIMATIONS.length) {
-                setCurrentClip(animationsRef.current[0]);
-                setIsLoadingAnimations(false);
-              }
-              return Promise.resolve();
-            }
-
-            // Load if not cached
             return new Promise<void>((resolve, reject) => {
               fbxLoader.load(
                 animUrl,
@@ -190,15 +158,11 @@ function AnimationProvider({ children }: { children: React.ReactNode }) {
                   if (fbx.animations.length > 0) {
                     const clip = fbx.animations[0];
                     clip.name = `animation_${index}`;
-                    const retargetedClip = retargetAnimation(clip);
-
-                    // Cache the animation
-                    animationCache.set(animUrl, retargetedClip);
-                    animationsRef.current[index] = retargetedClip;
+                    animations[index] = clip;
 
                     loadedCount++;
                     if (loadedCount === ANIMATIONS.length) {
-                      setCurrentClip(animationsRef.current[0]);
+                      setRawAnimations(animations);
                       setIsLoadingAnimations(false);
                     }
                   }
@@ -232,7 +196,6 @@ function AnimationProvider({ children }: { children: React.ReactNode }) {
       const timer = setTimeout(() => {
         const nextIndex = (animationIndex + 1) % ANIMATIONS.length;
         setAnimationIndex(nextIndex);
-        setCurrentClip(animationsRef.current[nextIndex]);
       }, duration * 1000);
 
       return () => clearTimeout(timer);
@@ -241,11 +204,92 @@ function AnimationProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AnimationContext.Provider
-      value={{ currentClip, setCurrentClip, isLoadingAnimations }}
+      value={{
+        currentClip,
+        setCurrentClip,
+        isLoadingAnimations,
+        rawAnimations,
+      }}
     >
       {children}
     </AnimationContext.Provider>
   );
+}
+
+// Add BoneCache class before VRMModel
+class BoneCache {
+  private avatarBones: Record<string, Bone> = {};
+  private clothesBones: Record<string, Record<string, Bone>> = {};
+  private clothesMesh: Record<string, Record<string, SkinnedMesh>> = {};
+  private skeleton: Skeleton | null = null;
+  private humanoid: any = null; // VRM humanoid reference
+
+  public setHumanoid(humanoid: any) {
+    this.humanoid = humanoid;
+  }
+
+  public getHumanBoneNode(boneName: string): Bone | null {
+    return this.humanoid?.getBoneNode(boneName) || null;
+  }
+
+  public mapAnimationBone(mixamoBoneName: string): Bone | null {
+    // Map Mixamo bones to VRM bones
+    const vrmBoneName = BONE_MAP[mixamoBoneName];
+    if (!vrmBoneName) return null;
+
+    // Get the actual bone from VRM humanoid
+    return this.getHumanBoneNode(vrmBoneName);
+  }
+
+  public setAvatarBone(name: string, bone: Bone) {
+    this.avatarBones[name] = bone;
+  }
+
+  public setBaseSkeleton(skeleton: Skeleton) {
+    this.skeleton = skeleton;
+  }
+
+  public addClothesBone = (node: Bone, category: string) => {
+    if (this.clothesBones[category]) {
+      delete this.clothesBones[category][node.name];
+    }
+    if (!this.clothesBones[category]) {
+      this.clothesBones[category] = {};
+    }
+    if (!this.clothesBones[category][node.name]) {
+      this.clothesBones[category][node.name] = node;
+    }
+  };
+
+  public addClothesMesh = (node: SkinnedMesh, category: string) => {
+    if (this.clothesMesh[category]) {
+      delete this.clothesMesh[category];
+    }
+    if (this.skeleton) {
+      if (!this.clothesMesh[category]) {
+        this.clothesMesh[category] = {};
+      }
+      if (!this.clothesMesh[category][node.name]) {
+        this.clothesMesh[category][node.name] = node;
+      }
+      // Map clothes bones to the avatar bones
+      const boneArray = node.skeleton.bones;
+      for (let i = 0; i < boneArray.length; i++) {
+        const name = boneArray[i].name;
+        if (this.avatarBones[name]) {
+          boneArray[i] = this.avatarBones[name];
+        }
+      }
+      this.clothesMesh[category][node.name].skeleton = node.skeleton;
+    }
+  };
+
+  public clear() {
+    this.avatarBones = {};
+    this.clothesBones = {};
+    this.clothesMesh = {};
+    this.skeleton = null;
+  }
 }
 
 // Modify the model cache to include progress callbacks
@@ -270,18 +314,129 @@ function VRMModel({
   onLoaded,
   onProgress,
   isComplete,
-}: VRMModelProps) {
+  isBaseModel = false,
+}: VRMModelProps & { isBaseModel?: boolean }) {
   const vrmRef = useRef<VRM>();
   const gltfRef = useRef<GLTF>();
   const sceneRef = useRef<Group>(null);
   const mixerRef = useRef<AnimationMixer>();
-  const clockRef = useRef(new Clock());
-  const { currentClip, isLoadingAnimations } = useContext(AnimationContext);
-  const hasInitialized = useRef(false);
+  const clockRef = useRef<Clock>(new Clock());
+  const boneCache = useRef<BoneCache>(new BoneCache());
+  const { rawAnimations, currentClip, setCurrentClip, isLoadingAnimations } =
+    useContext(AnimationContext);
+  const retargetedAnimationsRef = useRef<AnimationClip[]>([]);
+  const currentActionRef = useRef<AnimationAction | null>(null);
+
+  // Function to process the base model
+  const processBaseModel = (vrm: VRM) => {
+    if (!isBaseModel) return;
+
+    // Store humanoid reference
+    boneCache.current.setHumanoid(vrm.humanoid);
+
+    // Cache all bones from the base model
+    vrm.scene.traverse((node) => {
+      if (node instanceof Bone) {
+        boneCache.current.setAvatarBone(node.name, node);
+      }
+      if (node instanceof SkinnedMesh) {
+        boneCache.current.setBaseSkeleton(node.skeleton);
+      }
+    });
+  };
+
+  // Function to load clothes/accessories
+  const loadClothes = async (scene: Group, category: string) => {
+    if (!scene || isBaseModel) return;
+
+    scene.traverse(async (node: any) => {
+      // Handle bones
+      if (node instanceof Bone) {
+        boneCache.current.addClothesBone(node, category);
+      }
+
+      // Handle meshes
+      if (node instanceof SkinnedMesh) {
+        boneCache.current.addClothesMesh(node, category);
+      }
+
+      // Handle materials (simplified version - expand based on needs)
+      if (node.material) {
+        const oldMat = node.material;
+        const toonMat = new MeshToonMaterial({
+          transparent: true,
+          color: "#ffffff",
+          gradientMap: new TextureLoader().load("/three-tone.jpg"),
+        });
+        toonMat.map = oldMat.map;
+        node.material = toonMat;
+      }
+    });
+  };
+
+  // Effect to handle animation retargeting when VRM and animations are ready
+  useEffect(() => {
+    if (
+      isBaseModel &&
+      vrmRef.current &&
+      rawAnimations.length > 0 &&
+      !isLoadingAnimations
+    ) {
+      console.log("Retargeting animations...");
+      // Retarget all animations
+      retargetedAnimationsRef.current = rawAnimations.map((clip) =>
+        retargetAnimation(clip, boneCache.current)
+      );
+
+      // Set the first animation as current if none is set
+      if (!currentClip) {
+        console.log("Setting initial animation");
+        setCurrentClip(retargetedAnimationsRef.current[0]);
+      }
+    }
+  }, [
+    isBaseModel,
+    rawAnimations,
+    isLoadingAnimations,
+    setCurrentClip,
+    currentClip,
+  ]);
+
+  // Effect to handle animation changes
+  useEffect(() => {
+    if (!isBaseModel || !vrmRef.current || !mixerRef.current || !currentClip)
+      return;
+
+    console.log("Applying animation:", currentClip.name);
+
+    // Stop any current animation
+    if (currentActionRef.current) {
+      currentActionRef.current.stop();
+    }
+
+    // Find the retargeted version of the current clip
+    const retargetedClip = retargetedAnimationsRef.current.find(
+      (clip) => clip.name === currentClip.name
+    );
+
+    if (retargetedClip) {
+      // Create and play the new animation
+      const action = mixerRef.current.clipAction(retargetedClip);
+      action.setEffectiveTimeScale(0.6);
+      action.setLoop(LoopRepeat, Infinity);
+      action.clampWhenFinished = false;
+      action.play();
+
+      // Store the current action
+      currentActionRef.current = action;
+    }
+  }, [currentClip, isBaseModel]);
 
   // Animation and VRM update effect
   useEffect(() => {
     if (vrmRef.current && isComplete && !isLoadingAnimations) {
+      console.log("Initializing animation system");
+
       // Ensure VRM is properly initialized
       VRMUtils.rotateVRM0(vrmRef.current);
 
@@ -306,17 +461,21 @@ function VRMModel({
         action.setLoop(LoopRepeat, Infinity);
         action.clampWhenFinished = false;
         action.play();
-      } else {
-        console.log(
-          "No built-in VRM animations found, using external animation"
+        currentActionRef.current = action;
+      } else if (currentClip && isBaseModel) {
+        console.log("Using external animation:", currentClip.name);
+        // Find the retargeted version of the current clip
+        const retargetedClip = retargetedAnimationsRef.current.find(
+          (clip) => clip.name === currentClip.name
         );
-        // Fall back to external animation if available
-        if (currentClip) {
-          const action = mixerRef.current.clipAction(currentClip);
+
+        if (retargetedClip) {
+          const action = mixerRef.current.clipAction(retargetedClip);
           action.setEffectiveTimeScale(0.6);
           action.setLoop(LoopRepeat, Infinity);
           action.clampWhenFinished = false;
           action.play();
+          currentActionRef.current = action;
         }
       }
 
@@ -325,7 +484,7 @@ function VRMModel({
         vrmRef.current.springBoneManager.reset();
       }
     }
-  }, [currentClip, isComplete, isLoadingAnimations]);
+  }, [isComplete, isLoadingAnimations, isBaseModel, currentClip]);
 
   useEffect(() => {
     const loadModel = async () => {
@@ -351,10 +510,9 @@ function VRMModel({
             url,
             async (gltf: GLTF) => {
               const vrm = gltf.userData.vrm;
-              // Store the GLTF reference
               gltfRef.current = gltf;
 
-              // Initialize VRM immediately after load
+              // Initialize VRM
               VRMUtils.rotateVRM0(vrm);
               if (vrm.humanoid) {
                 vrm.humanoid.resetPose();
@@ -363,13 +521,14 @@ function VRMModel({
                 vrm.springBoneManager.reset();
               }
 
-              // Log animation info
-              if (gltf.animations?.length > 0) {
-                console.log("VRM animations found:", {
-                  count: gltf.animations.length,
-                  names: gltf.animations.map((a) => a.name),
-                  durations: gltf.animations.map((a) => a.duration),
-                });
+              // Process as base model or clothes
+              if (isBaseModel) {
+                processBaseModel(vrm);
+              } else {
+                // Extract category from URL or pass it as a prop
+                const category =
+                  url.split("/").pop()?.split(".")[0] || "default";
+                await loadClothes(vrm.scene, category);
               }
 
               resolvePromise(vrm);
@@ -429,6 +588,8 @@ function VRMModel({
           }
         });
       }
+      // Clear bone cache on cleanup
+      boneCache.current.clear();
     };
   }, [url]);
 
@@ -650,7 +811,7 @@ export default function VRMViewer({ modelUrls }: { modelUrls: string[] }) {
             far={4}
           />
 
-          {modelUrls.map((url) => (
+          {modelUrls.map((url, index) => (
             <VRMModel
               key={url}
               url={url}
@@ -658,6 +819,7 @@ export default function VRMViewer({ modelUrls }: { modelUrls: string[] }) {
               onLoaded={() => handleModelLoaded(url)}
               onProgress={(progress) => handleProgress(url, progress)}
               isComplete={isCharacterComplete(url)}
+              isBaseModel={index === 0} // Assume first model is base model
             />
           ))}
 
