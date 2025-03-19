@@ -11,6 +11,7 @@ import {
   Globe,
   X,
   FlaskConical,
+  Wrench,
 } from "lucide-react";
 
 interface ViewSwitcherProps {
@@ -20,14 +21,23 @@ interface ViewSwitcherProps {
     | "pfp"
     | "metaverse"
     | "ecosystem"
-    | "testnet";
+    | "testnet"
+    | "build";
   onViewChange: (
-    view: "viewer" | "analytics" | "pfp" | "metaverse" | "ecosystem" | "testnet"
+    view:
+      | "viewer"
+      | "analytics"
+      | "pfp"
+      | "metaverse"
+      | "ecosystem"
+      | "testnet"
+      | "build"
   ) => void;
 }
 
 export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isTestnetMenuOpen, setIsTestnetMenuOpen] = useState(false);
 
   return (
     <>
@@ -48,20 +58,57 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
           </button>
 
           {/* Testnet Section */}
-          <button
-            onClick={() => onViewChange("testnet")}
-            className={`flex items-center justify-start gap-2.5 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
-              activeView === "testnet"
-                ? "bg-gradient-to-r from-violet-50 to-purple-50 text-violet-600 border border-violet-200/50 shadow-sm dark:from-violet-500/20 dark:to-violet-500/10 dark:text-violet-400 dark:border-violet-500/20"
-                : "text-gray-600 hover:text-gray-900 hover:bg-white/50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-white/[0.08]"
-            }`}
-          >
-            <FlaskConical className="w-4 h-4 flex-shrink-0" />
-            <span className="flex-shrink-0">Testnet</span>
-            <span className="flex-shrink-0 px-1.5 py-0.5 text-[10px] font-medium rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-              New
-            </span>
-          </button>
+          <div className="group relative">
+            <button
+              className={`flex items-center justify-start gap-2.5 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
+                ["testnet", "build"].includes(activeView)
+                  ? "bg-gradient-to-r from-violet-50 to-purple-50 text-violet-600 border border-violet-200/50 shadow-sm dark:from-violet-500/20 dark:to-violet-500/10 dark:text-violet-400 dark:border-violet-500/20"
+                  : "text-gray-600 hover:text-gray-900 hover:bg-white/50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-white/[0.08]"
+              }`}
+            >
+              <FlaskConical className="w-4 h-4 flex-shrink-0" />
+              <span className="flex-shrink-0">Testnet</span>
+              <span className="flex-shrink-0 px-1.5 py-0.5 text-[10px] font-medium rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                New
+              </span>
+              <ChevronDown className="w-4 h-4 ml-1 transition-transform duration-300 ease-in-out group-hover:rotate-180" />
+            </button>
+
+            {/* Testnet Dropdown Menu */}
+            <div className="absolute invisible opacity-0 translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 ease-out z-50 w-60 p-2 bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl rounded-xl shadow-lg border border-gray-200/30 dark:border-white/[0.12] bottom-full left-1/2 -translate-x-1/2 mb-2">
+              <div className="relative space-y-1">
+                <button
+                  onClick={() => onViewChange("testnet")}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    activeView === "testnet"
+                      ? "bg-gradient-to-r from-violet-50/90 to-purple-50/90 text-violet-600 shadow-sm dark:from-violet-500/20 dark:to-violet-500/10 dark:text-violet-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <FlaskConical className="w-4 h-4 flex-shrink-0" />
+                  <span className="flex-1 text-left">Overview</span>
+                  {activeView === "testnet" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />
+                  )}
+                </button>
+                <button
+                  onClick={() => onViewChange("build")}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    activeView === "build"
+                      ? "bg-gradient-to-r from-violet-50/90 to-purple-50/90 text-violet-600 shadow-sm dark:from-violet-500/20 dark:to-violet-500/10 dark:text-violet-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <Wrench className="w-4 h-4 flex-shrink-0" />
+                  <span className="flex-1 text-left">Build</span>
+                  {activeView === "build" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />
+                  )}
+                </button>
+              </div>
+              <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rotate-45 bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl border-b border-r border-gray-200/30 dark:border-white/[0.12]" />
+            </div>
+          </div>
 
           {/* Divider */}
           <div className="w-px h-8 bg-gray-200/70 dark:bg-white/[0.06] mx-1" />
@@ -168,26 +215,29 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
             <span className="text-xs font-medium">Ecosystem</span>
           </button>
 
-          {/* Testnet */}
+          {/* Testnet Button (Mobile) */}
           <button
-            onClick={() => onViewChange("testnet")}
+            onClick={() => setIsTestnetMenuOpen(true)}
             className={`flex flex-col items-center gap-1.5 p-2 rounded-xl transition-all duration-200 ${
-              activeView === "testnet"
+              ["testnet", "build"].includes(activeView)
                 ? "bg-gradient-to-r from-violet-50 to-purple-50 dark:from-violet-500/20 dark:to-violet-500/10 text-violet-600 dark:text-violet-400 shadow-sm"
                 : "text-gray-600 dark:text-gray-300 hover:bg-white/50 dark:hover:bg-white/[0.08]"
             }`}
           >
-            <div
-              className={`relative transition-transform duration-200 ${
-                activeView === "testnet" ? "scale-110" : ""
-              }`}
-            >
-              <FlaskConical className="w-5 h-5" />
+            <div className="relative">
+              <div
+                className={`transition-transform duration-200 ${
+                  ["testnet", "build"].includes(activeView) ? "scale-110" : ""
+                }`}
+              >
+                <FlaskConical className="w-5 h-5" />
+              </div>
               <span className="absolute -top-3.5 -right-6 px-1.5 py-0.5 text-[8px] font-medium rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 shadow-sm">
                 New
               </span>
+              <ChevronDown className="w-3 h-3 absolute -bottom-1 -right-1 bg-white dark:bg-gray-900 rounded-full shadow-sm" />
             </div>
-            <span className="text-xs font-medium">Testnet</span>
+            <span className="text-xs font-medium mt-0.5">Testnet</span>
           </button>
 
           {/* Fluffles Button (Mobile) */}
@@ -217,6 +267,70 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
           </button>
         </div>
       </div>
+
+      {/* Testnet Mobile Menu */}
+      {isTestnetMenuOpen && (
+        <div className="sm:hidden fixed inset-0 z-50 bg-black/10 dark:bg-black/20 backdrop-blur-sm">
+          <div
+            className="absolute inset-x-0 bottom-0 bg-white/90 dark:bg-gray-900/90 rounded-t-2xl shadow-lg backdrop-blur-2xl"
+            style={{ maxHeight: "calc(100vh - 4rem)" }}
+          >
+            <div className="flex items-center justify-between px-4 py-3.5 border-b border-gray-200/30 dark:border-white/[0.12]">
+              <div className="flex items-center gap-2.5">
+                <FlaskConical className="w-4 h-4 text-violet-600 dark:text-violet-400" />
+                <span className="text-sm font-medium">Testnet</span>
+              </div>
+              <button
+                onClick={() => setIsTestnetMenuOpen(false)}
+                className="p-2 -mr-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div
+              className="p-2 overflow-y-auto"
+              style={{ maxHeight: "calc(100vh - 8rem)" }}
+            >
+              <div className="space-y-1">
+                <button
+                  onClick={() => {
+                    onViewChange("testnet");
+                    setIsTestnetMenuOpen(false);
+                  }}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    activeView === "testnet"
+                      ? "bg-gradient-to-r from-violet-50 to-purple-50 text-violet-600 shadow-sm dark:from-violet-500/20 dark:to-violet-500/10 dark:text-violet-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <FlaskConical className="w-5 h-5 flex-shrink-0" />
+                  <span className="flex-1 text-left">Overview</span>
+                  {activeView === "testnet" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />
+                  )}
+                </button>
+                <button
+                  onClick={() => {
+                    onViewChange("build");
+                    setIsTestnetMenuOpen(false);
+                  }}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    activeView === "build"
+                      ? "bg-gradient-to-r from-violet-50 to-purple-50 text-violet-600 shadow-sm dark:from-violet-500/20 dark:to-violet-500/10 dark:text-violet-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <Wrench className="w-5 h-5 flex-shrink-0" />
+                  <span className="flex-1 text-left">Build</span>
+                  {activeView === "build" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (

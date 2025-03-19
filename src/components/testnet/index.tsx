@@ -5,9 +5,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { NetworkInfoCard } from "./NetworkInfoCard";
 import { TimelineSection } from "./TimelineSection";
-import { TabSection } from "./TabSection";
 import { UsersContent } from "./UsersContent";
-import { BuildersContent } from "./BuildersContent";
 import { NETWORK_INFO, TIMELINE_EVENTS } from "./constants";
 
 declare global {
@@ -17,7 +15,6 @@ declare global {
 }
 
 export function TestnetView() {
-  const [activeView, setActiveView] = useState<"users" | "builders">("users");
   const [showCopied, setShowCopied] = useState<string | null>(null);
 
   const getCurrentPhase = () => {
@@ -124,20 +121,9 @@ export function TestnetView() {
         </div>
       </div>
 
-      {/* Tab Section with Content */}
+      {/* User Content Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <TabSection activeView={activeView} setActiveView={setActiveView} />
-        <div className="animate-fade-in mt-6">
-          <div className="relative">
-            <div className="absolute inset-0 opacity-0 pointer-events-none">
-              <UsersContent />
-              <BuildersContent />
-            </div>
-            <div className="relative">
-              {activeView === "users" ? <UsersContent /> : <BuildersContent />}
-            </div>
-          </div>
-        </div>
+        <UsersContent />
       </div>
     </div>
   );

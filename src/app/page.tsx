@@ -9,6 +9,7 @@ import { TraitsAnalyticsDashboard } from "@/components/analytics/TraitsAnalytics
 import { PFPGenerator } from "@/components/pfp/PFPGenerator";
 import { MetaverseTeaser } from "@/components/metaverse/MetaverseTeaser";
 import { TestnetView } from "@/components/testnet/index";
+import { BuildersView } from "@/components/build/index";
 import Hero from "@/components/Hero";
 import type { NFTTrait } from "@/utils/nftLoader";
 import { EcosystemDashboard } from "@/components/ecosystem/EcosystemDashboard";
@@ -22,8 +23,14 @@ interface ViewerData {
 
 export default function Home() {
   const [activeView, setActiveView] = useState<
-    "viewer" | "analytics" | "pfp" | "metaverse" | "ecosystem" | "testnet"
-  >("ecosystem");
+    | "viewer"
+    | "analytics"
+    | "pfp"
+    | "metaverse"
+    | "ecosystem"
+    | "testnet"
+    | "build"
+  >("viewer");
   const [viewers, setViewers] = useState<ViewerData[]>([]);
   const [error, setError] = useState("");
 
@@ -41,8 +48,10 @@ export default function Home() {
       setActiveView("metaverse");
     } else if (hash === "#testnet") {
       setActiveView("testnet");
+    } else if (hash === "#build") {
+      setActiveView("build");
     } else {
-      setActiveView("ecosystem");
+      setActiveView("viewer");
     }
 
     // Listen for hash changes
@@ -58,8 +67,10 @@ export default function Home() {
         setActiveView("metaverse");
       } else if (hash === "#testnet") {
         setActiveView("testnet");
+      } else if (hash === "#build") {
+        setActiveView("build");
       } else {
-        setActiveView("ecosystem");
+        setActiveView("viewer");
       }
     };
 
@@ -69,7 +80,14 @@ export default function Home() {
 
   // Update URL when view changes
   const handleViewChange = (
-    view: "viewer" | "analytics" | "pfp" | "metaverse" | "ecosystem" | "testnet"
+    view:
+      | "viewer"
+      | "analytics"
+      | "pfp"
+      | "metaverse"
+      | "ecosystem"
+      | "testnet"
+      | "build"
   ) => {
     if (view === "viewer") {
       window.history.replaceState(null, "", "/#viewer");
@@ -87,6 +105,8 @@ export default function Home() {
       window.history.replaceState(null, "", "/#metaverse");
     } else if (view === "testnet") {
       window.history.replaceState(null, "", "/#testnet");
+    } else if (view === "build") {
+      window.history.replaceState(null, "", "/#build");
     } else {
       window.history.replaceState(null, "", "/");
       setViewers([]);
@@ -213,6 +233,8 @@ export default function Home() {
           <EcosystemDashboard />
         ) : activeView === "testnet" ? (
           <TestnetView />
+        ) : activeView === "build" ? (
+          <BuildersView />
         ) : (
           <PFPGenerator />
         )}

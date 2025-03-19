@@ -113,6 +113,9 @@ export const UsersContent = () => (
               </span>
             </div>
           </div>
+          <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+            More details on other faucets coming soon.
+          </p>
         </div>
       </div>
     </div>
