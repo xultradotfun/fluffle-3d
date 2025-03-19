@@ -1,3 +1,5 @@
+import { FlaskConical } from "lucide-react";
+
 interface FilterControlsProps {
   selectedCategory: string | null;
   setSelectedCategory: (category: string | null) => void;
@@ -5,6 +7,8 @@ interface FilterControlsProps {
   setShowMegaMafiaOnly: (show: boolean) => void;
   showNativeOnly: boolean;
   setShowNativeOnly: (show: boolean) => void;
+  showTestnetOnly: boolean;
+  setShowTestnetOnly: (show: boolean) => void;
   voteFilter: "all" | "voted" | "not_voted";
   setVoteFilter: (filter: "all" | "voted" | "not_voted") => void;
   categories: string[];
@@ -16,6 +20,7 @@ interface FilterControlsProps {
   ) => number;
   getMegaMafiaCount: () => number;
   getNativeCount: () => number;
+  getTestnetCount: () => number;
   getUserVotedCount: () => number;
   getUserNotVotedCount: () => number;
   totalProjects: number;
@@ -28,12 +33,15 @@ export function FilterControls({
   setShowMegaMafiaOnly,
   showNativeOnly,
   setShowNativeOnly,
+  showTestnetOnly,
+  setShowTestnetOnly,
   voteFilter,
   setVoteFilter,
   categories,
   getCategoryCount,
   getMegaMafiaCount,
   getNativeCount,
+  getTestnetCount,
   getUserVotedCount,
   getUserNotVotedCount,
   totalProjects,
@@ -46,6 +54,7 @@ export function FilterControls({
           onClick={() => {
             setShowMegaMafiaOnly(!showMegaMafiaOnly);
             setShowNativeOnly(false);
+            setShowTestnetOnly(false);
           }}
           className={`group relative px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
             showMegaMafiaOnly
@@ -80,6 +89,7 @@ export function FilterControls({
           onClick={() => {
             setShowNativeOnly(!showNativeOnly);
             setShowMegaMafiaOnly(false);
+            setShowTestnetOnly(false);
           }}
           className={`group relative px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
             showNativeOnly
@@ -110,6 +120,36 @@ export function FilterControls({
               }`}
             >
               {getNativeCount()}
+            </span>
+          </div>
+        </button>
+
+        <button
+          onClick={() => {
+            setShowTestnetOnly(!showTestnetOnly);
+            setShowMegaMafiaOnly(false);
+            setShowNativeOnly(false);
+          }}
+          className={`group relative px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
+            showTestnetOnly
+              ? "bg-gradient-to-br from-yellow-500 to-amber-500 text-white shadow-sm"
+              : "bg-gray-50 dark:bg-white/[0.04] text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-white/[0.08] border border-gray-200/80 dark:border-white/[0.06]"
+          }`}
+        >
+          <div className="relative flex items-center justify-center sm:justify-start gap-2">
+            <FlaskConical
+              className={`w-4 h-4 ${
+                showTestnetOnly ? "text-white" : "text-yellow-500"
+              }`}
+              strokeWidth={2}
+            />
+            <span>Live on Testnet</span>
+            <span
+              className={`text-xs px-1.5 py-0.5 rounded ${
+                showTestnetOnly ? "bg-white/20" : "bg-black/5 dark:bg-white/10"
+              }`}
+            >
+              {getTestnetCount()}
             </span>
           </div>
         </button>

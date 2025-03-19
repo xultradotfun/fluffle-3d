@@ -24,6 +24,7 @@ interface Project {
   description: string;
   category: string;
   megaMafia: boolean;
+  testnet: boolean;
   votes?: {
     upvotes: number;
     downvotes: number;
@@ -174,6 +175,7 @@ export function ProjectCard({ project, isLoadingVotes }: ProjectCardProps) {
             twitter={project.twitter}
             category={project.category}
             megaMafia={project.megaMafia}
+            testnet={project.testnet}
           />
 
           <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 flex-grow leading-relaxed">

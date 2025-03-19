@@ -1,10 +1,12 @@
 import Image from "next/image";
+import { FlaskConical } from "lucide-react";
 
 interface ProjectHeaderProps {
   name: string;
   twitter: string;
   category: string;
   megaMafia: boolean;
+  testnet: boolean;
 }
 
 export function ProjectHeader({
@@ -12,6 +14,7 @@ export function ProjectHeader({
   twitter,
   category,
   megaMafia,
+  testnet,
 }: ProjectHeaderProps) {
   return (
     <div className="flex items-start gap-4 mb-6">
@@ -49,6 +52,17 @@ export function ProjectHeader({
                   />
                 </div>
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.3),transparent)] rounded-full blur-sm"></div>
+              </div>
+            )}
+            {testnet && (
+              <div className="relative flex-shrink-0">
+                <div className="w-5 h-5 rounded-full bg-gradient-to-br from-yellow-500 to-amber-500 p-1 shadow-sm ring-1 ring-white/20 group-hover:scale-110 transition-transform">
+                  <FlaskConical
+                    className="w-full h-full text-white"
+                    strokeWidth={2}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(234,179,8,0.3),transparent)] rounded-full blur-sm"></div>
               </div>
             )}
           </div>

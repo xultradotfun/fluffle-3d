@@ -25,6 +25,7 @@ interface Project {
   category: string;
   megaMafia: boolean;
   native: boolean;
+  testnet: boolean;
   votes?: {
     upvotes: number;
     downvotes: number;
@@ -40,6 +41,7 @@ export function EcosystemDashboard() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showMegaMafiaOnly, setShowMegaMafiaOnly] = useState(false);
   const [showNativeOnly, setShowNativeOnly] = useState(false);
+  const [showTestnetOnly, setShowTestnetOnly] = useState(false);
   const [voteFilter, setVoteFilter] = useState<VoteFilter>("all");
   const [isLoadingVotes, setIsLoadingVotes] = useState(true);
   const [projects, setProjects] = useState<Project[]>(
@@ -151,6 +153,10 @@ export function EcosystemDashboard() {
     return projects.filter((project) => project.native).length;
   };
 
+  const getTestnetCount = () => {
+    return projects.filter((project) => project.testnet).length;
+  };
+
   const getUserVotedCount = () => {
     return projects.filter(
       (project) => project.votes && project.votes.userVote !== null
@@ -185,12 +191,19 @@ export function EcosystemDashboard() {
         : true;
       const megaMafiaMatch = showMegaMafiaOnly ? project.megaMafia : true;
       const nativeMatch = showNativeOnly ? project.native : true;
+      const testnetMatch = showTestnetOnly ? project.testnet : true;
       const userVoteMatch =
         voteFilter === "all" ||
         (voteFilter === "voted"
           ? project.votes?.userVote !== null
           : project.votes?.userVote === null);
-      return categoryMatch && megaMafiaMatch && nativeMatch && userVoteMatch;
+      return (
+        categoryMatch &&
+        megaMafiaMatch &&
+        nativeMatch &&
+        testnetMatch &&
+        userVoteMatch
+      );
     })
     .sort((a, b) => {
       if (sortMethod.type === "score") {
@@ -228,12 +241,15 @@ export function EcosystemDashboard() {
             setShowMegaMafiaOnly={setShowMegaMafiaOnly}
             showNativeOnly={showNativeOnly}
             setShowNativeOnly={setShowNativeOnly}
+            showTestnetOnly={showTestnetOnly}
+            setShowTestnetOnly={setShowTestnetOnly}
             voteFilter={voteFilter}
             setVoteFilter={setVoteFilter}
             categories={categories}
             getCategoryCount={getCategoryCount}
             getMegaMafiaCount={getMegaMafiaCount}
             getNativeCount={getNativeCount}
+            getTestnetCount={getTestnetCount}
             getUserVotedCount={getUserVotedCount}
             getUserNotVotedCount={getUserNotVotedCount}
             totalProjects={projects.length}
