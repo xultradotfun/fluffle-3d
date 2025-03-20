@@ -17,6 +17,13 @@ const PREVIEW_ORDER: (keyof SelectedTraits)[] = [
   "head",
   "face",
   "clothes",
+  "eyelid",
+  "eyewhite",
+  "mouth",
+  "eyeliner_for_skin_2",
+  "eyeliner_for_skin_3",
+  "eyebrow_for_skin_3",
+  "mouth_for_skin_3",
 ];
 
 // Hair styles that have back parts that should be rendered behind the character

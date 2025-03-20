@@ -23,12 +23,20 @@ export const TRAIT_CATEGORIES: TraitType[] = [
   "head",
   "face",
   "clothes",
+  "eyelid",
+  "eyewhite",
+  "mouth",
+  "eyeliner_for_skin_2",
+  "eyeliner_for_skin_3",
+  "eyebrow_for_skin_3",
+  "mouth_for_skin_3",
 ];
 
 export function getTraitOptions(type: TraitType): TraitOption[] {
   const availableIds = getAvailableTraitIds(type);
 
-  return traitMappings
+  // Get mappings from JSON file
+  const jsonMappings = traitMappings
     .filter((m) => {
       const mappingType = m.Type.toLowerCase() as TraitType;
       return mappingType === type && isValidTrait(type, m["Backend Name"]);
@@ -38,8 +46,19 @@ export function getTraitOptions(type: TraitType): TraitOption[] {
       displayName: m["Display Name"],
       imageUrl: getTraitImageUrl(type, m["Backend Name"]),
       tribe: m.Tribe,
-    }))
-    .filter((option) => availableIds.includes(option.id));
+    }));
+
+  // If we have JSON mappings, filter by available IDs
+  if (jsonMappings.length > 0) {
+    return jsonMappings.filter((option) => availableIds.includes(option.id));
+  }
+
+  // For traits without JSON mappings, create options from available IDs
+  return availableIds.map((id) => ({
+    id,
+    displayName: `Style ${id}`,
+    imageUrl: getTraitImageUrl(type, id),
+  }));
 }
 
 export function getRandomTraitId(type: TraitType): string | undefined {
