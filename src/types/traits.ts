@@ -14,7 +14,8 @@ export type TraitType =
   | "eyeliner_for_skin_2"
   | "eyeliner_for_skin_3"
   | "eyebrow_for_skin_3"
-  | "mouth_for_skin_3";
+  | "mouth_for_skin_3"
+  | "background";
 
 export interface TraitMapping {
   Type: string;

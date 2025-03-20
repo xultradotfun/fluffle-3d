@@ -254,27 +254,30 @@ export const traitImageMap: TraitImageMap = {
     "32": { path: "32.png" },
   },
   eyebrow_for_skin_3: {
-    1: { path: "eyebrow_for_skin_3/1.png" },
-    2: { path: "eyebrow_for_skin_3/2.png" },
-    9: { path: "eyebrow_for_skin_3/9.png" },
-    11: { path: "eyebrow_for_skin_3/11.png" },
-    13: { path: "eyebrow_for_skin_3/13.png" },
-    17: { path: "eyebrow_for_skin_3/17.png" },
-    18: { path: "eyebrow_for_skin_3/18.png" },
-    19: { path: "eyebrow_for_skin_3/19.png" },
-    23: { path: "eyebrow_for_skin_3/23.png" },
-    25: { path: "eyebrow_for_skin_3/25.png" },
-    26: { path: "eyebrow_for_skin_3/26.png" },
-    27: { path: "eyebrow_for_skin_3/27.png" },
-    28: { path: "eyebrow_for_skin_3/28.png" },
-    29: { path: "eyebrow_for_skin_3/29.png" },
-    30: { path: "eyebrow_for_skin_3/30.png" },
+    1: { path: "1.png" },
+    2: { path: "2.png" },
+    9: { path: "9.png" },
+    11: { path: "11.png" },
+    13: { path: "13.png" },
+    17: { path: "17.png" },
+    18: { path: "18.png" },
+    19: { path: "19.png" },
+    23: { path: "23.png" },
+    25: { path: "25.png" },
+    26: { path: "26.png" },
+    27: { path: "27.png" },
+    28: { path: "28.png" },
+    29: { path: "29.png" },
+    30: { path: "30.png" },
   },
   mouth_for_skin_3: {
-    0: { path: "mouth_for_skin_3/0.png" },
-    1: { path: "mouth_for_skin_3/1.png" },
-    2: { path: "mouth_for_skin_3/2.png" },
-    30: { path: "mouth_for_skin_3/30.png" },
+    0: { path: "0.png" },
+    1: { path: "1.png" },
+    2: { path: "2.png" },
+    30: { path: "30.png" },
+  },
+  background: {
+    Mega: { path: "@pfpbg.png" },
   },
 };
 
@@ -287,6 +290,11 @@ export function getTraitImageUrl(type: TraitType, id: string): string {
       console.warn(`No trait found for type ${type} and id ${id}`);
     }
     return "";
+  }
+
+  // If the path starts with '@', it's a local file
+  if (traitInfo.path.startsWith("@")) {
+    return `/${traitInfo.path.slice(1)}`; // Remove the @ and add leading slash
   }
 
   return `${CDN_URL}/traits/${type}/${traitInfo.path}`;

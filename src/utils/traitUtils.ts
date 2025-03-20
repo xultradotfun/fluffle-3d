@@ -14,6 +14,7 @@ import {
 export { getTraitImageUrl };
 
 export const TRAIT_CATEGORIES: TraitType[] = [
+  "background",
   "skin",
   "eyeball",
   "eyeliner",
@@ -69,16 +70,77 @@ export function getRandomTraitId(type: TraitType): string | undefined {
   return availableIds[randomIndex];
 }
 
-export function getRandomTraits(): SelectedTraits {
-  return TRAIT_CATEGORIES.reduce((acc, type) => {
-    acc[type] = getRandomTraitId(type);
+export function getInitialTraits(): SelectedTraits {
+  // Only include these specific traits for initial load
+  const INITIAL_TRAITS: TraitType[] = [
+    "skin",
+    "eyeball",
+    "eyebrow",
+    "hair",
+    "eyelid",
+    "mouth",
+    "eyeliner",
+    "background",
+  ];
+
+  return INITIAL_TRAITS.reduce((acc, type) => {
+    // For background, 50% chance to be "Mega"
+    if (type === "background") {
+      acc[type] = Math.random() < 0.5 ? "Mega" : undefined;
+    } else {
+      acc[type] = getRandomTraitId(type);
+    }
     return acc;
   }, {} as SelectedTraits);
 }
 
-export function getTraitDisplayName(type: TraitType, id: string): string {
-  const mapping = traitMappings.find(
-    (m) => m.Type.toLowerCase() === type && m["Backend Name"] === id
-  );
-  return mapping?.["Display Name"] || `${type} ${id}`;
+export function getRandomTraits(): SelectedTraits {
+  // Required traits that must have a value
+  const REQUIRED_TRAITS: TraitType[] = [
+    "skin",
+    "eyeball",
+    "eyebrow",
+    "hair",
+    "eyelid",
+    "mouth",
+    "eyeliner",
+    "clothes",
+  ];
+
+  // Optional traits that can be "none"
+  const OPTIONAL_TRAITS: TraitType[] = [
+    "ear",
+    "head",
+    "face",
+    "eyewhite",
+    "eyeliner_for_skin_2",
+    "eyeliner_for_skin_3",
+    "eyebrow_for_skin_3",
+    "mouth_for_skin_3",
+    "background",
+  ];
+
+  // First, handle required traits
+  const requiredTraits = REQUIRED_TRAITS.reduce((acc, type) => {
+    acc[type] = getRandomTraitId(type);
+    return acc;
+  }, {} as SelectedTraits);
+
+  // Then, handle optional traits with 50% chance of being "none"
+  const optionalTraits = OPTIONAL_TRAITS.reduce((acc, type) => {
+    if (Math.random() < 0.5) {
+      // Special handling for background since it has fixed options
+      if (type === "background") {
+        acc[type] = "Mega";
+      } else {
+        acc[type] = getRandomTraitId(type);
+      }
+    }
+    return acc;
+  }, {} as SelectedTraits);
+
+  return {
+    ...requiredTraits,
+    ...optionalTraits,
+  };
 }
