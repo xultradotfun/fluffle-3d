@@ -28,7 +28,7 @@ export interface TraitOption {
 }
 
 export type SelectedTraits = {
-  [K in TraitType]?: string | null;
+  [K in TraitType]?: string;
 };
 
 export interface TraitImageInfo {

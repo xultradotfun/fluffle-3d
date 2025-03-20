@@ -5,7 +5,7 @@ export const traitImageMap: TraitImageMap = {
   clothes: {
     "1": { path: "1.png" },
     "2": { path: "2.png" },
-    "3": { path: "3_front.png", hasFrontBack: true },
+    "3": { path: "3_front.png", hasBack: true },
     "4": { path: "4.png" },
     "5": { path: "5.png" },
     "6": { path: "6.png" },
@@ -37,7 +37,7 @@ export const traitImageMap: TraitImageMap = {
     "32": { path: "32.png" },
     "33": { path: "33.png" },
     "34": { path: "34.png" },
-    "35": { path: "35_front.png", hasFrontBack: true },
+    "35": { path: "35_front.png", hasBack: true },
     "36": { path: "36.png" },
     "37": { path: "37.png" },
     "38": { path: "38.png" },
@@ -71,37 +71,38 @@ export const traitImageMap: TraitImageMap = {
   hair: {
     "1": { path: "1.png" },
     "2": { path: "2.png" },
-    "4": { path: "4_front.png", hasFrontBack: true },
+    "3": { path: "3.png" },
+    "4": { path: "4_front.png", hasBack: true },
     "6": { path: "6.png" },
     "10": { path: "10.png" },
-    "11": { path: "11_front.png", hasFrontBack: true },
-    "12": { path: "12_front.png", hasFrontBack: true },
+    "11": { path: "11_front.png", hasBack: true },
+    "12": { path: "12_front.png", hasBack: true },
     "13": { path: "13.png" },
     "16": { path: "16.png" },
-    "17": { path: "17_front.png", hasFrontBack: true },
-    "18": { path: "18_front.png", hasFrontBack: true },
+    "17": { path: "17_front.png", hasBack: true },
+    "18": { path: "18_front.png", hasBack: true },
     "19": { path: "19.png" },
     "21": { path: "21.png" },
-    "22": { path: "22_front.png", hasFrontBack: true },
+    "22": { path: "22_front.png", hasBack: true },
     "23": { path: "23.png" },
     "24": { path: "24.png" },
     "26": { path: "26.png" },
-    "27": { path: "27_front.png", hasFrontBack: true },
+    "27": { path: "27_front.png", hasBack: true },
     "28": { path: "28.png" },
     "29": { path: "29.png" },
-    "30": { path: "30_front.png", hasFrontBack: true },
-    "31": { path: "31_front.png", hasFrontBack: true },
+    "30": { path: "30_front.png", hasBack: true },
+    "31": { path: "31_front.png", hasBack: true },
     "32": { path: "32.png" },
     "33": { path: "33.png" },
     "38": { path: "38.png" },
-    "43": { path: "43_front.png", hasFrontBack: true },
-    "50": { path: "50_front.png", hasFrontBack: true },
+    "43": { path: "43_front.png", hasBack: true },
+    "50": { path: "50_front.png", hasBack: true },
     "51": { path: "51.png" },
     "58": { path: "58.png" },
     "60": { path: "60.png" },
     "61": { path: "61.png" },
-    "62": { path: "62_front.png", hasFrontBack: true },
-    "63": { path: "63_front.png", hasFrontBack: true },
+    "62": { path: "62_front.png", hasBack: true },
+    "63": { path: "63_front.png", hasBack: true },
   },
   skin: {
     "1": { path: "1.png" },
@@ -183,18 +184,32 @@ export const traitImageMap: TraitImageMap = {
     "33": { path: "33.png" },
     "34": { path: "34.png" },
   },
+  eyeliner_for_skin_2: {
+    // Special eyeliner mappings for skin type 2
+  },
+  eyeliner_for_skin_3: {
+    // Special eyeliner mappings for skin type 3
+  },
+  eyebrow_for_skin_3: {
+    // Special eyebrow mappings for skin type 3
+  },
+  mouth_for_skin_3: {
+    // Special mouth mappings for skin type 3
+  },
 };
 
-const CDN_URL = "https://fluffle-traits.b-cdn.net/traits";
+const CDN_URL = "https://fluffle-traits.b-cdn.net";
 
 export function getTraitImageUrl(type: TraitType, id: string): string {
   const traitInfo = traitImageMap[type]?.[id];
   if (!traitInfo) {
-    console.warn(`No trait image found for type: ${type}, id: ${id}`);
+    if (process.env.NODE_ENV === "development") {
+      console.warn(`No trait found for type ${type} and id ${id}`);
+    }
     return "";
   }
 
-  return `${CDN_URL}/${type}/${traitInfo.path}`;
+  return `${CDN_URL}/traits/${type}/${traitInfo.path}`;
 }
 
 export function getTraitBackImageUrl(
@@ -202,11 +217,11 @@ export function getTraitBackImageUrl(
   id: string
 ): string | null {
   const traitInfo = traitImageMap[type]?.[id];
-  if (!traitInfo?.hasFrontBack) {
+  if (!traitInfo?.hasBack) {
     return null;
   }
 
-  return `${CDN_URL}/${type}/${id}_back.png`;
+  return `${CDN_URL}/traits/${type}/${id}_back.png`;
 }
 
 export function isValidTrait(type: TraitType, id: string): boolean {

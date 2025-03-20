@@ -19,10 +19,10 @@ export default function NFTBuilder() {
     setSelectedTraits(getRandomTraits());
   }, []);
 
-  const handleTraitSelect = (traitId: string | null) => {
+  const handleTraitSelect = (traitId: string | undefined) => {
     setSelectedTraits((prev) => ({
       ...prev,
-      [activeCategory]: traitId || undefined,
+      [activeCategory]: traitId,
     }));
   };
 
@@ -48,18 +48,19 @@ export default function NFTBuilder() {
         <div className="w-full lg:w-1/2 flex flex-col gap-4">
           {/* Category Tabs */}
           <div className="flex flex-wrap gap-2">
-            {TRAIT_CATEGORIES.map(({ id, label }) => (
+            {TRAIT_CATEGORIES.map((type) => (
               <button
-                key={id}
-                onClick={() => setActiveCategory(id)}
+                key={type}
+                onClick={() => setActiveCategory(type)}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-                  activeCategory === id
+                  activeCategory === type
                     ? "bg-primary text-primary-foreground"
                     : "bg-card text-card-foreground hover:bg-card/80"
                 }`}
               >
-                {label}
-                {selectedTraits[id] && (
+                {type.charAt(0).toUpperCase() +
+                  type.slice(1).replace(/_/g, " ")}
+                {selectedTraits[type] && (
                   <span className="ml-2 w-2 h-2 rounded-full bg-green-500 inline-block" />
                 )}
               </button>

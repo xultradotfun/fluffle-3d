@@ -6,12 +6,12 @@ import {
 } from "@/types/traits";
 import traitMappings from "@/data/number2display_mapping.json";
 import {
-  getTraitImageUrl as getImageUrl,
+  getTraitImageUrl,
   isValidTrait,
   getAvailableTraitIds,
 } from "./traitImageMap";
 
-const CDN_URL = "https://fluffle-traits.b-cdn.net/traits";
+export { getTraitImageUrl };
 
 export const TRAIT_CATEGORIES: TraitType[] = [
   "skin",
@@ -42,9 +42,9 @@ export function getTraitOptions(type: TraitType): TraitOption[] {
     .filter((option) => availableIds.includes(option.id));
 }
 
-export function getRandomTraitId(type: TraitType): string | null {
+export function getRandomTraitId(type: TraitType): string | undefined {
   const availableIds = getAvailableTraitIds(type);
-  if (availableIds.length === 0) return null;
+  if (availableIds.length === 0) return undefined;
 
   const randomIndex = Math.floor(Math.random() * availableIds.length);
   return availableIds[randomIndex];
@@ -55,41 +55,6 @@ export function getRandomTraits(): SelectedTraits {
     acc[type] = getRandomTraitId(type);
     return acc;
   }, {} as SelectedTraits);
-}
-
-export function getTraitImageUrl(type: string, id: string) {
-  // Special cases for clothes that have front/back parts
-  if (type === "clothes") {
-    if (["3", "35"].includes(id)) {
-      return `${CDN_URL}/traits/${type}/${id}_front.png`;
-    }
-  }
-
-  // Handle hair front/back parts
-  if (type === "hair") {
-    const hasBackPart = [
-      "4",
-      "11",
-      "12",
-      "17",
-      "18",
-      "22",
-      "27",
-      "30",
-      "31",
-      "43",
-      "50",
-      "62",
-      "63",
-    ].includes(id);
-
-    if (hasBackPart) {
-      return `${CDN_URL}/traits/${type}/${id}_front.png`;
-    }
-  }
-
-  // Default case - no padding needed
-  return `${CDN_URL}/traits/${type}/${id}.png`;
 }
 
 export function getTraitDisplayName(type: TraitType, id: string): string {

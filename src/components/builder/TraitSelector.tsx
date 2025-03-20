@@ -1,12 +1,12 @@
 "use client";
 
 import { TraitType } from "@/types/traits";
-import { getTraitOptions, getTraitDisplayName } from "@/utils/traitUtils";
+import { getTraitOptions } from "@/utils/traitUtils";
 
 interface TraitSelectorProps {
   type: TraitType;
   selectedId?: string;
-  onSelect: (id: string | null) => void;
+  onSelect: (id: string | undefined) => void;
 }
 
 export default function TraitSelector({
@@ -20,7 +20,7 @@ export default function TraitSelector({
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
       {/* None option */}
       <button
-        onClick={() => onSelect(null)}
+        onClick={() => onSelect(undefined)}
         className={`aspect-square rounded-lg p-2 flex flex-col items-center justify-center gap-2 transition-colors ${
           !selectedId
             ? "bg-primary text-primary-foreground"
@@ -62,6 +62,9 @@ export default function TraitSelector({
               alt={option.displayName}
               className="w-full h-full object-contain"
               style={{ imageRendering: "pixelated" }}
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+              }}
             />
           </div>
           <span
