@@ -8,6 +8,9 @@ const nextConfig = {
     });
     return config;
   },
+  images: {
+    domains: ["fluffle-traits.b-cdn.net"],
+  },
 };
 
 module.exports = nextConfig;
