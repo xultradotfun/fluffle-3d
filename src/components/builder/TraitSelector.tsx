@@ -8,6 +8,8 @@ interface TraitSelectorProps {
   type: TraitType;
   selectedId?: string;
   onSelect: (id: string | undefined) => void;
+  allTraits: Record<TraitType, string | undefined>;
+  onClearMutuallyExclusive: (traitTypes: TraitType[]) => void;
 }
 
 // Extracted None option button component
@@ -103,7 +105,13 @@ function TraitButton({
   );
 }
 
-const TraitSelector = ({ type, selectedId, onSelect }: TraitSelectorProps) => {
+const TraitSelector = ({
+  type,
+  selectedId,
+  onSelect,
+  allTraits,
+  onClearMutuallyExclusive,
+}: TraitSelectorProps) => {
   const options = getTraitOptions(type);
   const [croppedImages, setCroppedImages] = useState<Record<string, string>>(
     {}
@@ -119,6 +127,59 @@ const TraitSelector = ({ type, selectedId, onSelect }: TraitSelectorProps) => {
       }
     }
   }, [type, selectedId, options, onSelect]);
+
+  const handleTraitSelect = (id: string | undefined) => {
+    // If deselecting (id is undefined), just pass it through
+    if (id === undefined) {
+      onSelect(id);
+      return;
+    }
+
+    // Handle mutual exclusivity
+    switch (type) {
+      case "eyeliner": {
+        // Clear eyeliner_for_skin_2 and eyeliner_for_skin_3
+        onClearMutuallyExclusive([
+          "eyeliner_for_skin_2",
+          "eyeliner_for_skin_3",
+        ]);
+        break;
+      }
+      case "eyeliner_for_skin_2": {
+        // Clear eyeliner and eyeliner_for_skin_3
+        onClearMutuallyExclusive(["eyeliner", "eyeliner_for_skin_3"]);
+        break;
+      }
+      case "eyeliner_for_skin_3": {
+        // Clear eyeliner and eyeliner_for_skin_2
+        onClearMutuallyExclusive(["eyeliner", "eyeliner_for_skin_2"]);
+        break;
+      }
+      case "eyebrow": {
+        // Clear eyebrow_for_skin_3
+        onClearMutuallyExclusive(["eyebrow_for_skin_3"]);
+        break;
+      }
+      case "eyebrow_for_skin_3": {
+        // Clear eyebrow
+        onClearMutuallyExclusive(["eyebrow"]);
+        break;
+      }
+      case "mouth": {
+        // Clear mouth_for_skin_3
+        onClearMutuallyExclusive(["mouth_for_skin_3"]);
+        break;
+      }
+      case "mouth_for_skin_3": {
+        // Clear mouth
+        onClearMutuallyExclusive(["mouth"]);
+        break;
+      }
+    }
+
+    // Apply the new selection
+    onSelect(id);
+  };
 
   const processImage = async (img: HTMLImageElement, id: string) => {
     // Skip if already processing or processed
@@ -219,7 +280,7 @@ const TraitSelector = ({ type, selectedId, onSelect }: TraitSelectorProps) => {
       {type !== "eyewhite" && type !== "skin" && type !== "eyeball" && (
         <NoneButton
           isSelected={!selectedId}
-          onSelect={() => onSelect(undefined)}
+          onSelect={() => handleTraitSelect(undefined)}
         />
       )}
       {options.map((option) => (
@@ -227,7 +288,7 @@ const TraitSelector = ({ type, selectedId, onSelect }: TraitSelectorProps) => {
           key={option.id}
           option={option}
           isSelected={selectedId === option.id}
-          onSelect={() => onSelect(option.id)}
+          onSelect={() => handleTraitSelect(option.id)}
           croppedImageUrl={croppedImages[option.id]}
           onImageLoad={(img) => processImage(img, option.id)}
         />

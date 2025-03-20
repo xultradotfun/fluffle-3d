@@ -197,7 +197,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   }`}
                 >
                   <Rabbit className="w-4 h-4 flex-shrink-0" />
-                  <span className="flex-1 text-left">NFT Builder</span>
+                  <span className="flex-1 text-left">Fluffle Builder</span>
                   {activeView === "builder" && (
                     <div className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400" />
                   )}
@@ -452,7 +452,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   }`}
                 >
                   <Rabbit className="w-5 h-5 flex-shrink-0" />
-                  <span className="flex-1 text-left">NFT Builder</span>
+                  <span className="flex-1 text-left">Fluffle Builder</span>
                   {activeView === "builder" && (
                     <div className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400" />
                   )}

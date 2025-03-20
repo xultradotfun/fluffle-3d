@@ -36,6 +36,18 @@ export default function NFTBuilder() {
     }));
   };
 
+  const handleClearMutuallyExclusive = (traitTypes: TraitType[]) => {
+    setSelectedTraits((prev) => {
+      const newTraits = { ...prev };
+      traitTypes.forEach((type) => {
+        if (newTraits[type]) {
+          newTraits[type] = undefined;
+        }
+      });
+      return newTraits;
+    });
+  };
+
   const handleRandomize = () => {
     setSelectedTraits(getRandomTraits());
   };
@@ -241,8 +253,8 @@ export default function NFTBuilder() {
               Fluffle Builder
             </h2>
             <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 max-w-2xl">
-              Create your perfect Fluffle character by mixing and matching
-              different traits
+              Create your perfect Fluffle by mixing and matching different
+              traits
             </p>
           </div>
         </div>
@@ -297,7 +309,7 @@ export default function NFTBuilder() {
                     Preview
                   </h3>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Your Fluffle character will appear here
+                    Your Fluffle will appear here
                   </p>
                 </div>
               </div>
@@ -488,6 +500,8 @@ export default function NFTBuilder() {
                     type={activeCategory}
                     selectedId={selectedTraits[activeCategory]}
                     onSelect={handleTraitSelect}
+                    allTraits={selectedTraits}
+                    onClearMutuallyExclusive={handleClearMutuallyExclusive}
                   />
                 </div>
               </div>
