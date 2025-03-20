@@ -1,6 +1,6 @@
 "use client";
 
-import { TraitType } from "@/types/traits";
+import { TraitType, SelectedTraits } from "@/types/traits";
 import { getTraitOptions } from "@/utils/traitUtils";
 import { useState, useRef, useEffect } from "react";
 
@@ -8,7 +8,7 @@ interface TraitSelectorProps {
   type: TraitType;
   selectedId?: string;
   onSelect: (id: string | undefined) => void;
-  allTraits: Record<TraitType, string | undefined>;
+  allTraits: SelectedTraits;
   onClearMutuallyExclusive: (traitTypes: TraitType[]) => void;
 }
 
