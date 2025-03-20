@@ -225,14 +225,13 @@ export default function NFTBuilder() {
             Fluffle Builder
           </h2>
           <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 max-w-2xl">
-            Create your perfect Fluffle character by mixing and matching
-            different traits. Use the zoom controls to focus on specific
-            details.
+            Create your perfect Fluffle by mixing and matching different traits.
+            Use the zoom controls to focus on specific details.
           </p>
         </div>
         <div className="inline-flex items-center gap-2 text-xs sm:text-sm px-2 py-1 rounded-lg bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-500/10 dark:to-pink-500/10 border border-purple-100 dark:border-purple-500/10">
           <span className="text-gray-500 dark:text-gray-400">
-            Tip: Use the randomize button to discover unique combinations!
+            Tip: You can download your creation or copy to clipboard!
           </span>
         </div>
       </div>
