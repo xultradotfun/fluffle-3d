@@ -19,8 +19,8 @@ import { ZOOM_PRESETS } from "@/constants/zoom";
 export default function NFTBuilder() {
   const [selectedTraits, setSelectedTraits] = useState<SelectedTraits>({});
   const [activeCategory, setActiveCategory] = useState<TraitType>("skin");
-  const [zoom, setZoom] = useState(ZOOM_PRESETS.FULL.zoom);
-  const [offsetY, setOffsetY] = useState(ZOOM_PRESETS.FULL.offsetY);
+  const [zoom, setZoom] = useState<number>(ZOOM_PRESETS.FULL.zoom);
+  const [offsetY, setOffsetY] = useState<number>(ZOOM_PRESETS.FULL.offsetY);
   const [isCopied, setIsCopied] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
 
