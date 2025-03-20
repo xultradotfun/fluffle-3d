@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 interface ContractAddressesProps {
   showCopied: string | null;
   onCopy: (text: string, type: string) => void;
@@ -8,17 +10,112 @@ interface ContractInfo {
   name: string;
   description: string;
   address: string;
-  category: "token" | "infrastructure";
+  category: "token" | "infrastructure" | "project";
   faucetUrl?: string;
+  issuer?: string;
+}
+
+interface CollapsibleSectionProps {
+  title: string;
+  count: number;
+  defaultExpanded?: boolean;
+  children: React.ReactNode;
+}
+
+function CollapsibleSection({
+  title,
+  count,
+  defaultExpanded = true,
+  children,
+}: CollapsibleSectionProps) {
+  const [isExpanded, setIsExpanded] = useState(defaultExpanded);
+
+  return (
+    <div className="border border-gray-200/50 dark:border-white/5 rounded-lg overflow-hidden">
+      <button
+        onClick={() => setIsExpanded(!isExpanded)}
+        className="w-full px-3 sm:px-4 py-2.5 sm:py-3 flex items-center justify-between bg-gray-50/50 dark:bg-white/[0.02] hover:bg-gray-100/50 dark:hover:bg-white/[0.04] transition-colors"
+      >
+        <div className="flex items-center gap-2">
+          <h3 className="text-sm font-medium text-gray-900 dark:text-gray-200">
+            {title}
+          </h3>
+          <div className="px-1.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-medium">
+            {count}
+          </div>
+        </div>
+        <svg
+          className={`w-4 h-4 sm:w-5 sm:h-5 text-gray-500 dark:text-gray-400 transition-transform ${
+            isExpanded ? "transform rotate-180" : ""
+          }`}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </button>
+      <div
+        className={`transition-all duration-200 ease-in-out ${
+          isExpanded ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"
+        } overflow-hidden`}
+      >
+        <div className="p-2.5 sm:p-4 space-y-2 bg-white/30 dark:bg-transparent">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Add function to handle adding token to wallet
+async function addTokenToWallet(contract: ContractInfo) {
+  try {
+    // @ts-ignore - ethereum object is injected by MetaMask
+    const ethereum = window.ethereum;
+    if (!ethereum) {
+      console.error("No ethereum wallet found");
+      return;
+    }
+
+    await ethereum.request({
+      method: "wallet_watchAsset",
+      params: {
+        type: "ERC20",
+        options: {
+          address: contract.address,
+          symbol: contract.name,
+          decimals: 18, // Most tokens use 18 decimals
+        },
+      },
+    });
+  } catch (error) {
+    console.error("Error adding token to wallet:", error);
+  }
 }
 
 const CONTRACTS: ContractInfo[] = [
+  // Token Contracts
+  {
+    id: "mega",
+    name: "MEGA",
+    description: "Canonical MEGA token",
+    address: "0x10a6be7d23989d00d528e68cf8051d095f741145",
+    category: "token",
+    issuer: "MegaETH",
+  },
   {
     id: "weth",
     name: "WETH",
     description: "Wrapped Ether",
     address: "0x4eB2Bd7beE16F38B1F4a0A5796Fffd028b6040e9",
     category: "token",
+    issuer: "MegaETH",
   },
   {
     id: "usdc",
@@ -26,6 +123,7 @@ const CONTRACTS: ContractInfo[] = [
     description: "USD Coin",
     address: "0x8D635c4702BA38b1F1735e8e784c7265Dcc0b623",
     category: "token",
+    issuer: "Bronto Finance",
     faucetUrl: "https://bronto.finance/faucet",
   },
   {
@@ -34,13 +132,74 @@ const CONTRACTS: ContractInfo[] = [
     description: "Wrapped Bitcoin",
     address: "0xFE928dD7D9cda6bcF7f2600B4A0e9726AE4d2577",
     category: "token",
+    issuer: "Bronto Finance",
     faucetUrl: "https://bronto.finance/faucet",
   },
+  {
+    id: "cusd",
+    name: "cUSD",
+    description: "Cap USD",
+    address: "0xE9b6e75C243B6100ffcb1c66e8f78F96FeeA727F",
+    category: "token",
+    issuer: "Cap Finance",
+    faucetUrl: "https://testnet.teko.finance/mint",
+  },
+  {
+    id: "tketh",
+    name: "tkETH",
+    description: "Teko ETH",
+    address: "0x176735870dc6C22B4EBFBf519DE2ce758de78d94",
+    category: "token",
+    issuer: "Teko Finance",
+    faucetUrl: "https://testnet.teko.finance/mint",
+  },
+  {
+    id: "tkwbtc",
+    name: "tkWBTC",
+    description: "Teko WBTC",
+    address: "0xF82ff0799448630eB56Ce747Db840a2E02Cde4D8",
+    category: "token",
+    issuer: "Teko Finance",
+    faucetUrl: "https://testnet.teko.finance/mint",
+  },
+  {
+    id: "tkusdc",
+    name: "tkUSDC",
+    description: "Teko USDC",
+    address: "0xFaf334e157175Ff676911AdcF0964D7f54F2C424",
+    category: "token",
+    issuer: "Teko Finance",
+    faucetUrl: "https://testnet.teko.finance/mint",
+  },
+  {
+    id: "nusdc",
+    name: "nUSDC",
+    description: "Noise USDC",
+    address: "0xe2e7d898488a2b6442d48d29a3840a92f7c3ff58",
+    category: "token",
+    issuer: "Noise",
+  },
+  {
+    id: "toast",
+    name: "TOAST",
+    description: "The one true token",
+    address: "0xc49ae2a62e7c18b7ddcab67617a63bf5182b08de",
+    category: "token",
+    issuer: "Bread",
+  },
+  // Infrastructure Contracts
   {
     id: "multicall",
     name: "Multicall3",
     description: "Batch Call Contract",
     address: "0xB1F60733C7B76F8F4085af3d9f6e374C43E462f8",
+    category: "infrastructure",
+  },
+  {
+    id: "create2deployer",
+    name: "Create2 Deployer",
+    description: "Deterministic addresses",
+    address: "0x13b0D85CcB8bf860b6b79AF3029fCA081AE9beF2",
     category: "infrastructure",
   },
   {
@@ -57,6 +216,14 @@ const CONTRACTS: ContractInfo[] = [
     address: "0x6CeFC3Bf9813693AAccD59cffcA3B0b2e54b0545",
     category: "infrastructure",
   },
+  // Project Contracts
+  {
+    id: "guessbest",
+    name: "Guess.Best",
+    description: "Prediction Game",
+    address: "0x937832aa1907f3a2E25a30992807C5B281b02540",
+    category: "project",
+  },
 ];
 
 function ContractCard({
@@ -69,18 +236,44 @@ function ContractCard({
   onCopy: (text: string, type: string) => void;
 }) {
   return (
-    <div className="group relative p-3 rounded-lg bg-white/40 dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/5 hover:border-blue-500/30 dark:hover:border-blue-500/30 hover:bg-gradient-to-br hover:from-blue-50/40 hover:to-blue-100/40 dark:hover:from-blue-500/[0.08] dark:hover:to-blue-600/[0.08] transition-all duration-300">
+    <div className="group relative p-2.5 sm:p-3 rounded-lg bg-white/40 dark:bg-white/[0.03] border border-gray-200/50 dark:border-white/5 hover:border-blue-500/30 dark:hover:border-blue-500/30 hover:bg-gradient-to-br hover:from-blue-50/40 hover:to-blue-100/40 dark:hover:from-blue-500/[0.08] dark:hover:to-blue-600/[0.08] transition-all duration-300">
       <div className="flex flex-col gap-2">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:justify-between">
+          <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
             <div className="font-medium text-sm text-foreground">
               {contract.name}
             </div>
             <div className="px-1.5 py-0.5 text-[10px] rounded-full bg-gray-100 dark:bg-white/[0.06] text-gray-600 dark:text-gray-400 font-medium">
               {contract.description}
             </div>
+            {contract.issuer && (
+              <div className="px-1.5 py-0.5 text-[10px] rounded-full bg-purple-50 dark:bg-purple-500/10 text-purple-600 dark:text-purple-400 font-medium">
+                {contract.issuer}
+              </div>
+            )}
           </div>
-          <div className="flex items-center gap-1 opacity-60 group-hover:opacity-100 transition-opacity">
+          <div className="flex items-center gap-1 sm:opacity-60 group-hover:opacity-100 transition-opacity">
+            {contract.category === "token" && (
+              <button
+                onClick={() => addTokenToWallet(contract)}
+                className="p-1.5 rounded-md hover:bg-blue-500/10 dark:hover:bg-blue-500/20 transition-colors"
+                title="Add to Wallet"
+              >
+                <svg
+                  className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"
+                  />
+                </svg>
+              </button>
+            )}
             <a
               href={`https://megaexplorer.xyz/address/${contract.address}`}
               target="_blank"
@@ -145,18 +338,18 @@ function ContractCard({
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <div className="flex-1 px-2 py-1.5 rounded bg-gray-50 dark:bg-white/[0.04] font-mono text-xs text-gray-600 dark:text-gray-400 select-all">
+          <div className="w-full font-mono text-[11px] sm:text-xs leading-relaxed break-all px-2 py-1.5 rounded bg-gray-50 dark:bg-white/[0.04] text-gray-600 dark:text-gray-400 select-all">
             {contract.address}
           </div>
         </div>
         {contract.faucetUrl && (
-          <div className="flex items-center gap-1.5 mt-0.5">
+          <div className="flex items-center gap-1.5">
             <div className="w-1 h-1 rounded-full bg-emerald-500 animate-pulse" />
             <a
               href={contract.faucetUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 font-medium transition-colors"
+              className="text-[11px] sm:text-xs text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 font-medium transition-colors"
             >
               Get test tokens from faucet →
             </a>
@@ -175,15 +368,16 @@ export function ContractAddresses({
   const infrastructureContracts = CONTRACTS.filter(
     (c) => c.category === "infrastructure"
   );
+  const projectContracts = CONTRACTS.filter((c) => c.category === "project");
 
   return (
-    <div className="p-6 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm shadow-xl">
-      <div className="flex items-start justify-between mb-6">
+    <div className="p-3 sm:p-6 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm shadow-xl">
+      <div className="flex flex-col sm:flex-row sm:items-start gap-3 sm:justify-between mb-4 sm:mb-6">
         <div className="space-y-1">
-          <h2 className="text-xl font-semibold text-foreground">
+          <h2 className="text-lg sm:text-xl font-semibold text-foreground">
             Contract Addresses
           </h2>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
+          <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
             Standard contract addresses on MegaETH testnet
           </p>
         </div>
@@ -191,11 +385,11 @@ export function ContractAddresses({
           href="https://megaeth-1.gitbook.io/untitled"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-500/20 text-sm font-medium transition-colors group"
+          className="inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-500/20 text-xs sm:text-sm font-medium transition-colors group whitespace-nowrap"
         >
           View full list
           <svg
-            className="w-4 h-4 transition-transform group-hover:translate-x-0.5"
+            className="w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform group-hover:translate-x-0.5"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -210,41 +404,44 @@ export function ContractAddresses({
         </a>
       </div>
 
-      <div className="space-y-6">
-        {/* Token Contracts */}
-        <div>
-          <div className="flex items-center gap-2 mb-3">
-            <h3 className="text-sm font-medium text-gray-900 dark:text-gray-200">
-              Token Contracts
-            </h3>
-            <div className="px-1.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-medium">
-              {tokenContracts.length}
-            </div>
-          </div>
-          <div className="grid gap-2">
-            {tokenContracts.map((contract) => (
-              <ContractCard
-                key={contract.id}
-                contract={contract}
-                showCopied={showCopied}
-                onCopy={onCopy}
-              />
-            ))}
-          </div>
-        </div>
+      <div className="space-y-2 sm:space-y-3">
+        <CollapsibleSection
+          title="Token Contracts"
+          count={tokenContracts.length}
+          defaultExpanded={true}
+        >
+          {tokenContracts.map((contract) => (
+            <ContractCard
+              key={contract.id}
+              contract={contract}
+              showCopied={showCopied}
+              onCopy={onCopy}
+            />
+          ))}
+        </CollapsibleSection>
 
-        {/* Infrastructure Contracts */}
-        <div>
-          <div className="flex items-center gap-2 mb-3">
-            <h3 className="text-sm font-medium text-gray-900 dark:text-gray-200">
-              Infrastructure
-            </h3>
-            <div className="px-1.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 text-xs font-medium">
-              {infrastructureContracts.length}
-            </div>
-          </div>
-          <div className="grid gap-2">
-            {infrastructureContracts.map((contract) => (
+        <CollapsibleSection
+          title="Infrastructure"
+          count={infrastructureContracts.length}
+          defaultExpanded={false}
+        >
+          {infrastructureContracts.map((contract) => (
+            <ContractCard
+              key={contract.id}
+              contract={contract}
+              showCopied={showCopied}
+              onCopy={onCopy}
+            />
+          ))}
+        </CollapsibleSection>
+
+        {projectContracts.length > 0 && (
+          <CollapsibleSection
+            title="Project Contracts"
+            count={projectContracts.length}
+            defaultExpanded={false}
+          >
+            {projectContracts.map((contract) => (
               <ContractCard
                 key={contract.id}
                 contract={contract}
@@ -252,14 +449,14 @@ export function ContractAddresses({
                 onCopy={onCopy}
               />
             ))}
-          </div>
-        </div>
+          </CollapsibleSection>
+        )}
       </div>
 
-      <div className="mt-6 pt-4 border-t border-gray-200/50 dark:border-white/5">
-        <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-amber-50/50 dark:bg-amber-500/5 border border-amber-100 dark:border-amber-500/10">
+      <div className="mt-4 sm:mt-6 pt-3 sm:pt-4 border-t border-gray-200/50 dark:border-white/5">
+        <div className="flex items-center gap-2 px-2.5 sm:px-3 py-2 rounded-lg bg-amber-50/50 dark:bg-amber-500/5 border border-amber-100 dark:border-amber-500/10">
           <svg
-            className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0"
+            className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-600 dark:text-amber-400 flex-shrink-0"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -271,7 +468,7 @@ export function ContractAddresses({
               d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          <p className="text-xs text-amber-800 dark:text-amber-300">
+          <p className="text-[11px] sm:text-xs text-amber-800 dark:text-amber-300">
             These addresses are community maintained and not officially endorsed
             by the MegaETH team.
           </p>
