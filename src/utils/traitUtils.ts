@@ -4,7 +4,7 @@ import {
   TraitType,
   SelectedTraits,
 } from "@/types/traits";
-import number2display_mapping from "@/data/number2display_mapping.json";
+import traitMappings from "@/data/number2display_mapping.json";
 import {
   getTraitImageUrl as getImageUrl,
   isValidTrait,
@@ -13,19 +13,48 @@ import {
 
 const CDN_URL = "https://fluffle-traits.b-cdn.net/traits";
 
-const traitMappings: Record<string, TraitMapping> = number2display_mapping;
+export const TRAIT_CATEGORIES: TraitType[] = [
+  "skin",
+  "eyeball",
+  "eyeliner",
+  "eyebrow",
+  "hair",
+  "ear",
+  "head",
+  "face",
+  "clothes",
+];
 
 export function getTraitOptions(type: TraitType): TraitOption[] {
-  return Object.entries(traitMappings)
-    .filter(([_, mapping]) => mapping.Type === type)
-    .map(([id, mapping]) => ({
-      id,
-      displayName: mapping["Display Name"],
-      type,
-      tribe: mapping.Tribe,
-      imageUrl: getImageUrl(type, id),
+  const availableIds = getAvailableTraitIds(type);
+
+  return traitMappings
+    .filter((m) => {
+      const mappingType = m.Type.toLowerCase() as TraitType;
+      return mappingType === type && isValidTrait(type, m["Backend Name"]);
+    })
+    .map((m) => ({
+      id: m["Backend Name"],
+      displayName: m["Display Name"],
+      imageUrl: getTraitImageUrl(type, m["Backend Name"]),
+      tribe: m.Tribe,
     }))
-    .filter((option) => isValidTrait(option.type, option.id));
+    .filter((option) => availableIds.includes(option.id));
+}
+
+export function getRandomTraitId(type: TraitType): string | null {
+  const availableIds = getAvailableTraitIds(type);
+  if (availableIds.length === 0) return null;
+
+  const randomIndex = Math.floor(Math.random() * availableIds.length);
+  return availableIds[randomIndex];
+}
+
+export function getRandomTraits(): SelectedTraits {
+  return TRAIT_CATEGORIES.reduce((acc, type) => {
+    acc[type] = getRandomTraitId(type);
+    return acc;
+  }, {} as SelectedTraits);
 }
 
 export function getTraitImageUrl(type: string, id: string) {
@@ -64,68 +93,8 @@ export function getTraitImageUrl(type: string, id: string) {
 }
 
 export function getTraitDisplayName(type: TraitType, id: string): string {
-  const mapping = traitMappings[id];
-  return mapping && mapping.Type === type ? mapping["Display Name"] : id;
-}
-
-export const TRAIT_CATEGORIES: { id: TraitType; label: string }[] = [
-  { id: "skin", label: "Skin" },
-  { id: "eyeball", label: "Eyes" },
-  { id: "eyeliner", label: "Eyeliner" },
-  { id: "eyebrow", label: "Eyebrows" },
-  { id: "hair", label: "Hair" },
-  { id: "ear", label: "Ears" },
-  { id: "head", label: "Head" },
-  { id: "face", label: "Face" },
-  { id: "clothes", label: "Clothes" },
-];
-
-// Helper function to get a random item from an array
-function getRandomItem<T>(array: T[]): T {
-  return array[Math.floor(Math.random() * array.length)];
-}
-
-// Function to generate a random combination of traits
-export function getRandomTraits(): SelectedTraits {
-  const traits: SelectedTraits = {};
-
-  // Always include skin
-  const skinOptions = getTraitOptions("skin");
-  if (skinOptions.length > 0) {
-    traits.skin = getRandomItem(skinOptions).id;
-  }
-
-  // For each trait type, 80% chance to include it
-  const traitTypes: TraitType[] = [
-    "eyeball",
-    "eyeliner",
-    "eyebrow",
-    "hair",
-    "ear",
-    "head",
-    "face",
-    "clothes",
-  ];
-
-  // Special traits based on skin type
-  if (traits.skin === "2") {
-    traitTypes.push("eyeliner_for_skin_2");
-  } else if (traits.skin === "3") {
-    traitTypes.push(
-      "eyeliner_for_skin_3",
-      "eyebrow_for_skin_3",
-      "mouth_for_skin_3"
-    );
-  }
-
-  for (const type of traitTypes) {
-    if (Math.random() < 0.8) {
-      const options = getTraitOptions(type);
-      if (options.length > 0) {
-        traits[type] = getRandomItem(options).id;
-      }
-    }
-  }
-
-  return traits;
+  const mapping = traitMappings.find(
+    (m) => m.Type.toLowerCase() === type && m["Backend Name"] === id
+  );
+  return mapping?.["Display Name"] || `${type} ${id}`;
 }

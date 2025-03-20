@@ -1,34 +1,35 @@
 "use client";
 
-import { TraitOption, TraitType } from "@/types/traits";
+import { TraitType } from "@/types/traits";
+import { getTraitOptions, getTraitDisplayName } from "@/utils/traitUtils";
 
 interface TraitSelectorProps {
   type: TraitType;
-  options: TraitOption[];
   selectedId?: string;
   onSelect: (id: string | null) => void;
 }
 
 export default function TraitSelector({
   type,
-  options,
   selectedId,
   onSelect,
 }: TraitSelectorProps) {
+  const options = getTraitOptions(type);
+
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
       {/* None option */}
       <button
         onClick={() => onSelect(null)}
-        className={`aspect-square rounded-lg p-2 flex flex-col items-center justify-center gap-2 transition-all ${
+        className={`aspect-square rounded-lg p-2 flex flex-col items-center justify-center gap-2 transition-colors ${
           !selectedId
-            ? "bg-primary/10 ring-2 ring-primary"
-            : "bg-card hover:bg-accent"
+            ? "bg-primary text-primary-foreground"
+            : "bg-card hover:bg-card/80 text-card-foreground"
         }`}
       >
-        <div className="w-full aspect-square rounded-md bg-background flex items-center justify-center">
+        <div className="w-full aspect-square rounded-lg bg-background/50 flex items-center justify-center">
           <svg
-            className="w-6 h-6 text-muted-foreground"
+            className="w-8 h-8 text-muted-foreground"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -41,7 +42,7 @@ export default function TraitSelector({
             />
           </svg>
         </div>
-        <span className="text-xs text-center font-medium">None</span>
+        <span className="text-sm font-medium truncate">None</span>
       </button>
 
       {/* Trait options */}
@@ -49,13 +50,13 @@ export default function TraitSelector({
         <button
           key={option.id}
           onClick={() => onSelect(option.id)}
-          className={`aspect-square rounded-lg p-2 flex flex-col items-center justify-center gap-2 transition-all ${
+          className={`aspect-square rounded-lg p-2 flex flex-col items-center justify-center gap-2 transition-colors ${
             selectedId === option.id
-              ? "bg-primary/10 ring-2 ring-primary"
-              : "bg-card hover:bg-accent"
+              ? "bg-primary text-primary-foreground"
+              : "bg-card hover:bg-card/80 text-card-foreground"
           }`}
         >
-          <div className="w-full aspect-square rounded-md bg-background overflow-hidden">
+          <div className="w-full aspect-square rounded-lg bg-background/50 overflow-hidden">
             <img
               src={option.imageUrl}
               alt={option.displayName}
@@ -63,9 +64,17 @@ export default function TraitSelector({
               style={{ imageRendering: "pixelated" }}
             />
           </div>
-          <span className="text-xs text-center font-medium line-clamp-1">
+          <span
+            className="text-sm font-medium truncate"
+            title={option.displayName}
+          >
             {option.displayName}
           </span>
+          {option.tribe && (
+            <span className="text-xs text-muted-foreground truncate">
+              {option.tribe}
+            </span>
+          )}
         </button>
       ))}
     </div>

@@ -1,36 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SelectedTraits, TraitType } from "@/types/traits";
-import { getRandomTraits, getTraitOptions } from "@/utils/traitUtils";
+import {
+  TRAIT_CATEGORIES,
+  getRandomTraits,
+  getTraitOptions,
+} from "@/utils/traitUtils";
 import Preview from "./Preview";
 import TraitSelector from "./TraitSelector";
 
-const TRAIT_CATEGORIES: { label: string; type: TraitType }[] = [
-  { label: "Skin", type: "skin" },
-  { label: "Eyes", type: "eyeball" },
-  { label: "Eyeliner", type: "eyeliner" },
-  { label: "Eyeliner (Skin 2)", type: "eyeliner_for_skin_2" },
-  { label: "Eyeliner (Skin 3)", type: "eyeliner_for_skin_3" },
-  { label: "Eyebrows", type: "eyebrow" },
-  { label: "Eyebrows (Skin 3)", type: "eyebrow_for_skin_3" },
-  { label: "Mouth (Skin 3)", type: "mouth_for_skin_3" },
-  { label: "Hair", type: "hair" },
-  { label: "Ears", type: "ear" },
-  { label: "Head", type: "head" },
-  { label: "Face", type: "face" },
-  { label: "Clothes", type: "clothes" },
-];
-
 export default function NFTBuilder() {
-  const [selectedTraits, setSelectedTraits] = useState<SelectedTraits>(
-    getRandomTraits()
-  );
+  const [selectedTraits, setSelectedTraits] = useState<SelectedTraits>({});
+  const [activeCategory, setActiveCategory] = useState<TraitType>("skin");
 
-  const handleTraitSelect = (type: TraitType, id: string | null) => {
+  // Initialize with random traits
+  useEffect(() => {
+    setSelectedTraits(getRandomTraits());
+  }, []);
+
+  const handleTraitSelect = (traitId: string | null) => {
     setSelectedTraits((prev) => ({
       ...prev,
-      [type]: id ?? undefined,
+      [activeCategory]: traitId || undefined,
     }));
   };
 
@@ -39,34 +31,49 @@ export default function NFTBuilder() {
   };
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-6 w-full max-w-6xl mx-auto p-6">
+      <div className="flex flex-col lg:flex-row gap-6">
         {/* Preview Section */}
-        <div className="w-full">
+        <div className="w-full lg:w-1/2">
           <Preview selectedTraits={selectedTraits} />
-          <div className="mt-4 flex justify-center">
-            <button
-              onClick={handleRandomize}
-              className="px-4 py-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
-            >
-              Randomize
-            </button>
-          </div>
+          <button
+            onClick={handleRandomize}
+            className="w-full mt-4 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+          >
+            Randomize
+          </button>
         </div>
 
         {/* Trait Selection Section */}
-        <div className="grid gap-8">
-          {TRAIT_CATEGORIES.map(({ label, type }) => (
-            <div key={type}>
-              <h3 className="text-lg font-semibold mb-4">{label}</h3>
-              <TraitSelector
-                type={type}
-                options={getTraitOptions(type)}
-                selectedId={selectedTraits[type]}
-                onSelect={(id) => handleTraitSelect(type, id)}
-              />
-            </div>
-          ))}
+        <div className="w-full lg:w-1/2 flex flex-col gap-4">
+          {/* Category Tabs */}
+          <div className="flex flex-wrap gap-2">
+            {TRAIT_CATEGORIES.map(({ id, label }) => (
+              <button
+                key={id}
+                onClick={() => setActiveCategory(id)}
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                  activeCategory === id
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-card text-card-foreground hover:bg-card/80"
+                }`}
+              >
+                {label}
+                {selectedTraits[id] && (
+                  <span className="ml-2 w-2 h-2 rounded-full bg-green-500 inline-block" />
+                )}
+              </button>
+            ))}
+          </div>
+
+          {/* Trait Options */}
+          <div className="bg-card rounded-xl p-4 flex-grow overflow-y-auto max-h-[500px]">
+            <TraitSelector
+              type={activeCategory}
+              selectedId={selectedTraits[activeCategory]}
+              onSelect={handleTraitSelect}
+            />
+          </div>
         </div>
       </div>
     </div>

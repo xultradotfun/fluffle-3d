@@ -1,13 +1,13 @@
 export type TraitType =
+  | "clothes"
+  | "hair"
   | "skin"
+  | "ear"
   | "eyeball"
   | "eyeliner"
   | "eyebrow"
-  | "hair"
-  | "ear"
   | "head"
   | "face"
-  | "clothes"
   | "eyeliner_for_skin_2"
   | "eyeliner_for_skin_3"
   | "eyebrow_for_skin_3"
@@ -23,32 +23,21 @@ export interface TraitMapping {
 export interface TraitOption {
   id: string;
   displayName: string;
-  type: TraitType;
-  tribe?: string;
   imageUrl: string;
+  tribe?: string;
 }
 
-export interface SelectedTraits {
-  skin?: string;
-  eyeball?: string;
-  eyeliner?: string;
-  eyebrow?: string;
-  hair?: string;
-  ear?: string;
-  head?: string;
-  face?: string;
-  clothes?: string;
-  eyeliner_for_skin_2?: string;
-  eyeliner_for_skin_3?: string;
-  eyebrow_for_skin_3?: string;
-  mouth_for_skin_3?: string;
+export type SelectedTraits = {
+  [K in TraitType]?: string | null;
+};
+
+export interface TraitImageInfo {
+  path: string;
+  hasBack?: boolean;
 }
 
-export interface TraitImageMap {
-  [type: string]: {
-    [id: string]: {
-      path: string;
-      hasFrontBack?: boolean;
-    };
+export type TraitImageMap = {
+  [K in TraitType]: {
+    [id: string]: TraitImageInfo;
   };
-}
+};
