@@ -21,15 +21,15 @@ function NoneButton({
   return (
     <button
       onClick={onSelect}
-      className={`aspect-square rounded-lg p-2 flex flex-col items-center justify-center gap-2 transition-colors ${
+      className={`aspect-square rounded-2xl p-3 flex flex-col items-center justify-center gap-2 transition-all ${
         isSelected
-          ? "bg-primary text-primary-foreground"
-          : "bg-card hover:bg-card/80 text-card-foreground"
+          ? "bg-blue-600 text-white"
+          : "bg-gray-900/60 text-blue-400 hover:bg-gray-900/80"
       }`}
     >
-      <div className="w-full aspect-square rounded-lg bg-background/50 flex items-center justify-center">
+      <div className="w-full aspect-square rounded-xl bg-gray-950/50 flex items-center justify-center">
         <svg
-          className="w-8 h-8 text-muted-foreground"
+          className="w-8 h-8 opacity-60"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -42,7 +42,7 @@ function NoneButton({
           />
         </svg>
       </div>
-      <span className="text-sm font-medium truncate">None</span>
+      <span className="text-sm font-medium">None</span>
     </button>
   );
 }
@@ -64,18 +64,19 @@ function TraitButton({
   return (
     <button
       onClick={onSelect}
-      className={`aspect-square rounded-lg p-2 flex flex-col items-center justify-center gap-2 transition-colors ${
+      className={`aspect-square rounded-2xl p-3 flex flex-col items-center justify-center gap-2 transition-all ${
         isSelected
-          ? "bg-primary text-primary-foreground"
-          : "bg-card hover:bg-card/80 text-card-foreground"
+          ? "bg-blue-600 text-white"
+          : "bg-gray-900/60 text-gray-100 hover:bg-gray-900/80"
       }`}
     >
-      <div className="w-full aspect-square rounded-lg bg-background/50 overflow-hidden relative">
+      <div className="w-full aspect-square rounded-xl overflow-hidden relative">
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-800/50 to-gray-900/50" />
         {croppedImageUrl ? (
           <img
             src={croppedImageUrl}
             alt={option.displayName}
-            className="w-full h-full object-contain"
+            className="w-full h-full object-contain relative z-10"
             style={{ imageRendering: "pixelated" }}
           />
         ) : (
@@ -83,7 +84,7 @@ function TraitButton({
             src={option.imageUrl}
             alt={option.displayName}
             crossOrigin="anonymous"
-            className="w-full h-full object-contain"
+            className="w-full h-full object-contain relative z-10"
             style={{ imageRendering: "pixelated" }}
             onLoad={(e) => onImageLoad(e.target as HTMLImageElement)}
             onError={(e) => {
@@ -96,9 +97,7 @@ function TraitButton({
         {option.displayName}
       </span>
       {option.tribe && (
-        <span className="text-xs text-muted-foreground truncate">
-          {option.tribe}
-        </span>
+        <span className="text-xs text-gray-400 truncate">{option.tribe}</span>
       )}
     </button>
   );
@@ -111,10 +110,13 @@ const TraitSelector = ({ type, selectedId, onSelect }: TraitSelectorProps) => {
   );
   const processingRef = useRef<Set<string>>(new Set());
 
-  // Ensure eyewhite has a default selection
+  // Ensure required traits have a default selection
   useEffect(() => {
-    if (type === "eyewhite" && !selectedId && options.length > 0) {
-      onSelect(options[0].id);
+    if (!selectedId && options.length > 0) {
+      // These traits must always have a selection
+      if (type === "eyewhite" || type === "skin" || type === "eyeball") {
+        onSelect(options[0].id);
+      }
     }
   }, [type, selectedId, options, onSelect]);
 
@@ -212,9 +214,9 @@ const TraitSelector = ({ type, selectedId, onSelect }: TraitSelectorProps) => {
   }, [type]);
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-      {/* Only show None button for non-eyewhite traits */}
-      {type !== "eyewhite" && (
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+      {/* Only show None button for traits that allow it */}
+      {type !== "eyewhite" && type !== "skin" && type !== "eyeball" && (
         <NoneButton
           isSelected={!selectedId}
           onSelect={() => onSelect(undefined)}

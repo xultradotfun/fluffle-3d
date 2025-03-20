@@ -6,7 +6,7 @@ export const LAYER_ORDER = {
   BACKGROUND: ["background"] as const,
 
   // Base character layers
-  BASE: ["skin", "eyewhite", "eyelid", "eyeball"] as const,
+  BASE: ["skin", "eyewhite", "eyeball", "eyelid"] as const,
 
   // Face features
   FACE_FEATURES: ["mouth", "eyebrow"] as const,
