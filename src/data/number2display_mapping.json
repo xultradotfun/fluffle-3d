@@ -1,0 +1,1166 @@
+[
+  {
+    "Type": "clothes",
+    "Display Name": "Amethyst",
+    "Backend Name": "1",
+    "Tribe": "Witch"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Gothic Girl",
+    "Backend Name": "2",
+    "Tribe": "Witch"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Stormrider",
+    "Backend Name": "3",
+    "Tribe": "Soldier"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Wilderness",
+    "Backend Name": "4",
+    "Tribe": "Soldier"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Sailor Fuku",
+    "Backend Name": "5",
+    "Tribe": "Mad"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Marnie Quinn",
+    "Backend Name": "6",
+    "Tribe": "Mad"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Nomad",
+    "Backend Name": "7",
+    "Tribe": "Outlaw"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Sand Serpent",
+    "Backend Name": "8",
+    "Tribe": "Outlaw"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Nightshade",
+    "Backend Name": "9",
+    "Tribe": "Executor"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Mist",
+    "Backend Name": "10",
+    "Tribe": "Executor"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Bianco",
+    "Backend Name": "11",
+    "Tribe": "Sage"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Olive",
+    "Backend Name": "12",
+    "Tribe": "Sage"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Tiger's Eye",
+    "Backend Name": "13",
+    "Tribe": "Muscular"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Phantom",
+    "Backend Name": "14",
+    "Tribe": "Muscular"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Kaede",
+    "Backend Name": "15",
+    "Tribe": "Samurai"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Kaze",
+    "Backend Name": "16",
+    "Tribe": "Samurai"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Rich Kid",
+    "Backend Name": "17",
+    "Tribe": "Playboy"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Cappuccino",
+    "Backend Name": "18",
+    "Tribe": "Playboy"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Eagle‘s Heart",
+    "Backend Name": "19",
+    "Tribe": "Boss"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Godson",
+    "Backend Name": "20",
+    "Tribe": "Boss"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Voidrunner",
+    "Backend Name": "21",
+    "Tribe": "Pilot"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Starborn",
+    "Backend Name": "22",
+    "Tribe": "Pilot"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Professor",
+    "Backend Name": "23",
+    "Tribe": "Scientist"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Chili",
+    "Backend Name": "24",
+    "Tribe": "Scientist"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "The Dude",
+    "Backend Name": "25",
+    "Tribe": "Yob"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "The Guy",
+    "Backend Name": "26",
+    "Tribe": "Yob"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Rouge Lady",
+    "Backend Name": "27",
+    "Tribe": "Femme Fatale"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Lipstick Rose",
+    "Backend Name": "28",
+    "Tribe": "Femme Fatale"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Pale Fairy",
+    "Backend Name": "29",
+    "Tribe": "Innocent"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Winter‘s Tale",
+    "Backend Name": "30",
+    "Tribe": "Innocent"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Kira Kira",
+    "Backend Name": "31",
+    "Tribe": "Musician"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Street Ballad",
+    "Backend Name": "32",
+    "Tribe": "Musician"
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Burgundy Curls",
+    "Backend Name": "1",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Little Wizard",
+    "Backend Name": "2",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Medium-length",
+    "Backend Name": "4",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Classic Bob",
+    "Backend Name": "6",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Sleeked-back",
+    "Backend Name": "10",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Layered Hair",
+    "Backend Name": "11",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Soft Waves",
+    "Backend Name": "12",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Spiky Hair",
+    "Backend Name": "13",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Courage",
+    "Backend Name": "16",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Protagonist",
+    "Backend Name": "17",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Elegance",
+    "Backend Name": "18",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Dark Pompadour",
+    "Backend Name": "19",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Crew Cut",
+    "Backend Name": "21",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Center-parted Bob",
+    "Backend Name": "22",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Pixie Cut",
+    "Backend Name": "23",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Well-behaved",
+    "Backend Name": "24",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Buzz Cut",
+    "Backend Name": "26",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Queen",
+    "Backend Name": "27",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Vintage Beauty",
+    "Backend Name": "28",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Dream Lady",
+    "Backend Name": "29",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Neighbor's Sister",
+    "Backend Name": "30",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Manga Girl",
+    "Backend Name": "31",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Rock Star",
+    "Backend Name": "32",
+    "Tribe": ""
+  },
+  {
+    "Type": "face",
+    "Display Name": "Phantom Mask - Silver",
+    "Backend Name": "33",
+    "Tribe": ""
+  },
+  {
+    "Type": "face",
+    "Display Name": "Phantom Mask - White",
+    "Backend Name": "34",
+    "Tribe": ""
+  },
+  {
+    "Type": "ear",
+    "Display Name": "Pearl Stud Earrings",
+    "Backend Name": "1",
+    "Tribe": ""
+  },
+  {
+    "Type": "ear",
+    "Display Name": "Single Circle Earring - Thin",
+    "Backend Name": "12",
+    "Tribe": ""
+  },
+  {
+    "Type": "ear",
+    "Display Name": "Single Circle Earring - Thick",
+    "Backend Name": "26",
+    "Tribe": ""
+  },
+  {
+    "Type": "ear",
+    "Display Name": "Black Stud Earrings",
+    "Backend Name": "2",
+    "Tribe": ""
+  },
+  {
+    "Type": "ear",
+    "Display Name": "Three-row Earrings",
+    "Backend Name": "22",
+    "Tribe": ""
+  },
+  {
+    "Type": "ear",
+    "Display Name": "Wing Earrings - Bright",
+    "Backend Name": "33",
+    "Tribe": ""
+  },
+  {
+    "Type": "ear",
+    "Display Name": "Wing earrings - Dark",
+    "Backend Name": "34",
+    "Tribe": ""
+  },
+  {
+    "Type": "ear",
+    "Display Name": "Cyborg Ear",
+    "Backend Name": "35",
+    "Tribe": ""
+  },
+  {
+    "Type": "head",
+    "Display Name": "Evil Halo",
+    "Backend Name": "33",
+    "Tribe": ""
+  },
+  {
+    "Type": "head",
+    "Display Name": "Sacred Halo",
+    "Backend Name": "34",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeball",
+    "Display Name": "Olive Green eye",
+    "Backend Name": "1",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeball",
+    "Display Name": "devil eye",
+    "Backend Name": "2",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeball",
+    "Display Name": "sky eye",
+    "Backend Name": "3",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeball",
+    "Display Name": "Brown eye",
+    "Backend Name": "4",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeball",
+    "Display Name": "Red eye",
+    "Backend Name": "5",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeball",
+    "Display Name": "Aqua eye",
+    "Backend Name": "6",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeball",
+    "Display Name": "single eye",
+    "Backend Name": "7",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeball",
+    "Display Name": "Light brown eye",
+    "Backend Name": "9",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeball",
+    "Display Name": "pastel brown eye",
+    "Backend Name": "11",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeball",
+    "Display Name": "flame eye",
+    "Backend Name": "15",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeball",
+    "Display Name": "grey eye",
+    "Backend Name": "16",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeball",
+    "Display Name": "summer eye",
+    "Backend Name": "17",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeball",
+    "Display Name": "green eye",
+    "Backend Name": "20",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeball",
+    "Display Name": "dark blue eye",
+    "Backend Name": "21",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeball",
+    "Display Name": "blue eye",
+    "Backend Name": "22",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeball",
+    "Display Name": "dessert eye",
+    "Backend Name": "26",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeball",
+    "Display Name": "Light green eye",
+    "Backend Name": "29",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeball",
+    "Display Name": "ocean eye",
+    "Backend Name": "31",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeliner",
+    "Display Name": "double eyelids",
+    "Backend Name": "1",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeliner",
+    "Display Name": "princess",
+    "Backend Name": "4",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeliner",
+    "Display Name": "Joker",
+    "Backend Name": "6",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeliner",
+    "Display Name": "deep eye",
+    "Backend Name": "7",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeliner",
+    "Display Name": "Mystery",
+    "Backend Name": "8",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeliner",
+    "Display Name": "cat eye",
+    "Backend Name": "11",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeliner",
+    "Display Name": "upper eyeline",
+    "Backend Name": "16",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeliner",
+    "Display Name": "smoky eye",
+    "Backend Name": "19",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeliner",
+    "Display Name": "Drama",
+    "Backend Name": "22",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeliner",
+    "Display Name": "lower lash",
+    "Backend Name": "23",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeliner",
+    "Display Name": "dark circles",
+    "Backend Name": "26",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeliner",
+    "Display Name": "foxy",
+    "Backend Name": "28",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeliner",
+    "Display Name": "gentle curl",
+    "Backend Name": "31",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyeliner",
+    "Display Name": "World-weary",
+    "Backend Name": "32",
+    "Tribe": ""
+  },
+  {
+    "Type": "skin",
+    "Display Name": "Pearl",
+    "Backend Name": "1",
+    "Tribe": ""
+  },
+  {
+    "Type": "skin",
+    "Display Name": "Bronzite",
+    "Backend Name": "2",
+    "Tribe": ""
+  },
+  {
+    "Type": "skin",
+    "Display Name": "Onyx",
+    "Backend Name": "3",
+    "Tribe": ""
+  },
+  {
+    "Type": "skin",
+    "Display Name": "Moonstone",
+    "Backend Name": "4",
+    "Tribe": ""
+  },
+  {
+    "Type": "skin",
+    "Display Name": "Amber",
+    "Backend Name": "5",
+    "Tribe": ""
+  },
+  {
+    "Type": "skin",
+    "Display Name": "Mable",
+    "Backend Name": "6",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyebrow",
+    "Display Name": "",
+    "Backend Name": "1",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyebrow",
+    "Display Name": "",
+    "Backend Name": "2",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyebrow",
+    "Display Name": "",
+    "Backend Name": "9",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyebrow",
+    "Display Name": "",
+    "Backend Name": "11",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyebrow",
+    "Display Name": "",
+    "Backend Name": "13",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyebrow",
+    "Display Name": "",
+    "Backend Name": "17",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyebrow",
+    "Display Name": "",
+    "Backend Name": "18",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyebrow",
+    "Display Name": "",
+    "Backend Name": "19",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyebrow",
+    "Display Name": "",
+    "Backend Name": "23",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyebrow",
+    "Display Name": "",
+    "Backend Name": "25",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyebrow",
+    "Display Name": "",
+    "Backend Name": "26",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyebrow",
+    "Display Name": "",
+    "Backend Name": "27",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyebrow",
+    "Display Name": "",
+    "Backend Name": "28",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyebrow",
+    "Display Name": "",
+    "Backend Name": "29",
+    "Tribe": ""
+  },
+  {
+    "Type": "eyebrow",
+    "Display Name": "",
+    "Backend Name": "30",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Witch",
+    "Backend Name": "1",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Witch",
+    "Backend Name": "2",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Soldier",
+    "Backend Name": "3",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Soldier",
+    "Backend Name": "4",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Mad",
+    "Backend Name": "5",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Mad",
+    "Backend Name": "6",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Outlaw",
+    "Backend Name": "7",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Outlaw",
+    "Backend Name": "8",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Executor",
+    "Backend Name": "9",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Executor",
+    "Backend Name": "10",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Sage",
+    "Backend Name": "11",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Sage",
+    "Backend Name": "12",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Muscular",
+    "Backend Name": "13",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Muscular",
+    "Backend Name": "14",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Samurai",
+    "Backend Name": "15",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Samurai",
+    "Backend Name": "16",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Playboy",
+    "Backend Name": "17",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Playboy",
+    "Backend Name": "18",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Boss",
+    "Backend Name": "19",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Boss",
+    "Backend Name": "20",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Pilot",
+    "Backend Name": "21",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Pilot",
+    "Backend Name": "22",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Scientist",
+    "Backend Name": "23",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Scientist",
+    "Backend Name": "24",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Yob",
+    "Backend Name": "25",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Yob",
+    "Backend Name": "26",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Femme Fatale",
+    "Backend Name": "27",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Femme Fatale",
+    "Backend Name": "28",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Innocent",
+    "Backend Name": "29",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Innocent",
+    "Backend Name": "30",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Musician",
+    "Backend Name": "31",
+    "Tribe": ""
+  },
+  {
+    "Type": "tribe",
+    "Display Name": "Musician",
+    "Backend Name": "32",
+    "Tribe": ""
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Amethyst B",
+    "Backend Name": "33",
+    "Tribe": "Witch"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Gothic Girl B",
+    "Backend Name": "34",
+    "Tribe": "Witch"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Stormrider B",
+    "Backend Name": "35",
+    "Tribe": "Soldier"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Wilderness B",
+    "Backend Name": "36",
+    "Tribe": "Soldier"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Sailor Fuku B",
+    "Backend Name": "37",
+    "Tribe": "Mad"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Marnie Quinn B",
+    "Backend Name": "38",
+    "Tribe": "Mad"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Nomad B",
+    "Backend Name": "39",
+    "Tribe": "Outlaw"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Sand Serpent B",
+    "Backend Name": "40",
+    "Tribe": "Outlaw"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Nightshade B",
+    "Backend Name": "41",
+    "Tribe": "Executor"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Mist B",
+    "Backend Name": "42",
+    "Tribe": "Executor"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Bianco B",
+    "Backend Name": "43",
+    "Tribe": "Sage"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Olive B",
+    "Backend Name": "44",
+    "Tribe": "Sage"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Tiger's Eye B",
+    "Backend Name": "45",
+    "Tribe": "Muscular"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Phantom B",
+    "Backend Name": "46",
+    "Tribe": "Muscular"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Kaede B",
+    "Backend Name": "47",
+    "Tribe": "Samurai"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Kaze B ",
+    "Backend Name": "48",
+    "Tribe": "Samurai"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Rich Kid B",
+    "Backend Name": "49",
+    "Tribe": "Playboy"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Cappuccino B",
+    "Backend Name": "50",
+    "Tribe": "Playboy"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Eagle‘s Heart B",
+    "Backend Name": "51",
+    "Tribe": "Boss"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Godson B",
+    "Backend Name": "52",
+    "Tribe": "Boss"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Voidrunner B ",
+    "Backend Name": "53",
+    "Tribe": "Pilot"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Starborn B",
+    "Backend Name": "54",
+    "Tribe": "Pilot"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Professor B",
+    "Backend Name": "55",
+    "Tribe": "Scientist"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Chili B",
+    "Backend Name": "56",
+    "Tribe": "Scientist"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "The Dude B",
+    "Backend Name": "57",
+    "Tribe": "Yob"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "The Guy B",
+    "Backend Name": "58",
+    "Tribe": "Yob"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Rouge Lady B",
+    "Backend Name": "59",
+    "Tribe": "Femme Fatale"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Lipstick Rose B",
+    "Backend Name": "60",
+    "Tribe": "Femme Fatale"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Pale Fairy B",
+    "Backend Name": "61",
+    "Tribe": "Innocent"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Winter‘s Tale B",
+    "Backend Name": "62",
+    "Tribe": "Innocent"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Kira Kira B",
+    "Backend Name": "63",
+    "Tribe": "Musician"
+  },
+  {
+    "Type": "clothes",
+    "Display Name": "Street Ballad B",
+    "Backend Name": "64",
+    "Tribe": "Musician"
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Burgundy Curls B",
+    "Backend Name": "33",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Classic Bob ",
+    "Backend Name": "38",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Layered Hair B",
+    "Backend Name": "43",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Elegance B",
+    "Backend Name": "50",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Dark Pompadour B",
+    "Backend Name": "51",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Buzz Cut B",
+    "Backend Name": "58",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Vintage Beauty B",
+    "Backend Name": "60",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Dream Lady B",
+    "Backend Name": "61",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Neighbor's Sister B",
+    "Backend Name": "62",
+    "Tribe": ""
+  },
+  {
+    "Type": "hair",
+    "Display Name": "Manga Girl B",
+    "Backend Name": "63",
+    "Tribe": ""
+  }
+]
