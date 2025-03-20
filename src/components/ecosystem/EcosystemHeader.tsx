@@ -39,12 +39,12 @@ export function EcosystemHeader() {
             __html: `<!-- 
 -----BEGIN PGP MESSAGE-----
 
-hF4DE9NOaOzmJc0SAQdAJxbXF0gCYy6ad6u1/VZIPj3KpaCqX+s4Sh6sAnB/xV8w
-eqW7vnDn6tndliBSvwMZrvtV9u20vHy3KMxbVQ6n8FIflAf6UlMWtjM4JFgi/egc
-1G8BCQIQSiTVAZJZwZLNF/IrPbr+Po40rv30c73exOk6EqocYn9Vh+dvG2lW3hd6
-lMabzWY9gAkgfw6C4vTYF+D5OsXPXFHvCah+ojQae39g8c2tqowTragSoLZzjlW7
-XdcCjKLB5oHpZtQkRu7rbNQ=
-=a+5Z
+hF4DE9NOaOzmJc0SAQdAqNKnViIq4EorfjAwpWxJcsD0iUkY0gOcU/c0zyw492kw
+WWroR4EC65+Vd1drdkJxCAsASXENS1TFKFTJzcX1qA7sI1MRD34gEgGhbyefxZws
+1G8BCQIQDypF/i8/nbyWalNSyGplA8IySIokLgSwGMqwmRnDb0OJsXHWCaFYBJye
+ddX5nXTrOlcbJmSytNdZJPWyZzNRgj7DkqDG5plD0Bez4hMXFAhjTAIBhLFdOrej
+jEr32f0NXNjHpwG++DJNddk=
+=phrv
 -----END PGP MESSAGE-----
 -->`,
           }}
