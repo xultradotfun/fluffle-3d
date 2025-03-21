@@ -128,7 +128,8 @@
       "category": "DeFi",
       "megaMafia": true,
       "native": true,
-      "testnet": false
+      "testnet": true,
+      "guide": false
     },
     {
       "name": "GTE",

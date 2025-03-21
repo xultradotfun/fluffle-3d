@@ -11,7 +11,7 @@ export const NETWORK_INFO = {
 
 export const TIMELINE_EVENTS = [
   {
-    date: "March 6th",
+    date: "March 5th",
     title: "Testnet Deployment",
     description: "Initial deployment of the MegaETH public testnet",
     startDate: new Date("2025-03-05T00:00:00Z"),
@@ -25,7 +25,7 @@ export const TIMELINE_EVENTS = [
     endDate: new Date("2025-03-20T23:59:59Z"),
   },
   {
-    date: "March 21th",
+    date: "March 21st",
     title: "User Onboarding",
     description: "Public testnet access opens to all users",
     startDate: new Date("2025-03-21T00:00:00Z"),

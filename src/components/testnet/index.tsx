@@ -5,7 +5,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { NetworkInfoCard } from "./NetworkInfoCard";
 import { TimelineSection } from "./TimelineSection";
-import { UsersContent } from "./UsersContent";
+import { TestnetOnboarding } from "./UsersContent";
 import { NETWORK_INFO, TIMELINE_EVENTS } from "./constants";
 
 declare global {
@@ -111,7 +111,7 @@ export function TestnetView() {
 
       {/* Timeline and Network Info Side by Side */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="grid lg:grid-cols-[3fr_2fr] gap-8">
+        <div className="grid lg:grid-cols-[3fr_2fr] gap-8 items-start">
           <TimelineSection currentPhase={currentPhase} />
           <NetworkInfoCard
             showCopied={showCopied}
@@ -123,7 +123,7 @@ export function TestnetView() {
 
       {/* User Content Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <UsersContent />
+        <TestnetOnboarding />
       </div>
     </div>
   );
