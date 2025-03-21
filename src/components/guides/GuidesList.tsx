@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
-import ecosystemData from '@/data/ecosystem.json';
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import ecosystemData from "@/data/ecosystem.json";
 
 interface Guide {
   project: {
@@ -81,8 +81,8 @@ export function GuidesList() {
 
         setGuides(loadedGuides);
       } catch (err) {
-        console.error('Error loading guides:', err);
-        setError('Failed to load guides. Please try again later.');
+        console.error("Error loading guides:", err);
+        setError("Failed to load guides. Please try again later.");
       } finally {
         setLoading(false);
       }
@@ -249,8 +249,8 @@ export function GuidesList() {
                 <div
                   className={`h-full transition-all duration-300 ${
                     isComplete
-                      ? 'bg-gradient-to-r from-green-500 to-emerald-500'
-                      : 'bg-gradient-to-r from-blue-500 to-indigo-500'
+                      ? "bg-gradient-to-r from-green-500 to-emerald-500"
+                      : "bg-gradient-to-r from-blue-500 to-indigo-500"
                   }`}
                   style={{ width: `${completionPercentage}%` }}
                 />
@@ -260,7 +260,7 @@ export function GuidesList() {
               <div className="mt-4 flex items-center justify-end">
                 <div className="px-2 py-1 group/btn relative inline-flex items-center gap-2 text-sm font-medium">
                   <span className="relative z-10  text-blue-400 group-hover/btn:text-white transition-colors">
-                    {isComplete ? 'Review Guide' : 'Start Guide'}
+                    {isComplete ? "Review Guide" : "Start Guide"}
                   </span>
                   <div className="relative z-10 w-6 h-6 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 group-hover/btn:text-white group-hover/btn:translate-x-1 transition-all">
                     <ArrowRight className="w-4 h-4" />
