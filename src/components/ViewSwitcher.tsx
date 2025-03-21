@@ -105,7 +105,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   }`}
                 >
                   <BookOpen className="w-4 h-4 flex-shrink-0" />
-                  <span className="flex-1 text-left">Explore</span>
+                  <span className="flex-1 text-left">Guides</span>
                   {activeView === "guides" && (
                     <div className="w-1.5 h-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />
                   )}

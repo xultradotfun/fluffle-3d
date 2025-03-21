@@ -26,6 +26,7 @@ interface Project {
   megaMafia: boolean;
   native: boolean;
   testnet: boolean;
+  guide?: boolean;
   votes?: {
     upvotes: number;
     downvotes: number;
@@ -42,6 +43,7 @@ export function EcosystemDashboard() {
   const [showMegaMafiaOnly, setShowMegaMafiaOnly] = useState(false);
   const [showNativeOnly, setShowNativeOnly] = useState(false);
   const [showTestnetOnly, setShowTestnetOnly] = useState(false);
+  const [showGuideOnly, setShowGuideOnly] = useState(false);
   const [voteFilter, setVoteFilter] = useState<VoteFilter>("all");
   const [isLoadingVotes, setIsLoadingVotes] = useState(true);
   const [projects, setProjects] = useState<Project[]>(
@@ -157,6 +159,10 @@ export function EcosystemDashboard() {
     return projects.filter((project) => project.testnet).length;
   };
 
+  const getGuideCount = () => {
+    return projects.filter((project) => project.guide).length;
+  };
+
   const getUserVotedCount = () => {
     return projects.filter(
       (project) => project.votes && project.votes.userVote !== null
@@ -192,6 +198,7 @@ export function EcosystemDashboard() {
       const megaMafiaMatch = showMegaMafiaOnly ? project.megaMafia : true;
       const nativeMatch = showNativeOnly ? project.native : true;
       const testnetMatch = showTestnetOnly ? project.testnet : true;
+      const guideMatch = showGuideOnly ? project.guide : true;
       const userVoteMatch =
         voteFilter === "all" ||
         (voteFilter === "voted"
@@ -202,6 +209,7 @@ export function EcosystemDashboard() {
         megaMafiaMatch &&
         nativeMatch &&
         testnetMatch &&
+        guideMatch &&
         userVoteMatch
       );
     })
@@ -243,6 +251,8 @@ export function EcosystemDashboard() {
             setShowNativeOnly={setShowNativeOnly}
             showTestnetOnly={showTestnetOnly}
             setShowTestnetOnly={setShowTestnetOnly}
+            showGuideOnly={showGuideOnly}
+            setShowGuideOnly={setShowGuideOnly}
             voteFilter={voteFilter}
             setVoteFilter={setVoteFilter}
             categories={categories}
@@ -250,6 +260,7 @@ export function EcosystemDashboard() {
             getMegaMafiaCount={getMegaMafiaCount}
             getNativeCount={getNativeCount}
             getTestnetCount={getTestnetCount}
+            getGuideCount={getGuideCount}
             getUserVotedCount={getUserVotedCount}
             getUserNotVotedCount={getUserNotVotedCount}
             totalProjects={projects.length}

@@ -2,12 +2,14 @@ interface ProjectLinksProps {
   website?: string;
   discord?: string;
   telegram?: string;
+  guide?: string;
 }
 
 export function ProjectLinks({
   website,
   discord,
   telegram,
+  guide,
 }: ProjectLinksProps) {
   return (
     <div className="flex items-center gap-3">
@@ -65,6 +67,27 @@ export function ProjectLinks({
             fill="currentColor"
           >
             <path d="M11.99432,2a10,10,0,1,0,10,10A9.99917,9.99917,0,0,0,11.99432,2Zm3.17951,15.15247a.70547.70547,0,0,1-1.002.3515l-2.71467-2.10938L9.71484,17.002a.29969.29969,0,0,1-.285.03894l.334-3.23242,5.90283-5.90283a.31193.31193,0,0,0-.37573-.49219L8.73438,12.552,5.69873,11.4502a.28978.28978,0,0,1,.00361-.54394l12.54718-4.8418a.29832.29832,0,0,1,.39844.41015Z" />
+          </svg>
+        </a>
+      )}
+      {guide && (
+        <a
+          href={guide}
+          className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-400/10 dark:to-pink-400/10 shadow-[0_2px_4px_rgba(0,0,0,0.02),0_0_0_1px_rgba(168,85,247,0.1)] dark:shadow-[0_0_0_1px_rgba(168,85,247,0.15)] dark:shadow-purple-400/10 text-purple-500 dark:text-purple-400 hover:text-purple-600 dark:hover:text-purple-300 hover:shadow-[0_4px_8px_rgba(168,85,247,0.15),0_0_0_1px_rgba(168,85,247,0.2)] dark:hover:shadow-[0_4px_8px_rgba(168,85,247,0.2),0_0_0_1px_rgba(168,85,247,0.25)] transition-all duration-200 group"
+          title="View Guide"
+        >
+          <svg
+            className="w-[18px] h-[18px] transition-transform duration-200 group-hover:scale-105"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+            />
           </svg>
         </a>
       )}
