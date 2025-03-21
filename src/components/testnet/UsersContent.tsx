@@ -1,7 +1,7 @@
 export const UsersContent = () => (
   <div className="w-full">
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-      <div className="p-5 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm shadow-xl">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 auto-rows-auto">
+      <div className="p-5 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm shadow-xl h-fit">
         <h3 className="text-lg font-semibold text-foreground mb-4">
           Get Started
         </h3>
@@ -81,9 +81,41 @@ export const UsersContent = () => (
               </div>
             </div>
           </li>
+          <li className="flex gap-3">
+            <span className="flex-none w-6 h-6 rounded-full bg-gradient-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-500/20 dark:to-pink-500/20 text-purple-500 flex items-center justify-center text-sm font-medium border border-purple-500/20 dark:border-purple-500/30">
+              4
+            </span>
+            <div>
+              <div className="font-medium text-foreground text-base mb-1">
+                Follow Project Guides
+              </div>
+              <div className="text-sm text-muted-foreground mb-2">
+                Step-by-step guides for testnet projects
+              </div>
+              <a
+                href="/explore"
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 transition-all text-sm font-medium shadow-sm hover:shadow-md group"
+              >
+                View Guides
+                <svg
+                  className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
+                </svg>
+              </a>
+            </div>
+          </li>
         </ol>
       </div>
-      <div className="p-5 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm shadow-xl">
+      <div className="p-5 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm shadow-xl h-fit">
         <h3 className="text-lg font-semibold text-foreground mb-4">
           Distribution Details
         </h3>
