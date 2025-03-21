@@ -188,7 +188,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     <div className="w-1.5 h-1.5 rounded-full bg-pink-500 dark:bg-pink-400" />
                   )}
                 </button>
-                {/* <button
+                <button
                   onClick={() => onViewChange("builder")}
                   className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                     activeView === "builder"
@@ -201,7 +201,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   {activeView === "builder" && (
                     <div className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400" />
                   )}
-                </button> */}
+                </button>
               </div>
               <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rotate-45 bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl border-b border-r border-gray-200/30 dark:border-white/[0.12]" />
             </div>
@@ -440,7 +440,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     <div className="w-1.5 h-1.5 rounded-full bg-pink-500 dark:bg-pink-400" />
                   )}
                 </button>
-                {/* <button
+                <button
                   onClick={() => {
                     onViewChange("builder");
                     setIsMobileMenuOpen(false);
@@ -456,7 +456,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   {activeView === "builder" && (
                     <div className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400" />
                   )}
-                </button> */}
+                </button>
               </div>
             </div>
           </div>
