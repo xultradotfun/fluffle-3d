@@ -126,15 +126,14 @@ export function getRandomTraits(): SelectedTraits {
     return acc;
   }, {} as SelectedTraits);
 
-  // Then, handle optional traits with 50% chance of being "none"
+  // Then, handle optional traits with equal chance between none and each trait
   const optionalTraits = OPTIONAL_TRAITS.reduce((acc, type) => {
-    if (Math.random() < 0.5) {
-      // Special handling for background since it has fixed options
-      if (type === "background") {
-        acc[type] = "Mega";
-      } else {
-        acc[type] = getRandomTraitId(type);
-      }
+    const availableIds = getAvailableTraitIds(type);
+    // Random number between 0 and number of options (including none)
+    const randomIndex = Math.floor(Math.random() * (availableIds.length + 1));
+    // If randomIndex is 0, it's none. Otherwise, it's a trait
+    if (randomIndex > 0) {
+      acc[type] = availableIds[randomIndex - 1];
     }
     return acc;
   }, {} as SelectedTraits);
