@@ -24,11 +24,12 @@
 ## ✨ Features
 
 - **3D Model Viewer**: View your Fluffle in 3D with VRM support
-- **Rarity Analytics**: Comprehensive dashboard for trait rarity analysis
+- **NFT Analytics**: Comprehensive dashboard for NFT trait analysis and rarity tracking
 - **PFP Generator**: Create custom profile pictures with background options
+- **Ecosystem Directory**: Curated list of MegaETH ecosystem projects
+- **Builder Tools**: Custom tools for NFT and metaverse development
+- **Testnet Integration**: Access and interact with MegaETH testnet
 - **Modern UI/UX**: Clean, responsive interface with dark mode support
-- **Full Collection Support**: Compatible with all 5,000 Fluffle NFTs
-- **Performance Optimized**: Fast loading and smooth animations
 - **Discord Integration**: Secure authentication and role-based access
 - **Responsive Design**: Optimized for both desktop and mobile experiences
 
@@ -74,9 +75,9 @@ npm run dev
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-## 📝 Adding Projects to the Ecosystem
+## 📝 Ecosystem Directory
 
-Projects in the MegaETH ecosystem can be added to the platform by modifying `src/data/ecosystem.json`. Each project should follow this format:
+The project includes a comprehensive directory of MegaETH ecosystem projects in `src/data/ecosystem.json`. Each project entry follows this structure:
 
 ```json
 {
@@ -88,19 +89,12 @@ Projects in the MegaETH ecosystem can be added to the platform by modifying `src
   "description": "A brief description of the project",
   "category": "Category",
   "megaMafia": false, // true if it's a MegaMafia project
-  "native": true // true if it's native to MegaETH ecosystem
+  "native": true, // true if it's native to MegaETH ecosystem
+  "testnet": false // true if the project is on testnet
 }
 ```
 
-### Project Requirements
-
-1. **Project Information**: All fields should be accurate and up-to-date
-2. **Avatar Image**: Add a square project logo/avatar to `/public/avatars/[twitter_handle].jpg`
-3. **Native Status**: Set `native` to `true` if the project was built specifically for MegaETH
-
-### Categories
-
-Available categories:
+### Project Categories
 
 - `NFT`: NFT collections and marketplaces
 - `DeFi`: Decentralized finance projects
@@ -110,59 +104,46 @@ Available categories:
 - `AI`: Artificial Intelligence and agent projects
 - `Meme`: Meme coins and related projects
 
-### Example
+### Project Status Fields
 
-```json
-{
-  "name": "Euphoria",
-  "twitter": "Euphoria_fi",
-  "website": "https://euphoria.finance",
-  "telegram": "https://t.me/euphoria_fi",
-  "description": "A mobile-first derivatives trading platform",
-  "category": "DeFi",
-  "megaMafia": true,
-  "native": true
-}
-```
+- `megaMafia`: Set to `true` for official MegaMafia projects
+- `native`: Set to `true` for projects built specifically for MegaETH
+- `testnet`: Set to `true` for projects currently on testnet
 
-### Guidelines
-
-1. **Project Name**:
-
-   - Use the official project name
-   - Maintain consistent capitalization
-
-2. **Social Links**:
-
-   - Twitter handle without the @ symbol
-   - Full URLs for website, Discord, and Telegram
-   - Only include active social channels
-
-3. **Description**:
-
-   - Keep it concise (1-2 sentences)
-   - Focus on the main value proposition
-   - Avoid excessive technical jargon
-
-4. **Category**:
-
-   - Choose the most relevant category from the list above
-   - Use existing categories when possible
-   - Contact maintainers if a new category is needed
-
-5. **Status Fields**:
-   - Set `megaMafia` to `true` only for official MegaMafia projects
-   - Set `native` to `true` for projects built specifically for MegaETH
-   - When in doubt about either field, set to `false`
-
-### Adding Your Project
+### Adding Projects
 
 1. Fork the repository
 2. Add your project to `src/data/ecosystem.json`
 3. Add your project logo to `/public/avatars/[twitter_handle].jpg`
 4. Maintain alphabetical order within the projects array
 5. Create a pull request with your changes
-6. Include any relevant social proof or verification
+
+## 📦 Project Structure
+
+```
+fluffle-3d/
+├── src/
+│   ├── app/             # Next.js app router pages
+│   │   ├── api/         # API routes including Discord auth
+│   │   ├── tools/       # Main application tools
+│   │   └── ecosystem/   # Ecosystem directory pages
+│   ├── components/      # React components
+│   │   ├── analytics/   # Analytics components
+│   │   ├── builder/     # Builder tool components
+│   │   ├── ecosystem/   # Ecosystem directory components
+│   │   ├── metaverse/   # 3D viewer components
+│   │   ├── nft/         # NFT-related components
+│   │   ├── pfp/         # PFP generator components
+│   │   ├── testnet/     # Testnet integration components
+│   │   └── ui/          # Shared UI components
+│   ├── data/           # Static data and configurations
+│   ├── lib/            # Shared libraries and utilities
+│   ├── utils/          # Utility functions
+│   └── types/          # TypeScript type definitions
+├── prisma/             # Database schema and migrations
+├── public/             # Static assets
+└── types/              # TypeScript type definitions
+```
 
 ## 🛠 Technology Stack
 
@@ -176,28 +157,6 @@ Available categories:
 - **Database**: Prisma with PostgreSQL
 - **State Management**: React Hooks
 - **Deployment**: [Vercel](https://vercel.com)
-
-## 📦 Project Structure
-
-```
-fluffle-3d/
-├── src/
-│   ├── app/             # Next.js app router pages
-│   │   ├── api/         # API routes including Discord auth
-│   │   └── (routes)/    # Application routes
-│   ├── components/      # React components
-│   │   ├── analytics/   # Analytics components
-│   │   ├── metaverse/   # 3D viewer components
-│   │   ├── pfp/         # PFP generator components
-│   │   └── ui/          # Shared UI components
-│   ├── lib/             # Shared libraries and utilities
-│   │   └── prisma.ts    # Database client
-│   ├── utils/           # Utility functions
-│   └── styles/          # Global styles
-├── prisma/              # Database schema and migrations
-├── public/              # Static assets
-└── types/               # TypeScript type definitions
-```
 
 ## 🚢 Deployment
 
@@ -229,6 +188,5 @@ Key points:
 
 ## 🔗 Links
 
-- [Website](https://fluffletools.com)
-- [OpenSea Collection](https://opensea.io/collection/megaeth-nft-1)
+- [Website](https://fluffle.tools)
 - [Twitter](https://x.com/0x_ultra)
