@@ -31,6 +31,7 @@ export interface GuideStep {
   id: string;
   title: string;
   content: string;
+  completable?: boolean;
   images?: GuideImage[];
   links?: GuideLink[];
 }

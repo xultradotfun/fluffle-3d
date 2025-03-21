@@ -16,6 +16,7 @@ interface Guide {
     steps: {
       id: string;
       title: string;
+      completable: boolean;
     }[];
   }[];
 }
@@ -37,11 +38,13 @@ export function GuideSidebar({
 
   // Calculate section progress
   const getSectionProgress = (section: Guide["sections"][0]) => {
-    const totalSteps = section.steps.length;
-    const completedStepsInSection = section.steps.filter((step) =>
-      completedSteps.includes(step.id)
+    const totalSteps = section.steps.filter(
+      (step) => step.completable !== false
     ).length;
-    return (completedStepsInSection / totalSteps) * 100;
+    const completedStepsInSection = section.steps.filter(
+      (step) => step.completable !== false && completedSteps.includes(step.id)
+    ).length;
+    return totalSteps > 0 ? (completedStepsInSection / totalSteps) * 100 : 0;
   };
 
   // Close sidebar when clicking outside on mobile
@@ -106,7 +109,11 @@ export function GuideSidebar({
                 width: `${
                   (completedSteps.length /
                     guide.sections.reduce(
-                      (acc, section) => acc + section.steps.length,
+                      (acc, section) =>
+                        acc +
+                        section.steps.filter(
+                          (step) => step.completable !== false
+                        ).length,
                       0
                     )) *
                   100

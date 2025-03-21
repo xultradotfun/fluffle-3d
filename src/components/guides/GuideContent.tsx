@@ -39,6 +39,7 @@ interface Guide {
       id: string;
       title: string;
       content: string;
+      completable?: boolean;
       images?: {
         url: string;
         alt: string;
@@ -95,6 +96,14 @@ export function GuideContent({
   }, [project.twitter]);
 
   const toggleStep = (stepId: string) => {
+    // Find the step to check if it's completable
+    const step = guide.sections
+      .flatMap((section) => section.steps)
+      .find((step) => step.id === stepId);
+
+    // Only allow toggling if the step is completable
+    if (!step?.completable) return;
+
     setProgress((prev) => {
       const newProgress = {
         completedSteps: prev.completedSteps.includes(stepId)
@@ -114,7 +123,8 @@ export function GuideContent({
   };
 
   const totalSteps = guide.sections.reduce(
-    (acc, section) => acc + section.steps.length,
+    (acc, section) =>
+      acc + section.steps.filter((step) => step.completable !== false).length,
     0
   );
   const completedSteps = progress.completedSteps.length;
@@ -359,18 +369,20 @@ export function GuideContent({
                     {section.steps.map((step) => (
                       <div id={step.id} key={step.id} className="group">
                         <div className="flex items-start gap-4">
-                          <button
-                            onClick={() => toggleStep(step.id)}
-                            className={`flex-shrink-0 w-6 h-6 mt-1 rounded-full border-2 transition-all duration-200 ${
-                              progress.completedSteps.includes(step.id)
-                                ? "bg-green-500 border-green-500"
-                                : "border-gray-300 dark:border-gray-600 group-hover:border-blue-500 dark:group-hover:border-blue-400"
-                            }`}
-                          >
-                            {progress.completedSteps.includes(step.id) && (
-                              <CheckCircle2 className="w-5 h-5 text-white" />
-                            )}
-                          </button>
+                          {step.completable !== false && (
+                            <button
+                              onClick={() => toggleStep(step.id)}
+                              className={`flex-shrink-0 w-6 h-6 mt-1 rounded-full border-2 transition-all duration-200 ${
+                                progress.completedSteps.includes(step.id)
+                                  ? "bg-green-500 border-green-500"
+                                  : "border-gray-300 dark:border-gray-600 group-hover:border-blue-500 dark:group-hover:border-blue-400"
+                              }`}
+                            >
+                              {progress.completedSteps.includes(step.id) && (
+                                <CheckCircle2 className="w-5 h-5 text-white" />
+                              )}
+                            </button>
+                          )}
                           <div className="flex-1 min-w-0">
                             <h3 className="text-lg font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                               {step.title}

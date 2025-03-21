@@ -39,14 +39,13 @@
             "id": "step-1",
             "title": "Token Distribution Model",
             "content": "Consider the following:\n\n• 80% of each token's supply is set aside to be sold on the bonding curve\n• The remaining 20% is reserved to see the token's AMM pool in case of it bonding\n• Tokens bond once all of the 80% of supply on the bonding curve is sold out\n• Once bonded, tokens will start trading on their respective AMM pool immediately. Long migration periods are a thing of the past.",
+            "completable": false,
             "images": [
               {
-                "url": "https://mega-eco.b-cdn.net/GTE_XYZ/1.png",
-                "alt": "Token distribution breakdown showing 80% for bonding curve and 20% for AMM pool"
+                "url": "https://mega-eco.b-cdn.net/GTE_XYZ/1.png"
               },
               {
-                "url": "https://mega-eco.b-cdn.net/GTE_XYZ/2.png",
-                "alt": "Token configuration interface showing parameters setup"
+                "url": "https://mega-eco.b-cdn.net/GTE_XYZ/2.png"
               }
             ]
           },
@@ -54,10 +53,10 @@
             "id": "step-2",
             "title": "Trade Your Token",
             "content": "Once your token is launched, you can start trading immediately on GTE's swap interface.",
+            "completable": true,
             "images": [
               {
-                "url": "https://mega-eco.b-cdn.net/GTE_XYZ/3.png",
-                "alt": "GTE's swap interface for token trading"
+                "url": "https://mega-eco.b-cdn.net/GTE_XYZ/3.png"
               }
             ]
           }
@@ -71,14 +70,13 @@
             "id": "step-3",
             "title": "Provide Liquidity",
             "content": "• When you provide liquidity to a pool, you earn fees from every trade executed within it\n• The GTE AMM uses a constant-product model, meaning you'll deposit equal amounts of each token into the pool, maintaining a balanced 50/50 ratio\n• In the future, more mature tokens will be traded in GTE's fully on-chain CLOB",
+            "completable": true,
             "images": [
               {
-                "url": "https://mega-eco.b-cdn.net/GTE_XYZ/4.png",
-                "alt": "Liquidity provision interface showing pool details"
+                "url": "https://mega-eco.b-cdn.net/GTE_XYZ/4.png"
               },
               {
-                "url": "https://mega-eco.b-cdn.net/GTE_XYZ/5.png",
-                "alt": "Earning statistics and rewards dashboard"
+                "url": "https://mega-eco.b-cdn.net/GTE_XYZ/5.png"
               }
             ]
           }
