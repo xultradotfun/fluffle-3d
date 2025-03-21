@@ -10,6 +10,7 @@ import { PFPGenerator } from "@/components/pfp/PFPGenerator";
 import { MetaverseTeaser } from "@/components/metaverse/MetaverseTeaser";
 import { TestnetView } from "@/components/testnet/index";
 import { BuildersView } from "@/components/build/index";
+import NFTBuilder from "@/components/builder/NFTBuilder";
 import Hero from "@/components/Hero";
 import type { NFTTrait } from "@/utils/nftLoader";
 import { EcosystemDashboard } from "@/components/ecosystem/EcosystemDashboard";
@@ -30,6 +31,7 @@ export default function Home() {
     | "ecosystem"
     | "testnet"
     | "build"
+    | "builder"
   >("viewer");
   const [viewers, setViewers] = useState<ViewerData[]>([]);
   const [error, setError] = useState("");
@@ -50,6 +52,8 @@ export default function Home() {
       setActiveView("testnet");
     } else if (hash === "#build") {
       setActiveView("build");
+    } else if (hash === "#builder") {
+      setActiveView("builder");
     } else {
       setActiveView("viewer");
     }
@@ -69,6 +73,8 @@ export default function Home() {
         setActiveView("testnet");
       } else if (hash === "#build") {
         setActiveView("build");
+      } else if (hash === "#builder") {
+        setActiveView("builder");
       } else {
         setActiveView("viewer");
       }
@@ -88,6 +94,7 @@ export default function Home() {
       | "ecosystem"
       | "testnet"
       | "build"
+      | "builder"
   ) => {
     if (view === "viewer") {
       window.history.replaceState(null, "", "/#viewer");
@@ -107,6 +114,8 @@ export default function Home() {
       window.history.replaceState(null, "", "/#testnet");
     } else if (view === "build") {
       window.history.replaceState(null, "", "/#build");
+    } else if (view === "builder") {
+      window.history.replaceState(null, "", "/#builder");
     } else {
       window.history.replaceState(null, "", "/");
       setViewers([]);
@@ -235,6 +244,8 @@ export default function Home() {
           <TestnetView />
         ) : activeView === "build" ? (
           <BuildersView />
+        ) : activeView === "builder" ? (
+          <NFTBuilder />
         ) : (
           <PFPGenerator />
         )}
