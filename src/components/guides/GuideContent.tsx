@@ -16,6 +16,7 @@ import {
 import { useRouter } from "next/navigation";
 import { GuideSidebar } from "./GuideSidebar";
 import { Project, Guide, GuideStep, GuideImage } from "./types";
+import { ProjectDetails } from "@/components/explore/ProjectDetails";
 
 interface ProjectFeature {
   title: string;
@@ -146,7 +147,13 @@ export function GuideContent({
                     rel="noopener noreferrer"
                     className="w-8 h-8 flex items-center justify-center rounded-full bg-black/30 hover:bg-black/40 text-white transition-colors backdrop-blur-sm"
                   >
-                    <Hash className="w-4 h-4" />
+                    <svg
+                      className="w-4 h-4"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z" />
+                    </svg>
                   </a>
                 )}
                 {projectData?.telegram && (
@@ -156,7 +163,13 @@ export function GuideContent({
                     rel="noopener noreferrer"
                     className="w-8 h-8 flex items-center justify-center rounded-full bg-black/30 hover:bg-black/40 text-white transition-colors backdrop-blur-sm"
                   >
-                    <MessageCircle className="w-4 h-4" />
+                    <svg
+                      className="w-4 h-4"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M11.99432,2a10,10,0,1,0,10,10A9.99917,9.99917,0,0,0,11.99432,2Zm3.17951,15.15247a.70547.70547,0,0,1-1.002.3515l-2.71467-2.10938L9.71484,17.002a.29969.29969,0,0,1-.285.03894l.334-3.23242,5.90283-5.90283a.31193.31193,0,0,0-.37573-.49219L8.73438,12.552,5.69873,11.4502a.28978.28978,0,0,1,.00361-.54394l12.54718-4.8418a.29832.29832,0,0,1,.39844.41015Z" />
+                    </svg>
                   </a>
                 )}
               </div>
@@ -212,98 +225,7 @@ export function GuideContent({
           </div>
 
           {/* Project Details */}
-          <div className="relative z-10">
-            <div className="bg-white/[0.02] dark:bg-white/[0.02] border border-gray-200/10 dark:border-white/5 rounded-2xl overflow-hidden backdrop-blur-sm">
-              <div className="p-8">
-                {/* Header */}
-                <div className="flex items-center gap-3 mb-8">
-                  <div className="w-10 h-10 rounded-xl bg-blue-500/10 dark:bg-blue-500/10 flex items-center justify-center text-blue-400">
-                    <svg
-                      className="w-5 h-5"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                    </svg>
-                  </div>
-                  <h2 className="text-xl font-semibold text-gray-100">
-                    Project Details
-                  </h2>
-                </div>
-
-                {/* Description */}
-                {project.longDescription && (
-                  <div className="mb-10">
-                    <h3 className="text-lg text-gray-300 mb-3">
-                      About {project.name}
-                    </h3>
-                    <p className="text-gray-400 leading-relaxed text-[15px]">
-                      {project.longDescription}
-                    </p>
-                  </div>
-                )}
-
-                {/* Features */}
-                {project.features && project.features.length > 0 && (
-                  <div className="mb-10">
-                    <h3 className="text-lg text-gray-300 mb-6">Key Features</h3>
-                    <div className="grid gap-6 sm:grid-cols-2">
-                      {project.features.map((feature, index) => (
-                        <div key={index} className="flex items-start gap-3">
-                          <div className="w-5 h-5 mt-1 rounded-full bg-indigo-500/10 flex items-center justify-center flex-shrink-0">
-                            <svg
-                              className="w-3 h-3 text-indigo-400"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                            >
-                              <path d="M5 13l4 4L19 7" />
-                            </svg>
-                          </div>
-                          <div>
-                            <h4 className="font-medium text-gray-200 text-[15px] mb-1">
-                              {feature.title}
-                            </h4>
-                            <p className="text-sm text-gray-400">
-                              {feature.description}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Current Status */}
-                {project.currentStatus && (
-                  <div>
-                    <h3 className="text-lg text-gray-300 mb-4">
-                      Current Status
-                    </h3>
-                    <div className="flex items-start gap-3">
-                      <div className="w-5 h-5 mt-1 rounded-full bg-green-500/10 flex items-center justify-center flex-shrink-0">
-                        <svg
-                          className="w-3 h-3 text-green-400"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                        >
-                          <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <p className="text-gray-400 leading-relaxed text-[15px]">
-                        {project.currentStatus}
-                      </p>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
+          <ProjectDetails project={project} />
 
           {/* Guide Content */}
           <div className="space-y-6">
