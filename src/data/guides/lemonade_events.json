@@ -39,6 +39,12 @@
               {
                 "url": "https://mega-eco.b-cdn.net/lemonade_events/1.png"
               }
+            ],
+            "links": [
+              {
+                "text": "MegaETH Space on Lemonade",
+                "url": "https://lemonade.social/s/megaeth"
+              }
             ]
           },
           {
@@ -52,6 +58,12 @@
               },
               {
                 "url": "https://mega-eco.b-cdn.net/lemonade_events/3.png"
+              }
+            ],
+            "links": [
+              {
+                "text": "MegaETH Space on Lemonade",
+                "url": "https://lemonade.social/s/megaeth"
               }
             ]
           }
@@ -72,6 +84,12 @@
               },
               {
                 "url": "https://mega-eco.b-cdn.net/lemonade_events/5.png"
+              }
+            ],
+            "links": [
+              {
+                "text": "MegaETH Space on Lemonade",
+                "url": "https://lemonade.social/s/megaeth"
               }
             ]
           }
