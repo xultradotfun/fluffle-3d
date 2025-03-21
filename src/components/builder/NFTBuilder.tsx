@@ -65,7 +65,7 @@ export default function NFTBuilder() {
       canvas.width = 1000;
       canvas.height = 1000;
 
-      // Load and draw all images in order
+      // Define drawImage function
       const drawImage = async (
         src: string,
         isBackground: boolean = false
@@ -79,13 +79,15 @@ export default function NFTBuilder() {
               ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
             } else {
               // For traits, maintain aspect ratio and center
-              const scale = Math.min(
+              const baseScale = Math.min(
                 canvas.width / img.width,
                 canvas.height / img.height
               );
-              const x = (canvas.width - img.width * scale) / 2;
-              const y = (canvas.height - img.height * scale) / 2;
-              ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+              const scaledWidth = img.width * baseScale;
+              const scaledHeight = img.height * baseScale;
+              const x = (canvas.width - scaledWidth) / 2;
+              const y = (canvas.height - scaledHeight) / 2;
+              ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
             }
             resolve();
           };
@@ -94,13 +96,24 @@ export default function NFTBuilder() {
         });
       };
 
-      // Draw background if selected
+      // Draw background if selected (before any transformations)
       if (selectedTraits.background) {
         await drawImage(
           getTraitImageUrl("background", selectedTraits.background),
           true // isBackground
         );
       }
+
+      // Save the initial context state
+      ctx.save();
+
+      // Apply zoom and offset to the entire context
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.scale(zoom, zoom);
+      ctx.translate(
+        -canvas.width / 2,
+        -canvas.height / 2 + (offsetY * canvas.height) / 100
+      );
 
       // Draw hair back part if applicable
       if (
@@ -114,60 +127,70 @@ export default function NFTBuilder() {
 
       // Draw base character
       for (const traitType of LAYER_ORDER.BASE) {
-        const traitId = selectedTraits[traitType as keyof SelectedTraits];
-        if (traitId) {
-          await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
+        if (selectedTraits[traitType]) {
+          await drawImage(
+            getTraitImageUrl(traitType, selectedTraits[traitType]!)
+          );
         }
       }
 
       // Draw face features
       for (const traitType of LAYER_ORDER.FACE_FEATURES) {
-        const traitId = selectedTraits[traitType as keyof SelectedTraits];
-        if (traitId) {
-          await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
+        if (selectedTraits[traitType]) {
+          await drawImage(
+            getTraitImageUrl(traitType, selectedTraits[traitType]!)
+          );
         }
       }
 
       // Draw eye details
       for (const traitType of LAYER_ORDER.EYE_DETAILS) {
-        const traitId = selectedTraits[traitType as keyof SelectedTraits];
-        if (traitId) {
-          await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
+        if (selectedTraits[traitType]) {
+          await drawImage(
+            getTraitImageUrl(traitType, selectedTraits[traitType]!)
+          );
         }
       }
 
       // Draw clothes
       for (const traitType of LAYER_ORDER.CLOTHES) {
-        const traitId = selectedTraits[traitType as keyof SelectedTraits];
-        if (traitId) {
-          await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
+        if (selectedTraits[traitType]) {
+          await drawImage(
+            getTraitImageUrl(traitType, selectedTraits[traitType]!)
+          );
         }
       }
 
-      // Draw hair front part
+      // Draw hair front part if applicable
       if (selectedTraits.hair) {
         await drawImage(getTraitImageUrl("hair", selectedTraits.hair));
       }
 
-      // Draw accessories last
+      // Draw accessories
       for (const traitType of LAYER_ORDER.ACCESSORIES) {
-        const traitId = selectedTraits[traitType as keyof SelectedTraits];
-        if (traitId) {
-          await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
+        if (selectedTraits[traitType]) {
+          await drawImage(
+            getTraitImageUrl(traitType, selectedTraits[traitType]!)
+          );
         }
       }
 
-      // Copy to clipboard
+      // Restore the context state
+      ctx.restore();
+
+      // Convert to blob and copy to clipboard
       const blob = await new Promise<Blob>((resolve) =>
-        canvas.toBlob((blob) => resolve(blob!))
+        canvas.toBlob((blob) => resolve(blob!), "image/png")
       );
       await navigator.clipboard.write([
-        new ClipboardItem({ "image/png": blob }),
+        new ClipboardItem({
+          [blob.type]: blob,
+        }),
       ]);
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000);
-    } catch (err) {
-      console.error("Error copying to clipboard:", err);
+    } catch (error) {
+      console.error("Error copying to clipboard:", error);
     }
   };
 
@@ -184,7 +207,7 @@ export default function NFTBuilder() {
       canvas.width = 1000;
       canvas.height = 1000;
 
-      // Load and draw all images in order
+      // Define drawImage function
       const drawImage = async (
         src: string,
         isBackground: boolean = false
@@ -198,13 +221,15 @@ export default function NFTBuilder() {
               ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
             } else {
               // For traits, maintain aspect ratio and center
-              const scale = Math.min(
+              const baseScale = Math.min(
                 canvas.width / img.width,
                 canvas.height / img.height
               );
-              const x = (canvas.width - img.width * scale) / 2;
-              const y = (canvas.height - img.height * scale) / 2;
-              ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+              const scaledWidth = img.width * baseScale;
+              const scaledHeight = img.height * baseScale;
+              const x = (canvas.width - scaledWidth) / 2;
+              const y = (canvas.height - scaledHeight) / 2;
+              ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
             }
             resolve();
           };
@@ -213,13 +238,24 @@ export default function NFTBuilder() {
         });
       };
 
-      // Draw background if selected
+      // Draw background if selected (before any transformations)
       if (selectedTraits.background) {
         await drawImage(
           getTraitImageUrl("background", selectedTraits.background),
           true // isBackground
         );
       }
+
+      // Save the initial context state
+      ctx.save();
+
+      // Apply zoom and offset to the entire context
+      ctx.translate(canvas.width / 2, canvas.height / 2);
+      ctx.scale(zoom, zoom);
+      ctx.translate(
+        -canvas.width / 2,
+        -canvas.height / 2 + (offsetY * canvas.height) / 100
+      );
 
       // Draw hair back part if applicable
       if (
@@ -233,56 +269,71 @@ export default function NFTBuilder() {
 
       // Draw base character
       for (const traitType of LAYER_ORDER.BASE) {
-        const traitId = selectedTraits[traitType as keyof SelectedTraits];
-        if (traitId) {
-          await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
+        if (selectedTraits[traitType]) {
+          await drawImage(
+            getTraitImageUrl(traitType, selectedTraits[traitType]!)
+          );
         }
       }
 
       // Draw face features
       for (const traitType of LAYER_ORDER.FACE_FEATURES) {
-        const traitId = selectedTraits[traitType as keyof SelectedTraits];
-        if (traitId) {
-          await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
+        if (selectedTraits[traitType]) {
+          await drawImage(
+            getTraitImageUrl(traitType, selectedTraits[traitType]!)
+          );
         }
       }
 
       // Draw eye details
       for (const traitType of LAYER_ORDER.EYE_DETAILS) {
-        const traitId = selectedTraits[traitType as keyof SelectedTraits];
-        if (traitId) {
-          await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
+        if (selectedTraits[traitType]) {
+          await drawImage(
+            getTraitImageUrl(traitType, selectedTraits[traitType]!)
+          );
         }
       }
 
       // Draw clothes
       for (const traitType of LAYER_ORDER.CLOTHES) {
-        const traitId = selectedTraits[traitType as keyof SelectedTraits];
-        if (traitId) {
-          await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
+        if (selectedTraits[traitType]) {
+          await drawImage(
+            getTraitImageUrl(traitType, selectedTraits[traitType]!)
+          );
         }
       }
 
-      // Draw hair front part
+      // Draw hair front part if applicable
       if (selectedTraits.hair) {
         await drawImage(getTraitImageUrl("hair", selectedTraits.hair));
       }
 
-      // Draw accessories last
+      // Draw accessories
       for (const traitType of LAYER_ORDER.ACCESSORIES) {
-        const traitId = selectedTraits[traitType as keyof SelectedTraits];
-        if (traitId) {
-          await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
+        if (selectedTraits[traitType]) {
+          await drawImage(
+            getTraitImageUrl(traitType, selectedTraits[traitType]!)
+          );
         }
       }
 
-      // Download the image
-      const link = document.createElement("a");
-      link.download = "fluffle-nft.png";
-      link.href = canvas.toDataURL("image/png");
-      link.click();
-    } catch (err) {
-      console.error("Error downloading image:", err);
+      // Restore the context state
+      ctx.restore();
+
+      // Convert to blob and download
+      const blob = await new Promise<Blob>((resolve) =>
+        canvas.toBlob((blob) => resolve(blob!), "image/png")
+      );
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "fluffle-nft.png";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading image:", error);
     }
   };
 
