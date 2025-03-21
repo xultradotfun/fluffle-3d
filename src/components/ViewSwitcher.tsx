@@ -156,6 +156,34 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
             <div className="absolute invisible opacity-0 translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 ease-out z-50 w-60 p-2 bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl rounded-xl shadow-lg border border-gray-200/30 dark:border-white/[0.12] bottom-full left-1/2 -translate-x-1/2 mb-2">
               <div className="relative space-y-1">
                 <button
+                  onClick={() => onViewChange("builder")}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    activeView === "builder"
+                      ? "bg-gradient-to-r from-amber-50 to-yellow-50 text-amber-600 shadow-sm dark:from-amber-500/20 dark:to-amber-500/10 dark:text-amber-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <Rabbit className="w-4 h-4 flex-shrink-0" />
+                  <span className="flex-1 text-left">Fluffle Builder</span>
+                  {activeView === "builder" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400" />
+                  )}
+                </button>
+                <button
+                  onClick={() => onViewChange("pfp")}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    activeView === "pfp"
+                      ? "bg-gradient-to-r from-green-50 to-emerald-50 text-green-600 shadow-sm dark:from-green-500/20 dark:to-green-500/10 dark:text-green-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <Image className="w-4 h-4 flex-shrink-0" />
+                  <span className="flex-1 text-left">PFP Generator</span>
+                  {activeView === "pfp" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 dark:bg-green-400" />
+                  )}
+                </button>
+                <button
                   onClick={() => onViewChange("viewer")}
                   className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                     activeView === "viewer"
@@ -184,20 +212,6 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   )}
                 </button>
                 <button
-                  onClick={() => onViewChange("pfp")}
-                  className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    activeView === "pfp"
-                      ? "bg-gradient-to-r from-green-50 to-emerald-50 text-green-600 shadow-sm dark:from-green-500/20 dark:to-green-500/10 dark:text-green-400"
-                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
-                  }`}
-                >
-                  <Image className="w-4 h-4 flex-shrink-0" />
-                  <span className="flex-1 text-left">PFP Generator</span>
-                  {activeView === "pfp" && (
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 dark:bg-green-400" />
-                  )}
-                </button>
-                <button
                   onClick={() => onViewChange("metaverse")}
                   className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                     activeView === "metaverse"
@@ -209,20 +223,6 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   <span className="flex-1 text-left">Metaverse</span>
                   {activeView === "metaverse" && (
                     <div className="w-1.5 h-1.5 rounded-full bg-pink-500 dark:bg-pink-400" />
-                  )}
-                </button>
-                <button
-                  onClick={() => onViewChange("builder")}
-                  className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    activeView === "builder"
-                      ? "bg-gradient-to-r from-amber-50 to-yellow-50 text-amber-600 shadow-sm dark:from-amber-500/20 dark:to-amber-500/10 dark:text-amber-400"
-                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
-                  }`}
-                >
-                  <Rabbit className="w-4 h-4 flex-shrink-0" />
-                  <span className="flex-1 text-left">Fluffle Builder</span>
-                  {activeView === "builder" && (
-                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400" />
                   )}
                 </button>
               </div>
@@ -415,6 +415,40 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
               <div className="space-y-1">
                 <button
                   onClick={() => {
+                    onViewChange("builder");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    activeView === "builder"
+                      ? "bg-gradient-to-r from-amber-50 to-yellow-50 text-amber-600 shadow-sm dark:from-amber-500/20 dark:to-amber-500/10 dark:text-amber-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <Rabbit className="w-5 h-5 flex-shrink-0" />
+                  <span className="flex-1 text-left">Fluffle Builder</span>
+                  {activeView === "builder" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400" />
+                  )}
+                </button>
+                <button
+                  onClick={() => {
+                    onViewChange("pfp");
+                    setIsMobileMenuOpen(false);
+                  }}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    activeView === "pfp"
+                      ? "bg-gradient-to-r from-green-50 to-emerald-50 text-green-600 shadow-sm dark:from-green-500/20 dark:to-green-500/10 dark:text-green-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <Image className="w-5 h-5 flex-shrink-0" />
+                  <span className="flex-1 text-left">PFP Generator</span>
+                  {activeView === "pfp" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 dark:bg-green-400" />
+                  )}
+                </button>
+                <button
+                  onClick={() => {
                     onViewChange("viewer");
                     setIsMobileMenuOpen(false);
                   }}
@@ -447,23 +481,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     <div className="w-1.5 h-1.5 rounded-full bg-purple-500 dark:bg-purple-400" />
                   )}
                 </button>
-                <button
-                  onClick={() => {
-                    onViewChange("pfp");
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className={`flex items-center w-full gap-2.5 px-3.5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
-                    activeView === "pfp"
-                      ? "bg-gradient-to-r from-green-50 to-emerald-50 text-green-600 shadow-sm dark:from-green-500/20 dark:to-green-500/10 dark:text-green-400"
-                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
-                  }`}
-                >
-                  <Image className="w-5 h-5 flex-shrink-0" />
-                  <span className="flex-1 text-left">PFP Generator</span>
-                  {activeView === "pfp" && (
-                    <div className="w-1.5 h-1.5 rounded-full bg-green-500 dark:bg-green-400" />
-                  )}
-                </button>
+
                 <button
                   onClick={() => {
                     onViewChange("metaverse");
@@ -479,23 +497,6 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   <span className="flex-1 text-left">Metaverse</span>
                   {activeView === "metaverse" && (
                     <div className="w-1.5 h-1.5 rounded-full bg-pink-500 dark:bg-pink-400" />
-                  )}
-                </button>
-                <button
-                  onClick={() => {
-                    onViewChange("builder");
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className={`flex items-center w-full gap-2.5 px-3.5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
-                    activeView === "builder"
-                      ? "bg-gradient-to-r from-amber-50 to-yellow-50 text-amber-600 shadow-sm dark:from-amber-500/20 dark:to-amber-500/10 dark:text-amber-400"
-                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
-                  }`}
-                >
-                  <Rabbit className="w-5 h-5 flex-shrink-0" />
-                  <span className="flex-1 text-left">Fluffle Builder</span>
-                  {activeView === "builder" && (
-                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400" />
                   )}
                 </button>
               </div>
