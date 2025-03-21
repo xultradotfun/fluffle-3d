@@ -258,8 +258,8 @@ export function GuidesList() {
 
               {/* Action Button */}
               <div className="mt-4 flex items-center justify-end">
-                <div className="group/btn relative inline-flex items-center gap-2 text-sm font-medium">
-                  <span className="relative z-10 text-blue-400 group-hover/btn:text-white transition-colors">
+                <div className="px-2 py-1 group/btn relative inline-flex items-center gap-2 text-sm font-medium">
+                  <span className="relative z-10  text-blue-400 group-hover/btn:text-white transition-colors">
                     {isComplete ? "Review Guide" : "Start Guide"}
                   </span>
                   <div className="relative z-10 w-6 h-6 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 group-hover/btn:text-white group-hover/btn:translate-x-1 transition-all">
