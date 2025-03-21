@@ -114,7 +114,7 @@ export function PFPGenerator() {
       const scale =
         currentZoom === "full"
           ? baseScale * 0.9 // Full body view
-          : baseScale * 2.2; // Bust view
+          : baseScale * 1.65; // Bust view (reduced from 2.2 to 1.65)
 
       // Calculate positions
       const x = (canvas.width - thumbnail.width * scale) / 2;
@@ -122,7 +122,7 @@ export function PFPGenerator() {
 
       // Add offset for bust view - using same offset regardless of background
       if (currentZoom === "bust") {
-        y += canvas.height * 0.15;
+        y += canvas.height * 0.12;
       }
 
       // Draw NFT
