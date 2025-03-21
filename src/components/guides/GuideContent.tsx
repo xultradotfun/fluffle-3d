@@ -23,9 +23,9 @@ interface Project {
   name: string;
   twitter: string;
   description: string;
-  longDescription: string;
-  features: ProjectFeature[];
-  currentStatus: string;
+  longDescription?: string;
+  features?: ProjectFeature[];
+  currentStatus?: string;
   website?: string;
   discord?: string;
   telegram?: string;
@@ -121,14 +121,15 @@ export function GuideContent({
   const completionPercentage = Math.round((completedSteps / totalSteps) * 100);
 
   return (
-    <div className="relative h-screen overflow-hidden">
+    <div className="relative">
       <GuideSidebar
         currentProject={project}
         guide={guide}
         availableGuides={availableGuides}
+        completedSteps={progress.completedSteps}
       />
 
-      <main className="h-screen overflow-y-auto lg:pl-72 pt-8">
+      <main className="lg:pl-72 pt-8">
         <div className="max-w-4xl mx-auto px-4 lg:px-6 space-y-8">
           {/* Header */}
           <div className="relative z-0">
@@ -236,141 +237,211 @@ export function GuideContent({
           </div>
 
           {/* Project Details */}
-          <div className="space-y-6 relative z-10">
-            {/* Description */}
-            <div className="bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 rounded-xl p-6">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                About {project.name}
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300">
-                {project.longDescription}
-              </p>
-            </div>
+          <div className="relative z-10">
+            <div className="bg-white/50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/5 rounded-xl overflow-hidden">
+              <div className="p-6">
+                {/* Header */}
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-lg bg-blue-500/10 dark:bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
+                    <svg
+                      className="w-5 h-5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                  </div>
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    Project Details
+                  </h2>
+                </div>
 
-            {/* Features */}
-            <div className="bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 rounded-xl p-6">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Features
-              </h2>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {project.features.map((feature, index) => (
-                  <div key={index} className="space-y-1">
-                    <h3 className="font-medium text-gray-900 dark:text-white">
-                      {feature.title}
+                {/* Description */}
+                {project.longDescription && (
+                  <div className="mb-6">
+                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+                      About {project.name}
                     </h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">
-                      {feature.description}
+                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                      {project.longDescription}
                     </p>
                   </div>
-                ))}
-              </div>
-            </div>
+                )}
 
-            {/* Current Status */}
-            <div className="bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 rounded-xl p-6">
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Current Status
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300">
-                {project.currentStatus}
-              </p>
+                {/* Features */}
+                {project.features && project.features.length > 0 && (
+                  <div className="mb-6">
+                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">
+                      Key Features
+                    </h3>
+                    <div className="grid gap-3 sm:grid-cols-2">
+                      {project.features.map((feature, index) => (
+                        <div key={index} className="flex items-start gap-2">
+                          <div className="w-5 h-5 mt-0.5 rounded-full bg-indigo-500/10 dark:bg-indigo-500/20 flex items-center justify-center flex-shrink-0">
+                            <svg
+                              className="w-3 h-3 text-indigo-600 dark:text-indigo-400"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                            >
+                              <path d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                          <div>
+                            <h4 className="font-medium text-gray-900 dark:text-white text-sm">
+                              {feature.title}
+                            </h4>
+                            <p className="text-sm text-gray-600 dark:text-gray-300 mt-0.5">
+                              {feature.description}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Current Status */}
+                {project.currentStatus && (
+                  <div>
+                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+                      Current Status
+                    </h3>
+                    <div className="flex items-start gap-2">
+                      <div className="w-5 h-5 mt-0.5 rounded-full bg-green-500/10 dark:bg-green-500/20 flex items-center justify-center flex-shrink-0">
+                        <svg
+                          className="w-3 h-3 text-green-600 dark:text-green-400"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2"
+                        >
+                          <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                        {project.currentStatus}
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
           {/* Guide Content */}
-          <div className="space-y-8">
+          <div className="space-y-6">
             {guide.sections.map((section) => (
               <div
                 id={section.id}
                 key={section.id}
-                className="bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 rounded-xl p-6"
+                className="bg-white/50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/5 rounded-xl overflow-hidden"
               >
-                <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                  {section.title}
-                </h2>
-                <div className="space-y-6">
-                  {section.steps.map((step) => (
-                    <div id={step.id} key={step.id} className="space-y-3">
-                      <div className="flex items-start gap-3">
-                        <button
-                          onClick={() => toggleStep(step.id)}
-                          className={`flex-shrink-0 w-6 h-6 mt-1 rounded-full border-2 transition-colors ${
-                            progress.completedSteps.includes(step.id)
-                              ? "bg-green-500 border-green-500"
-                              : "border-gray-300 dark:border-gray-600"
-                          }`}
-                        >
-                          {progress.completedSteps.includes(step.id) && (
-                            <CheckCircle2 className="w-5 h-5 text-white" />
-                          )}
-                        </button>
-                        <div className="flex-1">
-                          <h3 className="text-lg font-medium text-gray-900 dark:text-white">
-                            {step.title}
-                          </h3>
-                          <div className="mt-2 prose prose-gray dark:prose-invert max-w-none">
-                            <p className="text-gray-600 dark:text-gray-300 whitespace-pre-line">
-                              {step.content}
-                            </p>
-                          </div>
-                          {step.images && step.images.length > 0 && (
-                            <div className="mt-6">
-                              <div
-                                className={`grid ${
-                                  step.images.length > 1
-                                    ? "grid-cols-1 sm:grid-cols-2 gap-6"
-                                    : "grid-cols-1 place-items-center"
-                                }`}
-                              >
-                                {step.images.map((image, index) => (
-                                  <button
+                <div className="p-6">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-lg bg-purple-500/10 dark:bg-purple-500/20 flex items-center justify-center text-purple-600 dark:text-purple-400">
+                      <svg
+                        className="w-5 h-5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                      </svg>
+                    </div>
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      {section.title}
+                    </h2>
+                  </div>
+                  <div className="space-y-8">
+                    {section.steps.map((step) => (
+                      <div id={step.id} key={step.id} className="group">
+                        <div className="flex items-start gap-4">
+                          <button
+                            onClick={() => toggleStep(step.id)}
+                            className={`flex-shrink-0 w-6 h-6 mt-1 rounded-full border-2 transition-all duration-200 ${
+                              progress.completedSteps.includes(step.id)
+                                ? "bg-green-500 border-green-500"
+                                : "border-gray-300 dark:border-gray-600 group-hover:border-blue-500 dark:group-hover:border-blue-400"
+                            }`}
+                          >
+                            {progress.completedSteps.includes(step.id) && (
+                              <CheckCircle2 className="w-5 h-5 text-white" />
+                            )}
+                          </button>
+                          <div className="flex-1 min-w-0">
+                            <h3 className="text-lg font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                              {step.title}
+                            </h3>
+                            <div className="mt-3 prose prose-gray dark:prose-invert max-w-none">
+                              <p className="text-gray-600 dark:text-gray-300 whitespace-pre-line">
+                                {step.content}
+                              </p>
+                            </div>
+                            {step.images && step.images.length > 0 && (
+                              <div className="mt-4">
+                                <div
+                                  className={`grid ${
+                                    step.images.length > 1
+                                      ? "grid-cols-1 sm:grid-cols-2 gap-4"
+                                      : "grid-cols-1 place-items-center"
+                                  }`}
+                                >
+                                  {step.images.map((image, index) => (
+                                    <button
+                                      key={index}
+                                      className={`relative rounded-lg overflow-hidden bg-black/5 dark:bg-white/5 ring-1 ring-black/5 dark:ring-white/5 shadow-sm hover:ring-2 hover:ring-blue-500/50 transition-all cursor-zoom-in group ${
+                                        step.images && step.images.length === 1
+                                          ? "w-full sm:w-1/2"
+                                          : "w-full"
+                                      }`}
+                                      onClick={() => setExpandedImage(image)}
+                                    >
+                                      <div className="relative aspect-video">
+                                        <Image
+                                          src={image.url}
+                                          alt={image.alt}
+                                          fill
+                                          className="object-contain group-hover:scale-105 transition-transform duration-300"
+                                          sizes={
+                                            step.images &&
+                                            step.images.length > 1
+                                              ? "(max-width: 640px) 100vw, 50vw"
+                                              : "100vw"
+                                          }
+                                          priority={index === 0}
+                                        />
+                                      </div>
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                            )}
+                            {step.links && step.links.length > 0 && (
+                              <div className="mt-4 flex flex-wrap gap-2">
+                                {step.links.map((link, index) => (
+                                  <a
                                     key={index}
-                                    className={`relative rounded-xl overflow-hidden bg-black/5 dark:bg-white/5 ring-1 ring-black/5 dark:ring-white/5 shadow-sm hover:ring-2 hover:ring-blue-500/50 transition-all cursor-zoom-in group ${
-                                      step.images && step.images.length === 1
-                                        ? "w-full sm:w-1/2"
-                                        : "w-full"
-                                    }`}
-                                    onClick={() => setExpandedImage(image)}
+                                    href={link.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex items-center gap-1.5 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
                                   >
-                                    <div className="relative aspect-video">
-                                      <Image
-                                        src={image.url}
-                                        alt={image.alt}
-                                        fill
-                                        className="object-contain group-hover:scale-105 transition-transform duration-300"
-                                        sizes={
-                                          step.images && step.images.length > 1
-                                            ? "(max-width: 640px) 100vw, 50vw"
-                                            : "100vw"
-                                        }
-                                        priority={index === 0}
-                                      />
-                                    </div>
-                                  </button>
+                                    {link.text}
+                                    <ExternalLink className="w-3.5 h-3.5" />
+                                  </a>
                                 ))}
                               </div>
-                            </div>
-                          )}
-                          {step.links && step.links.length > 0 && (
-                            <div className="mt-4 flex flex-wrap gap-2">
-                              {step.links.map((link, index) => (
-                                <a
-                                  key={index}
-                                  href={link.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400 hover:underline"
-                                >
-                                  {link.text}
-                                  <ExternalLink className="w-3 h-3" />
-                                </a>
-                              ))}
-                            </div>
-                          )}
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
               </div>
             ))}
