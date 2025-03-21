@@ -1,0 +1,52 @@
+{
+  "project": {
+    "name": "Autonomous World Engine",
+    "twitter": "awe_box",
+    "description": "An autonomous world engine to power 3D experience",
+    "longDescription": "AWE (Autonomous World Engine) is a platform for creating and experiencing onchain mini-games running on MegaETH testnet. The platform features interactive 3D experiences with real-time multiplayer capabilities and on-chain game mechanics.",
+    "features": [
+      {
+        "title": "Onchain Mini-Games",
+        "description": "Play and interact with games that run directly on the blockchain."
+      },
+      {
+        "title": "Real-time Multiplayer",
+        "description": "Interact with other players in real-time through chat and gameplay."
+      },
+      {
+        "title": "3D Experience",
+        "description": "Immersive 3D environment for enhanced gaming experience."
+      },
+      {
+        "title": "Blockchain Integration",
+        "description": "Seamless integration with MegaETH for on-chain game mechanics."
+      }
+    ],
+    "currentStatus": "AWE is currently available on MegaETH testnet with the Whack A Fluffle game and more experiences coming soon."
+  },
+  "guide": {
+    "sections": [
+      {
+        "id": "play",
+        "title": "Play Whack A Fluffle",
+        "steps": [
+          {
+            "id": "step-1",
+            "title": "Game Overview",
+            "content": "Whack A Fluffle is a multiplayer game where:\n\n• Fluffles spawn randomly on a contract\n• Whack the fluffle before it times out or another live player gets it\n• Earn a point for each fluffle you whack\n• Talk to other live players in the chatbox",
+            "completable": true,
+            "images": [],
+            "links": [
+              {
+                "text": "Play on Testnet",
+                "url": "https://testnet.awe.box/"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "requirements": ["None"],
+    "lastUpdated": "2025-03-21"
+  }
+}

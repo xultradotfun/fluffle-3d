@@ -1,0 +1,85 @@
+{
+  "project": {
+    "name": "XL",
+    "twitter": "XLmemeCom",
+    "description": "A multichain memecoin launchpad designed for fair launches—no snipers, creator-first.",
+    "longDescription": "XL is a multichain memecoin launchpad designed for fair launches—no snipers, creator-first. It simplifies token creation and trading, giving users a seamless way to explore and launch new memes across multiple blockchains. The MegaETH testnet deployment is the latest step in expanding its reach.",
+    "features": [
+      {
+        "title": "Fair Launch System",
+        "description": "No snipers, creator-first approach ensuring fair token distribution."
+      },
+      {
+        "title": "Multichain Support",
+        "description": "Launch and trade memecoins across multiple blockchains."
+      },
+      {
+        "title": "Simple Token Creation",
+        "description": "User-friendly interface for creating new memecoins."
+      },
+      {
+        "title": "Seamless Trading",
+        "description": "Easy-to-use platform for buying and selling memecoins."
+      }
+    ],
+    "currentStatus": "XL is currently available on MegaETH testnet at alpha-testnet.xlmeme.com/megaeth"
+  },
+  "guide": {
+    "sections": [
+      {
+        "id": "trade",
+        "title": "Trade Memecoins",
+        "steps": [
+          {
+            "id": "step-1",
+            "title": "Buy and Sell",
+            "content": "Use XL's intuitive interface to buy and sell memecoins on MegaETH testnet.",
+            "completable": true,
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/XLmemeCom/1.png"
+              },
+              {
+                "url": "https://mega-eco.b-cdn.net/XLmemeCom/2.png"
+              }
+            ],
+            "links": [
+              {
+                "text": "Trade on Testnet",
+                "url": "https://alpha-testnet.xlmeme.com/megaeth"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "launch",
+        "title": "Launch a Memecoin",
+        "steps": [
+          {
+            "id": "step-2",
+            "title": "Create Your Token",
+            "content": "Follow the simple process to launch your own memecoin on XL's platform.",
+            "completable": true,
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/XLmemeCom/4.png"
+              },
+              {
+                "url": "https://mega-eco.b-cdn.net/XLmemeCom/5.png"
+              }
+            ],
+            "links": [
+              {
+                "text": "Launch on Testnet",
+                "url": "https://alpha-testnet.xlmeme.com/megaeth"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "requirements": ["None"],
+    "lastUpdated": "2025-03-21"
+  }
+}

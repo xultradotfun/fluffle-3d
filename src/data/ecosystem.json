@@ -20,7 +20,8 @@
       "category": "Gaming",
       "megaMafia": true,
       "native": true,
-      "testnet": false
+      "testnet": true,
+      "guide": true
     },
     {
       "name": "Sweep",
@@ -754,7 +755,8 @@
       "category": "Meme",
       "megaMafia": false,
       "native": false,
-      "testnet": false
+      "testnet": true,
+      "guide": true
     },
     {
       "name": "Fluffle Tools xultra.fun",
