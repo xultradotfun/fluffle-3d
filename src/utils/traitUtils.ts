@@ -105,6 +105,7 @@ export function getRandomTraits(): SelectedTraits {
     "mouth",
     "eyeliner",
     "clothes",
+    "eyewhite",
   ];
 
   // Optional traits that can be "none"
@@ -112,7 +113,6 @@ export function getRandomTraits(): SelectedTraits {
     "ear",
     "head",
     "face",
-    "eyewhite",
     "eyeliner_for_skin_2",
     "eyeliner_for_skin_3",
     "eyebrow_for_skin_3",
