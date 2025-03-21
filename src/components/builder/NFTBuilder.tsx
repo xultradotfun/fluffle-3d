@@ -112,20 +112,49 @@ export default function NFTBuilder() {
         await drawImage(getTraitBackImageUrl("hair", selectedTraits.hair)!);
       }
 
-      // Draw layers in order
-      for (const groupName of Object.keys(LAYER_ORDER) as LayerGroup[]) {
-        const traits = LAYER_ORDER[groupName];
-        for (const traitType of traits) {
-          const traitId = selectedTraits[traitType as keyof SelectedTraits];
-          if (traitId) {
-            await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
-          }
+      // Draw base character
+      for (const traitType of LAYER_ORDER.BASE) {
+        const traitId = selectedTraits[traitType as keyof SelectedTraits];
+        if (traitId) {
+          await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
+        }
+      }
+
+      // Draw face features
+      for (const traitType of LAYER_ORDER.FACE_FEATURES) {
+        const traitId = selectedTraits[traitType as keyof SelectedTraits];
+        if (traitId) {
+          await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
+        }
+      }
+
+      // Draw eye details
+      for (const traitType of LAYER_ORDER.EYE_DETAILS) {
+        const traitId = selectedTraits[traitType as keyof SelectedTraits];
+        if (traitId) {
+          await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
+        }
+      }
+
+      // Draw clothes
+      for (const traitType of LAYER_ORDER.CLOTHES) {
+        const traitId = selectedTraits[traitType as keyof SelectedTraits];
+        if (traitId) {
+          await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
         }
       }
 
       // Draw hair front part
       if (selectedTraits.hair) {
         await drawImage(getTraitImageUrl("hair", selectedTraits.hair));
+      }
+
+      // Draw accessories last
+      for (const traitType of LAYER_ORDER.ACCESSORIES) {
+        const traitId = selectedTraits[traitType as keyof SelectedTraits];
+        if (traitId) {
+          await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
+        }
       }
 
       // Copy to clipboard
@@ -202,20 +231,49 @@ export default function NFTBuilder() {
         await drawImage(getTraitBackImageUrl("hair", selectedTraits.hair)!);
       }
 
-      // Draw layers in order
-      for (const groupName of Object.keys(LAYER_ORDER) as LayerGroup[]) {
-        const traits = LAYER_ORDER[groupName];
-        for (const traitType of traits) {
-          const traitId = selectedTraits[traitType as keyof SelectedTraits];
-          if (traitId) {
-            await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
-          }
+      // Draw base character
+      for (const traitType of LAYER_ORDER.BASE) {
+        const traitId = selectedTraits[traitType as keyof SelectedTraits];
+        if (traitId) {
+          await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
+        }
+      }
+
+      // Draw face features
+      for (const traitType of LAYER_ORDER.FACE_FEATURES) {
+        const traitId = selectedTraits[traitType as keyof SelectedTraits];
+        if (traitId) {
+          await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
+        }
+      }
+
+      // Draw eye details
+      for (const traitType of LAYER_ORDER.EYE_DETAILS) {
+        const traitId = selectedTraits[traitType as keyof SelectedTraits];
+        if (traitId) {
+          await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
+        }
+      }
+
+      // Draw clothes
+      for (const traitType of LAYER_ORDER.CLOTHES) {
+        const traitId = selectedTraits[traitType as keyof SelectedTraits];
+        if (traitId) {
+          await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
         }
       }
 
       // Draw hair front part
       if (selectedTraits.hair) {
         await drawImage(getTraitImageUrl("hair", selectedTraits.hair));
+      }
+
+      // Draw accessories last
+      for (const traitType of LAYER_ORDER.ACCESSORIES) {
+        const traitId = selectedTraits[traitType as keyof SelectedTraits];
+        if (traitId) {
+          await drawImage(getTraitImageUrl(traitType as TraitType, traitId));
+        }
       }
 
       // Download the image
