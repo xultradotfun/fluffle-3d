@@ -35,6 +35,9 @@ export function GuideSidebar({
   completedSteps,
 }: GuideSidebarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [otherGuidesProgress, setOtherGuidesProgress] = useState<
+    Record<string, number>
+  >({});
 
   // Calculate section progress
   const getSectionProgress = (section: Guide["sections"][0]) => {
@@ -46,6 +49,31 @@ export function GuideSidebar({
     ).length;
     return totalSteps > 0 ? (completedStepsInSection / totalSteps) * 100 : 0;
   };
+
+  // Load progress for other guides
+  useEffect(() => {
+    const loadOtherGuidesProgress = () => {
+      const progress: Record<string, number> = {};
+      availableGuides.forEach((project) => {
+        if (project.twitter !== currentProject.twitter) {
+          const savedProgress = localStorage.getItem(
+            `guideProgress_${project.twitter}`
+          );
+          if (savedProgress) {
+            const { completedSteps: savedSteps } = JSON.parse(savedProgress);
+            // For now, we'll just show the percentage of completed steps
+            // You might want to fetch the actual guide data to calculate this more accurately
+            progress[project.twitter] = savedSteps.length > 0 ? 100 : 0;
+          } else {
+            progress[project.twitter] = 0;
+          }
+        }
+      });
+      setOtherGuidesProgress(progress);
+    };
+
+    loadOtherGuidesProgress();
+  }, [availableGuides, currentProject.twitter]);
 
   // Close sidebar when clicking outside on mobile
   useEffect(() => {
@@ -206,20 +234,53 @@ export function GuideSidebar({
               <h3 className="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">
                 Other Guides
               </h3>
-              <div className="space-y-1">
+              <div className="space-y-3">
                 {availableGuides
                   .filter(
                     (project) => project.twitter !== currentProject.twitter
                   )
-                  .map((project) => (
-                    <Link
-                      key={project.twitter}
-                      href={`/explore/${project.twitter}`}
-                      className="flex items-center gap-2 text-sm text-gray-400 hover:text-gray-300 transition-colors"
-                    >
-                      {project.name}
-                    </Link>
-                  ))}
+                  .map((project) => {
+                    const progress = otherGuidesProgress[project.twitter] || 0;
+                    const isStarted = progress > 0;
+                    return (
+                      <Link
+                        key={project.twitter}
+                        href={`/explore/${project.twitter}`}
+                        className="block group"
+                      >
+                        <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-white/[0.02] transition-colors">
+                          <div className="relative h-8 w-8 rounded-lg overflow-hidden border border-gray-200/50 dark:border-white/5">
+                            <Image
+                              src={`/avatars/${project.twitter}.jpg`}
+                              alt={project.name}
+                              className="object-cover"
+                              fill
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center justify-between mb-1">
+                              <h4 className="text-sm font-medium text-gray-900 dark:text-white truncate group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">
+                                {project.name}
+                              </h4>
+                              <span className="text-xs text-gray-500 dark:text-gray-400">
+                                {progress}%
+                              </span>
+                            </div>
+                            <div className="h-1 bg-gray-100 dark:bg-white/5 rounded-full overflow-hidden">
+                              <div
+                                className={`h-full transition-all duration-300 ${
+                                  isStarted
+                                    ? "bg-blue-500"
+                                    : "bg-gray-200 dark:bg-gray-700"
+                                }`}
+                                style={{ width: `${progress}%` }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
               </div>
             </div>
           </div>
