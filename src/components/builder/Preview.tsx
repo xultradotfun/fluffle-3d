@@ -129,6 +129,9 @@ const Preview = ({
               {/* Clothes */}
               {renderLayerGroup(selectedTraits, LAYER_ORDER.CLOTHES)}
 
+              {/* Accessories */}
+              {renderLayerGroup(selectedTraits, LAYER_ORDER.ACCESSORIES)}
+
               {/* Hair front part */}
               {selectedTraits.hair && (
                 <img
@@ -138,9 +141,6 @@ const Preview = ({
                   style={{ imageRendering: "pixelated" }}
                 />
               )}
-
-              {/* Accessories */}
-              {renderLayerGroup(selectedTraits, LAYER_ORDER.ACCESSORIES)}
             </>
           ) : (
             <EmptyState />
