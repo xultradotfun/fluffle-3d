@@ -11,7 +11,7 @@ export default function GuidesPage() {
 
   const handleViewChange = (view: string) => {
     if (view === "guides") {
-      router.push("/guides");
+      router.push("/explore");
     } else if (view === "viewer") {
       router.push("/#viewer");
     } else if (view === "analytics") {

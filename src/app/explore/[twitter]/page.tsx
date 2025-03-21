@@ -22,46 +22,14 @@ export default function GuidePage() {
   try {
     guideData = require(`@/data/guides/${twitter}.json`);
   } catch (error) {
-    return (
-      <div className="flex min-h-screen flex-col">
-        <Hero />
-        <ViewSwitcher
-          activeView="guides"
-          onViewChange={(view) => {
-            if (view === "guides") {
-              router.push("/guides");
-            } else if (view === "viewer") {
-              router.push("/#viewer");
-            } else if (view === "analytics") {
-              router.push("/#rarities");
-            } else if (view === "pfp") {
-              router.push("/#pfp");
-            } else if (view === "metaverse") {
-              router.push("/#metaverse");
-            } else if (view === "testnet") {
-              router.push("/#testnet");
-            } else if (view === "build") {
-              router.push("/#build");
-            } else if (view === "builder") {
-              router.push("/#builder");
-            } else if (view === "ecosystem") {
-              router.push("/");
-            }
-          }}
-        />
-        <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-          <div className="max-w-7xl mx-auto text-center">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-              Guide not found
-            </h1>
-            <p className="mt-4 text-gray-600 dark:text-gray-400">
-              The guide you're looking for doesn't exist or is still being
-              created.
-            </p>
-          </div>
-        </div>
-      </div>
-    );
+    console.error("Error loading guide data:", error);
+    router.push("/explore");
+    return;
+  }
+
+  if (!guideData) {
+    router.push("/explore");
+    return;
   }
 
   const { project, guide } = guideData;

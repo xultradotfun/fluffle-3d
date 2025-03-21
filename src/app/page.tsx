@@ -107,7 +107,7 @@ export default function Home() {
       | "guides"
   ) => {
     if (view === "guides") {
-      router.push("/guides");
+      router.push("/explore");
     } else if (view === "viewer") {
       router.push("/#viewer");
       setViewers([]);

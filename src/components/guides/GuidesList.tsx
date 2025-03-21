@@ -123,7 +123,7 @@ export function GuidesList() {
       {guides.map((guide) => (
         <Link
           key={guide.project.twitter}
-          href={`/guides/${guide.project.twitter}`}
+          href={`/explore/${guide.project.twitter}`}
           className="group relative overflow-hidden rounded-2xl bg-black/20 backdrop-blur-xl border border-white/5 transition-all hover:border-white/10 hover:bg-black/30"
         >
           {/* Banner Image */}
