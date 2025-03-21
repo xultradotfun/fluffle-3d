@@ -278,6 +278,12 @@ export const traitImageMap: TraitImageMap = {
   },
   background: {
     Mega: { path: "@pfpbg.png" },
+    GTE: { path: "bg-GTE.jpg" },
+    MegaDark: { path: "bg-mega-dark.jpg" },
+    MegaLight: { path: "bg-mega-light.jpg" },
+    Noise: { path: "bg-noise.jpg" },
+    Teko: { path: "bg-teko.jpg" },
+    Vahalla: { path: "bg-vahalla.jpg" },
   },
 };
 
@@ -297,7 +303,9 @@ export function getTraitImageUrl(type: TraitType, id: string): string {
     return `/${traitInfo.path.slice(1)}`; // Remove the @ and add leading slash
   }
 
-  return `${CDN_URL}/traits/${type}/${traitInfo.path}`;
+  // Special case for backgrounds - use 'backgrounds' directory
+  const directory = type === "background" ? "backgrounds" : type;
+  return `${CDN_URL}/traits/${directory}/${traitInfo.path}`;
 }
 
 export function getTraitBackImageUrl(
