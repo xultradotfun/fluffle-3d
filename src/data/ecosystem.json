@@ -366,7 +366,8 @@
       "category": "AI",
       "megaMafia": false,
       "native": true,
-      "testnet": false
+      "testnet": true,
+      "guide": true
     },
     {
       "name": "Ren",
