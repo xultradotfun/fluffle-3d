@@ -133,6 +133,8 @@ export function EcosystemDashboard() {
     category: string,
     megaMafiaOnly: boolean = false,
     nativeOnly: boolean = false,
+    testnetOnly: boolean = false,
+    showGuideOnly: boolean = false,
     voteFilter: VoteFilter = "all"
   ) => {
     return projects.filter(
@@ -140,6 +142,8 @@ export function EcosystemDashboard() {
         project.category === category &&
         (!megaMafiaOnly || project.megaMafia) &&
         (!nativeOnly || project.native) &&
+        (!testnetOnly || project.testnet) &&
+        (!showGuideOnly || project.guide) &&
         (voteFilter === "all" ||
           (voteFilter === "voted"
             ? project.votes?.userVote !== null

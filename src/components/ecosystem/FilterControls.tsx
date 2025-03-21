@@ -18,6 +18,8 @@ interface FilterControlsProps {
     category: string,
     megaMafiaOnly?: boolean,
     nativeOnly?: boolean,
+    testnetOnly?: boolean,
+    showGuideOnly?: boolean,
     voteFilter?: "all" | "voted" | "not_voted"
   ) => number;
   getMegaMafiaCount: () => number;
@@ -314,6 +316,8 @@ export function FilterControls({
                   category,
                   showMegaMafiaOnly,
                   showNativeOnly,
+                  showTestnetOnly,
+                  showGuideOnly,
                   voteFilter
                 )}
               </span>
