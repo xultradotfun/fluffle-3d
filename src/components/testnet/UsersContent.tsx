@@ -156,64 +156,112 @@ export const TestnetOnboarding = () => (
         <div className="space-y-4">
           <div>
             <p className="text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-3">
-              Get testnet ETH for testing and development:
+              Get testnet ETH through one of these faucets:
             </p>
-            <a
-              href="https://testnet.megaeth.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center w-full gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 transition-all text-sm font-medium shadow-sm hover:shadow group"
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+            <div className="space-y-3">
+              {/* Official Faucet */}
+              <a
+                href="https://testnet.megaeth.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center w-full gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 transition-all text-sm font-medium shadow-sm hover:shadow group"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              Get Testnet ETH
-              <svg
-                className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                Official MegaETH Faucet
+                <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-white/20">
+                  0.00002 ETH/24h
+                </span>
+                <svg
+                  className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
+                </svg>
+              </a>
+
+              {/* Gas.zip Faucet */}
+              <a
+                href="https://www.gas.zip/faucet/megaeth"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center w-full gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 transition-all text-sm font-medium shadow-sm hover:shadow group"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M14 5l7 7m0 0l-7 7m7-7H3"
-                />
-              </svg>
-            </a>
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
+                </svg>
+                Gas.zip Faucet
+                <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-white/20">
+                  0.00002 ETH/24h
+                </span>
+                <svg
+                  className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
+                </svg>
+              </a>
+            </div>
           </div>
 
-          <div className="p-3 rounded-lg bg-gray-50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/5">
-            <div className="flex items-start gap-2.5 text-xs text-gray-600 dark:text-gray-400">
-              <svg
-                className="w-4 h-4 flex-none mt-0.5 text-gray-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <span>
-                Note: A testnet ETH drop was previously completed for Discord
-                roles and Fluffle holders that registered their wallets prior to
-                March 21st
-              </span>
+          <div className="space-y-3">
+            {/* Historical Note */}
+            <div className="p-3 rounded-lg bg-gray-50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/5">
+              <div className="flex items-start gap-2.5 text-xs text-gray-600 dark:text-gray-400">
+                <svg
+                  className="w-4 h-4 flex-none mt-0.5 text-gray-400"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <p>
+                  A testnet ETH drop was previously completed for Discord roles
+                  and Fluffle holders that registered their wallets prior to
+                  March 21st.
+                </p>
+              </div>
             </div>
           </div>
         </div>
