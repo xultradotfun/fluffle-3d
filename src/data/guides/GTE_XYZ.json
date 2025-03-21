@@ -1,0 +1,115 @@
+{
+  "project": {
+    "name": "GTE",
+    "twitter": "GTE_XYZ",
+    "description": "The world's fastest decentralized trading venue, built on MegaETH.",
+    "longDescription": "GTE is the world's fastest decentralized trading venue, built on MegaETH. Our solution is a fully vertically integrated product suite that delivers an optimal trading experience across each stage of a token's lifecycle.",
+    "features": [
+      {
+        "title": "Crankless Onchain CLOB",
+        "description": "Providing CEX-level liquidity and price discovery for spot and perpetuals trading."
+      },
+      {
+        "title": "Classic AMM",
+        "description": "For passive liquidity provisioning on long-tail assets."
+      },
+      {
+        "title": "Best-Price Aggregator",
+        "description": "Across our AMM, CLOB, and the entire MegaETH ecosystem, ensuring GTE's traders are always getting the best price."
+      },
+      {
+        "title": "Permissionless Token Launcher",
+        "description": "Utilizing a bonding curve to bootstrap liquidity into the GTE AMM."
+      },
+      {
+        "title": "Token Launchpad",
+        "description": "For larger protocols seeking a takeoff venue for their TGE."
+      }
+    ],
+    "currentStatus": "Takeoff, the GTE permissionless token launcher, the bonding curve, and the AMM are part of our initial testnet launch. CLOB and Perps coming soon."
+  },
+  "guide": {
+    "sections": [
+      {
+        "id": "launch-token",
+        "title": "Launch a token (via Takeoff)",
+        "steps": [
+          {
+            "id": "step-1",
+            "title": "Token Distribution Model",
+            "content": "Before launching your token, it's important to understand how the supply is distributed:\n\n• 80% of each token's supply is set aside to be sold on the bonding curve\n• The remaining 20% is reserved to seed the token's AMM pool in case of it bonding\n• Tokens bond once all of the 80% of supply on the bonding curve is sold out\n• Once bonded, tokens will start trading on their respective AMM pool immediately. Long migration periods are a thing of the past.",
+            "images": [
+              {
+                "url": "https://spark-list-d20.notion.site/image/attachment%3Af0448ecf-e371-4aab-a208-eef05102fb18%3A13.png?table=block&id=1baad401-4d53-806c-8725-dffe5b04c682&spaceId=147c77d0-e725-4e81-84f9-7aa43f6d4389&width=2000&userId=&cache=v2",
+                "alt": "Token distribution breakdown showing 80% for bonding curve and 20% for AMM pool"
+              }
+            ]
+          },
+          {
+            "id": "step-2",
+            "title": "Configure and Launch",
+            "content": "Launch your token through GTE's Takeoff platform:\n\n1. Visit the GTE Takeoff platform\n2. Configure your token parameters (name, symbol, supply)\n3. Set your bonding curve parameters\n4. Review the distribution and confirm",
+            "images": [
+              {
+                "url": "https://spark-list-d20.notion.site/image/attachment%3A79c88cdb-815b-4407-98a0-e8b195e8bb40%3A14.png?table=block&id=1baad401-4d53-8094-9bf3-d1dbffbb18cc&spaceId=147c77d0-e725-4e81-84f9-7aa43f6d4389&width=2000&userId=&cache=v2",
+                "alt": "Token configuration interface showing parameters setup"
+              }
+            ],
+            "links": [
+              {
+                "text": "Launch on Takeoff",
+                "url": "https://testnet.gte.xyz/takeoff"
+              }
+            ]
+          },
+          {
+            "id": "step-3",
+            "title": "Trade Your Token",
+            "content": "Once your token is launched, you can start trading immediately on GTE's intuitive swap interface. The interface provides real-time price information and allows you to execute trades with minimal slippage.",
+            "images": [
+              {
+                "url": "https://spark-list-d20.notion.site/image/attachment%3A4b1e9274-9706-46bb-a7e4-d2551001d12a%3A15.png?table=block&id=1baad401-4d53-8062-90b3-d01e6d145d1d&spaceId=147c77d0-e725-4e81-84f9-7aa43f6d4389&width=2000&userId=&cache=v2",
+                "alt": "GTE's swap interface for token trading"
+              }
+            ],
+            "links": [
+              {
+                "text": "Start Trading",
+                "url": "https://testnet.gte.xyz/trade"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "earn",
+        "title": "Earn",
+        "steps": [
+          {
+            "id": "step-4",
+            "title": "Provide Liquidity",
+            "content": "Earn passive income by providing liquidity to GTE pools:\n\n• When you provide liquidity to a pool, you earn fees from every trade executed within it\n• The GTE AMM uses a constant-product model, meaning you'll deposit equal amounts of each token into the pool, maintaining a balanced 50/50 ratio\n• In the future, more mature tokens will be traded in GTE's fully on-chain CLOB",
+            "images": [
+              {
+                "url": "https://spark-list-d20.notion.site/image/attachment%3Ab5d7ed11-8655-48f9-beec-c5e2a825577c%3A16.png?table=block&id=1baad401-4d53-8076-a315-f381e4c8506e&spaceId=147c77d0-e725-4e81-84f9-7aa43f6d4389&width=2000&userId=&cache=v2",
+                "alt": "Liquidity provision interface showing pool details"
+              },
+              {
+                "url": "https://spark-list-d20.notion.site/image/attachment%3A285b2697-1acf-4ccc-b891-ad886c689cdb%3A17.png?table=block&id=1baad401-4d53-80b7-8a76-f0b717d466c3&spaceId=147c77d0-e725-4e81-84f9-7aa43f6d4389&width=2000&userId=&cache=v2",
+                "alt": "Earning statistics and rewards dashboard"
+              }
+            ],
+            "links": [
+              {
+                "text": "Add Liquidity",
+                "url": "https://testnet.gte.xyz/pool"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "requirements": ["None"],
+    "lastUpdated": "2024-03-21"
+  }
+}

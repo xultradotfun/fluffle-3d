@@ -10,6 +10,14 @@ const nextConfig = {
   },
   images: {
     domains: ["fluffle-traits.b-cdn.net"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "spark-list-d20.notion.site",
+        port: "",
+        pathname: "/image/**",
+      },
+    ],
   },
 };
 

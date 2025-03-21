@@ -100,7 +100,7 @@ export default function Hero() {
       />
 
       <section
-        className={`fixed top-0 left-0 right-0 z-30 sm:transition-all sm:duration-300 sm:ease-in-out ${
+        className={`fixed top-0 left-0 right-0 z-10 sm:transition-all sm:duration-300 sm:ease-in-out ${
           isScrolled
             ? "bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg shadow-sm"
             : "bg-transparent"

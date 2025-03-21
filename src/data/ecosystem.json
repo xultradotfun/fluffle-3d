@@ -92,7 +92,8 @@
       "category": "DeFi",
       "megaMafia": true,
       "native": true,
-      "testnet": false
+      "testnet": true,
+      "guide": true
     },
     {
       "name": "Showdown",
@@ -131,11 +132,12 @@
       "twitter": "GTE_XYZ",
       "website": "https://gte.xyz",
       "discord": "https://discord.gg/gte-xyz",
-      "description": "The world’s fastest decentralized exchange.",
+      "description": "The world's fastest decentralized exchange.",
       "category": "DeFi",
       "megaMafia": true,
       "native": true,
-      "testnet": false
+      "testnet": true,
+      "guide": true
     },
     {
       "name": "CAP",
