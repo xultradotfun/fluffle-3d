@@ -1,0 +1,52 @@
+{
+  "project": {
+    "name": "NectarAI",
+    "twitter": "TryNectarAI",
+    "description": "A platform focused on creating virtual companions",
+    "longDescription": "Nectar is a permissionless AI companion platform that transforms onchain agents from being purely utility-focused into emotionally intelligent partners. Users can build their own personalized companion that can engage in real-time interactions and transact autonomously onchain.",
+    "features": [
+      {
+        "title": "Emotionally Intelligent Companions",
+        "description": "Create AI companions that go beyond utility to provide emotional connection."
+      },
+      {
+        "title": "Real-time Interactions",
+        "description": "Engage with your AI companion through dynamic, real-time conversations."
+      },
+      {
+        "title": "Onchain Autonomy",
+        "description": "AI companions can perform autonomous transactions on the blockchain."
+      },
+      {
+        "title": "Personalization",
+        "description": "Build and customize your own unique AI companion."
+      }
+    ],
+    "currentStatus": "Nectar is currently available with LOVE tokens minting on MEGA. An immersive experience on AWE is coming next week."
+  },
+  "guide": {
+    "sections": [
+      {
+        "id": "get-started",
+        "title": "Get Started with Nectar",
+        "steps": [
+          {
+            "id": "step-1",
+            "title": "Mint LOVE Tokens",
+            "content": "1. Visit love.nectar.ai\n2. Use Nectar credits to mint LOVE tokens on MEGA\n3. Prepare for the upcoming immersive experience on AWE",
+            "completable": true,
+            "images": [],
+            "links": [
+              {
+                "text": "Visit Nectar Love",
+                "url": "https://love.nectar.ai/"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "requirements": ["None"],
+    "lastUpdated": "2025-03-21"
+  }
+}
