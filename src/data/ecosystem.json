@@ -838,7 +838,8 @@
       "category": "Gaming",
       "megaMafia": false,
       "native": false,
-      "testnet": false
+      "testnet": true,
+      "guide": true
     },
     {
       "name": "games.fun",
