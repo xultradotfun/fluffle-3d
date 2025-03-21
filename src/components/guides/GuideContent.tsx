@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,50 +15,16 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { GuideSidebar } from "./GuideSidebar";
+import { Project, Guide, GuideStep, GuideImage } from "./types";
 
 interface ProjectFeature {
   title: string;
   description: string;
 }
 
-interface Project {
-  name: string;
-  twitter: string;
-  description: string;
-  longDescription?: string;
-  features?: ProjectFeature[];
-  currentStatus?: string;
-  website?: string;
-  discord?: string;
-  telegram?: string;
-}
-
-interface Guide {
-  sections: {
-    id: string;
-    title: string;
-    steps: {
-      id: string;
-      title: string;
-      content: string;
-      completable?: boolean;
-      images?: {
-        url: string;
-        alt: string;
-      }[];
-      links?: {
-        text: string;
-        url: string;
-      }[];
-    }[];
-  }[];
-  requirements: string[];
-  lastUpdated: string;
-}
-
 interface GuideContentProps {
-  project: Project;
   guide: Guide;
+  project: Project;
   availableGuides: Project[];
 }
 
@@ -71,10 +39,7 @@ export function GuideContent({
   availableGuides,
 }: GuideContentProps) {
   const router = useRouter();
-  const [expandedImage, setExpandedImage] = useState<{
-    url: string;
-    alt: string;
-  } | null>(null);
+  const [expandedImage, setExpandedImage] = useState<GuideImage | null>(null);
   const [progress, setProgress] = useState<Progress>({
     completedSteps: [],
     lastVisited: new Date().toISOString(),
@@ -414,7 +379,10 @@ export function GuideContent({
                                       <div className="relative aspect-video">
                                         <Image
                                           src={image.url}
-                                          alt={image.alt}
+                                          alt={
+                                            image.alt ||
+                                            `${step.title} - Image ${index + 1}`
+                                          }
                                           fill
                                           className="object-contain group-hover:scale-105 transition-transform duration-300"
                                           sizes={
@@ -492,7 +460,7 @@ export function GuideContent({
           <div className="relative w-full h-full max-w-7xl max-h-[90vh] m-4">
             <Image
               src={expandedImage.url}
-              alt={expandedImage.alt}
+              alt={expandedImage.alt || "Guide step image"}
               fill
               className="object-contain"
               sizes="100vw"

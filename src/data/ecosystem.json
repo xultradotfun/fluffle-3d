@@ -149,7 +149,8 @@
       "category": "DeFi",
       "megaMafia": true,
       "native": true,
-      "testnet": false
+      "testnet": true,
+      "guide": true
     },
     {
       "name": "Teko",
