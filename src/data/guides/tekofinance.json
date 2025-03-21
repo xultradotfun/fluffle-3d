@@ -26,8 +26,7 @@
         "description": "Trade with leverage while maintaining full control over your positions and risk exposure."
       }
     ],
-    "currentStatus": "The testnet is live with core lending and borrowing functionality. Users can mint test tokens, provide liquidity, and experiment with borrowing features. Leveraged strategies and margin trading coming soon.",
-    "website": "https://teko.finance"
+    "currentStatus": "The testnet is live with core lending and borrowing functionality. Users can mint test tokens, provide liquidity, and experiment with borrowing features. Leveraged strategies and margin trading coming soon."
   },
   "guide": {
     "sections": [

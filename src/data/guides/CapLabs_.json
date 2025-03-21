@@ -2,7 +2,7 @@
   "project": {
     "name": "CapLabs",
     "twitter": "CapLabs_",
-    "description": "Mint cUSD on CAP testnet",
+    "description": "A stablecoin engine to democratize sophiscated yield strategies",
     "longDescription": "CAP is a decentralized stablecoin protocol on MegaETH. Users can mint cUSD by depositing collateral and maintaining a collateral ratio.",
     "features": [
       {
@@ -14,8 +14,7 @@
         "description": "Full functionality available on the MegaETH testnet."
       }
     ],
-    "currentStatus": "Testnet is live with full functionality for minting cUSD.",
-    "website": "https://cap.app/testnet"
+    "currentStatus": "Testnet is live with full functionality for minting cUSD."
   },
   "guide": {
     "sections": [

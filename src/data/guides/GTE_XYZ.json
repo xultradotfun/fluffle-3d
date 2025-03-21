@@ -26,8 +26,7 @@
         "description": "For larger protocols seeking a takeoff venue for their TGE."
       }
     ],
-    "currentStatus": "Takeoff, the GTE permissionless token launcher, the bonding curve, and the AMM are part of our initial testnet launch. CLOB and Perps coming soon.",
-    "website": "https://testnet.gte.xyz"
+    "currentStatus": "Takeoff, the GTE permissionless token launcher, the bonding curve, and the AMM are part of our initial testnet launch. CLOB and Perps coming soon."
   },
   "guide": {
     "sections": [
