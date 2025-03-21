@@ -237,9 +237,9 @@ export function GuideContent({
               >
                 <div className="p-6">
                   <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 rounded-lg bg-purple-500/10 dark:bg-purple-500/20 flex items-center justify-center text-purple-600 dark:text-purple-400">
+                    <div className="w-8 h-8 rounded-lg bg-purple-500/10 dark:bg-purple-500/20 flex items-center justify-center text-purple-600 dark:text-purple-400">
                       <svg
-                        className="w-5 h-5"
+                        className="w-4 h-4"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
@@ -248,52 +248,66 @@ export function GuideContent({
                         <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                       </svg>
                     </div>
-                    <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    <h2 className="text-[15px] font-semibold text-gray-900 dark:text-white">
                       {section.title}
                     </h2>
                   </div>
                   <div className="space-y-8">
                     {section.steps.map((step) => (
-                      <div id={step.id} key={step.id} className="group">
+                      <div
+                        id={step.id}
+                        key={step.id}
+                        className="group relative"
+                      >
                         <div className="flex items-start gap-4">
                           {step.completable !== false && (
                             <button
                               onClick={() => toggleStep(step.id)}
-                              className={`flex-shrink-0 w-6 h-6 mt-1 rounded-full border-2 transition-all duration-200 ${
+                              className={`flex-shrink-0 w-6 h-6 mt-1 rounded-full border-2 flex items-center justify-center transition-all duration-200 ${
                                 progress.completedSteps.includes(step.id)
-                                  ? "bg-green-500 border-green-500"
-                                  : "border-gray-300 dark:border-gray-600 group-hover:border-blue-500 dark:group-hover:border-blue-400"
+                                  ? "bg-gradient-to-br from-green-500 to-emerald-500 border-transparent shadow-sm shadow-green-500/10"
+                                  : "border-gray-300 dark:border-gray-600 group-hover:border-blue-500 dark:group-hover:border-blue-400 hover:scale-105 hover:shadow-sm hover:shadow-blue-500/10"
                               }`}
                             >
-                              {progress.completedSteps.includes(step.id) && (
-                                <CheckCircle2 className="w-5 h-5 text-white" />
+                              {progress.completedSteps.includes(step.id) ? (
+                                <CheckCircle2 className="w-4 h-4 text-white" />
+                              ) : (
+                                <div className="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 group-hover:bg-blue-500 dark:group-hover:bg-blue-400 transition-colors" />
                               )}
                             </button>
                           )}
                           <div className="flex-1 min-w-0">
-                            <h3 className="text-lg font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                              {step.title}
-                            </h3>
+                            <div className="flex items-center gap-3">
+                              <h3 className="text-[15px] font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                {step.title}
+                              </h3>
+                              {step.completable !== false &&
+                                progress.completedSteps.includes(step.id) && (
+                                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">
+                                    Completed
+                                  </span>
+                                )}
+                            </div>
                             <div className="mt-3 prose prose-gray dark:prose-invert max-w-none">
-                              <p className="text-gray-600 dark:text-gray-300 whitespace-pre-line">
+                              <p className="text-[14px] text-gray-600 dark:text-gray-300 whitespace-pre-line leading-relaxed">
                                 {step.content}
                               </p>
                             </div>
                             {step.images && step.images.length > 0 && (
-                              <div className="mt-4">
+                              <div className="mt-6">
                                 <div
                                   className={`grid ${
                                     step.images.length > 1
-                                      ? "grid-cols-1 sm:grid-cols-2 gap-4"
+                                      ? "grid-cols-1 sm:grid-cols-2 gap-6"
                                       : "grid-cols-1 place-items-center"
                                   }`}
                                 >
                                   {step.images.map((image, index) => (
                                     <button
                                       key={index}
-                                      className={`relative rounded-lg overflow-hidden bg-black/5 dark:bg-white/5 ring-1 ring-black/5 dark:ring-white/5 shadow-sm hover:ring-2 hover:ring-blue-500/50 transition-all cursor-zoom-in group ${
+                                      className={`relative rounded-xl overflow-hidden bg-black/5 dark:bg-white/5 ring-1 ring-black/10 dark:ring-white/10 shadow-lg hover:ring-2 hover:ring-blue-500/50 hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 cursor-zoom-in group ${
                                         step.images && step.images.length === 1
-                                          ? "w-full sm:w-1/2"
+                                          ? "w-full sm:w-2/3"
                                           : "w-full"
                                       }`}
                                       onClick={() => setExpandedImage(image)}
@@ -322,17 +336,20 @@ export function GuideContent({
                               </div>
                             )}
                             {step.links && step.links.length > 0 && (
-                              <div className="mt-4 flex flex-wrap gap-2">
+                              <div className="mt-6 flex flex-wrap gap-3">
                                 {step.links.map((link, index) => (
                                   <a
                                     key={index}
                                     href={link.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex items-center gap-1.5 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors group"
                                   >
-                                    {link.text}
-                                    <ExternalLink className="w-3.5 h-3.5" />
+                                    <Globe className="w-4 h-4" />
+                                    <span className="text-sm font-medium">
+                                      {link.text}
+                                    </span>
+                                    <ExternalLink className="w-3.5 h-3.5 opacity-50 group-hover:opacity-100 transition-opacity" />
                                   </a>
                                 ))}
                               </div>
