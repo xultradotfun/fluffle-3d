@@ -31,7 +31,6 @@ interface Guide {
     requirements: string[];
     rewards: string[];
   };
-  lastUpdated: string;
 }
 
 interface Project {
@@ -151,7 +150,7 @@ export function GuidesList() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {guides.map((guide) => {
         const guideProgress = progress[guide.project.twitter];
         const totalSteps = guide.guide.sections.reduce(
@@ -170,123 +169,103 @@ export function GuidesList() {
           <Link
             key={guide.project.twitter}
             href={`/explore/${guide.project.twitter}`}
-            className="group relative overflow-hidden rounded-2xl bg-black/20 backdrop-blur-xl border border-white/5 transition-all hover:border-white/10 hover:bg-black/30"
+            className="group flex flex-col overflow-hidden rounded-3xl bg-black/20 hover:bg-black/30 border border-white/[0.08] transition-all duration-300 hover:border-white/20"
           >
+            {/* Header Section */}
+            <div className="relative p-6 pb-0">
+              <div className="flex items-start gap-5">
+                {/* Project Logo */}
+                <div className="relative flex-shrink-0">
+                  <div className="relative h-[72px] w-[72px] rounded-2xl overflow-hidden bg-black/40 ring-1 ring-white/[0.12] transition-all duration-300 group-hover:ring-white/20">
+                    <Image
+                      src={`/avatars/${guide.project.twitter}.jpg`}
+                      alt={`${guide.project.name} logo`}
+                      fill
+                      className="object-cover"
+                      priority
+                    />
+                  </div>
+                  {isComplete && (
+                    <div className="absolute -right-1 -bottom-1 w-6 h-6 rounded-full bg-green-500 ring-[3px] ring-black flex items-center justify-center">
+                      <svg
+                        className="w-3.5 h-3.5 text-white"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                      >
+                        <path
+                          d="M20 6L9 17L4 12"
+                          stroke="currentColor"
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                  )}
+                </div>
+
+                {/* Project Info */}
+                <div className="flex-1 min-w-0 pt-2">
+                  <h3 className="text-xl font-semibold text-white group-hover:text-blue-400 transition-colors">
+                    {guide.project.name}
+                  </h3>
+                  <p className="mt-2 text-sm text-gray-400 line-clamp-2 leading-relaxed">
+                    {guide.project.description}
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* Banner Image */}
-            <div className="relative h-40 w-full overflow-hidden">
+            <div className="relative h-32 mt-6 overflow-hidden">
               <Image
                 src={`/banners/${guide.project.twitter}.jpeg`}
                 alt={`${guide.project.name} banner`}
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
+                priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-
-              {/* Completion Badge */}
-              {isComplete && (
-                <div className="absolute top-4 right-4 bg-green-500/90 text-white text-sm font-medium px-3 py-1 rounded-full backdrop-blur-sm">
-                  Completed
-                </div>
-              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
             </div>
 
-            {/* Content */}
-            <div className="relative p-6">
-              {/* Project Logo */}
-              <div className="absolute -top-10 left-6">
-                <div className="relative h-16 w-16 rounded-xl overflow-hidden bg-black/50 backdrop-blur-xl ring-1 ring-white/10 transition-all group-hover:ring-white/20">
-                  <Image
-                    src={`/avatars/${guide.project.twitter}.jpg`}
-                    alt={`${guide.project.name} logo`}
-                    fill
-                    className="object-cover"
-                  />
+            {/* Progress Section */}
+            <div className="relative p-6 pt-4">
+              <div className="flex items-center justify-between text-sm mb-2">
+                <div className="flex items-center gap-2.5">
+                  <span className="text-gray-300 font-medium">
+                    Guide Progress
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-white/5 text-gray-400 tabular-nums">
+                    {completedSteps}/{totalSteps}
+                  </span>
                 </div>
-              </div>
-
-              {/* Project Info */}
-              <div className="pt-8 space-y-2">
-                <h3 className="text-xl font-semibold text-white group-hover:text-primary transition-colors">
-                  {guide.project.name}
-                </h3>
-                <p className="text-sm text-gray-400 line-clamp-2">
-                  {guide.project.description}
-                </p>
+                <span className="text-sm font-medium text-gray-400">
+                  {completionPercentage}%
+                </span>
               </div>
 
               {/* Progress Bar */}
-              <div className="mt-4">
-                <div className="flex items-center justify-between text-sm mb-2">
-                  <span className="text-gray-400">Progress</span>
-                  <span className="text-gray-400">{completionPercentage}%</span>
-                </div>
-                <div className="h-1.5 bg-gray-800 rounded-full overflow-hidden">
-                  <div
-                    className={`h-full transition-all duration-300 ${
-                      isComplete ? "bg-green-500" : "bg-blue-500"
-                    }`}
-                    style={{ width: `${completionPercentage}%` }}
-                  />
-                </div>
+              <div className="h-2 bg-white/[0.03] rounded-full overflow-hidden">
+                <div
+                  className={`h-full transition-all duration-300 ${
+                    isComplete
+                      ? "bg-gradient-to-r from-green-500 to-emerald-500"
+                      : "bg-gradient-to-r from-blue-500 to-indigo-500"
+                  }`}
+                  style={{ width: `${completionPercentage}%` }}
+                />
               </div>
 
-              {/* Stats */}
-              <div className="mt-4 flex items-center justify-between text-sm text-gray-500">
-                <div className="flex items-center space-x-1">
-                  <svg
-                    className="w-4 h-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9 6L15 12L9 18"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <span>
-                    {completedSteps} of {totalSteps} steps
+              {/* Action Button */}
+              <div className="mt-4 flex items-center justify-end">
+                <div className="group/btn relative inline-flex items-center gap-2 text-sm font-medium">
+                  <span className="relative z-10 text-blue-400 group-hover/btn:text-white transition-colors">
+                    {isComplete ? "Review Guide" : "Start Guide"}
                   </span>
-                </div>
-                <div className="flex items-center space-x-1">
-                  <svg
-                    className="w-4 h-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M12 8V12L15 15"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="9"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    />
-                  </svg>
-                  <span>Updated {guide.lastUpdated}</span>
-                </div>
-              </div>
-
-              {/* View Guide Button */}
-              <div className="mt-6 flex items-center justify-between">
-                <div className="flex items-center text-primary group-hover:text-primary/80 transition-colors">
-                  <span className="text-sm font-medium">
-                    {isComplete ? "Review Guide" : "Continue Guide"}
-                  </span>
-                  <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </div>
-                <div className="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <ArrowRight className="h-4 w-4 text-primary" />
+                  <div className="relative z-10 w-6 h-6 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 group-hover/btn:text-white group-hover/btn:translate-x-1 transition-all">
+                    <ArrowRight className="w-4 h-4" />
+                  </div>
+                  <div className="absolute inset-0 rounded-full opacity-0 group-hover/btn:opacity-100 transition-opacity bg-gradient-to-r from-blue-500 to-indigo-500" />
                 </div>
               </div>
             </div>
