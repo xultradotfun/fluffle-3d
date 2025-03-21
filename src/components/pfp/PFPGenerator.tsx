@@ -5,6 +5,7 @@ import { NFTBadge } from "./NFTBadge";
 import { PreviewCard } from "./PreviewCard";
 import { InputCard } from "./InputCard";
 import type { NFTTrait } from "@/utils/nftLoader";
+import { getTraitImageUrl } from "@/utils/traitImageMap";
 
 type ZoomLevel = "full" | "bust";
 
@@ -18,38 +19,33 @@ export function PFPGenerator() {
   const [isCopied, setIsCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [zoomLevel, setZoomLevel] = useState<ZoomLevel>("bust");
-  const [bgImage, setBgImage] = useState<HTMLImageElement | null>(null);
   const [includeBackground, setIncludeBackground] = useState(true);
+  const [selectedBackground, setSelectedBackground] = useState("Mega");
+  const [currentBgImage, setCurrentBgImage] = useState<HTMLImageElement | null>(
+    null
+  );
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // Load background image on mount
+  // Load initial background image
   useEffect(() => {
-    const loadBgImage = async () => {
+    const loadInitialBg = async () => {
       try {
-        const img = await loadImage("/pfpbg.png");
-        setBgImage(img);
-
-        // Draw initial background
-        if (canvasRef.current) {
-          const canvas = canvasRef.current;
-          const ctx = canvas.getContext("2d");
-          if (ctx) {
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0);
-          }
-        }
+        const img = await loadImage(
+          getTraitImageUrl("background", selectedBackground)
+        );
+        setCurrentBgImage(img);
       } catch (err) {
-        console.error("Error loading background:", err);
+        console.error("Error loading initial background:", err);
       }
     };
-    loadBgImage();
-  }, []);
+    loadInitialBg();
+  }, []); // Only run once when component mounts
 
   const generatePFP = async (
     nftId: string,
     currentZoom: ZoomLevel,
-    withBackground: boolean
+    withBackground: boolean,
+    bgImage?: HTMLImageElement | null
   ) => {
     try {
       setIsLoading(true);
@@ -80,15 +76,32 @@ export function PFPGenerator() {
       }
 
       // Set dimensions based on background preference
-      canvas.width = withBackground && bgImage ? bgImage.width : 1000;
-      canvas.height = withBackground && bgImage ? bgImage.height : 1000;
+      canvas.width = withBackground ? 1000 : 1000;
+      canvas.height = withBackground ? 1000 : 1000;
 
       // Clear canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Draw background if requested
       if (withBackground && bgImage) {
-        ctx.drawImage(bgImage, 0, 0);
+        // Calculate background scale to cover the canvas
+        const bgScale = Math.max(
+          canvas.width / bgImage.width,
+          canvas.height / bgImage.height
+        );
+
+        // Calculate position to center the background
+        const bgX = (canvas.width - bgImage.width * bgScale) / 2;
+        const bgY = (canvas.height - bgImage.height * bgScale) / 2;
+
+        // Draw background with cover scaling
+        ctx.drawImage(
+          bgImage,
+          bgX,
+          bgY,
+          bgImage.width * bgScale,
+          bgImage.height * bgScale
+        );
       }
 
       // Calculate base scale to fit the image
@@ -154,7 +167,7 @@ export function PFPGenerator() {
     setSelectedNFT({ id, traits });
     setCompositeImage(null);
     setError("");
-    await generatePFP(id, zoomLevel, includeBackground);
+    await generatePFP(id, zoomLevel, includeBackground, currentBgImage);
   };
 
   const handleClear = () => {
@@ -168,11 +181,10 @@ export function PFPGenerator() {
     if (canvasRef.current) {
       const canvas = canvasRef.current;
       const ctx = canvas.getContext("2d");
-      if (ctx && bgImage) {
-        canvas.width = bgImage.width;
-        canvas.height = bgImage.height;
+      if (ctx) {
+        canvas.width = 1000;
+        canvas.height = 1000;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(bgImage, 0, 0);
       }
     }
   };
@@ -180,7 +192,12 @@ export function PFPGenerator() {
   const handleZoomChange = async (level: ZoomLevel) => {
     setZoomLevel(level);
     if (selectedNFT) {
-      await generatePFP(selectedNFT.id, level, includeBackground);
+      await generatePFP(
+        selectedNFT.id,
+        level,
+        includeBackground,
+        currentBgImage
+      );
     }
   };
 
@@ -188,7 +205,7 @@ export function PFPGenerator() {
     if (!selectedNFT) return;
 
     setIncludeBackground(include);
-    await generatePFP(selectedNFT.id, zoomLevel, include);
+    await generatePFP(selectedNFT.id, zoomLevel, include, currentBgImage);
   };
 
   const handleCopyToClipboard = async () => {
@@ -215,6 +232,38 @@ export function PFPGenerator() {
       link.href = compositeImage;
       link.download = `fluffle-pfp-${selectedNFT?.id}.png`;
       link.click();
+    }
+  };
+
+  const handleBackgroundChange = async (background: string) => {
+    try {
+      // Load the new background image first
+      const newBgImage = await loadImage(
+        getTraitImageUrl("background", background)
+      );
+
+      // Only proceed if we have a valid image
+      if (!newBgImage) {
+        throw new Error("Failed to load new background image");
+      }
+
+      // Generate PFP with new background before updating states
+      if (selectedNFT) {
+        // Generate PFP with new background image directly
+        await generatePFP(
+          selectedNFT.id,
+          zoomLevel,
+          includeBackground,
+          newBgImage
+        );
+
+        // Update states after successful generation
+        setCurrentBgImage(newBgImage);
+        setSelectedBackground(background);
+      }
+    } catch (err) {
+      console.error("Error changing background:", err);
+      setError("Failed to load new background. Please try again.");
     }
   };
 
@@ -251,14 +300,14 @@ export function PFPGenerator() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto">
         {/* Preview Card */}
-        <div className="h-fit">
+        <div className="h-fit w-full">
           <PreviewCard canvasRef={canvasRef} isLoading={isLoading} />
         </div>
 
         {/* Input Card */}
-        <div className="h-fit">
+        <div className="h-fit w-full">
           <InputCard
             selectedNFT={selectedNFT}
             error={error}
@@ -267,12 +316,14 @@ export function PFPGenerator() {
             zoomLevel={zoomLevel}
             compositeImage={compositeImage}
             includeBackground={includeBackground}
+            selectedBackground={selectedBackground}
             onNFTLoad={handleNFTLoad}
             onClear={handleClear}
             onZoomChange={handleZoomChange}
             onCopyToClipboard={handleCopyToClipboard}
             onDownload={handleDownload}
             onBackgroundToggle={handleBackgroundToggle}
+            onBackgroundChange={handleBackgroundChange}
           />
         </div>
       </div>

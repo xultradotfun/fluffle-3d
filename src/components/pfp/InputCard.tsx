@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { ZoomControls } from "./ZoomControls";
 import type { NFTTrait } from "@/utils/nftLoader";
+import { getAvailableTraitIds, getTraitImageUrl } from "@/utils/traitImageMap";
 
 type ZoomLevel = "full" | "bust";
 
@@ -13,12 +14,14 @@ interface InputCardProps {
   zoomLevel: ZoomLevel;
   compositeImage: string | null;
   includeBackground: boolean;
+  selectedBackground: string;
   onNFTLoad: (id: string, urls: string[], traits: NFTTrait) => void;
   onClear: () => void;
   onZoomChange: (level: ZoomLevel) => void;
   onCopyToClipboard: () => void;
   onDownload: () => void;
   onBackgroundToggle: (include: boolean) => void;
+  onBackgroundChange: (background: string) => void;
 }
 
 export function InputCard({
@@ -29,12 +32,14 @@ export function InputCard({
   zoomLevel,
   compositeImage,
   includeBackground,
+  selectedBackground,
   onNFTLoad,
   onClear,
   onZoomChange,
   onCopyToClipboard,
   onDownload,
   onBackgroundToggle,
+  onBackgroundChange,
 }: InputCardProps) {
   const handleRandomNFT = () => {
     const random = Math.floor(Math.random() * 5000).toString();
@@ -190,34 +195,58 @@ export function InputCard({
                 onZoomChange={onZoomChange}
               />
 
-              {/* Add background toggle after zoom controls */}
+              {/* Add background selector after zoom controls */}
               {selectedNFT && (
-                <div className="flex items-center justify-between gap-4 px-4 py-3 border-t border-gray-100 dark:border-gray-800">
-                  <span className="text-sm text-gray-600 dark:text-gray-300">
-                    Background
-                  </span>
-                  <div className="flex items-center gap-3">
-                    <button
-                      onClick={() => onBackgroundToggle(true)}
-                      className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
-                        includeBackground
-                          ? "bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300"
-                          : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                      }`}
-                    >
-                      With
-                    </button>
-                    <button
-                      onClick={() => onBackgroundToggle(false)}
-                      className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
-                        !includeBackground
-                          ? "bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300"
-                          : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                      }`}
-                    >
-                      Without
-                    </button>
+                <div className="space-y-4 px-4 py-3 border-t border-gray-100 dark:border-gray-800">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-600 dark:text-gray-300">
+                      Background
+                    </span>
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => onBackgroundToggle(true)}
+                        className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                          includeBackground
+                            ? "bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300"
+                            : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        }`}
+                      >
+                        With
+                      </button>
+                      <button
+                        onClick={() => onBackgroundToggle(false)}
+                        className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                          !includeBackground
+                            ? "bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300"
+                            : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        }`}
+                      >
+                        Without
+                      </button>
+                    </div>
                   </div>
+                  {includeBackground && (
+                    <div className="grid grid-cols-8 sm:grid-cols-10 gap-[1px] w-full max-w-[300px] mx-auto">
+                      {getAvailableTraitIds("background").map((bg) => (
+                        <button
+                          key={bg}
+                          onClick={() => onBackgroundChange(bg)}
+                          disabled={selectedBackground === bg}
+                          className={`p-[1px] rounded-sm border transition-colors ${
+                            selectedBackground === bg
+                              ? "border-purple-500 bg-purple-50 dark:bg-purple-500/20"
+                              : "border-gray-200 dark:border-gray-700 hover:border-purple-500/50 dark:hover:border-purple-500/50"
+                          }`}
+                        >
+                          <img
+                            src={getTraitImageUrl("background", bg)}
+                            alt={bg}
+                            className="w-full aspect-square object-cover rounded-[2px]"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               )}
 
