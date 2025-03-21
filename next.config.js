@@ -9,7 +9,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ["fluffle-traits.b-cdn.net"],
+    domains: ["fluffle-traits.b-cdn.net", "mega-eco.b-cdn.net"],
   },
 };
 

@@ -14,6 +14,9 @@ import NFTBuilder from "@/components/builder/NFTBuilder";
 import Hero from "@/components/Hero";
 import type { NFTTrait } from "@/utils/nftLoader";
 import { EcosystemDashboard } from "@/components/ecosystem/EcosystemDashboard";
+import { GuidesHeader } from "@/components/guides/GuidesHeader";
+import { GuidesList } from "@/components/guides/GuidesList";
+import { useRouter } from "next/navigation";
 
 interface ViewerData {
   id: string;
@@ -23,6 +26,7 @@ interface ViewerData {
 }
 
 export default function Home() {
+  const router = useRouter();
   const [activeView, setActiveView] = useState<
     | "viewer"
     | "analytics"
@@ -32,7 +36,8 @@ export default function Home() {
     | "testnet"
     | "build"
     | "builder"
-  >("viewer");
+    | "guides"
+  >("ecosystem");
   const [viewers, setViewers] = useState<ViewerData[]>([]);
   const [error, setError] = useState("");
 
@@ -54,8 +59,10 @@ export default function Home() {
       setActiveView("build");
     } else if (hash === "#builder") {
       setActiveView("builder");
+    } else if (hash === "#guides") {
+      setActiveView("guides");
     } else {
-      setActiveView("viewer");
+      setActiveView("ecosystem");
     }
 
     // Listen for hash changes
@@ -75,8 +82,10 @@ export default function Home() {
         setActiveView("build");
       } else if (hash === "#builder") {
         setActiveView("builder");
+      } else if (hash === "#guides") {
+        setActiveView("guides");
       } else {
-        setActiveView("viewer");
+        setActiveView("ecosystem");
       }
     };
 
@@ -95,29 +104,32 @@ export default function Home() {
       | "testnet"
       | "build"
       | "builder"
+      | "guides"
   ) => {
-    if (view === "viewer") {
-      window.history.replaceState(null, "", "/#viewer");
+    if (view === "guides") {
+      router.push("/explore");
+    } else if (view === "viewer") {
+      router.push("/#viewer");
       setViewers([]);
       setError("");
     } else if (view === "analytics") {
-      window.history.replaceState(null, "", "/#rarities");
+      router.push("/#rarities");
       setViewers([]);
       setError("");
     } else if (view === "pfp") {
-      window.history.replaceState(null, "", "/#pfp");
+      router.push("/#pfp");
       setViewers([]);
       setError("");
     } else if (view === "metaverse") {
-      window.history.replaceState(null, "", "/#metaverse");
+      router.push("/#metaverse");
     } else if (view === "testnet") {
-      window.history.replaceState(null, "", "/#testnet");
+      router.push("/#testnet");
     } else if (view === "build") {
-      window.history.replaceState(null, "", "/#build");
+      router.push("/#build");
     } else if (view === "builder") {
-      window.history.replaceState(null, "", "/#builder");
-    } else {
-      window.history.replaceState(null, "", "/");
+      router.push("/#builder");
+    } else if (view === "ecosystem") {
+      router.push("/");
       setViewers([]);
       setError("");
     }
@@ -246,6 +258,13 @@ export default function Home() {
           <BuildersView />
         ) : activeView === "builder" ? (
           <NFTBuilder />
+        ) : activeView === "guides" ? (
+          <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-7xl mx-auto">
+              <GuidesHeader />
+              <GuidesList />
+            </div>
+          </div>
         ) : (
           <PFPGenerator />
         )}

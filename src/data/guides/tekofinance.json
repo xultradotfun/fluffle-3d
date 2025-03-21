@@ -1,0 +1,112 @@
+{
+  "project": {
+    "name": "Teko",
+    "twitter": "tekofinance",
+    "description": "A money market with leveraged strategies + margin trading",
+    "longDescription": "Teko Finance is a cutting-edge money market protocol built on MegaETH, offering a comprehensive suite of lending, borrowing, and leveraged trading features. Our platform combines traditional lending markets with innovative leveraged strategies, providing users with enhanced yield opportunities and flexible borrowing options.",
+    "features": [
+      {
+        "title": "Lending Markets",
+        "description": "Earn yield by providing liquidity to various lending pools with different risk profiles."
+      },
+      {
+        "title": "Flexible Borrowing",
+        "description": "Borrow against your collateral with customizable loan-to-value ratios and risk parameters."
+      },
+      {
+        "title": "Leveraged Strategies",
+        "description": "Access advanced trading strategies with built-in leverage for enhanced returns."
+      },
+      {
+        "title": "Risk Management",
+        "description": "Comprehensive risk assessment tools and transparent pool metrics for informed decision-making."
+      },
+      {
+        "title": "Margin Trading",
+        "description": "Trade with leverage while maintaining full control over your positions and risk exposure."
+      }
+    ],
+    "currentStatus": "The testnet is live with core lending and borrowing functionality. Users can mint test tokens, provide liquidity, and experiment with borrowing features. Leveraged strategies and margin trading coming soon."
+  },
+  "guide": {
+    "sections": [
+      {
+        "id": "mint-tokens",
+        "title": "Get Started with Test Tokens",
+        "steps": [
+          {
+            "id": "step-1",
+            "title": "Access the Testnet Faucet",
+            "content": "Visit the Teko Finance testnet platform to mint test tokens for experimenting with the protocol's features.",
+            "completable": true,
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/tekofinance/1.png"
+              },
+              {
+                "url": "https://mega-eco.b-cdn.net/tekofinance/2.png"
+              }
+            ],
+            "links": [
+              {
+                "text": "Open Testnet Faucet",
+                "url": "https://testnet.teko.finance/mint"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "borrow",
+        "title": "Borrow Assets",
+        "steps": [
+          {
+            "id": "step-2",
+            "title": "Select Collateral and Borrow Amount",
+            "content": "1. Navigate to the borrowing interface\n2. Choose your preferred collateral asset\n3. Specify how much you want to borrow\n4. Review the loan-to-value ratio and risk parameters\n5. Confirm your borrowing position",
+            "completable": true,
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/tekofinance/3.png"
+              },
+              {
+                "url": "https://mega-eco.b-cdn.net/tekofinance/4.png"
+              }
+            ],
+            "links": [
+              {
+                "text": "Borrow",
+                "url": "https://testnet.teko.finance/borrow"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "earn",
+        "title": "Earn Yield",
+        "steps": [
+          {
+            "id": "step-3",
+            "title": "Provide Liquidity",
+            "content": "1. Browse available lending pools\n2. Review pool statistics and risk profiles\n3. Choose the amount you want to deposit\n4. Expand pool details for more information about APY and risk metrics\n5. Confirm your deposit to start earning yield",
+            "completable": true,
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/tekofinance/5.png"
+              },
+              {
+                "url": "https://mega-eco.b-cdn.net/tekofinance/6.png"
+              },
+              {
+                "url": "https://mega-eco.b-cdn.net/tekofinance/7.png"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "requirements": ["Web3 wallet", "Test tokens from the faucet"],
+    "lastUpdated": "2025-03-21"
+  }
+}

@@ -22,13 +22,13 @@ export const TIMELINE_EVENTS = [
     title: "Builder Onboarding",
     description: "Dedicated onboarding period for apps and infrastructure",
     startDate: new Date("2025-03-06T00:00:00Z"),
-    endDate: new Date("2025-03-23T23:59:59Z"),
+    endDate: new Date("2025-03-20T23:59:59Z"),
   },
   {
-    date: "March 24th",
+    date: "March 21th",
     title: "User Onboarding",
     description: "Public testnet access opens to all users",
-    startDate: new Date("2025-03-24T00:00:00Z"),
+    startDate: new Date("2025-03-21T00:00:00Z"),
     endDate: new Date("2025-03-30T23:59:59Z"),
   },
 ];

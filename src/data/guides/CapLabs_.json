@@ -1,0 +1,59 @@
+{
+  "project": {
+    "name": "CapLabs",
+    "twitter": "CapLabs_",
+    "description": "A stablecoin engine to democratize sophiscated yield strategies",
+    "longDescription": "CAP is a decentralized stablecoin protocol on MegaETH. Users can mint cUSD by depositing collateral and maintaining a collateral ratio.",
+    "features": [
+      {
+        "title": "cUSD Stablecoin",
+        "description": "A decentralized stablecoin backed by collateral on MegaETH."
+      },
+      {
+        "title": "Testnet Support",
+        "description": "Full functionality available on the MegaETH testnet."
+      }
+    ],
+    "currentStatus": "Testnet is live with full functionality for minting cUSD."
+  },
+  "guide": {
+    "sections": [
+      {
+        "id": "mint-cusd",
+        "title": "Mint cUSD on CAP",
+        "steps": [
+          {
+            "id": "step-1",
+            "title": "Access CAP Testnet",
+            "content": "Visit https://cap.app/testnet to access the CAP testnet interface.",
+            "completable": true,
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/capmoney_/1.png"
+              }
+            ]
+          },
+          {
+            "id": "step-2",
+            "title": "Mint cUSD",
+            "content": "Follow the interface to mint cUSD by depositing collateral and maintaining the required collateral ratio.",
+            "completable": true,
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/capmoney_/2.png"
+              }
+            ],
+            "links": [
+              {
+                "text": "Learn more about CAP",
+                "url": "https://cap-labs.gitbook.io/cap-overview"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "requirements": ["Web3 wallet", "Testnet ETH for gas fees"],
+    "lastUpdated": "2025-03-21"
+  }
+}

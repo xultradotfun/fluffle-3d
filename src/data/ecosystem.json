@@ -20,7 +20,8 @@
       "category": "Gaming",
       "megaMafia": true,
       "native": true,
-      "testnet": false
+      "testnet": true,
+      "guide": true
     },
     {
       "name": "Sweep",
@@ -62,7 +63,8 @@
       "category": "AI",
       "megaMafia": true,
       "native": true,
-      "testnet": false
+      "testnet": true,
+      "guide": true
     },
     {
       "name": "Lemonade",
@@ -72,7 +74,8 @@
       "category": "Community",
       "megaMafia": true,
       "native": true,
-      "testnet": false
+      "testnet": true,
+      "guide": true
     },
     {
       "name": "Hop Network",
@@ -92,7 +95,8 @@
       "category": "DeFi",
       "megaMafia": true,
       "native": true,
-      "testnet": false
+      "testnet": true,
+      "guide": false
     },
     {
       "name": "Showdown",
@@ -131,11 +135,12 @@
       "twitter": "GTE_XYZ",
       "website": "https://gte.xyz",
       "discord": "https://discord.gg/gte-xyz",
-      "description": "The world’s fastest decentralized exchange.",
+      "description": "The world's fastest decentralized exchange.",
       "category": "DeFi",
       "megaMafia": true,
       "native": true,
-      "testnet": false
+      "testnet": true,
+      "guide": true
     },
     {
       "name": "CAP",
@@ -147,7 +152,8 @@
       "category": "DeFi",
       "megaMafia": true,
       "native": true,
-      "testnet": false
+      "testnet": true,
+      "guide": true
     },
     {
       "name": "Teko",
@@ -158,7 +164,8 @@
       "category": "DeFi",
       "megaMafia": true,
       "native": true,
-      "testnet": false
+      "testnet": true,
+      "guide": true
     },
     {
       "name": "Alien Rabbits",
@@ -363,7 +370,8 @@
       "category": "AI",
       "megaMafia": false,
       "native": true,
-      "testnet": false
+      "testnet": true,
+      "guide": true
     },
     {
       "name": "Ren",
@@ -748,7 +756,8 @@
       "category": "Meme",
       "megaMafia": false,
       "native": false,
-      "testnet": false
+      "testnet": true,
+      "guide": true
     },
     {
       "name": "Fluffle Tools xultra.fun",
@@ -832,7 +841,8 @@
       "category": "Gaming",
       "megaMafia": false,
       "native": false,
-      "testnet": false
+      "testnet": true,
+      "guide": true
     },
     {
       "name": "games.fun",

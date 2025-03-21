@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import * as Popover from "@radix-ui/react-popover";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import {
   Flower2,
   Rabbit,
@@ -12,6 +13,7 @@ import {
   X,
   FlaskConical,
   Wrench,
+  BookOpen,
 } from "lucide-react";
 
 interface ViewSwitcherProps {
@@ -23,7 +25,8 @@ interface ViewSwitcherProps {
     | "ecosystem"
     | "testnet"
     | "build"
-    | "builder";
+    | "builder"
+    | "guides";
   onViewChange: (
     view:
       | "viewer"
@@ -34,12 +37,14 @@ interface ViewSwitcherProps {
       | "testnet"
       | "build"
       | "builder"
+      | "guides"
   ) => void;
 }
 
 export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isTestnetMenuOpen, setIsTestnetMenuOpen] = useState(false);
+  const router = useRouter();
 
   return (
     <>
@@ -94,10 +99,28 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   )}
                 </button>
                 <button
+                  onClick={() => {
+                    onViewChange("guides");
+                    router.push("/explore");
+                    setIsTestnetMenuOpen(false);
+                  }}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    activeView === "guides"
+                      ? "bg-gradient-to-r from-violet-50/90 to-purple-50/90 text-violet-600 shadow-sm dark:from-violet-500/20 dark:to-violet-500/10 dark:text-violet-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <BookOpen className="w-4 h-4 flex-shrink-0" />
+                  <span className="flex-1 text-left">Guides</span>
+                  {activeView === "guides" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />
+                  )}
+                </button>
+                <button
                   onClick={() => onViewChange("build")}
                   className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                     activeView === "build"
-                      ? "bg-gradient-to-r from-violet-50/90 to-purple-50/90 text-violet-600 shadow-sm dark:from-violet-500/20 dark:to-violet-500/10 dark:text-violet-400"
+                      ? "bg-gradient-to-r from-violet-50 to-purple-50 text-violet-600 shadow-sm dark:from-violet-500/20 dark:to-violet-500/10 dark:text-violet-400"
                       : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
                   }`}
                 >
@@ -322,6 +345,24 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   <FlaskConical className="w-5 h-5 flex-shrink-0" />
                   <span className="flex-1 text-left">Overview</span>
                   {activeView === "testnet" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />
+                  )}
+                </button>
+                <button
+                  onClick={() => {
+                    onViewChange("guides");
+                    router.push("/explore");
+                    setIsTestnetMenuOpen(false);
+                  }}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    activeView === "guides"
+                      ? "bg-gradient-to-r from-violet-50 to-purple-50 text-violet-600 shadow-sm dark:from-violet-500/20 dark:to-violet-500/10 dark:text-violet-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <BookOpen className="w-5 h-5 flex-shrink-0" />
+                  <span className="flex-1 text-left">Guides</span>
+                  {activeView === "guides" && (
                     <div className="w-1.5 h-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />
                   )}
                 </button>

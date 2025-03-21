@@ -1,0 +1,85 @@
+{
+  "project": {
+    "name": "Guess Best",
+    "twitter": "playguessbest",
+    "description": "A prediction market platform that makes betting fun and intuitive",
+    "longDescription": "Guess Best is a unique prediction market platform that focuses on making betting fun and accessible. With instant payouts and potential returns up to ×100,000, users can bet on any imaginable topic by simply trusting their gut on crowd opinions. The platform combines the speed of MegaETH with an intuitive betting experience across a wide range of engaging topics.",
+    "features": [
+      {
+        "title": "High Returns",
+        "description": "Potential returns up to ×100,000 on your bets"
+      },
+      {
+        "title": "Instant Payouts",
+        "description": "No waiting around - get your winnings instantly"
+      },
+      {
+        "title": "Private Rooms",
+        "description": "Create private betting rooms via Telegram for you and your friends"
+      },
+      {
+        "title": "Creator Rewards",
+        "description": "Earn 50% of the 10% platform fee as a room creator"
+      },
+      {
+        "title": "Referral System",
+        "description": "Earn additional points through referrals"
+      }
+    ],
+    "currentStatus": "Game actions are live on MEGA testnet, with app funding currently hosted on Solana"
+  },
+  "guide": {
+    "sections": [
+      {
+        "id": "getting-started",
+        "title": "Getting Started with Guess Best",
+        "steps": [
+          {
+            "id": "step-1",
+            "title": "Join via Telegram",
+            "content": "To start using Guess Best:\n\n1. Add the Telegram bot @BestGuessBot to create your private room\n2. Use the special code 'GMOON' during setup\n3. You'll get access to create and manage your own prediction rooms",
+            "completable": true,
+            "links": [
+              {
+                "text": "Start with Telegram Bot",
+                "url": "https://t.me/BestGuessBot/Guess_Best/start?startapp=ULTRA"
+              }
+            ]
+          },
+          {
+            "id": "step-2",
+            "title": "Create Your First Room",
+            "content": "As a room creator:\n\n• You can set up custom prediction topics\n• Invite friends to participate\n• Earn 50% of the 10% platform fee from all bets in your room\n• Track your earnings and referral points through the dashboard",
+            "completable": true,
+            "links": [
+              {
+                "text": "Open Guess Best App",
+                "url": "https://app.guess.best/?referralCode=gq8tk6v&refSource=copy"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "betting",
+        "title": "Place Your Bets",
+        "steps": [
+          {
+            "id": "step-3",
+            "title": "Making Predictions",
+            "content": "When placing bets:\n\n• Choose from a wide range of topics\n• Trust your gut on what the crowd thinks\n• No special skills or knowledge required\n• Potential returns can go up to ×100,000\n• Payouts are processed instantly",
+            "completable": true,
+            "links": [
+              {
+                "text": "Start Betting",
+                "url": "https://app.guess.best/airdrop"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "requirements": ["Telegram account"],
+    "lastUpdated": "2025-03-21"
+  }
+}

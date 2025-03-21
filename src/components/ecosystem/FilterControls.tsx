@@ -9,6 +9,8 @@ interface FilterControlsProps {
   setShowNativeOnly: (show: boolean) => void;
   showTestnetOnly: boolean;
   setShowTestnetOnly: (show: boolean) => void;
+  showGuideOnly: boolean;
+  setShowGuideOnly: (show: boolean) => void;
   voteFilter: "all" | "voted" | "not_voted";
   setVoteFilter: (filter: "all" | "voted" | "not_voted") => void;
   categories: string[];
@@ -21,6 +23,7 @@ interface FilterControlsProps {
   getMegaMafiaCount: () => number;
   getNativeCount: () => number;
   getTestnetCount: () => number;
+  getGuideCount: () => number;
   getUserVotedCount: () => number;
   getUserNotVotedCount: () => number;
   totalProjects: number;
@@ -35,6 +38,8 @@ export function FilterControls({
   setShowNativeOnly,
   showTestnetOnly,
   setShowTestnetOnly,
+  showGuideOnly,
+  setShowGuideOnly,
   voteFilter,
   setVoteFilter,
   categories,
@@ -42,6 +47,7 @@ export function FilterControls({
   getMegaMafiaCount,
   getNativeCount,
   getTestnetCount,
+  getGuideCount,
   getUserVotedCount,
   getUserNotVotedCount,
   totalProjects,
@@ -55,6 +61,7 @@ export function FilterControls({
             setShowMegaMafiaOnly(!showMegaMafiaOnly);
             setShowNativeOnly(false);
             setShowTestnetOnly(false);
+            setShowGuideOnly(false);
           }}
           className={`group relative px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
             showMegaMafiaOnly
@@ -90,6 +97,7 @@ export function FilterControls({
             setShowNativeOnly(!showNativeOnly);
             setShowMegaMafiaOnly(false);
             setShowTestnetOnly(false);
+            setShowGuideOnly(false);
           }}
           className={`group relative px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
             showNativeOnly
@@ -129,6 +137,7 @@ export function FilterControls({
             setShowTestnetOnly(!showTestnetOnly);
             setShowMegaMafiaOnly(false);
             setShowNativeOnly(false);
+            setShowGuideOnly(false);
           }}
           className={`group relative px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
             showTestnetOnly
@@ -150,6 +159,46 @@ export function FilterControls({
               }`}
             >
               {getTestnetCount()}
+            </span>
+          </div>
+        </button>
+
+        <button
+          onClick={() => {
+            setShowGuideOnly(!showGuideOnly);
+            setShowMegaMafiaOnly(false);
+            setShowNativeOnly(false);
+            setShowTestnetOnly(false);
+          }}
+          className={`group relative px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
+            showGuideOnly
+              ? "bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-sm"
+              : "bg-gray-50 dark:bg-white/[0.04] text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-white/[0.08] border border-gray-200/80 dark:border-white/[0.06]"
+          }`}
+        >
+          <div className="relative flex items-center justify-center sm:justify-start gap-2">
+            <svg
+              className={`w-4 h-4 ${
+                showGuideOnly ? "text-white" : "text-purple-500"
+              }`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+              />
+            </svg>
+            <span>Has Guide</span>
+            <span
+              className={`text-xs px-1.5 py-0.5 rounded ${
+                showGuideOnly ? "bg-white/20" : "bg-black/5 dark:bg-white/10"
+              }`}
+            >
+              {getGuideCount()}
             </span>
           </div>
         </button>

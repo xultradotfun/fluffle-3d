@@ -25,6 +25,7 @@ interface Project {
   category: string;
   megaMafia: boolean;
   testnet: boolean;
+  guide?: boolean;
   votes?: {
     upvotes: number;
     downvotes: number;
@@ -50,6 +51,10 @@ export function ProjectCard({ project, isLoadingVotes }: ProjectCardProps) {
   const [userVote, setUserVote] = useState<"up" | "down" | null>(
     project.votes?.userVote || null
   );
+
+  const guideUrl = project.guide
+    ? `/explore/${project.twitter.toLowerCase()}`
+    : undefined;
 
   useEffect(() => {
     if (project.votes) {
@@ -188,6 +193,7 @@ export function ProjectCard({ project, isLoadingVotes }: ProjectCardProps) {
                 website={project.website}
                 discord={project.discord}
                 telegram={project.telegram}
+                guide={guideUrl}
               />
             </div>
             <div className="flex-shrink-0 self-end sm:self-auto">
