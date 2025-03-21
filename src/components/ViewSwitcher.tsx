@@ -102,6 +102,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   onClick={() => {
                     onViewChange("guides");
                     router.push("/explore");
+                    setIsTestnetMenuOpen(false);
                   }}
                   className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                     activeView === "guides"
@@ -351,6 +352,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   onClick={() => {
                     onViewChange("guides");
                     router.push("/explore");
+                    setIsTestnetMenuOpen(false);
                   }}
                   className={`flex items-center w-full gap-2.5 px-3.5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                     activeView === "guides"
