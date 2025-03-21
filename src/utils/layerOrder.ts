@@ -18,12 +18,13 @@ export const LAYER_ORDER = {
     "eyeliner_for_skin_3",
     "eyebrow_for_skin_3",
     "mouth_for_skin_3",
+    "face",
   ] as const,
 
   // Hair back part is rendered separately
 
   // Accessories
-  ACCESSORIES: ["ear", "head", "face"] as const,
+  ACCESSORIES: ["ear", "head"] as const,
 
   // Clothes
   CLOTHES: ["clothes"] as const,
