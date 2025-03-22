@@ -35,6 +35,12 @@
               {
                 "url": "https://mega-eco.b-cdn.net/SirioApp/1.png"
               }
+            ],
+            "links": [
+              {
+                "text": "Open Mining Page",
+                "url": "https://www.sirio.gg/mining"
+              }
             ]
           }
         ]
@@ -47,7 +53,13 @@
             "id": "step-2",
             "title": "What are Sirio Points?",
             "content": "Sirio Points reward your platform engagement. Earn points through:\n\n• Daily Logins\n• Off-Chain NFT Staking\n• Referrals: Share your code with others\n• Completing Missions\n• X Platform Interactions\n\nThe more you engage, the more points you'll earn, leading to future opportunities and rewards as Sirio grows.",
-            "completable": true
+            "completable": true,
+            "links": [
+              {
+                "text": "Visit Sirio",
+                "url": "https://sirio.gg/"
+              }
+            ]
           }
         ]
       }
