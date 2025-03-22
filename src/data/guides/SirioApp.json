@@ -1,0 +1,58 @@
+{
+  "project": {
+    "name": "Sirio",
+    "twitter": "SirioApp",
+    "description": "The unified Web3 Experience Hub",
+    "longDescription": "With many dApps and NFTs, users need to stay on top of multiple websites, information sources, and platforms to keep up with developments. This often results in missed airdrops and time-sensitive events. Sirio steps in as a global Web3 experience hub, unifying the ecosystem.",
+    "features": [
+      {
+        "title": "Benefits Dashboard",
+        "description": "Track and access benefits tied to your NFTs with real-time updates, ensuring you never miss any opportunities."
+      },
+      {
+        "title": "Secure Minting",
+        "description": "A simplified and secure way to mint NFTs directly on the platform. All projects are verified and include essential details about their offering, benefits, and vision."
+      },
+      {
+        "title": "Mining System",
+        "description": "Off-chain mining system that requires no signatures or transactions. Connect your wallet, select eligible NFTs to mine, and earn rewards while your assets stay safely in your wallet."
+      }
+    ],
+    "currentStatus": "Integrating multiple chains to make Web3 accessible from a single universal platform."
+  },
+  "guide": {
+    "sections": [
+      {
+        "id": "mining",
+        "title": "Mining with Sirio",
+        "steps": [
+          {
+            "id": "step-1",
+            "title": "Mining System",
+            "content": "The mining mechanism operates off-chain with no signatures required.\n\nHow it works:\n• Connect your wallet\n• Eligible NFTs are identified automatically\n• Select which NFTs to use for mining\n• Each NFT is assigned mining power\n• Rewards are distributed at regular intervals\n• Your assets always stay safely in your wallet",
+            "completable": true,
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/SirioApp/1.png"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "points",
+        "title": "Sirio Points",
+        "steps": [
+          {
+            "id": "step-2",
+            "title": "What are Sirio Points?",
+            "content": "Sirio Points reward your platform engagement. Earn points through:\n\n• Daily Logins\n• Off-Chain NFT Staking\n• Referrals: Share your code with others\n• Completing Missions\n• X Platform Interactions\n\nThe more you engage, the more points you'll earn, leading to future opportunities and rewards as Sirio grows.",
+            "completable": true
+          }
+        ]
+      }
+    ],
+    "requirements": ["NFTs (for mining)"],
+    "lastUpdated": "2025-03-21"
+  }
+}

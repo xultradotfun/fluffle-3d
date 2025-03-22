@@ -707,7 +707,7 @@
       "megaMafia": false,
       "native": false,
       "testnet": true,
-      "guide": false
+      "guide": true
     },
     {
       "name": "Zeru",
