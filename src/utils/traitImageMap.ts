@@ -284,6 +284,8 @@ export const traitImageMap: TraitImageMap = {
     Noise: { path: "bg-noise.jpg" },
     Teko: { path: "bg-teko.jpg" },
     Vahalla: { path: "bg-vahalla.jpg" },
+    Cap: { path: "bg-cap.jpg" },
+    Hop: { path: "bg-hop.jpg" },
   },
 };
 
