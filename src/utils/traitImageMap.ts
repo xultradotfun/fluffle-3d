@@ -286,6 +286,10 @@ export const traitImageMap: TraitImageMap = {
     Vahalla: { path: "bg-vahalla.jpg" },
     Cap: { path: "bg-cap.jpg" },
     Hop: { path: "bg-hop.jpg" },
+    SpaceBust: { path: "bg-space-portrait.png" },
+    SpaceFull: { path: "bg-space-full.png" },
+    SmolBust: { path: "bg-smolmega-portrait.png" },
+    SmolFull: { path: "bg-smolmega-full.png" },
   },
 };
 
