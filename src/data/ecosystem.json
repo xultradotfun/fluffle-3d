@@ -865,7 +865,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "testnet": false
+      "testnet": true,
+      "guide": false
     },
     {
       "name": "Mega Docs",
