@@ -290,6 +290,9 @@ export const traitImageMap: TraitImageMap = {
     SpaceFull: { path: "bg-space-full.png" },
     SmolBust: { path: "bg-smolmega-portrait.png" },
     SmolFull: { path: "bg-smolmega-full.png" },
+    Euphoria: { path: "bg-euphoria.jpg" },
+    Showdown: { path: "bg-showdown.jpg" },
+    Lemonade: { path: "bg-lemonade.jpg" },
   },
 };
 
