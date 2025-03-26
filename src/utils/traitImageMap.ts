@@ -293,6 +293,7 @@ export const traitImageMap: TraitImageMap = {
     Euphoria: { path: "bg-euphoria.jpg" },
     Showdown: { path: "bg-showdown.jpg" },
     Lemonade: { path: "bg-lemonade.jpg" },
+    Avon: { path: "bg-avon.jpg" },
   },
 };
 
