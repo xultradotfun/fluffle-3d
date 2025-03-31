@@ -149,13 +149,15 @@ export default function Hero() {
                     />
                   </div>
                 </div>
-                <h1
-                  className={`sm:transition-all sm:duration-300 whitespace-nowrap ${
-                    isScrolled ? "text-2xl" : "text-4xl"
-                  } font-black tracking-tight bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-200 dark:to-gray-300 bg-clip-text text-transparent`}
-                >
-                  Fluffle Tools
-                </h1>
+                <a href="/" className="hover:opacity-80 transition-opacity">
+                  <h1
+                    className={`sm:transition-all sm:duration-300 whitespace-nowrap ${
+                      isScrolled ? "text-2xl" : "text-4xl"
+                    } font-black tracking-tight bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 dark:from-white dark:via-gray-200 dark:to-gray-300 bg-clip-text text-transparent`}
+                  >
+                    Fluffle Tools
+                  </h1>
+                </a>
               </div>
 
               {/* Description - Only show when not scrolled */}
