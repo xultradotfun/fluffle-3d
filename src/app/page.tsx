@@ -17,6 +17,7 @@ import { EcosystemDashboard } from "@/components/ecosystem/EcosystemDashboard";
 import { GuidesHeader } from "@/components/guides/GuidesHeader";
 import { GuidesList } from "@/components/guides/GuidesList";
 import { useRouter } from "next/navigation";
+import { BingoView } from "@/components/bingo/BingoView";
 
 interface ViewerData {
   id: string;
@@ -37,6 +38,7 @@ export default function Home() {
     | "build"
     | "builder"
     | "guides"
+    | "bingo"
   >("ecosystem");
   const [viewers, setViewers] = useState<ViewerData[]>([]);
   const [error, setError] = useState("");
@@ -61,6 +63,8 @@ export default function Home() {
       setActiveView("builder");
     } else if (hash === "#guides") {
       setActiveView("guides");
+    } else if (hash === "#bingo") {
+      setActiveView("bingo");
     } else {
       setActiveView("ecosystem");
     }
@@ -84,6 +88,8 @@ export default function Home() {
         setActiveView("builder");
       } else if (hash === "#guides") {
         setActiveView("guides");
+      } else if (hash === "#bingo") {
+        setActiveView("bingo");
       } else {
         setActiveView("ecosystem");
       }
@@ -105,6 +111,7 @@ export default function Home() {
       | "build"
       | "builder"
       | "guides"
+      | "bingo"
   ) => {
     if (view === "guides") {
       router.push("/explore");
@@ -132,6 +139,8 @@ export default function Home() {
       router.push("/");
       setViewers([]);
       setError("");
+    } else if (view === "bingo") {
+      router.push("/#bingo");
     }
     setActiveView(view);
   };
@@ -196,78 +205,34 @@ export default function Home() {
       )}
 
       {/* Content Section */}
-      <section className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 py-6 sm:py-12 pb-24 pt-12 sm:pt-20 flex-grow">
-        {activeView === "viewer" ? (
-          viewers.length > 0 ? (
-            <>
-              <div className="flex items-center justify-between mb-8 animate-fade-in">
-                <h2 className="text-2xl font-bold text-foreground">
-                  Your NFTs
-                </h2>
-                <Badge variant="default" size="md">
-                  {viewers.length} loaded
-                </Badge>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {viewers.map(({ id, urls, traits, timestamp }) => (
-                  <NFTCard
-                    key={`${id}-${timestamp}`}
-                    id={id}
-                    urls={urls}
-                    traits={traits}
-                    onRemove={() => handleRemoveViewer(id, timestamp)}
-                  />
-                ))}
-              </div>
-            </>
-          ) : (
-            <div className="text-center py-16 animate-fade-in">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-card mb-6 ring-1 ring-border">
-                <svg
-                  className="w-10 h-10 text-muted-foreground"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">
-                No NFTs Loaded
-              </h3>
-              <p className="text-muted-foreground max-w-sm mx-auto">
-                Enter a Fluffle NFT ID above to view its 3D model and traits.
-                You can load multiple NFTs at once.
-              </p>
-            </div>
-          )
-        ) : activeView === "analytics" ? (
-          <TraitsAnalyticsDashboard />
-        ) : activeView === "metaverse" ? (
-          <MetaverseTeaser />
-        ) : activeView === "ecosystem" ? (
-          <EcosystemDashboard />
-        ) : activeView === "testnet" ? (
-          <TestnetView />
-        ) : activeView === "build" ? (
-          <BuildersView />
-        ) : activeView === "builder" ? (
-          <NFTBuilder />
-        ) : activeView === "guides" ? (
-          <div className="min-h-screen py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-7xl mx-auto">
-              <GuidesHeader />
-              <GuidesList />
-            </div>
+      <section className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 py-6 sm:py-12 pb-24">
+        {activeView === "ecosystem" && <EcosystemDashboard />}
+        {activeView === "viewer" && (
+          <div className="max-w-7xl mx-auto space-y-12">
+            {viewers.map((viewer) => (
+              <NFTCard
+                key={`${viewer.id}-${viewer.timestamp}`}
+                id={viewer.id}
+                urls={viewer.urls}
+                traits={viewer.traits}
+                onRemove={() => handleRemoveViewer(viewer.id, viewer.timestamp)}
+              />
+            ))}
           </div>
-        ) : (
-          <PFPGenerator />
         )}
+        {activeView === "analytics" && <TraitsAnalyticsDashboard />}
+        {activeView === "pfp" && <PFPGenerator />}
+        {activeView === "metaverse" && <MetaverseTeaser />}
+        {activeView === "testnet" && <TestnetView />}
+        {activeView === "build" && <BuildersView />}
+        {activeView === "builder" && <NFTBuilder />}
+        {activeView === "guides" && (
+          <div className="max-w-7xl mx-auto">
+            <GuidesHeader />
+            <GuidesList />
+          </div>
+        )}
+        {activeView === "bingo" && <BingoView />}
       </section>
     </div>
   );

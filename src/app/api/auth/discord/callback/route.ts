@@ -140,6 +140,8 @@ export async function GET(request: Request) {
     const minimalUserData = {
       id: userData.id,
       username: userData.username,
+      discriminator: userData.discriminator,
+      avatar: userData.avatar,
       guildIds: guildsData.map((g: any) => g.id),
       hasRequiredRole,
     };

@@ -1,0 +1,145 @@
+{
+  "metadata": {
+    "title": "MegaETH Community Bingo",
+    "description": "Complete ecosystem tasks to earn rewards and contribute to the MegaETH community!",
+    "version": "1.0.0"
+  },
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Free Square!",
+      "description": "Nothing. Mark it off cuz we love you.",
+      "category": "Welcome",
+      "culturalElement": "Mega Milady"
+    },
+    {
+      "id": "2",
+      "title": "Food Coin Meta",
+      "description": "Trade MegaETH Food Coins (Hotpot, Burger, Bread, Toast, Da Bing, Pancake, Brekkie Ice Cream, Carrot, Timothy) on GTE/XL",
+      "category": "Trading",
+      "projects": ["GTE_XYZ", "XLmemeCom"],
+      "culturalElement": "Food-related stuff"
+    },
+    {
+      "id": "3",
+      "title": "Hats Cabal Tribute",
+      "description": "Mint cUSD on CAP or lend tokens in a pool involving cUSD on Teko",
+      "category": "DeFi",
+      "projects": ["CapLabs_", "tekofinance"],
+      "culturalElement": "Hats Cabal"
+    },
+    {
+      "id": "4",
+      "title": "Fluffle Believer",
+      "description": "Launch or locate/purchase an asset associated to your favorite Fluffle cabal/tribe on GTE/XL",
+      "category": "Community",
+      "projects": ["XLmemeCom", "GTE_XYZ"],
+      "culturalElement": "The Fluffle Cabals"
+    },
+    {
+      "id": "5",
+      "title": "Fluffle Cabal",
+      "description": "Join Fluffle Cabal communities on Lemonade and stake the related token after buying it on GTE/XL",
+      "category": "Community",
+      "projects": ["lemonade_events", "GTE_XYZ", "XLmemeCom"],
+      "culturalElement": "The Fluffle Cabals"
+    },
+    {
+      "id": "6",
+      "title": "Just Use Teko",
+      "description": "Supply & Borrow assets on Teko",
+      "category": "DeFi",
+      "projects": ["tekofinance"],
+      "culturalElement": "Real-Time"
+    },
+    {
+      "id": "7",
+      "title": "Party @ World Computer",
+      "description": "Create a MegaETH themed event on Lemonade",
+      "category": "Social",
+      "projects": ["lemonade_events"],
+      "culturalElement": "MegaZu, World Computer"
+    },
+    {
+      "id": "8",
+      "title": "Founder's Pet",
+      "description": "Organize/Join a Lemonade raid Event to make Brother Bing tweet a keyword or phrase. Launch/Trade the related token on GTE",
+      "category": "Social",
+      "projects": ["lemonade_events", "GTE_XYZ"],
+      "culturalElement": "Brother Bing"
+    },
+    {
+      "id": "9",
+      "title": "Hit The Gym",
+      "description": "Play guess.best and build up a streak of 5",
+      "category": "Gaming",
+      "projects": ["playguessbest"],
+      "culturalElement": "Bread Power Lifter",
+      "link": "https://t.me/BestGuessBot/Guess_Best/start?startapp=ultra-ULTRA"
+    },
+    {
+      "id": "10",
+      "title": "Mega Money",
+      "description": "Mint tkUSD or cUSD. Swap for MEGA on GTE",
+      "category": "DeFi",
+      "projects": ["GTE_XYZ", "CapLabs_", "tekofinance"],
+      "culturalElement": "MEGA"
+    },
+    {
+      "id": "11",
+      "title": "Heavy Metal Chain",
+      "description": "Launch/Trade tokens on GTE/XL for your fave Megadeth track",
+      "category": "Trading",
+      "projects": ["XLmemeCom", "GTE_XYZ"],
+      "culturalElement": "Heavy Metal Chain"
+    },
+    {
+      "id": "12",
+      "title": "Chubby Bunny Smash",
+      "description": "Act on your cuteness aggression on AWE. Whack the Fluffles",
+      "category": "Gaming",
+      "projects": ["awe_box"],
+      "culturalElement": "Chubby Bunnies"
+    },
+    {
+      "id": "13",
+      "title": "$LOVE Is Onchain",
+      "description": "Interact with AI agents and swap some $LOVE on Nectar AI",
+      "category": "AI",
+      "projects": ["TryNectarAI"],
+      "culturalElement": "Heisenburger is a woman / AI Waifu"
+    },
+    {
+      "id": "14",
+      "title": "Make Noise",
+      "description": "Put your money on your hottest take. Trade Pre-TGE project mindshare on Noise",
+      "category": "Trading",
+      "projects": ["noise_xyz"],
+      "culturalElement": "Louder"
+    },
+    {
+      "id": "15",
+      "title": "Is This Web2?",
+      "description": "Use social sign-in + spam 'Quick Buy' on GTE's Dash page to get a truly real-time experience",
+      "category": "Trading",
+      "projects": ["GTE_XYZ"],
+      "culturalElement": "Real-Time"
+    },
+    {
+      "id": "16",
+      "title": "See You, Space Cowboy",
+      "description": "Trade your favourite tokens on Bebop",
+      "category": "Trading",
+      "projects": ["bebop_dex"],
+      "culturalElement": "General"
+    },
+    {
+      "id": "17",
+      "title": "Make It rAIn",
+      "description": "Launch and Trade AI agents on Rainmakr",
+      "category": "AI",
+      "projects": ["RainMakr_xyz"],
+      "culturalElement": "General"
+    }
+  ]
+}
