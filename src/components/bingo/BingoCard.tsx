@@ -122,7 +122,6 @@ export function BingoCard({
         new ClipboardItem({ "image/png": blob }),
       ]);
 
-      setIsShareModalOpen(false);
       // TODO: Show success toast
     } catch (error) {
       console.error("Failed to share bingo card:", error);
@@ -376,6 +375,9 @@ export function BingoCard({
         onClose={() => setIsShareModalOpen(false)}
         onShare={handleShare}
         previewRef={previewRef}
+        completedCount={completedTaskIds.length}
+        totalTasks={tasks.length}
+        completedLines={completedLines.length}
       />
     </>
   );
