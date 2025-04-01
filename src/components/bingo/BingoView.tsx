@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
 import { BingoCard } from "./BingoCard";
-import { Trophy } from "lucide-react";
+import { Trophy, Smartphone } from "lucide-react";
 import bingoConfig from "@/data/bingo.json";
 import ecosystemData from "@/data/ecosystem.json";
 import Image from "next/image";
@@ -10,6 +10,19 @@ import type { BingoTask, Project } from "@/types/bingo";
 export function BingoView() {
   const { user, login } = useDiscordAuth();
   const [completedTaskIds, setCompletedTaskIds] = useState<string[]>([]);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check for mobile device on mount and window resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Merge completed state with base tasks
   const tasks = bingoConfig.tasks.map((task) => ({
@@ -66,6 +79,28 @@ export function BingoView() {
   });
 
   const completedCount = completedTaskIds.length;
+
+  // If on mobile, show warning message
+  if (isMobile) {
+    return (
+      <div className="min-h-[50vh] flex items-center justify-center px-6">
+        <div className="max-w-md text-center space-y-4">
+          <div className="flex justify-center">
+            <div className="p-4 rounded-full bg-yellow-50 dark:bg-yellow-500/10">
+              <Smartphone className="w-8 h-8 text-yellow-500 dark:text-yellow-400" />
+            </div>
+          </div>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+            Desktop View Required
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300">
+            The MegaETH Community Bingo is optimized for desktop viewing. Please
+            visit this page on a desktop device for the best experience.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen py-12">
