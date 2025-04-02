@@ -17,7 +17,7 @@ interface DiscordUser {
 interface DiscordAuthContextType {
   user: DiscordUser | null;
   isLoading: boolean;
-  login: () => void;
+  login: (returnTo?: string) => void;
   logout: () => void;
 }
 
@@ -55,9 +55,12 @@ export function DiscordAuthProvider({
     }
   };
 
-  const login = () => {
+  const login = (returnTo?: string) => {
     // Redirect to Discord OAuth flow
-    window.location.href = "/api/auth/discord/login";
+    const loginUrl = returnTo
+      ? `/api/auth/discord/login?returnTo=${encodeURIComponent(returnTo)}`
+      : "/api/auth/discord/login";
+    window.location.href = loginUrl;
   };
 
   const logout = async () => {

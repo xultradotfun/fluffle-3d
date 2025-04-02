@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
 import { BingoCard } from "./BingoCard";
-import { Trophy, Smartphone } from "lucide-react";
+import { Trophy, Smartphone, LogOut } from "lucide-react";
 import bingoConfig from "@/data/bingo.json";
 import ecosystemData from "@/data/ecosystem.json";
 import Image from "next/image";
 import type { BingoTask, Project } from "@/types/bingo";
 
 export function BingoView() {
-  const { user, login } = useDiscordAuth();
+  const { user, login, logout } = useDiscordAuth();
   const [completedTaskIds, setCompletedTaskIds] = useState<string[]>([]);
   const [isMobile, setIsMobile] = useState(false);
+
+  const handleLogin = () => {
+    login("/#bingo");
+  };
 
   // Check for mobile device on mount and window resize
   useEffect(() => {
@@ -160,9 +164,39 @@ export function BingoView() {
             </div>
           </div>
 
-          {!user && (
+          {user ? (
+            <div className="flex items-center justify-center gap-3">
+              <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/[0.08] backdrop-blur-sm">
+                {user.avatar && (
+                  <div className="relative w-8 h-8 rounded-full overflow-hidden ring-2 ring-gray-200 dark:ring-gray-700">
+                    <Image
+                      src={`https://cdn.discordapp.com/avatars/${user.id}/${
+                        user.avatar
+                      }.${
+                        user.avatar.startsWith("a_") ? "gif" : "png"
+                      }?size=128`}
+                      alt={user.username}
+                      fill
+                      className="object-cover"
+                      unoptimized
+                    />
+                  </div>
+                )}
+                <span className="text-sm font-medium text-gray-900 dark:text-white">
+                  {user.username}
+                </span>
+              </div>
+              <button
+                onClick={logout}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-50 hover:bg-red-100 dark:bg-red-500/[0.08] dark:hover:bg-red-500/[0.16] border border-red-200/50 dark:border-red-500/20 text-red-600 dark:text-red-400 transition-all"
+              >
+                <LogOut className="w-4 h-4" />
+                <span className="font-medium">Logout</span>
+              </button>
+            </div>
+          ) : (
             <button
-              onClick={login}
+              onClick={handleLogin}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-teal-50 hover:bg-teal-100 dark:bg-teal-500/[0.08] dark:hover:bg-teal-500/[0.16] border border-teal-200/50 dark:border-teal-500/20 text-teal-600 dark:text-teal-400 transition-all"
             >
               <Trophy className="w-5 h-5" />

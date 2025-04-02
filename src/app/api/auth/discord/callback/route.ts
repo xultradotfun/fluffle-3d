@@ -133,8 +133,21 @@ export async function GET(request: Request) {
       }
     }
 
+    // Get the return URL from state
+    const state = searchParams.get("state");
+    let returnTo = "/#ecosystem"; // Default fallback
+
+    try {
+      if (state) {
+        const stateData = JSON.parse(state);
+        returnTo = stateData.returnTo || returnTo;
+      }
+    } catch (error) {
+      console.error("Failed to parse state:", error);
+    }
+
     // Create the response first
-    const response = NextResponse.redirect(new URL("/#ecosystem", request.url));
+    const response = NextResponse.redirect(new URL(returnTo, request.url));
 
     // Store minimal user data
     const minimalUserData = {
