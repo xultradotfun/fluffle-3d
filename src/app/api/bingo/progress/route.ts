@@ -170,21 +170,6 @@ export async function GET() {
       );
     }
 
-    // Enhanced CSRF protection
-    const origin = headersList.get("origin");
-    const referer = headersList.get("referer");
-
-    if (!origin || !referer || !isAllowedBaseUrl(origin)) {
-      console.log("Security check failed:", { origin, referer });
-      return new NextResponse(
-        JSON.stringify({ error: "Invalid request origin" }),
-        {
-          status: 403,
-          headers: { "Content-Type": "application/json", ...securityHeaders },
-        }
-      );
-    }
-
     const user = await verifyUserAuth(cookieStore);
 
     // Check user rate limit
