@@ -200,28 +200,29 @@ export function BingoView() {
             complete your very own bingo card!
           </p>
 
-          {/* Progress Stats */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
-            {/* Overall Progress */}
-            <div className="col-span-2 sm:col-span-3 lg:col-span-4 flex items-center justify-center gap-8 mb-4">
-              <div className="px-4 py-2 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/[0.08] backdrop-blur-sm">
-                <div className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {completedCount}
+          {/* Progress Stats - Only show when logged in */}
+          {user && (
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+              <div className="col-span-2 sm:col-span-3 lg:col-span-4 flex items-center justify-center gap-8 mb-4">
+                <div className="px-4 py-2 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/[0.08] backdrop-blur-sm">
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                    {completedCount}
+                  </div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    Tasks Completed
+                  </div>
                 </div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
-                  Tasks Completed
-                </div>
-              </div>
-              <div className="px-4 py-2 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/[0.08] backdrop-blur-sm">
-                <div className="text-2xl font-bold text-gray-900 dark:text-white">
-                  {Math.floor((completedCount / tasks.length) * 100)}%
-                </div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
-                  Completion
+                <div className="px-4 py-2 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/[0.08] backdrop-blur-sm">
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                    {Math.floor((completedCount / tasks.length) * 100)}%
+                  </div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">
+                    Completion
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
 
           {user ? (
             <div className="flex items-center justify-center gap-3">
@@ -254,24 +255,67 @@ export function BingoView() {
               </button>
             </div>
           ) : (
-            <button
-              onClick={handleLogin}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-teal-50 hover:bg-teal-100 dark:bg-teal-500/[0.08] dark:hover:bg-teal-500/[0.16] border border-teal-200/50 dark:border-teal-500/20 text-teal-600 dark:text-teal-400 transition-all"
-            >
-              <Trophy className="w-5 h-5" />
-              <span className="font-medium">Connect with Discord</span>
-            </button>
+            <div className="space-y-4">
+              <button
+                onClick={handleLogin}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-teal-50 hover:bg-teal-100 dark:bg-teal-500/[0.08] dark:hover:bg-teal-500/[0.16] border border-teal-200/50 dark:border-teal-500/20 text-teal-600 dark:text-teal-400 transition-all"
+              >
+                <Trophy className="w-5 h-5" />
+                <span className="font-medium">
+                  Connect with Discord to Start
+                </span>
+              </button>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Your progress will be saved and synced across devices
+              </p>
+            </div>
           )}
         </div>
 
         {/* Bingo Card */}
         <div className="max-w-5xl mx-auto">
-          <BingoCard
-            tasks={tasks}
-            onTaskToggle={handleTaskToggle}
-            completedTaskIds={completedTaskIds}
-            projectMap={projectMap}
-          />
+          {user ? (
+            <BingoCard
+              tasks={tasks}
+              onTaskToggle={handleTaskToggle}
+              completedTaskIds={completedTaskIds}
+              projectMap={projectMap}
+            />
+          ) : (
+            <div className="relative">
+              {/* Preview overlay */}
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/80 to-white dark:via-gray-900/80 dark:to-gray-900 z-10" />
+              <div className="absolute inset-0 flex items-center justify-center z-20">
+                <div className="text-center space-y-4">
+                  <div className="p-4 rounded-full bg-teal-50 dark:bg-teal-500/10 inline-block">
+                    <Trophy className="w-8 h-8 text-teal-500 dark:text-teal-400" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                    Connect to Start Playing
+                  </h3>
+                  <p className="text-gray-600 dark:text-gray-300 max-w-sm">
+                    Sign in with Discord to get your personal bingo card and
+                    start tracking your progress!
+                  </p>
+                  <button
+                    onClick={handleLogin}
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-teal-50 hover:bg-teal-100 dark:bg-teal-500/[0.08] dark:hover:bg-teal-500/[0.16] border border-teal-200/50 dark:border-teal-500/20 text-teal-600 dark:text-teal-400 transition-all"
+                  >
+                    <Trophy className="w-5 h-5" />
+                    <span className="font-medium">Connect with Discord</span>
+                  </button>
+                </div>
+              </div>
+              {/* Show a non-interactive preview of the bingo card */}
+              <BingoCard
+                tasks={tasks}
+                onTaskToggle={() => {}}
+                completedTaskIds={[]}
+                projectMap={projectMap}
+                isPreview={true}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
