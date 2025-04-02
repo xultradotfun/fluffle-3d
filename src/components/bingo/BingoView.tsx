@@ -94,7 +94,7 @@ export function BingoView() {
             Desktop View Required
           </h2>
           <p className="text-gray-600 dark:text-gray-300">
-            The MegaETH Community Bingo is optimized for desktop viewing. Please
+            The MegaETH Testnet Bingo is optimized for desktop viewing. Please
             visit this page on a desktop device for the best experience.
           </p>
         </div>
@@ -109,12 +109,32 @@ export function BingoView() {
         <div className="text-center max-w-4xl mx-auto mb-12 relative">
           <div className="absolute inset-x-0 top-6 -bottom-6 bg-gradient-to-b from-teal-500/10 via-emerald-500/5 to-transparent dark:from-teal-500/[0.07] dark:via-emerald-500/[0.03] dark:to-transparent blur-2xl -z-10 rounded-[100%]" />
 
-          <h1 className="text-4xl sm:text-5xl font-bold mb-6 bg-gradient-to-r from-teal-500 via-emerald-500 to-green-500 dark:from-teal-400 dark:via-emerald-400 dark:to-green-400 bg-clip-text text-transparent tracking-tight">
-            {bingoConfig.metadata.title}
+          <h1 className="flex items-center justify-center gap-3 text-4xl sm:text-5xl font-bold mb-6">
+            <div
+              className="relative h-10 sm:h-12"
+              style={{ width: "calc(8.13 * 2.5rem)" }}
+            >
+              <Image
+                src={
+                  document.documentElement.classList.contains("dark")
+                    ? "/megalogo-white.png"
+                    : "/megalogo.png"
+                }
+                alt="MegaETH"
+                fill
+                className="object-contain"
+                unoptimized
+                priority
+              />
+            </div>
+            <span className="bg-gradient-to-r from-teal-500 via-emerald-500 to-green-500 dark:from-teal-400 dark:via-emerald-400 dark:to-green-400 bg-clip-text text-transparent tracking-tight">
+              Testnet Bingo
+            </span>
           </h1>
 
           <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
-            {bingoConfig.metadata.description}
+            Explore the MegaETH testnet through interactive challenges and
+            complete your very own bingo card!
           </p>
 
           {/* Progress Stats */}

@@ -25,6 +25,9 @@ export function BingoTaskCard({
     window.open(link, "_blank");
   };
 
+  // Get background image URL based on index
+  const bgImageUrl = `https://mega-bingo.b-cdn.net/${index + 1}.jpg`;
+
   return (
     <motion.button
       onClick={onToggle}
@@ -40,7 +43,19 @@ export function BingoTaskCard({
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
     >
-      <div className="h-full flex flex-col">
+      {/* Background Image */}
+      <div className="absolute inset-0 overflow-hidden rounded-lg">
+        <Image
+          src={bgImageUrl}
+          alt=""
+          fill
+          className="object-cover opacity-10 dark:opacity-5"
+          unoptimized
+        />
+      </div>
+
+      {/* Content Overlay */}
+      <div className="relative h-full flex flex-col">
         {isCompleted && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <CheckCircle2 className="w-10 h-10 text-teal-500/20 dark:text-teal-400/20" />
@@ -87,10 +102,10 @@ export function BingoTaskCard({
               <div className="mt-auto pt-1">
                 <button
                   onClick={(e) => handleLinkClick(e, task.link!)}
-                  className="inline-flex items-center gap-0.5 text-[10px] text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 transition-colors"
+                  className="group/link inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-teal-50 dark:bg-teal-500/10 hover:bg-teal-100 dark:hover:bg-teal-500/20 text-[10px] font-medium text-teal-600 dark:text-teal-400 transition-all"
                 >
                   <ExternalLink className="w-2.5 h-2.5" />
-                  <span>Link</span>
+                  <span>Start Task</span>
                 </button>
               </div>
             )}

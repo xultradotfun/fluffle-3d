@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
-import { Share2, Trophy, CheckCircle2 } from "lucide-react";
+import { Share2, Trophy, CheckCircle2, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import html2canvas from "html2canvas";
 import { BingoTaskCard } from "./BingoTaskCard";
@@ -25,6 +25,27 @@ export function BingoCard({
   const [completedLines, setCompletedLines] = useState<number[][]>([]);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
+  const [preloadedImages, setPreloadedImages] = useState<Map<number, string>>(
+    new Map()
+  );
+
+  // Preload background images
+  useEffect(() => {
+    const preloadImages = async () => {
+      const newPreloadedImages = new Map<number, string>();
+      for (let i = 0; i < tasks.length; i++) {
+        const img = document.createElement("img");
+        img.src = `https://mega-bingo.b-cdn.net/${i + 1}.jpg`;
+        await new Promise<void>((resolve) => {
+          img.onload = () => resolve();
+        });
+        newPreloadedImages.set(i, img.src);
+      }
+      setPreloadedImages(newPreloadedImages);
+    };
+
+    preloadImages();
+  }, [tasks.length]);
 
   // Format Discord avatar URL
   const avatarUrl = user?.avatar
@@ -164,6 +185,11 @@ export function BingoCard({
     }, 100);
   };
 
+  const handleLinkClick = (e: React.MouseEvent, link: string) => {
+    e.preventDefault();
+    window.open(link, "_blank");
+  };
+
   return (
     <>
       <div className="w-full max-w-4xl mx-auto space-y-6">
@@ -183,7 +209,7 @@ export function BingoCard({
             )}
             <div>
               <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                MegaETH Community Bingo
+                MegaETH Testnet Bingo
               </h2>
               <p className="text-sm text-gray-500 dark:text-gray-400">
                 {completedTaskIds.length} of {tasks.length} tasks completed (
@@ -280,6 +306,9 @@ export function BingoCard({
               const isInLine = completedLines.some((line) =>
                 line.includes(index)
               );
+              const bgImageUrl =
+                preloadedImages.get(index) ||
+                `https://mega-bingo.b-cdn.net/${index + 1}.jpg`;
 
               return (
                 <div
@@ -294,7 +323,19 @@ export function BingoCard({
                       : "ring-1 ring-gray-200 dark:ring-gray-700"
                   }`}
                 >
-                  <div className="h-full flex flex-col">
+                  {/* Background Image */}
+                  <div className="absolute inset-0 overflow-hidden rounded-lg">
+                    <Image
+                      src={bgImageUrl}
+                      alt=""
+                      fill
+                      className="object-cover opacity-10 dark:opacity-5"
+                      unoptimized
+                      priority={index < 5} // Prioritize loading first row
+                    />
+                  </div>
+
+                  <div className="relative h-full flex flex-col">
                     {isTaskCompleted && (
                       <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                         <CheckCircle2 className="w-10 h-10 text-teal-500/20 dark:text-teal-400/20" />
@@ -303,21 +344,20 @@ export function BingoCard({
 
                     <div className="relative w-full h-full flex flex-col">
                       {task.projects && task.projects.length > 0 && (
-                        <div className="absolute top-0 right-0 flex -space-x-2">
+                        <div className="absolute top-0 right-0 flex -space-x-1.5">
                           {task.projects.map((twitter: string) => {
                             const project = projectMap.get(twitter);
                             if (!project) return null;
                             return (
                               <div
                                 key={twitter}
-                                className="relative w-6 h-6 rounded-full overflow-hidden ring-1 ring-gray-200 dark:ring-gray-700 bg-white dark:bg-gray-800"
+                                className="relative w-4 h-4 rounded-full overflow-hidden ring-1 ring-gray-200 dark:ring-gray-700 bg-white dark:bg-gray-800"
                               >
                                 <Image
                                   src={`/avatars/${twitter}.jpg`}
                                   alt={project.name}
-                                  width={24}
-                                  height={24}
-                                  className="w-full h-full object-cover"
+                                  fill
+                                  className="object-cover"
                                   unoptimized
                                 />
                               </div>
@@ -326,12 +366,12 @@ export function BingoCard({
                         </div>
                       )}
 
-                      <h3 className="text-xs font-medium text-gray-900 dark:text-white mb-1.5 pr-6">
+                      <h3 className="text-xs font-medium text-gray-900 dark:text-white mb-1.5 pr-6 text-center">
                         {task.title}
                       </h3>
 
-                      <div className="flex-1">
-                        <p className="text-[10px] text-gray-600 dark:text-gray-300 leading-relaxed text-left">
+                      <div className="flex-1 flex flex-col">
+                        <p className="text-[10px] text-gray-600 dark:text-gray-300 leading-relaxed text-center">
                           {task.description}
                         </p>
                       </div>
