@@ -72,6 +72,16 @@ export function BingoView() {
   const handleTaskToggle = async (taskId: string) => {
     if (!user) return;
 
+    // Optimistically update the UI
+    setCompletedTaskIds((prevIds) => {
+      const isCompleted = prevIds.includes(taskId);
+      if (isCompleted) {
+        return prevIds.filter((id) => id !== taskId);
+      } else {
+        return [...prevIds, taskId];
+      }
+    });
+
     try {
       const isCompleted = completedTaskIds.includes(taskId);
       const response = await fetch("/api/bingo/progress", {
@@ -81,17 +91,18 @@ export function BingoView() {
       });
 
       if (!response.ok) {
+        // Revert the optimistic update on error
+        setCompletedTaskIds((prevIds) => {
+          if (isCompleted) {
+            return [...prevIds, taskId];
+          } else {
+            return prevIds.filter((id) => id !== taskId);
+          }
+        });
         const data = await response.json();
         throw new Error(data.error || "Failed to update progress");
       }
 
-      setCompletedTaskIds((prevIds) => {
-        if (isCompleted) {
-          return prevIds.filter((id) => id !== taskId);
-        } else {
-          return [...prevIds, taskId];
-        }
-      });
       setError(null);
     } catch (error) {
       console.error("Error updating task completion:", error);
