@@ -38,3 +38,13 @@ model Vote {
 
   @@unique([userId, projectId])
 }
+
+model BingoTaskCompletion {
+  id        Int      @id @default(autoincrement())
+  userId    String
+  taskId    String
+  completedAt DateTime @default(now())
+
+  @@unique([userId, taskId])
+  @@index([userId])
+}

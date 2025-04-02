@@ -11,6 +11,8 @@ export function BingoView() {
   const { user, login, logout } = useDiscordAuth();
   const [completedTaskIds, setCompletedTaskIds] = useState<string[]>([]);
   const [isMobile, setIsMobile] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const handleLogin = () => {
     login("/#bingo");
@@ -28,6 +30,34 @@ export function BingoView() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // Load progress from database when user is logged in
+  useEffect(() => {
+    const loadProgress = async () => {
+      if (!user) {
+        setCompletedTaskIds([]); // Reset progress when logged out
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch("/api/bingo/progress");
+        if (!response.ok) throw new Error("Failed to fetch progress");
+
+        const data = await response.json();
+        // Handle case where user has no completions - data.completedTasks will be an empty array
+        setCompletedTaskIds(data.completedTasks.map((t: any) => t.taskId));
+        setError(null);
+      } catch (error) {
+        console.error("Error loading bingo progress:", error);
+        setError("Failed to load progress");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadProgress();
+  }, [user]);
+
   // Merge completed state with base tasks
   const tasks = bingoConfig.tasks.map((task) => ({
     ...task,
@@ -39,34 +69,34 @@ export function BingoView() {
     ecosystemData.projects.map((project) => [project.twitter, project])
   );
 
-  useEffect(() => {
-    // Load saved progress from local storage if user is logged in
-    if (user) {
-      const savedProgress = localStorage.getItem(`bingo_progress_${user.id}`);
-      if (savedProgress) {
-        setCompletedTaskIds(JSON.parse(savedProgress));
-      }
-    }
-  }, [user]);
+  const handleTaskToggle = async (taskId: string) => {
+    if (!user) return;
 
-  useEffect(() => {
-    // Save progress to local storage if user is logged in
-    if (user) {
-      localStorage.setItem(
-        `bingo_progress_${user.id}`,
-        JSON.stringify(completedTaskIds)
-      );
-    }
-  }, [completedTaskIds, user]);
+    try {
+      const isCompleted = completedTaskIds.includes(taskId);
+      const response = await fetch("/api/bingo/progress", {
+        method: isCompleted ? "DELETE" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ taskId }),
+      });
 
-  const handleTaskToggle = (taskId: string) => {
-    setCompletedTaskIds((prevIds) => {
-      if (prevIds.includes(taskId)) {
-        return prevIds.filter((id) => id !== taskId);
-      } else {
-        return [...prevIds, taskId];
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || "Failed to update progress");
       }
-    });
+
+      setCompletedTaskIds((prevIds) => {
+        if (isCompleted) {
+          return prevIds.filter((id) => id !== taskId);
+        } else {
+          return [...prevIds, taskId];
+        }
+      });
+      setError(null);
+    } catch (error) {
+      console.error("Error updating task completion:", error);
+      setError("Failed to update progress");
+    }
   };
 
   // Get unique categories and calculate stats
@@ -101,6 +131,24 @@ export function BingoView() {
             The MegaETH Testnet Bingo is optimized for desktop viewing. Please
             visit this page on a desktop device for the best experience.
           </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-[50vh] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-500"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-[50vh] flex items-center justify-center">
+        <div className="text-red-500 dark:text-red-400">
+          {error}. Please try again later.
         </div>
       </div>
     );
