@@ -913,6 +913,15 @@
       "megaMafia": false,
       "native": true,
       "testnet": false
+    },
+    {
+      "name": "Bolt",
+      "twitter": "bolt_dex",
+      "description": "Bolt is a native DEX purpose-built for MegaETH. Better swaps and higher yields, built on real-time rails.",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": true,
+      "testnet": false
     }
   ]
 }
