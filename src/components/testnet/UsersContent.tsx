@@ -181,7 +181,7 @@ export const TestnetOnboarding = () => (
                 </svg>
                 MegaETH Faucet
                 <span className="text-[10px] font-medium px-1.5 py-0.5 rounded-full bg-white/20">
-                  0.00002 ETH/24h
+                  0.005 ETH/24h
                 </span>
                 <svg
                   className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5"
