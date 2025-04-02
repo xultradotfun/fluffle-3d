@@ -1,12 +1,11 @@
 import { motion } from "framer-motion";
-import { CheckCircle2, ExternalLink } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 import type { Project, BingoTask } from "@/types/bingo";
 
 interface BingoTaskCardProps {
   task: BingoTask;
   index: number;
-  isInCompletedLine: boolean;
   projectMap: Map<string, Project>;
   onToggle: () => void;
   isCompleted: boolean;
@@ -15,16 +14,10 @@ interface BingoTaskCardProps {
 export function BingoTaskCard({
   task,
   index,
-  isInCompletedLine,
   projectMap,
   onToggle,
   isCompleted,
 }: BingoTaskCardProps) {
-  const handleLinkClick = (e: React.MouseEvent, link: string) => {
-    e.stopPropagation();
-    window.open(link, "_blank");
-  };
-
   // Get background image URL based on index
   const bgImageUrl = `https://mega-bingo.b-cdn.net/${index + 1}.jpg`;
 
@@ -35,11 +28,7 @@ export function BingoTaskCard({
         isCompleted
           ? "bg-gradient-to-br from-teal-500/20 to-emerald-500/20 dark:from-teal-500/30 dark:to-emerald-500/30"
           : "bg-white dark:bg-gray-900 hover:bg-gray-50/80 dark:hover:bg-gray-800/80"
-      } ${
-        isInCompletedLine
-          ? "ring-4 ring-teal-500/50 dark:ring-teal-400/50"
-          : "ring-1 ring-gray-200 dark:ring-gray-700 hover:ring-2 hover:ring-gray-300 dark:hover:ring-gray-600"
-      }`}
+      } ring-1 ring-gray-200 dark:ring-gray-700 hover:ring-2 hover:ring-gray-300 dark:hover:ring-gray-600`}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
     >
@@ -94,33 +83,12 @@ export function BingoTaskCard({
           </h3>
 
           <div className="flex-1 flex flex-col">
-            <p className="text-[10px] text-gray-600 dark:text-gray-300 leading-relaxed text-left">
+            <p className="text-[10px] text-gray-600 dark:text-gray-300 leading-relaxed">
               {task.description}
             </p>
-
-            {task.link && (
-              <div className="mt-auto pt-1">
-                <button
-                  onClick={(e) => handleLinkClick(e, task.link!)}
-                  className="group/link inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-teal-50 dark:bg-teal-500/10 hover:bg-teal-100 dark:hover:bg-teal-500/20 text-[10px] font-medium text-teal-600 dark:text-teal-400 transition-all"
-                >
-                  <ExternalLink className="w-2.5 h-2.5" />
-                  <span>Start Task</span>
-                </button>
-              </div>
-            )}
           </div>
         </div>
       </div>
-
-      {isInCompletedLine && (
-        <motion.div
-          className="absolute inset-0 bg-teal-500/10 dark:bg-teal-400/10 pointer-events-none"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        />
-      )}
     </motion.button>
   );
 }

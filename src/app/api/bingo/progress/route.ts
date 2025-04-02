@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { isAllowedBaseUrl } from "@/utils/baseUrl";
+import bingoConfig from "@/data/bingo.json";
 
 // Constants for rate limiting
 const RATE_LIMIT = {
@@ -48,6 +49,11 @@ async function verifyDiscordToken(accessToken: string): Promise<boolean> {
   } catch (error) {
     return false;
   }
+}
+
+// Validate task ID against bingo configuration
+function isValidTaskId(taskId: string): boolean {
+  return bingoConfig.tasks.some((task) => task.id === taskId);
 }
 
 async function verifyUserAuth(cookieStore: ReturnType<typeof cookies>) {
@@ -286,6 +292,14 @@ export async function POST(request: Request) {
       );
     }
 
+    // Validate task ID against bingo configuration
+    if (!isValidTaskId(taskId)) {
+      return NextResponse.json(
+        { error: "Invalid task ID" },
+        { status: 400, headers: securityHeaders }
+      );
+    }
+
     const completion = await prisma.bingoTaskCompletion.create({
       data: {
         userId: user.id,
@@ -305,9 +319,9 @@ export async function POST(request: Request) {
         { status: 409, headers: securityHeaders }
       );
     }
-    console.error("Error marking task as completed:", error);
+    console.error("Error in bingo progress POST:", error);
     return NextResponse.json(
-      { error: "Failed to mark task as completed" },
+      { error: "Failed to update progress" },
       { status: 500, headers: securityHeaders }
     );
   }
@@ -383,6 +397,14 @@ export async function DELETE(request: Request) {
       );
     }
 
+    // Validate task ID against bingo configuration
+    if (!isValidTaskId(taskId)) {
+      return NextResponse.json(
+        { error: "Invalid task ID" },
+        { status: 400, headers: securityHeaders }
+      );
+    }
+
     await prisma.bingoTaskCompletion.delete({
       where: {
         userId_taskId: {
@@ -393,10 +415,16 @@ export async function DELETE(request: Request) {
     });
 
     return NextResponse.json({ success: true }, { headers: securityHeaders });
-  } catch (error) {
-    console.error("Error removing task completion:", error);
+  } catch (error: any) {
+    if (error.code === "P2025") {
+      return NextResponse.json(
+        { error: "Task completion not found" },
+        { status: 404, headers: securityHeaders }
+      );
+    }
+    console.error("Error in bingo progress DELETE:", error);
     return NextResponse.json(
-      { error: "Failed to remove task completion" },
+      { error: "Failed to update progress" },
       { status: 500, headers: securityHeaders }
     );
   }

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
-import { Share2, Trophy, CheckCircle2, ExternalLink } from "lucide-react";
+import { Share2, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 import html2canvas from "html2canvas";
 import { BingoTaskCard } from "./BingoTaskCard";
@@ -22,7 +22,6 @@ export function BingoCard({
   completedTaskIds,
 }: BingoCardProps) {
   const { user } = useDiscordAuth();
-  const [completedLines, setCompletedLines] = useState<number[][]>([]);
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
   const [preloadedImages, setPreloadedImages] = useState<Map<number, string>>(
@@ -55,100 +54,6 @@ export function BingoCard({
     : user?.id
     ? `https://cdn.discordapp.com/embed/avatars/${Number(user.id) % 5}.png`
     : null;
-
-  // Check for completed lines
-  useEffect(() => {
-    const newCompletedLines: number[][] = [];
-
-    // Check rows
-    for (let i = 0; i < 5; i++) {
-      const rowTasks = tasks.slice(i * 5, (i + 1) * 5);
-      if (
-        rowTasks.length === 5 &&
-        rowTasks.every((task) => task && completedTaskIds.includes(task.id))
-      ) {
-        newCompletedLines.push(Array.from({ length: 5 }, (_, j) => i * 5 + j));
-      }
-    }
-
-    // Check columns
-    for (let i = 0; i < 5; i++) {
-      const columnTasks = Array.from({ length: 5 }, (_, j) => tasks[i + j * 5]);
-      if (
-        columnTasks.length === 5 &&
-        columnTasks.every((task) => task && completedTaskIds.includes(task.id))
-      ) {
-        newCompletedLines.push(Array.from({ length: 5 }, (_, j) => i + j * 5));
-      }
-    }
-
-    // Check diagonals
-    const diagonal1 = Array.from({ length: 5 }, (_, i) => i * 6);
-    const diagonal2 = Array.from({ length: 5 }, (_, i) => (i + 1) * 4).slice(
-      0,
-      -1
-    );
-
-    const diagonal1Tasks = diagonal1.map((i) => tasks[i]);
-    const diagonal2Tasks = diagonal2.map((i) => tasks[i]);
-
-    if (
-      diagonal1Tasks.length === 5 &&
-      diagonal1Tasks.every((task) => task && completedTaskIds.includes(task.id))
-    ) {
-      newCompletedLines.push(diagonal1);
-    }
-    if (
-      diagonal2Tasks.length === 5 &&
-      diagonal2Tasks.every((task) => task && completedTaskIds.includes(task.id))
-    ) {
-      newCompletedLines.push(diagonal2);
-    }
-
-    setCompletedLines(newCompletedLines);
-  }, [tasks, completedTaskIds]);
-
-  const handleShare = async () => {
-    const card = document.getElementById("bingo-card-share");
-    if (!card || !previewRef.current) return;
-
-    try {
-      // Show the share version temporarily
-      card.classList.remove("hidden");
-
-      const canvas = await html2canvas(card, {
-        background: document.documentElement.classList.contains("dark")
-          ? "#111"
-          : "#fff",
-        scale: 2,
-        useCORS: true,
-      } as any);
-
-      // Hide the share version again
-      card.classList.add("hidden");
-
-      // Set the preview image
-      previewRef.current.innerHTML = "";
-      const previewImg = canvas.toDataURL("image/png");
-      const img = document.createElement("img");
-      img.src = previewImg;
-      img.className = "w-full h-auto rounded-lg";
-      previewRef.current.appendChild(img);
-
-      const blob = await new Promise<Blob>((resolve) => {
-        canvas.toBlob((blob) => resolve(blob!), "image/png");
-      });
-
-      await navigator.clipboard.write([
-        new ClipboardItem({ "image/png": blob }),
-      ]);
-
-      // TODO: Show success toast
-    } catch (error) {
-      console.error("Failed to share bingo card:", error);
-      // TODO: Show error toast
-    }
-  };
 
   const handleShareButtonClick = async () => {
     setIsShareModalOpen(true);
@@ -185,9 +90,9 @@ export function BingoCard({
     }, 100);
   };
 
-  const handleLinkClick = (e: React.MouseEvent, link: string) => {
-    e.preventDefault();
-    window.open(link, "_blank");
+  const handleShare = async (platform: string) => {
+    // Share logic here
+    setIsShareModalOpen(false);
   };
 
   return (
@@ -237,9 +142,6 @@ export function BingoCard({
                 key={task.id}
                 task={task}
                 index={index}
-                isInCompletedLine={completedLines.some((line) =>
-                  line.includes(index)
-                )}
                 projectMap={projectMap}
                 onToggle={() => onTaskToggle(task.id)}
                 isCompleted={completedTaskIds.includes(task.id)}
@@ -303,9 +205,6 @@ export function BingoCard({
           <div className="grid grid-cols-5 gap-2">
             {tasks.map((task, index) => {
               const isTaskCompleted = completedTaskIds.includes(task.id);
-              const isInLine = completedLines.some((line) =>
-                line.includes(index)
-              );
               const bgImageUrl =
                 preloadedImages.get(index) ||
                 `https://mega-bingo.b-cdn.net/${index + 1}.jpg`;
@@ -317,11 +216,7 @@ export function BingoCard({
                     isTaskCompleted
                       ? "bg-gradient-to-br from-teal-500/20 to-emerald-500/20 dark:from-teal-500/30 dark:to-emerald-500/30"
                       : "bg-white dark:bg-gray-900"
-                  } ${
-                    isInLine
-                      ? "ring-4 ring-teal-500/50 dark:ring-teal-400/50"
-                      : "ring-1 ring-gray-200 dark:ring-gray-700"
-                  }`}
+                  } ring-1 ring-gray-200 dark:ring-gray-700`}
                 >
                   {/* Background Image */}
                   <div className="absolute inset-0 overflow-hidden rounded-lg">
@@ -377,10 +272,6 @@ export function BingoCard({
                       </div>
                     </div>
                   </div>
-
-                  {isInLine && (
-                    <div className="absolute inset-0 bg-teal-500/10 dark:bg-teal-400/10 pointer-events-none" />
-                  )}
                 </div>
               );
             })}
@@ -396,28 +287,17 @@ export function BingoCard({
             </div>
           </div>
         </div>
-
-        {/* Completed Lines Trophy */}
-        {completedLines.length > 0 && (
-          <div className="flex items-center justify-center gap-2 text-yellow-500 dark:text-yellow-400">
-            <Trophy className="w-5 h-5" />
-            <span className="text-sm font-medium">
-              {completedLines.length} line{completedLines.length > 1 ? "s" : ""}{" "}
-              completed!
-            </span>
-          </div>
-        )}
       </div>
 
       {/* Share Modal */}
       <ShareModal
         isOpen={isShareModalOpen}
         onClose={() => setIsShareModalOpen(false)}
-        onShare={handleShare}
+        onShare={() => handleShare("")}
         previewRef={previewRef}
         completedCount={completedTaskIds.length}
         totalTasks={tasks.length}
-        completedLines={completedLines.length}
+        completedLines={0}
       />
     </>
   );
