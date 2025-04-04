@@ -922,6 +922,39 @@
       "megaMafia": false,
       "native": true,
       "testnet": false
+    },
+    {
+      "name": "ZNS Connect",
+      "twitter": "ZNSConnect",
+      "description": "Decentralized naming solutions for Web3",
+      "website": "https://www.znsconnect.io/",
+      "discord": "https://discord.gg/2rrkuqT8pB",
+      "telegram": "https://t.me/znsconnect",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
+    },
+    {
+      "name": "Gasp",
+      "twitter": "Gasp_xyz",
+      "description": "Cross-chain DEX.",
+      "website": "https://www.gasp.xyz/",
+      "discord": "https://discord.gg/gasp-xyz",
+      "telegram": "https://t.me/mgtfi",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
+    },
+    {
+      "name": "Bad Bunnz",
+      "twitter": "badbunnz_",
+      "description": "NFT collection.",
+      "category": "NFT",
+      "megaMafia": false,
+      "native": true,
+      "testnet": false
     }
   ]
 }
