@@ -29,6 +29,34 @@ export function BingoCard({
   const [preloadedImages, setPreloadedImages] = useState<Map<number, string>>(
     new Map()
   );
+  const [hoveredTaskId, setHoveredTaskId] = useState<string | null>(null);
+  const hoverTimeoutRef = useRef<NodeJS.Timeout>();
+
+  const handleTaskHover = (taskId: string | null) => {
+    // Clear any existing timeout
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current);
+    }
+
+    if (taskId) {
+      // Set hovered state immediately
+      setHoveredTaskId(taskId);
+    } else {
+      // When mouse leaves, set a timeout before clearing the hover state
+      hoverTimeoutRef.current = setTimeout(() => {
+        setHoveredTaskId(null);
+      }, 2000); // Keep description visible for 2 seconds after hover ends
+    }
+  };
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current);
+      }
+    };
+  }, []);
 
   // Preload background images
   useEffect(() => {
@@ -69,9 +97,7 @@ export function BingoCard({
         card.classList.remove("hidden");
 
         const canvas = await html2canvas(card, {
-          background: document.documentElement.classList.contains("dark")
-            ? "#111"
-            : "#fff",
+          backgroundColor: null, // Let the gradient background show
           scale: 2,
           useCORS: true,
           allowTaint: true,
@@ -80,7 +106,6 @@ export function BingoCard({
             // Ensure all images in the cloned document have proper styling
             const images = clonedDoc.querySelectorAll("img");
             images.forEach((img: HTMLImageElement) => {
-              // Use the exact same approach as the main view
               img.style.objectFit = "cover";
               img.style.width = "100%";
               img.style.height = "100%";
@@ -107,9 +132,33 @@ export function BingoCard({
     }, 100);
   };
 
-  const handleShare = async (platform: string) => {
-    // Share logic here
-    setIsShareModalOpen(false);
+  const handleShare = async () => {
+    try {
+      const previewImg = previewRef.current?.querySelector("img");
+      if (!previewImg) return;
+
+      // Create a canvas element
+      const canvas = document.createElement("canvas");
+      canvas.width = previewImg.naturalWidth;
+      canvas.height = previewImg.naturalHeight;
+
+      // Draw the image onto the canvas
+      const ctx = canvas.getContext("2d");
+      if (!ctx) return;
+      ctx.drawImage(previewImg, 0, 0);
+
+      // Get the blob from the canvas
+      const blob = await new Promise<Blob | null>((resolve) =>
+        canvas.toBlob(resolve, "image/png")
+      );
+      if (!blob) return;
+
+      // Create a ClipboardItem and write to clipboard
+      const item = new ClipboardItem({ "image/png": blob });
+      await navigator.clipboard.write([item]);
+    } catch (error) {
+      console.error("Failed to copy image:", error);
+    }
   };
 
   return (
@@ -171,6 +220,8 @@ export function BingoCard({
                       : "cursor-default"
                   }`}
                   onClick={() => !isPreview && onTaskToggle(task.id)}
+                  onMouseEnter={() => !isPreview && handleTaskHover(task.id)}
+                  onMouseLeave={() => !isPreview && handleTaskHover(null)}
                 >
                   {/* Background Image */}
                   <div className="absolute inset-0">
@@ -235,11 +286,26 @@ export function BingoCard({
                       </h3>
                     </div>
 
-                    {/* Description - Visible on hover */}
-                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-3 rounded-xl">
-                      <p className="text-xs text-white/90 leading-relaxed text-center">
+                    {/* Description - Visible on hover and for 2s after */}
+                    <div
+                      className={`absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center p-3 rounded-xl transition-opacity duration-300 ${
+                        hoveredTaskId === task.id ? "opacity-100" : "opacity-0"
+                      }`}
+                    >
+                      <p className="text-xs text-white/90 leading-relaxed text-center mb-2">
                         {task.description}
                       </p>
+                      {task.link && (
+                        <a
+                          href={task.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-teal-400 hover:text-teal-300 transition-colors mt-auto"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          Learn More →
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -252,7 +318,7 @@ export function BingoCard({
         {!isPreview && (
           <div
             id="bingo-card-share"
-            className="hidden bg-gradient-to-br from-gray-50/50 to-white dark:from-gray-900 dark:to-gray-900/95 p-6 rounded-xl"
+            className="hidden bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-6 rounded-xl shadow-lg"
           >
             {/* Share Header */}
             <div className="flex items-center justify-between mb-6">
@@ -277,7 +343,7 @@ export function BingoCard({
                 <div className="w-px h-8 bg-gray-200 dark:bg-gray-700" />
                 <div className="flex items-center gap-3">
                   {avatarUrl && (
-                    <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-gray-200 dark:ring-gray-700">
+                    <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-gray-200 dark:ring-gray-700 shadow-sm">
                       <Image
                         src={avatarUrl}
                         alt={user?.username || "User avatar"}
@@ -309,7 +375,11 @@ export function BingoCard({
                 return (
                   <div
                     key={task.id}
-                    className="group relative w-full aspect-square rounded-xl overflow-hidden"
+                    className={`group relative w-full aspect-square rounded-xl overflow-hidden ${
+                      isTaskCompleted
+                        ? "ring-2 ring-teal-500/50 dark:ring-teal-400/50"
+                        : "ring-1 ring-gray-200 dark:ring-gray-700"
+                    }`}
                   >
                     {/* Background Image Container */}
                     <div className="absolute inset-0 w-full h-full">
@@ -399,7 +469,7 @@ export function BingoCard({
         <ShareModal
           isOpen={isShareModalOpen}
           onClose={() => setIsShareModalOpen(false)}
-          onShare={() => handleShare("")}
+          onShare={() => handleShare()}
           previewRef={previewRef}
           completedCount={completedTaskIds.length}
           totalTasks={tasks.length}

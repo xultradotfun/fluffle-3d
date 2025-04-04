@@ -55,9 +55,13 @@ export function ShareModal({
   };
 
   const handleCopy = async () => {
-    await onShare();
-    setHasCopied(true);
-    setTimeout(() => setHasCopied(false), 2000); // Reset after 2 seconds
+    try {
+      await onShare();
+      setHasCopied(true);
+      setTimeout(() => setHasCopied(false), 2000); // Reset after 2 seconds
+    } catch (error) {
+      console.error("Failed to copy:", error);
+    }
   };
 
   return (
