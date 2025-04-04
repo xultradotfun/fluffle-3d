@@ -260,8 +260,8 @@ export function BingoView() {
           ) : (
             <div className="relative">
               {/* Preview overlay */}
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/80 to-white dark:via-gray-900/80 dark:to-gray-900 z-10" />
-              <div className="absolute inset-0 flex items-center justify-center z-20">
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/80 to-white dark:via-gray-900/80 dark:to-gray-900 z-[5]" />
+              <div className="absolute inset-0 flex items-center justify-center z-[5]">
                 <div className="text-center space-y-4">
                   <div className="p-4 rounded-full bg-teal-50 dark:bg-teal-500/10 inline-block">
                     <Trophy className="w-8 h-8 text-teal-500 dark:text-teal-400" />

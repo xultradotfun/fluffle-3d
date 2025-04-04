@@ -120,7 +120,30 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   )}
                 </button>
                 <button
-                  onClick={() => onViewChange("build")}
+                  onClick={() => {
+                    onViewChange("bingo");
+                    setIsTestnetMenuOpen(false);
+                  }}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    activeView === "bingo"
+                      ? "bg-gradient-to-r from-violet-50 to-purple-50 text-violet-600 shadow-sm dark:from-violet-500/20 dark:to-violet-500/10 dark:text-violet-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <Grid className="w-4 h-4 flex-shrink-0" />
+                  <span className="flex-1 text-left">Bingo</span>
+                  <span className="flex-shrink-0 px-1.5 py-0.5 text-[10px] font-medium rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                    New
+                  </span>
+                  {activeView === "bingo" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />
+                  )}
+                </button>
+                <button
+                  onClick={() => {
+                    onViewChange("build");
+                    setIsTestnetMenuOpen(false);
+                  }}
                   className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                     activeView === "build"
                       ? "bg-gradient-to-r from-violet-50 to-purple-50 text-violet-600 shadow-sm dark:from-violet-500/20 dark:to-violet-500/10 dark:text-violet-400"
@@ -173,20 +196,6 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   )}
                 </button>
                 <button
-                  onClick={() => onViewChange("bingo")}
-                  className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    activeView === "bingo"
-                      ? "bg-gradient-to-r from-teal-50 to-emerald-50 text-teal-600 shadow-sm dark:from-teal-500/20 dark:to-teal-500/10 dark:text-teal-400"
-                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
-                  }`}
-                >
-                  <Grid className="w-4 h-4 flex-shrink-0" />
-                  <span className="flex-1 text-left">Bingo</span>
-                  {activeView === "bingo" && (
-                    <div className="w-1.5 h-1.5 rounded-full bg-teal-500 dark:bg-teal-400" />
-                  )}
-                </button>
-                <button
                   onClick={() => onViewChange("pfp")}
                   className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                     activeView === "pfp"
@@ -204,7 +213,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   onClick={() => onViewChange("viewer")}
                   className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
                     activeView === "viewer"
-                      ? "bg-gradient-to-r from-blue-50/90 to-indigo-50/90 text-blue-600 shadow-sm dark:from-blue-500/20 dark:to-blue-500/10 dark:text-blue-400"
+                      ? "bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-600 shadow-sm dark:from-blue-500/20 dark:to-blue-500/10 dark:text-blue-400"
                       : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
                   }`}
                 >
@@ -385,6 +394,26 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                 </button>
                 <button
                   onClick={() => {
+                    onViewChange("bingo");
+                    setIsTestnetMenuOpen(false);
+                  }}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    activeView === "bingo"
+                      ? "bg-gradient-to-r from-violet-50 to-purple-50 text-violet-600 shadow-sm dark:from-violet-500/20 dark:to-violet-500/10 dark:text-violet-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <Grid className="w-5 h-5 flex-shrink-0" />
+                  <span className="flex-1 text-left">Bingo</span>
+                  <span className="flex-shrink-0 px-1.5 py-0.5 text-[10px] font-medium rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                    New
+                  </span>
+                  {activeView === "bingo" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />
+                  )}
+                </button>
+                <button
+                  onClick={() => {
                     onViewChange("build");
                     setIsTestnetMenuOpen(false);
                   }}
@@ -445,23 +474,6 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   <span className="flex-1 text-left">Fluffle Builder</span>
                   {activeView === "builder" && (
                     <div className="w-1.5 h-1.5 rounded-full bg-amber-500 dark:bg-amber-400" />
-                  )}
-                </button>
-                <button
-                  onClick={() => {
-                    onViewChange("bingo");
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className={`flex items-center w-full gap-2.5 px-3.5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
-                    activeView === "bingo"
-                      ? "bg-gradient-to-r from-teal-50 to-emerald-50 text-teal-600 shadow-sm dark:from-teal-500/20 dark:to-teal-500/10 dark:text-teal-400"
-                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
-                  }`}
-                >
-                  <Grid className="w-5 h-5 flex-shrink-0" />
-                  <span className="flex-1 text-left">Bingo</span>
-                  {activeView === "bingo" && (
-                    <div className="w-1.5 h-1.5 rounded-full bg-teal-500 dark:bg-teal-400" />
                   )}
                 </button>
                 <button
