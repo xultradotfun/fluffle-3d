@@ -29,32 +29,41 @@ export function BingoCard({
   const [preloadedImages, setPreloadedImages] = useState<Map<number, string>>(
     new Map()
   );
-  const [hoveredTaskId, setHoveredTaskId] = useState<string | null>(null);
-  const hoverTimeoutRef = useRef<NodeJS.Timeout>();
+  const [hoveredCards, setHoveredCards] = useState<Set<string>>(new Set());
+  const timeoutsRef = useRef<Map<string, NodeJS.Timeout>>(new Map());
 
-  const handleTaskHover = (taskId: string | null) => {
-    // Clear any existing timeout
-    if (hoverTimeoutRef.current) {
-      clearTimeout(hoverTimeoutRef.current);
-    }
+  const handleTaskHover = (taskId: string | null, isEntering: boolean) => {
+    if (isEntering && taskId) {
+      // Add to hovered set immediately
+      setHoveredCards((prev) => {
+        const next = new Set(prev);
+        next.add(taskId);
+        return next;
+      });
+    } else if (!isEntering && taskId) {
+      // Clear any existing timeout for this card
+      if (timeoutsRef.current.has(taskId)) {
+        clearTimeout(timeoutsRef.current.get(taskId));
+      }
 
-    if (taskId) {
-      // Set hovered state immediately
-      setHoveredTaskId(taskId);
-    } else {
-      // When mouse leaves, set a timeout before clearing the hover state
-      hoverTimeoutRef.current = setTimeout(() => {
-        setHoveredTaskId(null);
-      }, 2000); // Keep description visible for 2 seconds after hover ends
+      // Set new timeout to remove the card
+      const timeout = setTimeout(() => {
+        setHoveredCards((prev) => {
+          const next = new Set(prev);
+          next.delete(taskId);
+          return next;
+        });
+        timeoutsRef.current.delete(taskId);
+      }, 2000);
+
+      timeoutsRef.current.set(taskId, timeout);
     }
   };
 
-  // Cleanup timeout on unmount
+  // Cleanup timeouts on unmount
   useEffect(() => {
     return () => {
-      if (hoverTimeoutRef.current) {
-        clearTimeout(hoverTimeoutRef.current);
-      }
+      timeoutsRef.current.forEach((timeout) => clearTimeout(timeout));
     };
   }, []);
 
@@ -220,8 +229,12 @@ export function BingoCard({
                       : "cursor-default"
                   }`}
                   onClick={() => !isPreview && onTaskToggle(task.id)}
-                  onMouseEnter={() => !isPreview && handleTaskHover(task.id)}
-                  onMouseLeave={() => !isPreview && handleTaskHover(null)}
+                  onMouseEnter={() =>
+                    !isPreview && handleTaskHover(task.id, true)
+                  }
+                  onMouseLeave={() =>
+                    !isPreview && handleTaskHover(task.id, false)
+                  }
                 >
                   {/* Background Image */}
                   <div className="absolute inset-0">
@@ -289,7 +302,7 @@ export function BingoCard({
                     {/* Description - Visible on hover and for 2s after */}
                     <div
                       className={`absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center p-3 rounded-xl transition-opacity duration-300 ${
-                        hoveredTaskId === task.id ? "opacity-100" : "opacity-0"
+                        hoveredCards.has(task.id) ? "opacity-100" : "opacity-0"
                       }`}
                     >
                       <p className="text-xs text-white/90 leading-relaxed text-center mb-2">
