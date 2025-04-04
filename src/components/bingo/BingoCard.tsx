@@ -174,38 +174,57 @@ export function BingoCard({
     <>
       <div className="w-full max-w-4xl mx-auto space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between px-4">
-          <div className="flex items-center gap-3">
-            {avatarUrl && (
-              <div className="relative w-10 h-10 rounded-full overflow-hidden ring-2 ring-gray-200 dark:ring-gray-700">
-                <Image
-                  src={avatarUrl}
-                  alt={user?.username || "User avatar"}
-                  fill
-                  className="object-cover"
-                  unoptimized
-                />
+        <div className="relative px-6 py-4 bg-white/50 dark:bg-white/[0.03] rounded-2xl border border-gray-200/50 dark:border-white/[0.05] backdrop-blur-sm">
+          <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-teal-500/20 to-transparent" />
+          <div className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent" />
+
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              {avatarUrl && (
+                <div className="relative">
+                  <div className="absolute -inset-0.5 bg-gradient-to-br from-teal-500/30 to-emerald-500/30 dark:from-teal-500/20 dark:to-emerald-500/20 rounded-full blur" />
+                  <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-white/20 dark:ring-white/10">
+                    <Image
+                      src={avatarUrl}
+                      alt={user?.username || "User avatar"}
+                      fill
+                      className="object-cover"
+                      unoptimized
+                    />
+                  </div>
+                </div>
+              )}
+              <div>
+                <div className="flex items-center gap-3 mb-0.5">
+                  <h2 className="text-xl font-bold bg-gradient-to-br from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+                    MegaETH Testnet Bingo
+                  </h2>
+                  <div className="h-4 w-px bg-gradient-to-b from-gray-200 to-transparent dark:from-white/10" />
+                  <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-teal-50/50 dark:bg-teal-500/[0.05] ring-1 ring-teal-500/10">
+                    <div className="w-1.5 h-1.5 rounded-full bg-teal-500/50" />
+                    <span className="text-xs font-medium text-teal-700 dark:text-teal-300">
+                      {Math.round(
+                        (completedTaskIds.length / tasks.length) * 100
+                      )}
+                      % Complete
+                    </span>
+                  </div>
+                </div>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {completedTaskIds.length} of {tasks.length} tasks completed
+                </p>
               </div>
-            )}
-            <div>
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-                MegaETH Testnet Bingo
-              </h2>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                {completedTaskIds.length} of {tasks.length} tasks completed (
-                {Math.round((completedTaskIds.length / tasks.length) * 100)}%)
-              </p>
             </div>
+            {!isPreview && (
+              <button
+                onClick={handleShareButtonClick}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-50 hover:bg-gray-100 dark:bg-white/[0.05] dark:hover:bg-white/[0.1] border border-gray-200/50 dark:border-white/[0.05] text-sm font-medium text-gray-700 dark:text-gray-200 transition-all hover:scale-105"
+              >
+                <Share2 className="w-4 h-4" />
+                Share Progress
+              </button>
+            )}
           </div>
-          {!isPreview && (
-            <button
-              onClick={handleShareButtonClick}
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white transition-colors"
-            >
-              <Share2 className="w-4 h-4" />
-              Share
-            </button>
-          )}
         </div>
 
         {/* Bingo Grid */}
@@ -301,26 +320,30 @@ export function BingoCard({
 
                     {/* Description - Visible on hover and for 2s after */}
                     <div
-                      className={`absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center justify-center p-3 rounded-xl transition-opacity duration-300 ${
+                      className={`absolute inset-0 bg-black/60 backdrop-blur-sm flex flex-col items-center p-3 rounded-xl transition-opacity duration-300 ${
                         hoveredCards.has(task.id) ? "opacity-100" : "opacity-0"
                       }`}
                     >
-                      <p className="text-xs text-white/90 leading-relaxed text-center mb-2">
-                        {task.description}
-                      </p>
+                      <div className="flex-1 w-full overflow-y-auto scrollbar-thin scrollbar-track-white/5 scrollbar-thumb-white/20 hover:scrollbar-thumb-white/30 pr-2">
+                        <div className="space-y-2">
+                          <p className="text-xs text-white/90 leading-relaxed text-center">
+                            {task.description}
+                          </p>
+                        </div>
+                      </div>
                       {task.links && task.links.length > 0 && (
-                        <div className="flex items-center justify-center gap-1.5 mt-auto">
+                        <div className="flex items-center justify-center gap-2 mt-2 pt-2 border-t border-white/10 w-full">
                           {task.links.map((url, i) => (
                             <a
                               key={i}
                               href={url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="p-1.5 rounded-lg bg-teal-500/10 hover:bg-teal-500/20 ring-1 ring-teal-500/20 hover:ring-teal-500/30 transition-all duration-200 hover:scale-110 hover:shadow-[0_0_10px_rgba(20,184,166,0.3)] group/link"
+                              className="flex items-center justify-center w-7 h-7 rounded-full bg-white/5 hover:bg-white/15 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all duration-200 hover:scale-105 hover:shadow-[0_0_15px_rgba(255,255,255,0.15)] group/link"
                               onClick={(e) => e.stopPropagation()}
                               title="Start Task"
                             >
-                              <ExternalLink className="w-3.5 h-3.5 text-teal-400 group-hover/link:text-teal-300 transition-colors" />
+                              <ExternalLink className="w-3.5 h-3.5 text-white/70 group-hover/link:text-white transition-colors" />
                             </a>
                           ))}
                         </div>

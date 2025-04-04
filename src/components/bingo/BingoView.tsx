@@ -200,30 +200,6 @@ export function BingoView() {
             complete your very own bingo card!
           </p>
 
-          {/* Progress Stats - Only show when logged in */}
-          {user && (
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
-              <div className="col-span-2 sm:col-span-3 lg:col-span-4 flex items-center justify-center gap-8 mb-4">
-                <div className="px-4 py-2 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/[0.08] backdrop-blur-sm">
-                  <div className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {completedCount}
-                  </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                    Tasks Completed
-                  </div>
-                </div>
-                <div className="px-4 py-2 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/[0.08] backdrop-blur-sm">
-                  <div className="text-2xl font-bold text-gray-900 dark:text-white">
-                    {Math.floor((completedCount / tasks.length) * 100)}%
-                  </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                    Completion
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
           {user ? (
             <div className="flex items-center justify-center gap-3">
               <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/[0.08] backdrop-blur-sm">
