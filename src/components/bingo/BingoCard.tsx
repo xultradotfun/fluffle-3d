@@ -211,7 +211,7 @@ export function BingoCard({
                   </div>
                 </div>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  {completedTaskIds.length} of {tasks.length} tasks completed
+                  {completedTaskIds.length} of {tasks.length} tiles completed
                 </p>
               </div>
             </div>

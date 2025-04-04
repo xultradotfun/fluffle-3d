@@ -26,7 +26,7 @@ export function ShareModal({
 
   const getShareText = () => {
     const percentage = Math.round((completedCount / totalTasks) * 100);
-    let text = `${completedCount}/${totalTasks} tasks completed (${percentage}%) on @megaeth_labs Community Bingo!`;
+    let text = `${completedCount}/${totalTasks} tiles completed (${percentage}%) on @megaeth_labs Community Bingo!`;
 
     if (completedLines > 0) {
       text += `\n${completedLines} bingo line${
