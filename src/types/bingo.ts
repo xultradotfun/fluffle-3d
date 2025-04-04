@@ -17,5 +17,5 @@ export interface BingoTask {
   category: string;
   projects?: string[];
   culturalElement: string;
-  link?: string;
+  links?: string[];
 }

@@ -16,7 +16,11 @@
       "description": "Trade MegaETH Food Coins (Hotpot, Burger, Bread, Toast, Da Bing, Pancake, Brekkie Ice Cream, Carrot, Timothy) on GTE/XL",
       "category": "Trading",
       "projects": ["GTE_XYZ", "XLmemeCom"],
-      "culturalElement": "Food-related stuff"
+      "culturalElement": "Food-related stuff",
+      "links": [
+        "https://testnet.gte.xyz",
+        "https://alpha-testnet.xlmeme.com/megaeth"
+      ]
     },
     {
       "id": "3",
@@ -24,7 +28,8 @@
       "description": "Mint cUSD on CAP or lend tokens in a pool involving cUSD on Teko",
       "category": "DeFi",
       "projects": ["CapLabs_", "tekofinance"],
-      "culturalElement": "Hats Cabal"
+      "culturalElement": "Hats Cabal",
+      "links": ["https://cap.app/testnet", "https://testnet.teko.finance"]
     },
     {
       "id": "4",
@@ -32,7 +37,11 @@
       "description": "Launch or locate/purchase an asset associated to your favorite Fluffle cabal/tribe on GTE/XL",
       "category": "Community",
       "projects": ["XLmemeCom", "GTE_XYZ"],
-      "culturalElement": "The Fluffle Cabals"
+      "culturalElement": "The Fluffle Cabals",
+      "links": [
+        "https://testnet.gte.xyz",
+        "https://alpha-testnet.xlmeme.com/megaeth"
+      ]
     },
     {
       "id": "5",
@@ -48,7 +57,8 @@
       "description": "Supply & Borrow assets on Teko",
       "category": "DeFi",
       "projects": ["tekofinance"],
-      "culturalElement": "Real-Time"
+      "culturalElement": "Real-Time",
+      "links": ["https://testnet.teko.finance"]
     },
     {
       "id": "7",
@@ -56,7 +66,8 @@
       "description": "Create a MegaETH themed event on Lemonade",
       "category": "Social",
       "projects": ["lemonade_events"],
-      "culturalElement": "MegaZu, World Computer"
+      "culturalElement": "MegaZu, World Computer",
+      "links": ["https://lemonade.social/s/megaeth"]
     },
     {
       "id": "8",
@@ -64,7 +75,8 @@
       "description": "Organize/Join a Lemonade raid Event to make Brother Bing tweet a keyword or phrase. Launch/Trade the related token on GTE",
       "category": "Social",
       "projects": ["lemonade_events", "GTE_XYZ"],
-      "culturalElement": "Brother Bing"
+      "culturalElement": "Brother Bing",
+      "links": ["https://lemonade.social/s/megaeth", "https://testnet.gte.xyz"]
     },
     {
       "id": "9",
@@ -73,7 +85,9 @@
       "category": "Gaming",
       "projects": ["playguessbest"],
       "culturalElement": "Bread Power Lifter",
-      "link": "https://t.me/BestGuessBot/Guess_Best/start?startapp=ultra-ULTRA"
+      "links": [
+        "https://t.me/BestGuessBot/Guess_Best/start?startapp=ultra-ULTRA"
+      ]
     },
     {
       "id": "10",
@@ -81,7 +95,12 @@
       "description": "Mint tkUSD or cUSD. Swap for MEGA on GTE",
       "category": "DeFi",
       "projects": ["GTE_XYZ", "CapLabs_", "tekofinance"],
-      "culturalElement": "MEGA"
+      "culturalElement": "MEGA",
+      "links": [
+        "https://testnet.gte.xyz",
+        "https://cap.app/testnet",
+        "https://testnet.teko.finance"
+      ]
     },
     {
       "id": "11",
@@ -89,7 +108,11 @@
       "description": "Launch/Trade tokens on GTE/XL for your fave Megadeth track",
       "category": "Trading",
       "projects": ["XLmemeCom", "GTE_XYZ"],
-      "culturalElement": "Heavy Metal Chain"
+      "culturalElement": "Heavy Metal Chain",
+      "links": [
+        "https://testnet.gte.xyz",
+        "https://alpha-testnet.xlmeme.com/megaeth"
+      ]
     },
     {
       "id": "12",
@@ -97,7 +120,8 @@
       "description": "Act on your cuteness aggression on AWE. Whack the Fluffles",
       "category": "Gaming",
       "projects": ["awe_box"],
-      "culturalElement": "Chubby Bunnies"
+      "culturalElement": "Chubby Bunnies",
+      "links": ["https://testnet.awe.box"]
     },
     {
       "id": "13",
@@ -105,7 +129,8 @@
       "description": "Interact with AI agents and swap some $LOVE on Nectar AI",
       "category": "AI",
       "projects": ["TryNectarAI"],
-      "culturalElement": "Heisenburger is a woman / AI Waifu"
+      "culturalElement": "Heisenburger is a woman / AI Waifu",
+      "links": ["https://love.nectar.ai"]
     },
     {
       "id": "14",
@@ -113,7 +138,8 @@
       "description": "Put your money on your hottest take. Trade Pre-TGE project mindshare on Noise",
       "category": "Trading",
       "projects": ["noise_xyz"],
-      "culturalElement": "Louder"
+      "culturalElement": "Louder",
+      "links": ["https://app.noise.xyz/"]
     },
     {
       "id": "15",
@@ -121,7 +147,8 @@
       "description": "Use social sign-in + spam 'Quick Buy' on GTE's Dash page to get a truly real-time experience",
       "category": "Trading",
       "projects": ["GTE_XYZ"],
-      "culturalElement": "Real-Time"
+      "culturalElement": "Real-Time",
+      "links": ["https://testnet.gte.xyz"]
     },
     {
       "id": "16",
@@ -129,7 +156,8 @@
       "description": "Trade your favourite tokens on Bebop",
       "category": "Trading",
       "projects": ["bebop_dex"],
-      "culturalElement": "General"
+      "culturalElement": "General",
+      "links": ["https://bebop.xyz/trade?network=megaeth"]
     },
     {
       "id": "17",
@@ -137,7 +165,8 @@
       "description": "Launch and Trade AI agents on Rainmakr",
       "category": "AI",
       "projects": ["RainMakr_xyz"],
-      "culturalElement": "General"
+      "culturalElement": "General",
+      "links": ["https://rainmakr.xyz/en/rainai"]
     }
   ]
 }

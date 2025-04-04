@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
-import { Share2, CheckCircle2 } from "lucide-react";
+import { Share2, CheckCircle2, ExternalLink } from "lucide-react";
 import Image from "next/image";
 import html2canvas from "html2canvas";
 import { BingoTaskCard } from "./BingoTaskCard";
@@ -34,6 +34,11 @@ export function BingoCard({
 
   const handleTaskHover = (taskId: string | null, isEntering: boolean) => {
     if (isEntering && taskId) {
+      // Clear any existing timeout for this card
+      if (timeoutsRef.current.has(taskId)) {
+        clearTimeout(timeoutsRef.current.get(taskId));
+        timeoutsRef.current.delete(taskId);
+      }
       // Add to hovered set immediately
       setHoveredCards((prev) => {
         const next = new Set(prev);
@@ -41,11 +46,6 @@ export function BingoCard({
         return next;
       });
     } else if (!isEntering && taskId) {
-      // Clear any existing timeout for this card
-      if (timeoutsRef.current.has(taskId)) {
-        clearTimeout(timeoutsRef.current.get(taskId));
-      }
-
       // Set new timeout to remove the card
       const timeout = setTimeout(() => {
         setHoveredCards((prev) => {
@@ -308,16 +308,22 @@ export function BingoCard({
                       <p className="text-xs text-white/90 leading-relaxed text-center mb-2">
                         {task.description}
                       </p>
-                      {task.link && (
-                        <a
-                          href={task.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-xs text-teal-400 hover:text-teal-300 transition-colors mt-auto"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          Learn More →
-                        </a>
+                      {task.links && task.links.length > 0 && (
+                        <div className="flex items-center justify-center gap-1.5 mt-auto">
+                          {task.links.map((url, i) => (
+                            <a
+                              key={i}
+                              href={url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-1.5 rounded-lg bg-teal-500/10 hover:bg-teal-500/20 ring-1 ring-teal-500/20 hover:ring-teal-500/30 transition-all duration-200 hover:scale-110 hover:shadow-[0_0_10px_rgba(20,184,166,0.3)] group/link"
+                              onClick={(e) => e.stopPropagation()}
+                              title="Start Task"
+                            >
+                              <ExternalLink className="w-3.5 h-3.5 text-teal-400 group-hover/link:text-teal-300 transition-colors" />
+                            </a>
+                          ))}
+                        </div>
                       )}
                     </div>
                   </div>
