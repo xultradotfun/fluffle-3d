@@ -1,0 +1,92 @@
+{
+  "project": {
+    "name": "Bebop",
+    "twitter": "bebop_dex",
+    "description": "Seamless and efficient crypto trading for everyone",
+    "longDescription": "Bebop is a trading app and a suite of APIs that finds the best route for your trades. It provides quick, secure trading for any tokens in any size at the best prices. The platform offers advanced features like USD value input, customizable slippage, and the ability to receive tokens in a different wallet.",
+    "features": [
+      {
+        "title": "Best Route Finding",
+        "description": "Automatically finds and executes trades through the most efficient paths"
+      },
+      {
+        "title": "Advanced Trading Features",
+        "description": "USD value input, customizable slippage, and split wallet receiving"
+      },
+      {
+        "title": "Quick Actions",
+        "description": "Shortcuts menu for common trading operations and settings"
+      }
+    ],
+    "currentStatus": "Live on MegaETH testnet with full trading functionality"
+  },
+  "guide": {
+    "sections": [
+      {
+        "id": "getting-started",
+        "title": "Getting Started with Bebop",
+        "steps": [
+          {
+            "id": "step-1",
+            "title": "Connect Your Wallet",
+            "content": "Visit https://bebop.xyz/trade?network=megaeth and connect your wallet. Make sure to set the network to MegaETH testnet.",
+            "completable": true,
+            "images": [],
+            "links": [
+              {
+                "text": "Visit Bebop",
+                "url": "https://bebop.xyz/trade?network=megaeth"
+              }
+            ]
+          },
+          {
+            "id": "step-2",
+            "title": "Select Trading Pairs",
+            "content": "Choose the tokens you want to trade from the available options. You can input either token amounts or USD values to specify your trade.",
+            "completable": true,
+            "images": []
+          }
+        ]
+      },
+      {
+        "id": "trading",
+        "title": "Trading on Bebop",
+        "steps": [
+          {
+            "id": "step-3",
+            "title": "Using Quick Actions",
+            "content": "Access the 'Shortcuts' menu to perform common actions quickly. This includes adjusting settings and executing frequent trading patterns.",
+            "completable": false,
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/bebop_dex/1.png",
+                "alt": "Bebop shortcuts menu showing quick actions"
+              }
+            ]
+          },
+          {
+            "id": "step-4",
+            "title": "Customize Your Trade",
+            "content": "Fine-tune your trading parameters:\n• Adjust slippage tolerance to control price impact\n• Set a different receiving wallet address if desired\n• Review the trade details and estimated output",
+            "completable": true,
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/bebop_dex/2.png",
+                "alt": "Bebop trade customization options"
+              }
+            ]
+          },
+          {
+            "id": "step-5",
+            "title": "Execute Your Trade",
+            "content": "Once you're satisfied with the trade parameters and output estimates, click the trade button to execute your transaction. Make sure you have enough tokens and gas for the trade.",
+            "completable": true,
+            "images": []
+          }
+        ]
+      }
+    ],
+    "requirements": ["None"],
+    "lastUpdated": "2025-04-05"
+  }
+}

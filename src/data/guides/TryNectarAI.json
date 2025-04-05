@@ -42,6 +42,19 @@
                 "url": "https://love.nectar.ai/"
               }
             ]
+          },
+          {
+            "id": "step-2",
+            "title": "(Optional) Upgrade your Nectar subscription and try premium features",
+            "content": "Choose from multiple subscription tiers to enhance your experience:\n\n• Premium ($4.99/mo): 100 generations/day, 6000 messages/mo, 600 photo messages\n• Pro ($9.99/mo): Unlimited HD generations, 9000 messages/mo, 3 custom personas\n• Ultimate ($14.99/mo): Unlimited everything, video generation, voice chat, priority support\n\nAll paid tiers include additional customizations and faster response times.",
+            "completable": true,
+            "images": [],
+            "links": [
+              {
+                "text": "Try Premium Features",
+                "url": "https://nectar.ai/?utm_source=affiliate&utm_medium=referral&utm_campaign=0xultraman"
+              }
+            ]
           }
         ]
       }

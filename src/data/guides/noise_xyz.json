@@ -34,7 +34,13 @@
             "title": "Access the Platform",
             "content": "Visit https://app.noise.xyz/pages/discover and enter your access code to get started.",
             "completable": true,
-            "images": []
+            "images": [],
+            "links": [
+              {
+                "text": "Visit Noise",
+                "url": "https://app.noise.xyz/pages/discover"
+              }
+            ]
           },
           {
             "id": "step-3",
@@ -54,14 +60,25 @@
             "title": "Monitor Real-time Prices",
             "content": "• Prices are streamed directly from Kaito\n• Updates occur every second\n• This ensures you always have the most current market data\n• Monitor trends and make informed trading decisions based on real-time mindshare changes",
             "completable": false,
-            "images": []
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/noise_xyz/1.png"
+              }
+            ]
           },
           {
             "id": "step-6",
             "title": "Place Your First Trade",
             "content": "Select a trend you want to trade, review the current mindshare value, and place your trade. Remember that mindshare reflects the current attention and popularity of the trend.",
             "completable": true,
-            "images": []
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/noise_xyz/2.png"
+              },
+              {
+                "url": "https://mega-eco.b-cdn.net/noise_xyz/3.png"
+              }
+            ]
           }
         ]
       }
