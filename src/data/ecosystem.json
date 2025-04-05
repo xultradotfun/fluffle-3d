@@ -97,7 +97,7 @@
       "megaMafia": true,
       "native": true,
       "testnet": true,
-      "guide": false
+      "guide": true
     },
     {
       "name": "Showdown",
