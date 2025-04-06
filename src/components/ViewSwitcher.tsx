@@ -119,7 +119,8 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     <div className="w-1.5 h-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />
                   )}
                 </button>
-                <button
+
+                {/* <button
                   onClick={() => {
                     onViewChange("bingo");
                     setIsTestnetMenuOpen(false);
@@ -138,7 +139,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   {activeView === "bingo" && (
                     <div className="w-1.5 h-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />
                   )}
-                </button>
+                </button> */}
                 <button
                   onClick={() => {
                     onViewChange("build");
