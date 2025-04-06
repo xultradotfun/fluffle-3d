@@ -1,0 +1,172 @@
+{
+  "metadata": {
+    "version": "1.0.0"
+  },
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Free Square!",
+      "description": "Nothing. Mark it off cuz we love you.",
+      "category": "Welcome",
+      "culturalElement": "Mega Milady"
+    },
+    {
+      "id": "2",
+      "title": "Food Coin Meta",
+      "description": "Trade MegaETH Food Coins (Hotpot, Burger, Bread, Toast, Da Bing, Pancake, Brekkie Ice Cream, Carrot, Timothy) on GTE/XL",
+      "category": "Trading",
+      "projects": ["GTE_XYZ", "XLmemeCom"],
+      "culturalElement": "Food-related stuff",
+      "links": [
+        "https://testnet.gte.xyz",
+        "https://alpha-testnet.xlmeme.com/megaeth"
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Hats Cabal Tribute",
+      "description": "Mint cUSD on CAP or lend tokens in a pool involving cUSD on Teko",
+      "category": "DeFi",
+      "projects": ["CapLabs_", "tekofinance"],
+      "culturalElement": "Hats Cabal",
+      "links": ["https://cap.app/testnet", "https://testnet.teko.finance"]
+    },
+    {
+      "id": "4",
+      "title": "Fluffle Believer",
+      "description": "Launch or locate/purchase an asset associated to your favorite Fluffle cabal/tribe on GTE/XL",
+      "category": "Community",
+      "projects": ["XLmemeCom", "GTE_XYZ"],
+      "culturalElement": "The Fluffle Cabals",
+      "links": [
+        "https://testnet.gte.xyz",
+        "https://alpha-testnet.xlmeme.com/megaeth"
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Fluffle Cabal",
+      "description": "Join Fluffle Cabal communities on Lemonade and stake the related token after buying it on GTE/XL",
+      "category": "Community",
+      "projects": ["lemonade_events", "GTE_XYZ", "XLmemeCom"],
+      "culturalElement": "The Fluffle Cabals"
+    },
+    {
+      "id": "6",
+      "title": "Just Use Teko",
+      "description": "Supply & Borrow assets on Teko",
+      "category": "DeFi",
+      "projects": ["tekofinance"],
+      "culturalElement": "Real-Time",
+      "links": ["https://testnet.teko.finance"]
+    },
+    {
+      "id": "7",
+      "title": "Party @ World Computer",
+      "description": "Create a MegaETH themed event on Lemonade",
+      "category": "Social",
+      "projects": ["lemonade_events"],
+      "culturalElement": "MegaZu, World Computer",
+      "links": ["https://lemonade.social/s/megaeth"]
+    },
+    {
+      "id": "8",
+      "title": "Founder's Pet",
+      "description": "Organize/Join a Lemonade raid Event to make Brother Bing tweet a keyword or phrase. Launch/Trade the related token on GTE",
+      "category": "Social",
+      "projects": ["lemonade_events", "GTE_XYZ"],
+      "culturalElement": "Brother Bing",
+      "links": ["https://lemonade.social/s/megaeth", "https://testnet.gte.xyz"]
+    },
+    {
+      "id": "9",
+      "title": "Hit The Gym",
+      "description": "Play guess.best and build up a streak of 5",
+      "category": "Gaming",
+      "projects": ["playguessbest"],
+      "culturalElement": "Bread Power Lifter",
+      "links": [
+        "https://t.me/BestGuessBot/Guess_Best/start?startapp=ultra-ULTRA"
+      ]
+    },
+    {
+      "id": "10",
+      "title": "Mega Money",
+      "description": "Mint tkUSD or cUSD. Swap for MEGA on GTE",
+      "category": "DeFi",
+      "projects": ["GTE_XYZ", "CapLabs_", "tekofinance"],
+      "culturalElement": "MEGA",
+      "links": [
+        "https://testnet.gte.xyz",
+        "https://cap.app/testnet",
+        "https://testnet.teko.finance"
+      ]
+    },
+    {
+      "id": "11",
+      "title": "Heavy Metal Chain",
+      "description": "Launch/Trade tokens on GTE/XL for your fave Megadeth track",
+      "category": "Trading",
+      "projects": ["XLmemeCom", "GTE_XYZ"],
+      "culturalElement": "Heavy Metal Chain",
+      "links": [
+        "https://testnet.gte.xyz",
+        "https://alpha-testnet.xlmeme.com/megaeth"
+      ]
+    },
+    {
+      "id": "12",
+      "title": "Chubby Bunny Smash",
+      "description": "Act on your cuteness aggression on AWE. Whack the Fluffles",
+      "category": "Gaming",
+      "projects": ["awe_box"],
+      "culturalElement": "Chubby Bunnies",
+      "links": ["https://testnet.awe.box"]
+    },
+    {
+      "id": "13",
+      "title": "$LOVE Is Onchain",
+      "description": "Interact with AI agents and swap some $LOVE on Nectar AI",
+      "category": "AI",
+      "projects": ["TryNectarAI"],
+      "culturalElement": "Heisenburger is a woman / AI Waifu",
+      "links": ["https://love.nectar.ai"]
+    },
+    {
+      "id": "14",
+      "title": "Make Noise",
+      "description": "Put your money on your hottest take. Trade Pre-TGE project mindshare on Noise",
+      "category": "Trading",
+      "projects": ["noise_xyz"],
+      "culturalElement": "Louder",
+      "links": ["https://app.noise.xyz/"]
+    },
+    {
+      "id": "15",
+      "title": "Is This Web2?",
+      "description": "Use social sign-in + spam 'Quick Buy' on GTE's Dash page to get a truly real-time experience",
+      "category": "Trading",
+      "projects": ["GTE_XYZ"],
+      "culturalElement": "Real-Time",
+      "links": ["https://testnet.gte.xyz"]
+    },
+    {
+      "id": "16",
+      "title": "See You, Space Cowboy",
+      "description": "Trade your favourite tokens on Bebop",
+      "category": "Trading",
+      "projects": ["bebop_dex"],
+      "culturalElement": "General",
+      "links": ["https://bebop.xyz/trade?network=megaeth"]
+    },
+    {
+      "id": "17",
+      "title": "Make It rAIn",
+      "description": "Launch and Trade AI agents on Rainmakr",
+      "category": "AI",
+      "projects": ["RainMakr_xyz"],
+      "culturalElement": "General",
+      "links": ["https://rainmakr.xyz/en/rainai"]
+    }
+  ]
+}

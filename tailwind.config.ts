@@ -74,7 +74,6 @@ const config = {
       },
     },
   },
-  plugins: [],
 } satisfies Config;
 
 export default config;
