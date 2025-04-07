@@ -178,14 +178,10 @@ export function BingoView() {
               style={{ width: "calc(8.13 * 2.5rem)" }}
             >
               <Image
-                src={
-                  document.documentElement.classList.contains("dark")
-                    ? "/megalogo-white.png"
-                    : "/megalogo.png"
-                }
+                src="/megalogo.png"
                 alt="MegaETH"
                 fill
-                className="object-contain"
+                className="object-contain brightness-0 opacity-80 dark:opacity-100 dark:invert"
                 unoptimized
                 priority
               />
