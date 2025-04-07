@@ -978,6 +978,18 @@
       "megaMafia": false,
       "native": false,
       "testnet": false
+    },
+    {
+      "name": "Blocksense Network",
+      "twitter": "blocksense_",
+      "website": "https://blocksense.network/",
+      "telegram": "https://t.me/BlocksenseNetwork",
+      "discord": "https://discord.gg/mYujUXwrMr",
+      "description": "A programmable oracle network with custom data feeds.",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
     }
   ]
 }
