@@ -295,6 +295,7 @@ export const traitImageMap: TraitImageMap = {
     Lemonade: { path: "bg-lemonade.jpg" },
     Avon: { path: "bg-avon.jpg" },
     Sirio: { path: "bg-sirio.png" },
+    RedStone: { path: "bg-redstonefi.png" },
   },
 };
 

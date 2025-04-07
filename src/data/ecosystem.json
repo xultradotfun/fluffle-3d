@@ -955,6 +955,18 @@
       "megaMafia": false,
       "native": true,
       "testnet": false
+    },
+    {
+      "name": "RedStone",
+      "twitter": "redstone_defi",
+      "website": "https://redstone.finance/",
+      "discord": "https://discord.gg/PVxBZKFr46",
+      "telegram": "https://t.me/redstonefinance/",
+      "description": "Modular oracles for DeFi & institutions. Building RedStone Bolt, the fastest oracle, only for MegaETH.",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
     }
   ]
 }
