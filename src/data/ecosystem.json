@@ -209,7 +209,7 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": true,
-      "testnet": false
+      "testnet": true
     },
     {
       "name": "ComLayer",
@@ -230,7 +230,7 @@
       "category": "NFT",
       "megaMafia": false,
       "native": false,
-      "testnet": false
+      "testnet": true
     },
     {
       "name": "Kontos Protocol",
@@ -424,7 +424,7 @@
       "category": "Gaming",
       "megaMafia": false,
       "native": true,
-      "testnet": false
+      "testnet": true
     },
     {
       "name": "Dx Protocol",
@@ -686,7 +686,7 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "testnet": false
+      "testnet": true
     },
     {
       "name": "Kaiju Finance",
@@ -901,7 +901,7 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "testnet": false
+      "testnet": true
     },
     {
       "name": "ITS",
@@ -1002,6 +1002,154 @@
       "megaMafia": false,
       "native": false,
       "testnet": true
+    },
+    {
+      "name": "Caddy Finance",
+      "twitter": "caddyfi",
+      "website": "https://caddy.finance/",
+      "telegram": "https://t.me/caddyfi",
+      "discord": "https://discord.gg/wX4P9va8Ry",
+      "description": "Allows LST holders to hedge against underlying price volatility.",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
+    },
+    {
+      "name": "Canary Protocol",
+      "twitter": "canary_proto",
+      "website": "https://www.canaryprotocol.com/",
+      "description": "Multi-chain security for next-gen dApps.",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
+    },
+    {
+      "name": "Curve",
+      "twitter": "CurveFinance",
+      "website": "https://curve.fi/",
+      "discord": "https://discord.gg/rgrfS7W",
+      "telegram": "https://t.me/curvefi",
+      "description": "DEX with deep liquidity using advanced bonding curves.",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
+    },
+    {
+      "name": "Cyclo",
+      "twitter": "cyclofinance",
+      "website": "https://cyclo.finance/",
+      "telegram": "https://t.me/cyclofinance",
+      "description": "Leverage while keeping your collateral completely safe from liquidations.",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
+    },
+    {
+      "name": "Mach Exchange",
+      "twitter": "mach_exchange",
+      "website": "https://app.mach.exchange/",
+      "discord": "https://discord.gg/mach",
+      "telegram": "https://t.me/mach_exchange",
+      "description": "Cross-chain swaps.",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
+    },
+    {
+      "name": "Orbiter Financee",
+      "twitter": "Orbiter_Finance",
+      "website": "https://www.orbiter.finance/en",
+      "discord": "https://discord.gg/FbztTBvnBT",
+      "description": "Decentralized cross-rollup bridge.",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
+    },
+    {
+      "name": "Pike Finance",
+      "twitter": "PikeFinance",
+      "website": "https://www.pike.finance/",
+      "discord": "https://discord.gg/pikefinance",
+      "telegram": "https://t.me/pike_finance",
+      "description": "Lending protocol with built-in stableswap engine.",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
+    },
+    {
+      "name": "Poster",
+      "twitter": "posterdotfun",
+      "website": "https://www.poster.fun/",
+      "description": "The SOCIALFi engine where viral content earns onchain rewards.",
+      "category": "Gaming",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
+    },
+    {
+      "name": "Rubic",
+      "twitter": "CryptoRubic",
+      "website": "https://rubic.exchange/",
+      "discord": "https://discord.gg/7EYzPbWKFQ",
+      "telegram": "https://t.me/cryptorubic_chat",
+      "description": "Your multichain DEX aggregator.",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
+    },
+    {
+      "name": "Tokenops",
+      "twitter": "TokenOps_xyz",
+      "website": "https://tokenops.xyz/",
+      "description": "Manage token vesting, unlocks, airdrops and staking.",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
+    },
+    {
+      "name": "Wasabi",
+      "twitter": "wasabi_protocol",
+      "website": "https://wasabi.xyz/",
+      "discord": "https://discord.gg/wZqzsfnvmh",
+      "telegram": "https://t.me/wasabiportal",
+      "description": "A spot leverage DEX that allows you to long, short, swap, and earn.",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
+    },
+    {
+      "name": "Zapper",
+      "twitter": "zapper_fi",
+      "website": "https://zapper.xyz/",
+      "discord": "https://zapper.xyz/discord",
+      "telegram": "https://t.me/+OE0wMq01sNc5MTMx",
+      "description": "Track your onchain portfolio. Discover new opportunities.",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
+    },
+    {
+      "name": "Zyfai",
+      "twitter": "ZyfAI_",
+      "website": "https://zyf.ai/",
+      "discord": "https://discord.gg/KHchZXmv8Q",
+      "telegram": "https://t.me/+wRxgyrGcAz9kMzI0",
+      "description": "A DeFi AI agent built to optimize DeFi yields ",
+      "category": "AI",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
     }
   ]
 }
