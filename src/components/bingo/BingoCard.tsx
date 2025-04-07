@@ -54,7 +54,7 @@ export function BingoCard({
           return next;
         });
         timeoutsRef.current.delete(taskId);
-      }, 2000);
+      }, 250);
 
       timeoutsRef.current.set(taskId, timeout);
     }
