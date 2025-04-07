@@ -990,6 +990,18 @@
       "megaMafia": false,
       "native": false,
       "testnet": false
+    },
+    {
+      "name": "Gelato",
+      "twitter": "gelatonetwork",
+      "website": "https://www.gelato.network/",
+      "telegram": "https://t.me/gelatonetwork",
+      "discord": "https://discord.gg/ApbA39BKyJ",
+      "description": "VRF, Relay, Functions, smart account abstraction, and more toolkits.",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
     }
   ]
 }
