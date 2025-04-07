@@ -967,6 +967,17 @@
       "megaMafia": false,
       "native": false,
       "testnet": true
+    },
+    {
+      "name": "AikaVerse",
+      "twitter": "aika_verse",
+      "website": "https://aikaswap.xyz/?code=AIKA-924134809",
+      "telegram": "https://t.me/aikaverse",
+      "description": "AI agent capable of executing trades across both EVM & Solana chains. Ref: AIKA-924134809",
+      "category": "AI",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
     }
   ]
 }
