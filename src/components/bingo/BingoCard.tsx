@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
-import { Share2, CheckCircle2, ExternalLink } from "lucide-react";
+import { Share2, CheckCircle2, ExternalLink, Sparkles } from "lucide-react";
 import Image from "next/image";
 import html2canvas from "html2canvas";
 import { BingoTaskCard } from "./BingoTaskCard";
@@ -238,7 +238,7 @@ export function BingoCard({
               return (
                 <div
                   key={task.id}
-                  className={`group relative w-full aspect-square rounded-xl overflow-hidden transition-all duration-300 ${
+                  className={`group relative w-full aspect-square rounded-xl overflow-hidden transition-all duration-150 ${
                     isCompleted
                       ? "ring-2 ring-teal-500/50 dark:ring-teal-400/50"
                       : "ring-1 ring-gray-200 dark:ring-gray-700"
@@ -261,7 +261,7 @@ export function BingoCard({
                       src={`https://mega-bingo.b-cdn.net/${index + 1}.jpg`}
                       alt=""
                       fill
-                      className="object-cover transition-all duration-500 group-hover:scale-110"
+                      className="object-cover transition-all duration-150 group-hover:scale-110"
                       unoptimized
                       priority={index < 5}
                     />
@@ -353,6 +353,35 @@ export function BingoCard({
                 </div>
               );
             })}
+            {/* Coming Soon Message */}
+            {tasks.length % 5 !== 0 && (
+              <div
+                className="group relative w-full rounded-xl overflow-hidden ring-1 ring-gray-200 dark:ring-gray-700 bg-gradient-to-br from-teal-50 via-emerald-50 to-teal-50 dark:from-teal-900/20 dark:via-emerald-900/20 dark:to-teal-900/20"
+                style={{
+                  gridColumn: `${(tasks.length % 5) + 1} / span ${
+                    5 - (tasks.length % 5)
+                  }`,
+                  aspectRatio: 5 - (tasks.length % 5) + 0.15,
+                }}
+              >
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(20,184,166,0.1)_0%,transparent_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(20,184,166,0.2)_0%,transparent_70%)]" />
+                <div className="absolute inset-0 flex items-center justify-center p-4 text-center">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-teal-500/20 to-emerald-500/20 dark:from-teal-500/30 dark:to-emerald-500/30 flex items-center justify-center shadow-lg shadow-teal-500/10 dark:shadow-teal-500/5">
+                      <Sparkles className="w-6 h-6 text-teal-600 dark:text-teal-400" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-semibold text-teal-700 dark:text-teal-300">
+                        More Tasks Coming Soon!
+                      </h3>
+                      <p className="text-xs text-teal-600/80 dark:text-teal-400/80">
+                        Come back soon for more tasks
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -491,6 +520,35 @@ export function BingoCard({
                   </div>
                 );
               })}
+              {/* Coming Soon Message for Share Preview */}
+              {tasks.length % 5 !== 0 && (
+                <div
+                  className="group relative w-full rounded-xl overflow-hidden ring-1 ring-gray-200 dark:ring-gray-700 bg-gradient-to-br from-teal-50 via-emerald-50 to-teal-50 dark:from-teal-900/20 dark:via-emerald-900/20 dark:to-teal-900/20"
+                  style={{
+                    gridColumn: `${(tasks.length % 5) + 1} / span ${
+                      5 - (tasks.length % 5)
+                    }`,
+                    aspectRatio: 5 - (tasks.length % 5) + 0.15,
+                  }}
+                >
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(20,184,166,0.1)_0%,transparent_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(20,184,166,0.2)_0%,transparent_70%)]" />
+                  <div className="absolute inset-0 flex items-center justify-center p-4 text-center">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-teal-500/20 to-emerald-500/20 dark:from-teal-500/30 dark:to-emerald-500/30 flex items-center justify-center shadow-lg shadow-teal-500/10 dark:shadow-teal-500/5">
+                        <Sparkles className="w-6 h-6 text-teal-600 dark:text-teal-400" />
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-semibold text-teal-700 dark:text-teal-300">
+                          More Tasks Coming Soon!
+                        </h3>
+                        <p className="text-xs text-teal-600/80 dark:text-teal-400/80">
+                          Come back soon for more tasks
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Share Footer */}
