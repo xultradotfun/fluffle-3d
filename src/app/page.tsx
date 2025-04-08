@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/Badge";
 import { ViewSwitcher } from "@/components/ViewSwitcher";
 import { TraitsAnalyticsDashboard } from "@/components/analytics/TraitsAnalytics";
 import { PFPGenerator } from "@/components/pfp/PFPGenerator";
-import { MetaverseTeaser } from "@/components/metaverse/MetaverseTeaser";
 import { TestnetView } from "@/components/testnet/index";
 import { BuildersView } from "@/components/build/index";
 import NFTBuilder from "@/components/builder/NFTBuilder";
@@ -32,7 +31,6 @@ export default function Home() {
     | "viewer"
     | "analytics"
     | "pfp"
-    | "metaverse"
     | "ecosystem"
     | "testnet"
     | "build"
@@ -53,8 +51,6 @@ export default function Home() {
       setActiveView("analytics");
     } else if (hash === "#pfp") {
       setActiveView("pfp");
-    } else if (hash === "#metaverse") {
-      setActiveView("metaverse");
     } else if (hash === "#testnet") {
       setActiveView("testnet");
     } else if (hash === "#build") {
@@ -78,8 +74,6 @@ export default function Home() {
         setActiveView("analytics");
       } else if (hash === "#pfp") {
         setActiveView("pfp");
-      } else if (hash === "#metaverse") {
-        setActiveView("metaverse");
       } else if (hash === "#testnet") {
         setActiveView("testnet");
       } else if (hash === "#build") {
@@ -105,7 +99,6 @@ export default function Home() {
       | "viewer"
       | "analytics"
       | "pfp"
-      | "metaverse"
       | "ecosystem"
       | "testnet"
       | "build"
@@ -220,7 +213,6 @@ export default function Home() {
         )}
         {activeView === "analytics" && <TraitsAnalyticsDashboard />}
         {activeView === "pfp" && <PFPGenerator />}
-        {activeView === "metaverse" && <MetaverseTeaser />}
         {activeView === "testnet" && <TestnetView />}
         {activeView === "build" && <BuildersView />}
         {activeView === "builder" && <NFTBuilder />}
