@@ -418,6 +418,18 @@
       "testnet": true
     },
     {
+      "name": "R2",
+      "twitter": "r2yield",
+      "website": "https://www.r2.money/",
+      "discord": "https://discord.gg/r2yield",
+      "telegram": "https://t.me/R2Yield",
+      "description": "Next-Gen Synthetic Stable Money Powered by RWA, Tradefi & Defi.",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
+    },
+    {
       "name": "Dx Protocol",
       "twitter": "0xDxProtocol",
       "website": "https://dxprotocol.org",
