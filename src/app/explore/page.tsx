@@ -18,8 +18,6 @@ export default function GuidesPage() {
       router.push("/#rarities");
     } else if (view === "pfp") {
       router.push("/#pfp");
-    } else if (view === "metaverse") {
-      router.push("/#metaverse");
     } else if (view === "testnet") {
       router.push("/#testnet");
     } else if (view === "build") {
