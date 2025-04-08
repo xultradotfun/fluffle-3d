@@ -372,10 +372,10 @@ export function BingoCard({
                     </div>
                     <div>
                       <h3 className="text-sm font-semibold text-teal-700 dark:text-teal-300">
-                        More Tasks Coming Soon!
+                        More Tasks Coming Soon
                       </h3>
                       <p className="text-xs text-teal-600/80 dark:text-teal-400/80">
-                        Come back soon for more tasks
+                        New projects are launching on testnet every week!
                       </p>
                     </div>
                   </div>
@@ -453,25 +453,28 @@ export function BingoCard({
                     }`}
                   >
                     {/* Background Image Container */}
-                    <div className="absolute inset-0 w-full h-full">
-                      <div className="relative w-full h-full">
-                        <Image
-                          src={`https://mega-bingo.b-cdn.net/${index + 1}.jpg`}
-                          alt=""
-                          fill
-                          className="object-cover"
-                          unoptimized
-                          priority={index < 5}
+                    <div className="absolute inset-0">
+                      <div className="absolute inset-0">
+                        <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+                          <Image
+                            src={`https://mega-bingo.b-cdn.net/${
+                              index + 1
+                            }.jpg`}
+                            alt=""
+                            fill
+                            className="object-cover"
+                            unoptimized
+                            priority={index < 5}
+                          />
+                        </div>
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-b ${
+                            isTaskCompleted
+                              ? "from-teal-500/30 to-emerald-500/30 dark:from-teal-500/40 dark:to-emerald-500/40"
+                              : "from-gray-900/70 to-gray-900/50 dark:from-gray-900/80 dark:to-gray-900/60"
+                          }`}
                         />
                       </div>
-                      {/* Overlay gradient */}
-                      <div
-                        className={`absolute inset-0 bg-gradient-to-b ${
-                          isTaskCompleted
-                            ? "from-teal-500/30 to-emerald-500/30 dark:from-teal-500/40 dark:to-emerald-500/40"
-                            : "from-gray-900/70 to-gray-900/50 dark:from-gray-900/80 dark:to-gray-900/60"
-                        }`}
-                      />
                     </div>
 
                     {/* Completion Checkmark */}
@@ -523,7 +526,7 @@ export function BingoCard({
               {/* Coming Soon Message for Share Preview */}
               {tasks.length % 5 !== 0 && (
                 <div
-                  className="group relative w-full rounded-xl overflow-hidden ring-1 ring-gray-200 dark:ring-gray-700 bg-gradient-to-br from-teal-50 via-emerald-50 to-teal-50 dark:from-teal-900/20 dark:via-emerald-900/20 dark:to-teal-900/20"
+                  className="group relative w-full rounded-xl overflow-hidden ring-1 ring-white/10 bg-gray-900"
                   style={{
                     gridColumn: `${(tasks.length % 5) + 1} / span ${
                       5 - (tasks.length % 5)
@@ -531,21 +534,27 @@ export function BingoCard({
                     aspectRatio: 5 - (tasks.length % 5) + 0.15,
                   }}
                 >
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(20,184,166,0.1)_0%,transparent_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(20,184,166,0.2)_0%,transparent_70%)]" />
-                  <div className="absolute inset-0 flex items-center justify-center p-4 text-center">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-teal-500/20 to-emerald-500/20 dark:from-teal-500/30 dark:to-emerald-500/30 flex items-center justify-center shadow-lg shadow-teal-500/10 dark:shadow-teal-500/5">
-                        <Sparkles className="w-6 h-6 text-teal-600 dark:text-teal-400" />
-                      </div>
-                      <div>
-                        <h3 className="text-sm font-semibold text-teal-700 dark:text-teal-300">
-                          More Tasks Coming Soon!
-                        </h3>
-                        <p className="text-xs text-teal-600/80 dark:text-teal-400/80">
-                          Come back soon for more tasks
-                        </p>
+                  <div className="absolute inset-0">
+                    <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
+                      <div
+                        className="relative w-full"
+                        style={{ aspectRatio: "2/1" }}
+                      >
+                        <Image
+                          src="/socialpreview.jpg"
+                          alt="MegaETH"
+                          fill
+                          className="object-cover"
+                          unoptimized
+                        />
                       </div>
                     </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/50 to-transparent" />
+                  </div>
+                  <div className="absolute inset-0 flex flex-col items-end justify-end p-4">
+                    <p className="text-sm font-medium text-white/90">
+                      fluffle.tools
+                    </p>
                   </div>
                 </div>
               )}
