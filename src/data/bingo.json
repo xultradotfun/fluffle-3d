@@ -27,7 +27,7 @@
       "title": "Hats Cabal Tribute",
       "description": "Mint cUSD on CAP or lend tokens in a pool involving cUSD on Teko",
       "category": "DeFi",
-      "projects": ["CapLabs_", "tekofinance"],
+      "projects": ["capmoney_", "tekofinance"],
       "culturalElement": "Hats Cabal",
       "links": ["https://cap.app/testnet", "https://testnet.teko.finance"]
     },
@@ -94,7 +94,7 @@
       "title": "Mega Money",
       "description": "Mint tkUSD or cUSD. Swap for MEGA on GTE",
       "category": "DeFi",
-      "projects": ["GTE_XYZ", "CapLabs_", "tekofinance"],
+      "projects": ["GTE_XYZ", "capmoney_", "tekofinance"],
       "culturalElement": "MEGA",
       "links": [
         "https://testnet.gte.xyz",

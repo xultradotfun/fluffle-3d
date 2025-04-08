@@ -22,7 +22,6 @@ interface ViewSwitcherProps {
     | "viewer"
     | "analytics"
     | "pfp"
-    | "metaverse"
     | "ecosystem"
     | "testnet"
     | "build"
@@ -34,7 +33,6 @@ interface ViewSwitcherProps {
       | "viewer"
       | "analytics"
       | "pfp"
-      | "metaverse"
       | "ecosystem"
       | "testnet"
       | "build"
@@ -169,7 +167,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
           <div className="group relative">
             <button
               className={`flex items-center justify-start gap-2.5 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 ${
-                ["viewer", "analytics", "pfp", "metaverse"].includes(activeView)
+                ["viewer", "analytics", "pfp"].includes(activeView)
                   ? "bg-gradient-to-r from-blue-50 to-indigo-50 text-blue-600 border border-blue-200/50 shadow-sm dark:from-blue-500/20 dark:to-blue-500/10 dark:text-blue-400 dark:border-blue-500/20"
                   : "text-gray-600 hover:text-gray-900 hover:bg-white/50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-white/[0.08]"
               }`}
@@ -238,20 +236,6 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     <div className="w-1.5 h-1.5 rounded-full bg-purple-500 dark:bg-purple-400" />
                   )}
                 </button>
-                <button
-                  onClick={() => onViewChange("metaverse")}
-                  className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    activeView === "metaverse"
-                      ? "bg-gradient-to-r from-pink-50 to-rose-50 text-pink-600 shadow-sm dark:from-pink-500/20 dark:to-pink-500/10 dark:text-pink-400"
-                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
-                  }`}
-                >
-                  <Globe className="w-4 h-4 flex-shrink-0" />
-                  <span className="flex-1 text-left">Metaverse</span>
-                  {activeView === "metaverse" && (
-                    <div className="w-1.5 h-1.5 rounded-full bg-pink-500 dark:bg-pink-400" />
-                  )}
-                </button>
               </div>
               <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2.5 h-2.5 rotate-45 bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl border-b border-r border-gray-200/30 dark:border-white/[0.12]" />
             </div>
@@ -310,7 +294,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
           <button
             onClick={() => setIsMobileMenuOpen(true)}
             className={`flex flex-col items-center gap-1.5 p-2 rounded-xl transition-all duration-200 ${
-              ["viewer", "analytics", "pfp", "metaverse"].includes(activeView)
+              ["viewer", "analytics", "pfp"].includes(activeView)
                 ? "bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-500/20 dark:to-blue-500/10 text-blue-600 dark:text-blue-400 shadow-sm"
                 : "text-gray-600 dark:text-gray-300 hover:bg-white/50 dark:hover:bg-white/[0.08]"
             }`}
@@ -318,9 +302,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
             <div className="relative">
               <div
                 className={`transition-transform duration-200 ${
-                  ["viewer", "analytics", "pfp", "metaverse"].includes(
-                    activeView
-                  )
+                  ["viewer", "analytics", "pfp"].includes(activeView)
                     ? "scale-110"
                     : ""
                 }`}
@@ -526,24 +508,6 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   <span className="flex-1 text-left">Rarities</span>
                   {activeView === "analytics" && (
                     <div className="w-1.5 h-1.5 rounded-full bg-purple-500 dark:bg-purple-400" />
-                  )}
-                </button>
-
-                <button
-                  onClick={() => {
-                    onViewChange("metaverse");
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className={`flex items-center w-full gap-2.5 px-3.5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
-                    activeView === "metaverse"
-                      ? "bg-gradient-to-r from-pink-50 to-rose-50 text-pink-600 shadow-sm dark:from-pink-500/20 dark:to-pink-500/10 dark:text-pink-400"
-                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
-                  }`}
-                >
-                  <Globe className="w-5 h-5 flex-shrink-0" />
-                  <span className="flex-1 text-left">Metaverse</span>
-                  {activeView === "metaverse" && (
-                    <div className="w-1.5 h-1.5 rounded-full bg-pink-500 dark:bg-pink-400" />
                   )}
                 </button>
               </div>
