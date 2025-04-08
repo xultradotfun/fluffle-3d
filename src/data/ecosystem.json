@@ -408,15 +408,6 @@
       "testnet": false
     },
     {
-      "name": "Yield Dot Fun",
-      "twitter": "yieldsdotfun",
-      "description": "A multichain yield aggregator with AI agents",
-      "category": "DeFi",
-      "megaMafia": false,
-      "native": true,
-      "testnet": false
-    },
-    {
       "name": "Battlefold",
       "twitter": "Battlefold_hq",
       "telegram": "https://t.me/battlefold",
@@ -502,18 +493,6 @@
       "website": "https://eternalai.org/",
       "description": "A Peer-to-Peer Autonomous Agent Protocol.",
       "category": "AI",
-      "megaMafia": false,
-      "native": false,
-      "testnet": false
-    },
-    {
-      "name": "Brickbank",
-      "twitter": "BrickBank_",
-      "website": "https://www.brickbank.finance/",
-      "discord": "https://discord.gg/brickbank",
-      "telegram": "https://t.me/BrickBankOfficial",
-      "description": "Stablecoin yield through RWA.",
-      "category": "DeFi",
       "megaMafia": false,
       "native": false,
       "testnet": false
