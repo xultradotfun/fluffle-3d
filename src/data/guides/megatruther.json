@@ -1,0 +1,68 @@
+{
+  "project": {
+    "name": "ITS",
+    "twitter": "megatruther",
+    "description": "Imagine the smell",
+    "longDescription": "ITS is an alternate reality game that introduces players to a maze of puzzles at the crossroads of basic cryptography, computer science, blockchain analysis and logic. No prior computer science experience is required to enter the world of ITS, just grit and patience. Every few weeks, a new puzzle sequence ('epoch') drops on ITS's X page (@megatruther). The first few to solve the puzzle are rewarded with the megamind role on Megaeth's Discord.",
+    "features": [],
+    "currentStatus": "Game is live with regular epoch drops and community engagement."
+  },
+  "guide": {
+    "sections": [
+      {
+        "id": "getting-started",
+        "title": "Guide to Safe Truthing",
+        "steps": [
+          {
+            "id": "step-1",
+            "title": "Mental Health Check",
+            "content": "Consult your psychiatrist for schizoid preconditions. In the event where truthing would trigger such conditions, ITS is not legally liable.",
+            "completable": true
+          },
+          {
+            "id": "step-2",
+            "title": "Personal Affairs",
+            "content": "Tell your parents you love them. Tell your girlfriend it's not her fault.",
+            "completable": true
+          },
+          {
+            "id": "step-3",
+            "title": "Identity Protection",
+            "content": "Shred your passport and any official documentation that could be linked to you.",
+            "completable": true
+          },
+          {
+            "id": "step-4",
+            "title": "Follow the Trail",
+            "content": "Follow @megatruther on X, watch the pinned video.",
+            "completable": true,
+            "links": [
+              {
+                "text": "Follow on X",
+                "url": "https://twitter.com/megatruther"
+              }
+            ]
+          },
+          {
+            "id": "step-5",
+            "title": "Truth",
+            "content": "Truth",
+            "completable": true,
+            "links": [
+              {
+                "text": "Visit Website",
+                "url": "https://imaginethesmell.xyz"
+              },
+              {
+                "text": "Join Telegram",
+                "url": "https://t.me/+UQIoB7pviIxjYjFk"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "requirements": ["None"],
+    "lastUpdated": "2025-04-10"
+  }
+}

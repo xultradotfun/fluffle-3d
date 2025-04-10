@@ -903,7 +903,8 @@
       "category": "Gaming",
       "megaMafia": false,
       "native": true,
-      "testnet": false
+      "testnet": false,
+      "guide": true
     },
     {
       "name": "Bolt",
