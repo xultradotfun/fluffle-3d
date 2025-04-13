@@ -1137,8 +1137,17 @@
       "website": "https://zyf.ai/",
       "discord": "https://discord.gg/KHchZXmv8Q",
       "telegram": "https://t.me/+wRxgyrGcAz9kMzI0",
-      "description": "A DeFi AI agent built to optimize DeFi yields ",
+      "description": "A DeFi AI agent built to optimize DeFi yields.",
       "category": "AI",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
+    },
+    {
+      "name": "Megalio Civilization",
+      "twitter": "megalioeth",
+      "description": "Milady derivative NFT collection representing the Mega Civilization.",
+      "category": "NFT",
       "megaMafia": false,
       "native": false,
       "testnet": false
