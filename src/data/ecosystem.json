@@ -892,7 +892,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "testnet": true
+      "testnet": true,
+      "guide": true
     },
     {
       "name": "ITS",
