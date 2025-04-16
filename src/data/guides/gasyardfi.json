@@ -48,7 +48,11 @@
             "title": "Configure Your Bridge",
             "content": "1. Select your source network (the chain you're sending from)\n2. Choose your destination chain\n3. Enter the amount you want to bridge\n4. Select the token you wish to transfer\n5. Review the quote, fees, and destination wallet address",
             "completable": true,
-            "images": []
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/gasyardfi/1.jpg"
+              }
+            ]
           },
           {
             "id": "step-3",
