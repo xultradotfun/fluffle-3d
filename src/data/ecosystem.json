@@ -122,10 +122,10 @@
     },
     {
       "name": "Valhalla",
-      "twitter": "valhallaperps",
+      "twitter": "valhalla_defi",
       "website": "https://valhalla.exchange",
       "discord": "https://discord.gg/valhallaperps",
-      "description": "A fully on-chain and composable perpetual DEX",
+      "description": "The on-chain exchange on MegaETH. Trade perpetuals, spot, and earn more.",
       "category": "DeFi",
       "megaMafia": true,
       "native": true,

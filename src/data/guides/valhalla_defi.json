@@ -1,0 +1,74 @@
+{
+  "project": {
+    "name": "Valhalla",
+    "twitter": "valhalla_defi",
+    "description": "The on-chain exchange on MegaETH. Trade perpetuals, spot, and earn more.",
+    "longDescription": "Valhalla, the on-chain exchange, where perpetuals, spot and other DeFi primitives come together unlocking more markets, yields on collateral, and new trading primitives all on MegaETH.",
+    "features": [
+      {
+        "title": "Perpetual Trading",
+        "description": "Trade perpetuals on MegaETH."
+      },
+      {
+        "title": "Spot Trading",
+        "description": "Trade your favourite tokens on a CLOB and AMM."
+      },
+      {
+        "title": "Composability & more",
+        "description": "Coming soon."
+      }
+    ],
+    "currentStatus": "Trade perpetuals on testnet. Spot CLOB coming soon and perpetuals on-chain as well."
+  },
+  "guide": {
+    "sections": [
+      {
+        "id": "trade-perpetuals",
+        "title": "Trade Perpetuals",
+        "steps": [
+          {
+            "id": "step-1",
+            "title": "Use a Refcode",
+            "content": "Use a refcode ULTRA to access the platform.\n\nAfter logging in you will be given your own refcode to share with friends.",
+            "completable": true,
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/valhalla_defi/1.png"
+              }
+            ],
+            "links": [
+              {
+                "text": "Join Valhalla",
+                "url": "https://valhalla.exchange/referral"
+              }
+            ]
+          },
+          {
+            "id": "step-2",
+            "title": "Setup Your Account",
+            "content": "Sign Terms of Use, Login, and Deposit.\n\nThese will be messages that are required to guarantee the security of your account.",
+            "completable": true,
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/valhalla_defi/2.png"
+              }
+            ]
+          },
+          {
+            "id": "step-3",
+            "title": "Start Trading",
+            "content": "Trade Perpetual's like you are used to on other platforms. Enjoy!",
+            "completable": true,
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/valhalla_defi/3.png"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "requirements": ["Refcode for platform access"],
+    "lastUpdated": "2025-04-10"
+  }
+}
