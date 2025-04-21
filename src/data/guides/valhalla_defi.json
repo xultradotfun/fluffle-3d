@@ -11,7 +11,7 @@
       },
       {
         "title": "Spot Trading",
-        "description": "Trade your favourite tokens on a CLOB and AMM."
+        "description": "Trade your favorite tokens on a CLOB and AMM."
       },
       {
         "title": "Composability & more",
@@ -29,7 +29,7 @@
           {
             "id": "step-1",
             "title": "Use a Refcode",
-            "content": "Use a refcode ULTRA to access the platform.\n\nAfter logging in you will be given your own refcode to share with friends.",
+            "content": "You can use refcode 98224c63 to get access to the platform.",
             "completable": true,
             "images": [
               {
@@ -39,7 +39,7 @@
             "links": [
               {
                 "text": "Join Valhalla",
-                "url": "https://valhalla.exchange/referral"
+                "url": "https://app.valhalla.exchange/"
               }
             ]
           },
