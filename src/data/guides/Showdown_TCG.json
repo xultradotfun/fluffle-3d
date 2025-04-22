@@ -1,0 +1,100 @@
+{
+  "project": {
+    "name": "Showdown",
+    "twitter": "Showdown_TCG",
+    "description": "Decentralized poker game with dynamic action card mechanics",
+    "longDescription": "Showdown is 1v1 poker with a twist, featuring collectible action cards, that can swing the tide of the game at any moment.",
+    "features": [
+      {
+        "title": "Free to play",
+        "description": "Access to regular versions of cards available to all players."
+      },
+      {
+        "title": "Mobile friendly",
+        "description": "Easy to learn, short games full of dopamine."
+      }
+    ],
+    "currentStatus": "Early testing stage."
+  },
+  "guide": {
+    "sections": [
+      {
+        "id": "get-started",
+        "title": "Get Started with Showdown",
+        "steps": [
+          {
+            "id": "step-1",
+            "title": "Obtain Access Code",
+            "content": "• Access to Showdown is gated by an invite code. \n • Invite codes are distributed to selected users who joined the waitlist with their email. \n • Codes are sent to a portion of registered emails.",
+            "completable": true,
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/Showdown_TCG/1.png"
+              }
+            ],
+            "links": [
+              {
+                "text": "Visit Showdown",
+                "url": "https://www.showdown.game/"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "play-game",
+        "title": "Showdown Gameplay",
+        "steps": [
+          {
+            "id": "step-1",
+            "title": "",
+            "content": "",
+            "completable": false,
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/Showdown_TCG/3.jpg"
+              }
+            ]
+          },
+          {
+            "id": "step-2",
+            "title": "Starting a Hand",
+            "content": "• Each round (“Hand”), you get 2 pocket cards and 2 action cards (4 on the very first hand).\n• You can keep up to 5 action cards, and they carry over to future hands.",
+            "completable": false
+          },
+          {
+            "id": "step-3",
+            "title": "Action Cards",
+            "content": "• Action cards have various effects (change pocket cards, steal chips, interact with opponent, etc.).\n• Each card has a Chip value, which is added to the Pot when played.\n• The Pot starts with 10 Chips each hand. The goal is to reach 100 Chips.",
+            "completable": false
+          },
+          {
+            "id": "step-4",
+            "title": "Hand Flow",
+            "content": "• Players take turns each stage, either using an action card or checking (passing priority).\n• When both players check consecutively, move to the next stage.",
+            "completable": false
+          },
+          {
+            "id": "step-5",
+            "title": "Stages",
+            "content": "• Preflop → Flop (3 community cards revealed) → Option to Fold → If both continue, Pot doubles and move directly to River (2 more community cards).\n• Action cards can only be played in certain stages, depending on their color (Green: Preflop, Red: Flop, Blue: River, Grey: any stage).",
+            "completable": false
+          },
+          {
+            "id": "step-6",
+            "title": "Showdown",
+            "content": "• After the River, players reveal their best 5-card poker hand using pocket and community cards.\n• The winner takes all Chips in the Pot (split if tied).\n• Next hand begins.",
+            "completable": false,
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/Showdown_TCG/2.png"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "requirements": ["Invitation Code"],
+    "lastUpdated": "2025-04-21"
+  }
+}
