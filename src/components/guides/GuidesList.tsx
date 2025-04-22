@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import ecosystemData from "@/data/ecosystem.json";
+import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
 
 interface Guide {
   project: {
@@ -30,6 +31,13 @@ interface Guide {
     }[];
     requirements: string[];
     rewards: string[];
+    lastUpdated?: string;
+  };
+  votes?: {
+    upvotes: number;
+    downvotes: number;
+    userVote: "up" | "down" | null;
+    breakdown: Record<string, { up: number; down: number }>;
   };
 }
 
@@ -47,6 +55,7 @@ interface EcosystemData {
 }
 
 export function GuidesList() {
+  const { user } = useDiscordAuth();
   const [guides, setGuides] = useState<Guide[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -79,7 +88,61 @@ export function GuidesList() {
           (guide): guide is Guide => guide !== null
         );
 
-        setGuides(loadedGuides);
+        // Fetch votes for all projects
+        try {
+          const response = await fetch("/api/votes", {
+            headers: {
+              "Cache-Control": "no-cache, no-store, must-revalidate",
+              Pragma: "no-cache",
+              Expires: "0",
+            },
+          });
+
+          if (response.ok) {
+            const votesData = await response.json();
+
+            // Add votes data to guides
+            const guidesWithVotes = loadedGuides.map((guide) => {
+              const projectVotes = votesData.projects.find(
+                (p: any) => p.twitter === guide.project.twitter
+              )?.votes;
+
+              return {
+                ...guide,
+                votes: projectVotes || {
+                  upvotes: 0,
+                  downvotes: 0,
+                  userVote: null,
+                  breakdown: {},
+                },
+              };
+            });
+
+            // Sort guides by score (votes excluding minieth)
+            const sortedGuides = guidesWithVotes.sort((a, b) => {
+              const scoreA = getProjectScore(a);
+              const scoreB = getProjectScore(b);
+              return scoreB - scoreA;
+            });
+
+            setGuides(sortedGuides);
+          } else {
+            throw new Error("Failed to fetch votes");
+          }
+        } catch (err) {
+          console.error("Error fetching votes:", err);
+          // Fall back to date-based sorting if vote fetching fails
+          const sortedByDate = loadedGuides.sort((a, b) => {
+            const dateA = a.guide.lastUpdated
+              ? new Date(a.guide.lastUpdated).getTime()
+              : 0;
+            const dateB = b.guide.lastUpdated
+              ? new Date(b.guide.lastUpdated).getTime()
+              : 0;
+            return dateB - dateA;
+          });
+          setGuides(sortedByDate);
+        }
       } catch (err) {
         console.error("Error loading guides:", err);
         setError("Failed to load guides. Please try again later.");
@@ -89,7 +152,22 @@ export function GuidesList() {
     };
 
     loadGuides();
-  }, []);
+  }, [user]);
+
+  // Calculate project score (excluding minieth votes)
+  const getProjectScore = (guide: Guide) => {
+    if (!guide.votes) return 0;
+
+    let score = 0;
+    if (guide.votes.breakdown) {
+      for (const [role, votes] of Object.entries(guide.votes.breakdown)) {
+        if (role.toLowerCase() !== "minieth") {
+          score += votes.up - votes.down;
+        }
+      }
+    }
+    return score;
+  };
 
   useEffect(() => {
     // Load progress from localStorage for all guides
@@ -256,8 +334,29 @@ export function GuidesList() {
                 />
               </div>
 
-              {/* Action Button */}
-              <div className="mt-4 flex items-center justify-end">
+              {/* Votes and Action Button */}
+              <div className="mt-4 flex items-center justify-between">
+                {/* Vote Count */}
+                <div className="flex items-center gap-1.5 text-sm text-gray-400">
+                  <svg
+                    className="h-4 w-4 text-emerald-500/60 dark:text-emerald-400/60"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth={1.75}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M5 15l7-7 7 7"
+                    />
+                  </svg>
+                  <span className="tabular-nums font-medium">
+                    {guide.votes ? guide.votes.upvotes : 0}
+                  </span>
+                </div>
+
+                {/* Action Button */}
                 <div className="px-2 py-1 group/btn relative inline-flex items-center gap-2 text-sm font-medium">
                   <span className="relative z-10  text-blue-400 group-hover/btn:text-white transition-colors">
                     {isComplete ? "Review Guide" : "Start Guide"}
