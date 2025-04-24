@@ -70,17 +70,17 @@ export function TestnetMintsList() {
   const [error, setError] = useState<string | null>(null);
   const [hasAttemptedLoad, setHasAttemptedLoad] = useState(false);
 
-  // We'll keep track of retries instead of preventing duplicate requests
-  const retryCount = useRef(0);
-  const maxRetries = 3;
+  // Add a ref to track fetch requests and prevent duplication
+  const isFetchingRef = useRef(false);
 
   useEffect(() => {
-    // Create a flag to handle cleanup/unmounting
-    let isComponentMounted = true;
+    // Skip if already fetching to prevent double requests
+    if (isFetchingRef.current) return;
 
     const fetchMints = async () => {
       try {
-        if (!isComponentMounted) return;
+        // Set fetching flag to prevent duplicate requests
+        isFetchingRef.current = true;
 
         setLoading(true);
         setError(null);
@@ -305,7 +305,7 @@ export function TestnetMintsList() {
         // Mark as attempted load even if there was an error
         setHasAttemptedLoad(true);
 
-        // Create a descriptive error message that will be shown to the user
+        // Set error message
         const errorMessage =
           err instanceof Error
             ? `${err.message}`
@@ -313,28 +313,14 @@ export function TestnetMintsList() {
 
         setError(errorMessage);
         setMints([]);
-
-        // Retry logic moved here where we have direct access to the error
-        if (retryCount.current < maxRetries && isComponentMounted) {
-          retryCount.current += 1;
-          console.log(
-            `Retrying fetch attempt ${retryCount.current} of ${maxRetries}...`
-          );
-          setTimeout(fetchMints, 1000); // Retry after 1 second
-        }
       } finally {
-        if (isComponentMounted) {
-          setLoading(false);
-        }
+        // Reset fetching flag to allow future requests
+        isFetchingRef.current = false;
+        setLoading(false);
       }
     };
 
     fetchMints();
-
-    // Clean up
-    return () => {
-      isComponentMounted = false;
-    };
   }, []);
 
   if (loading) {
