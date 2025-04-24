@@ -18,8 +18,8 @@ export default function TestnetMintsPage() {
     | "builder"
     | "guides"
     | "bingo"
-    | "testnetmints"
-  >("testnetmints");
+    | "mints"
+  >("mints");
 
   // Handle view changes
   const handleViewChange = (
@@ -33,7 +33,7 @@ export default function TestnetMintsPage() {
       | "builder"
       | "guides"
       | "bingo"
-      | "testnetmints"
+      | "mints"
   ) => {
     if (view === "guides") {
       router.push("/explore");
@@ -53,7 +53,7 @@ export default function TestnetMintsPage() {
       router.push("/");
     } else if (view === "bingo") {
       router.push("/#bingo");
-    } else if (view === "testnetmints") {
+    } else if (view === "mints") {
       router.push("/mints");
     }
     setActiveView(view);
