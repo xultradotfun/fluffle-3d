@@ -251,42 +251,8 @@ export function TestnetMintsList() {
 
         console.log("Found MegaETH Testnet mints:", megaEthMints.length);
 
-        // Since we don't have any MegaETH mints in the API response, use mock data instead
-        if (megaEthMints.length === 0) {
-          console.log("No MegaETH Testnet mints found, creating mock data");
-
-          // Mock data for MegaETH Testnet
-          const mockData: TestnetMint[] = [
-            {
-              name: "Fimmo Bunny",
-              description:
-                "@fimmonaci test-net collection, fimmo bunny is an experiment. i made the collection so fast, like the megaeth real-time network",
-              profileImgUrl:
-                "https://firebasestorage.googleapis.com/v0/b/kingdomly-appv2.appspot.com/o/projects%2F9FSGOaFHxwaTbgTd30PF%2Fmint_page%2Fcard_img.webp?alt=media&token=bbfda203-a309-4fe2-95d8-84ee27db2a82",
-              headerImgUrl:
-                "https://firebasestorage.googleapis.com/v0/b/kingdomly-appv2.appspot.com/o/projects%2F9FSGOaFHxwaTbgTd30PF%2Fmint_page%2Fbanner.webp?alt=media&token=b79e953d-9378-476d-a3a6-6306e0c519ef",
-              totalSupply: 3333,
-              mintTimestamp: Math.floor(1744102800000 / 1000), // Convert milliseconds to seconds
-              mintLink: "https://www.kingdomly.app/fimmo-bunny",
-              twitter: "https://x.com/fimmonaci",
-              discord: "",
-              website: "",
-              mintGroups: [
-                {
-                  name: "Public",
-                  size: 3333,
-                  price: 0.00333,
-                  startTime: Math.floor(1744102800000 / 1000), // Convert milliseconds to seconds
-                },
-              ],
-              chain: "MegaETH Testnet",
-              status: "upcoming",
-            },
-          ];
-
-          setMints(mockData);
-          setError(null);
-        } else {
+        // If we have MegaETH mints, format them and display them
+        if (megaEthMints.length > 0) {
           // Format the data to match our expected structure
           const formattedMints = megaEthMints.map(
             (mint: ApiMint & { status?: string }) => ({
@@ -323,6 +289,12 @@ export function TestnetMintsList() {
           // Clear any errors and set the data
           setError(null);
           setMints(formattedMints);
+        } else {
+          // No MegaETH Testnet mints found - set empty array without any mock data
+          setMints([]);
+          setError(
+            "No MegaETH Testnet mints (chain_id: 6342) were found in the API response."
+          );
         }
 
         // Only after successfully processing the data, mark as attempted
