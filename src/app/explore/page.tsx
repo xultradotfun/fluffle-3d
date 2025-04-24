@@ -26,6 +26,10 @@ export default function GuidesPage() {
       router.push("/#builder");
     } else if (view === "ecosystem") {
       router.push("/");
+    } else if (view === "bingo") {
+      router.push("/#bingo");
+    } else if (view === "mints") {
+      router.push("/mints");
     }
   };
 
