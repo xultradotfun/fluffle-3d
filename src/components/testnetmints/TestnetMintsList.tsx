@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { TestnetMintCard } from "./TestnetMintCard";
 import Image from "next/image";
 import Link from "next/link";
+import ecosystemData from "@/data/ecosystem.json";
 
 interface MintGroup {
   name: string;
@@ -47,6 +48,20 @@ interface ApiMint {
   mint_group_data: ApiMintGroup[];
 }
 
+// Add interface for vote data
+interface VoteData {
+  upvotes: number;
+  downvotes: number;
+  userVote: string | null;
+  breakdown: Record<string, { up: number; down: number }>;
+}
+
+interface ProjectVotes {
+  twitter: string;
+  name: string;
+  votes: VoteData;
+}
+
 interface TestnetMint {
   name: string;
   description: string;
@@ -62,6 +77,8 @@ interface TestnetMint {
   mintGroups: MintGroup[];
   chain: string;
   status?: "live" | "upcoming" | "sold_out";
+  ecosystemProject?: any; // Store matched ecosystem project
+  votes?: VoteData; // Add votes data
 }
 
 export function TestnetMintsList() {
@@ -69,9 +86,40 @@ export function TestnetMintsList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [hasAttemptedLoad, setHasAttemptedLoad] = useState(false);
+  const [votesData, setVotesData] = useState<ProjectVotes[]>([]);
 
   // Add a ref to track fetch requests and prevent duplication
   const isFetchingRef = useRef(false);
+
+  // Fetch votes data
+  useEffect(() => {
+    const fetchVotes = async () => {
+      try {
+        const response = await fetch("/api/votes", {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+          },
+          cache: "no-store",
+        });
+
+        if (!response.ok) {
+          console.warn("Failed to fetch votes data:", response.status);
+          return;
+        }
+
+        const data = await response.json();
+        if (data.projects && Array.isArray(data.projects)) {
+          setVotesData(data.projects);
+          console.log("Votes data loaded:", data.projects.length, "projects");
+        }
+      } catch (err) {
+        console.error("Error fetching votes data:", err);
+      }
+    };
+
+    fetchVotes();
+  }, []);
 
   useEffect(() => {
     // Skip if already fetching to prevent double requests
@@ -255,35 +303,58 @@ export function TestnetMintsList() {
         if (megaEthMints.length > 0) {
           // Format the data to match our expected structure
           const formattedMints = megaEthMints.map(
-            (mint: ApiMint & { status?: string }) => ({
-              name: mint.collection_name,
-              description: mint.description,
-              profileImgUrl: mint.profile_image,
-              headerImgUrl: mint.header_image,
-              totalSupply: mint.total_supply,
-              mintTimestamp: Math.floor(mint.mint_live_timestamp / 1000), // Convert milliseconds to seconds
-              mintLink: mint.mint_page_link,
-              twitter: mint.socials?.twitter || "",
-              discord: mint.socials?.discord || "",
-              website: mint.socials?.website || "",
-              telegram: mint.socials?.telegram || "",
-              mintGroups: Array.isArray(mint.mint_group_data)
-                ? mint.mint_group_data.map((group: ApiMintGroup) => ({
-                    name: group.name,
-                    size: group.allocation,
-                    price: group.price,
-                    startTime: Math.floor(
-                      (group.startTime || mint.mint_live_timestamp) / 1000
-                    ),
-                  }))
-                : [],
-              chain: mint.chain.chain_name,
-              status: mint.status as
-                | "live"
-                | "upcoming"
-                | "sold_out"
-                | undefined,
-            })
+            (mint: ApiMint & { status?: string }) => {
+              // Extract just the Twitter handle from the URL (if it exists)
+              let twitterHandle = "";
+              if (mint.socials?.twitter) {
+                const twitterUrl = mint.socials.twitter;
+                twitterHandle = twitterUrl.split("/").pop() || "";
+                // Remove @ if present
+                twitterHandle = twitterHandle.replace("@", "");
+              }
+
+              // Find matching ecosystem project by Twitter handle if it exists
+              let ecosystemProject = null;
+              if (twitterHandle) {
+                ecosystemProject = ecosystemData.projects.find(
+                  (project) =>
+                    project.twitter &&
+                    project.twitter.toLowerCase() ===
+                      twitterHandle.toLowerCase()
+                );
+              }
+
+              return {
+                name: mint.collection_name,
+                description: mint.description,
+                profileImgUrl: mint.profile_image,
+                headerImgUrl: mint.header_image,
+                totalSupply: mint.total_supply,
+                mintTimestamp: Math.floor(mint.mint_live_timestamp / 1000), // Convert milliseconds to seconds
+                mintLink: mint.mint_page_link,
+                twitter: mint.socials?.twitter || "",
+                discord: mint.socials?.discord || "",
+                website: mint.socials?.website || "",
+                telegram: mint.socials?.telegram || "",
+                mintGroups: Array.isArray(mint.mint_group_data)
+                  ? mint.mint_group_data.map((group: ApiMintGroup) => ({
+                      name: group.name,
+                      size: group.allocation,
+                      price: group.price,
+                      startTime: Math.floor(
+                        (group.startTime || mint.mint_live_timestamp) / 1000
+                      ),
+                    }))
+                  : [],
+                chain: mint.chain.chain_name,
+                status: mint.status as
+                  | "live"
+                  | "upcoming"
+                  | "sold_out"
+                  | undefined,
+                ecosystemProject: ecosystemProject,
+              };
+            }
           );
 
           // Clear any errors and set the data
@@ -322,6 +393,80 @@ export function TestnetMintsList() {
 
     fetchMints();
   }, []);
+
+  // Modify the mints mapping to include votes data
+  useEffect(() => {
+    if (mints.length > 0 && votesData.length > 0) {
+      console.log("Processing mints with votes data...");
+
+      const updatedMints = mints.map((mint) => {
+        // Helper function to extract Twitter handle from URL or handle text
+        const extractTwitterHandle = (twitterText?: string): string => {
+          if (!twitterText) return "";
+          // Remove any URL parts
+          let handle = twitterText.split("/").pop() || "";
+          // Remove @ if present
+          handle = handle.replace("@", "");
+          return handle.toLowerCase();
+        };
+
+        const twitterHandle = extractTwitterHandle(mint.twitter);
+
+        // Log the mint details for debugging
+        console.log(
+          `Processing mint: ${mint.name}, Twitter: ${mint.twitter}, Handle: ${twitterHandle}`
+        );
+
+        // Enhanced special case: Check both name and Twitter handle for fimmonaci
+        if (
+          mint.name.toLowerCase().includes("fimmonaci") ||
+          twitterHandle.includes("fimmonaci") ||
+          mint.description.toLowerCase().includes("fimmonaci")
+        ) {
+          console.log("Found fimmonaci project, looking for meganacci data");
+
+          // Find votes for meganacci
+          const meganacciVotes = votesData.find(
+            (p) => p.twitter.toLowerCase() === "meganacci"
+          );
+
+          // Find ecosystem data for meganacci
+          const meganacciEcosystem = ecosystemData.projects.find(
+            (project) =>
+              project.twitter && project.twitter.toLowerCase() === "meganacci"
+          );
+
+          console.log("Meganacci votes found:", !!meganacciVotes);
+          console.log("Meganacci ecosystem found:", !!meganacciEcosystem);
+
+          if (meganacciVotes) {
+            console.log("Applied special mapping: fimmonaci → meganacci");
+            return {
+              ...mint,
+              votes: meganacciVotes.votes,
+              ecosystemProject: meganacciEcosystem || mint.ecosystemProject,
+            };
+          }
+        }
+
+        // Try to find votes for this project by Twitter handle
+        if (twitterHandle) {
+          const projectVotes = votesData.find(
+            (p) => p.twitter.toLowerCase() === twitterHandle
+          );
+
+          if (projectVotes) {
+            console.log(`Found votes for ${mint.name} (${twitterHandle})`);
+            return { ...mint, votes: projectVotes.votes };
+          }
+        }
+
+        return mint;
+      });
+
+      setMints(updatedMints);
+    }
+  }, [votesData, mints]);
 
   if (loading) {
     return (
@@ -368,6 +513,8 @@ export function TestnetMintsList() {
               mintGroups={mint.mintGroups}
               chain={mint.chain}
               status={mint.status}
+              ecosystemProject={mint.ecosystemProject}
+              votes={mint.votes}
             />
           ))}
         </div>
