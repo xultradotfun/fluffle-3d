@@ -15,6 +15,7 @@ import {
   Wrench,
   BookOpen,
   Grid,
+  Sparkles,
 } from "lucide-react";
 
 interface ViewSwitcherProps {
@@ -27,7 +28,8 @@ interface ViewSwitcherProps {
     | "build"
     | "builder"
     | "guides"
-    | "bingo";
+    | "bingo"
+    | "mints";
   onViewChange: (
     view:
       | "viewer"
@@ -39,6 +41,7 @@ interface ViewSwitcherProps {
       | "builder"
       | "guides"
       | "bingo"
+      | "mints"
   ) => void;
 }
 
@@ -101,6 +104,27 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                 </button>
                 <button
                   onClick={() => {
+                    onViewChange("mints");
+                    router.push("/mints");
+                    setIsTestnetMenuOpen(false);
+                  }}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+                    activeView === "mints"
+                      ? "bg-gradient-to-r from-violet-50/90 to-purple-50/90 text-violet-600 shadow-sm dark:from-violet-500/20 dark:to-violet-500/10 dark:text-violet-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <Sparkles className="w-4 h-4 flex-shrink-0" />
+                  <span className="flex-1 text-left">NFT Mints</span>
+                  <span className="flex-shrink-0 px-1.5 py-0.5 text-[10px] font-medium rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                    New
+                  </span>
+                  {activeView === "mints" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />
+                  )}
+                </button>
+                <button
+                  onClick={() => {
                     onViewChange("guides");
                     router.push("/explore");
                     setIsTestnetMenuOpen(false);
@@ -113,6 +137,9 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                 >
                   <BookOpen className="w-4 h-4 flex-shrink-0" />
                   <span className="flex-1 text-left">Guides</span>
+                  <span className="flex-shrink-0 px-1.5 py-0.5 text-[10px] font-medium rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                    New
+                  </span>
                   {activeView === "guides" && (
                     <div className="w-1.5 h-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />
                   )}
@@ -359,6 +386,27 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                 </button>
                 <button
                   onClick={() => {
+                    onViewChange("mints");
+                    router.push("/mints");
+                    setIsTestnetMenuOpen(false);
+                  }}
+                  className={`flex items-center w-full gap-2.5 px-3.5 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    activeView === "mints"
+                      ? "bg-gradient-to-r from-violet-50 to-purple-50 text-violet-600 shadow-sm dark:from-violet-500/20 dark:to-violet-500/10 dark:text-violet-400"
+                      : "text-gray-700 dark:text-gray-200 hover:bg-white/50 dark:hover:bg-white/[0.08] hover:text-gray-900 dark:hover:text-white"
+                  }`}
+                >
+                  <Sparkles className="w-5 h-5 flex-shrink-0" />
+                  <span className="flex-1 text-left">NFT Mints</span>
+                  <span className="flex-shrink-0 px-1.5 py-0.5 text-[10px] font-medium rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                    New
+                  </span>
+                  {activeView === "mints" && (
+                    <div className="w-1.5 h-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />
+                  )}
+                </button>
+                <button
+                  onClick={() => {
                     onViewChange("guides");
                     router.push("/explore");
                     setIsTestnetMenuOpen(false);
@@ -371,6 +419,9 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                 >
                   <BookOpen className="w-5 h-5 flex-shrink-0" />
                   <span className="flex-1 text-left">Guides</span>
+                  <span className="flex-shrink-0 px-1.5 py-0.5 text-[10px] font-medium rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                    New
+                  </span>
                   {activeView === "guides" && (
                     <div className="w-1.5 h-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />
                   )}

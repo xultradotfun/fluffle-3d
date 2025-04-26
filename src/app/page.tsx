@@ -37,6 +37,7 @@ export default function Home() {
     | "builder"
     | "guides"
     | "bingo"
+    | "mints"
   >("ecosystem");
   const [viewers, setViewers] = useState<ViewerData[]>([]);
   const [error, setError] = useState("");
@@ -61,6 +62,8 @@ export default function Home() {
       setActiveView("guides");
     } else if (hash === "#bingo") {
       setActiveView("bingo");
+    } else if (hash === "#mints") {
+      setActiveView("mints");
     } else {
       setActiveView("ecosystem");
     }
@@ -84,6 +87,8 @@ export default function Home() {
         setActiveView("guides");
       } else if (hash === "#bingo") {
         setActiveView("bingo");
+      } else if (hash === "#mints") {
+        setActiveView("mints");
       } else {
         setActiveView("ecosystem");
       }
@@ -105,6 +110,7 @@ export default function Home() {
       | "builder"
       | "guides"
       | "bingo"
+      | "mints"
   ) => {
     if (view === "guides") {
       router.push("/explore");
@@ -132,6 +138,8 @@ export default function Home() {
       setError("");
     } else if (view === "bingo") {
       router.push("/#bingo");
+    } else if (view === "mints") {
+      router.push("/mints");
     }
     setActiveView(view);
   };

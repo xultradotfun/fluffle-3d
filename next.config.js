@@ -13,6 +13,7 @@ const nextConfig = {
       "fluffle-traits.b-cdn.net",
       "mega-eco.b-cdn.net",
       "mega-bingo.b-cdn.net",
+      "firebasestorage.googleapis.com",
     ],
   },
 };
