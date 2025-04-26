@@ -137,6 +137,9 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                 >
                   <BookOpen className="w-4 h-4 flex-shrink-0" />
                   <span className="flex-1 text-left">Guides</span>
+                  <span className="flex-shrink-0 px-1.5 py-0.5 text-[10px] font-medium rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                    New
+                  </span>
                   {activeView === "guides" && (
                     <div className="w-1.5 h-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />
                   )}
@@ -416,6 +419,9 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                 >
                   <BookOpen className="w-5 h-5 flex-shrink-0" />
                   <span className="flex-1 text-left">Guides</span>
+                  <span className="flex-shrink-0 px-1.5 py-0.5 text-[10px] font-medium rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                    New
+                  </span>
                   {activeView === "guides" && (
                     <div className="w-1.5 h-1.5 rounded-full bg-violet-500 dark:bg-violet-400" />
                   )}
