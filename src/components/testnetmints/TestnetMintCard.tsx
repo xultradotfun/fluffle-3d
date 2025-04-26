@@ -187,18 +187,59 @@ export function TestnetMintCard({
   const statusConfig = useMemo(() => {
     if (isSoldOut) {
       return {
-        badgeClass: "bg-gray-700 text-gray-100",
+        badgeClass:
+          "bg-gradient-to-r from-gray-700 to-gray-600 border border-gray-600/50 text-gray-100",
         text: "SOLD OUT",
+        icon: (
+          <svg
+            className="w-3 h-3 mr-1"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <path d="M21 4H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
+            <path d="M16 2v4"></path>
+            <path d="M8 2v4"></path>
+            <path d="M3 10h18"></path>
+          </svg>
+        ),
       };
     } else if (isMintLive) {
       return {
-        badgeClass: "bg-green-600 text-white",
+        badgeClass:
+          "bg-gradient-to-r from-green-600 to-green-500 border border-green-500/50 text-white",
         text: "LIVE",
+        icon: (
+          <svg
+            className="w-3 h-3 mr-1"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        ),
       };
     } else {
       return {
-        badgeClass: "bg-amber-500 text-white",
+        badgeClass:
+          "bg-gradient-to-r from-amber-600 to-amber-500 border border-amber-500/50 text-white",
         text: "UPCOMING",
+        icon: (
+          <svg
+            className="w-3 h-3 mr-1"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        ),
       };
     }
   }, [isSoldOut, isMintLive]);
@@ -246,11 +287,12 @@ export function TestnetMintCard({
         {/* Status indicators */}
         <div className="absolute top-3 left-3 z-10">
           <div
-            className={`px-3 py-1 rounded-full text-xs font-bold ${statusConfig.badgeClass}`}
+            className={`px-3 py-1.5 rounded-full text-xs font-bold flex items-center shadow-sm ${statusConfig.badgeClass}`}
           >
+            {statusConfig.icon}
             {statusConfig.text}
             {isMintLive && (
-              <span className="ml-1.5 h-2 w-2 rounded-full bg-white inline-block animate-pulse"></span>
+              <span className="ml-1.5 h-2 w-2 rounded-full bg-white inline-block animate-pulse shadow-glow"></span>
             )}
           </div>
         </div>
