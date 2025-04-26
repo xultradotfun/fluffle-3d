@@ -91,6 +91,9 @@ export function TestnetMintsList() {
   // Add a ref to track fetch requests and prevent duplication
   const isFetchingRef = useRef(false);
 
+  // Add a ref to track processed data combinations to prevent infinite loops
+  const lastProcessedDataRef = useRef<string | null>(null);
+
   // Fetch votes data
   useEffect(() => {
     const fetchVotes = async () => {
@@ -398,6 +401,20 @@ export function TestnetMintsList() {
   useEffect(() => {
     if (mints.length > 0 && votesData.length > 0) {
       console.log("Processing mints with votes data...");
+
+      // Use a ref to track if we've already processed this data combination
+      const mintsKey = mints.map((m) => m.name).join("|");
+      const votesKey = votesData.map((v) => v.twitter).join("|");
+      const dataKey = `${mintsKey}:${votesKey}`;
+
+      // Check if we already processed this exact data combination
+      if (lastProcessedDataRef.current === dataKey) {
+        console.log("Skipping redundant processing - data already processed");
+        return;
+      }
+
+      // Mark this data combination as processed
+      lastProcessedDataRef.current = dataKey;
 
       const updatedMints = mints.map((mint) => {
         // Helper function to extract Twitter handle from URL or handle text

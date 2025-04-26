@@ -280,7 +280,7 @@ export function TestnetMintCard({
     !!voteBreakdown && Object.keys(voteBreakdown).length > 0;
 
   return (
-    <Card className="overflow-hidden border-0 bg-gray-900/95 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+    <Card className="overflow-hidden border-0 bg-gradient-to-b from-gray-900/95 to-gray-900/90 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 hover:translate-y-[-2px]">
       {/* Header section with image */}
       <div className="relative">
         {/* Status indicators */}
@@ -301,7 +301,7 @@ export function TestnetMintCard({
           timeLeft &&
           timeLeft.days + timeLeft.hours + timeLeft.minutes + timeLeft.seconds >
             0 && (
-            <div className="absolute top-3 right-3 z-10 bg-black/60 backdrop-blur-sm px-2.5 py-1.5 rounded-lg flex items-center gap-1.5">
+            <div className="absolute top-3 right-3 z-10 bg-black/60 backdrop-blur-sm px-2.5 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="12"
@@ -328,25 +328,25 @@ export function TestnetMintCard({
             </div>
           )}
 
-        {/* Header Image */}
+        {/* Header Image with improved gradient overlay */}
         <div className="relative h-40 w-full overflow-hidden">
           <Image
             src={headerImgUrl || "/placeholder-header.png"}
             alt={`${name} header`}
             fill
-            className="object-cover"
+            className="object-cover transition-transform duration-700 hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/80"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/90"></div>
         </div>
 
-        {/* Social links in banner */}
+        {/* Social links in banner with hover effects */}
         <div className="absolute bottom-3 right-3 z-10 flex gap-2">
           {twitter && twitter !== "" && (
             <Link
               href={twitter}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-7 h-7 bg-blue-500/80 hover:bg-blue-600/90 text-white rounded-full transition-colors shadow-sm"
+              className="flex items-center justify-center w-7 h-7 bg-blue-500/80 hover:bg-blue-600 text-white rounded-full transition-all duration-200 shadow-sm hover:shadow hover:scale-105"
               aria-label="Twitter"
             >
               <svg
@@ -359,12 +359,13 @@ export function TestnetMintCard({
             </Link>
           )}
 
+          {/* Other social links with same hover effect pattern */}
           {discord && discord !== "" && (
             <Link
               href={discord}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-7 h-7 bg-indigo-500/80 hover:bg-indigo-600/90 text-white rounded-full transition-colors shadow-sm"
+              className="flex items-center justify-center w-7 h-7 bg-indigo-500/80 hover:bg-indigo-600 text-white rounded-full transition-all duration-200 shadow-sm hover:shadow hover:scale-105"
               aria-label="Discord"
             >
               <svg
@@ -376,52 +377,10 @@ export function TestnetMintCard({
               </svg>
             </Link>
           )}
-
-          {website && website !== "" && (
-            <Link
-              href={website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center w-7 h-7 bg-gray-500/80 hover:bg-gray-600/90 text-white rounded-full transition-colors shadow-sm"
-              aria-label="Website"
-            >
-              <svg
-                className="w-3.5 h-3.5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                />
-              </svg>
-            </Link>
-          )}
-
-          {telegram && telegram !== "" && (
-            <Link
-              href={telegram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center w-7 h-7 bg-blue-400/80 hover:bg-blue-500/90 text-white rounded-full transition-colors shadow-sm"
-              aria-label="Telegram"
-            >
-              <svg
-                className="w-3.5 h-3.5"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M11.99432,2a10,10,0,1,0,10,10A9.99917,9.99917,0,0,0,11.99432,2Zm3.17951,15.15247a.70547.70547,0,0,1-1.002.3515l-2.71467-2.10938L9.71484,17.002a.29969.29969,0,0,1-.285.03894l.334-3.23242,5.90283-5.90283a.31193.31193,0,0,0-.37573-.49219L8.73438,12.552,5.69873,11.4502a.28978.28978,0,0,1,.00361-.54394l12.54718-4.8418a.29832.29832,0,0,1,.39844.41015Z" />
-              </svg>
-            </Link>
-          )}
         </div>
 
-        {/* Profile image */}
-        <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 h-16 w-16 rounded-full overflow-hidden border-2 border-gray-900 shadow-lg ring-2 ring-blue-500/30">
+        {/* Profile image with enhanced styling */}
+        <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 h-16 w-16 rounded-full overflow-hidden border-2 border-gray-900 shadow-lg ring-2 ring-blue-500/30 transition-all duration-300 hover:ring-blue-500/50">
           <Image
             src={profileImgUrl || "/placeholder-profile.png"}
             alt={`${name} profile`}
@@ -434,8 +393,8 @@ export function TestnetMintCard({
 
       {/* Content section */}
       <div className="flex flex-col px-4 pt-10 pb-4">
-        {/* Title */}
-        <h3 className="text-xl font-bold text-center mb-1 text-white leading-tight">
+        {/* Title with hover effect */}
+        <h3 className="text-xl font-bold text-center mb-1 text-white leading-tight transition-colors duration-200 hover:text-blue-400">
           {name}
         </h3>
 
@@ -446,7 +405,7 @@ export function TestnetMintCard({
 
         {/* Stat grid with improved styling */}
         <div className="grid grid-cols-2 gap-3 mb-5">
-          <div className="bg-gray-800/80 rounded-lg p-3 flex flex-col">
+          <div className="bg-gray-800/80 rounded-lg p-3 flex flex-col hover:bg-gray-800/95 transition-colors duration-200">
             <div className="flex items-center mb-1">
               <svg
                 className="w-3.5 h-3.5 text-blue-400 mr-1.5"
@@ -466,7 +425,7 @@ export function TestnetMintCard({
               {totalSupply.toLocaleString()}
             </div>
           </div>
-          <div className="bg-gray-800/80 rounded-lg p-3 flex flex-col">
+          <div className="bg-gray-800/80 rounded-lg p-3 flex flex-col hover:bg-gray-800/95 transition-colors duration-200">
             <div className="flex items-center mb-1">
               <svg
                 className="w-3.5 h-3.5 text-blue-400 mr-1.5"
@@ -591,16 +550,17 @@ export function TestnetMintCard({
             )}
           </div>
 
-          {/* CTA Button with improved styling */}
+          {/* CTA Button with improved styling and animation */}
           <Link
             href={mintLink}
             target="_blank"
             rel="noopener noreferrer"
-            className={`relative overflow-hidden rounded-lg font-medium py-2.5 px-4 text-center flex items-center justify-center transition-all duration-200 shadow-sm ${
-              isMintLive
-                ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white hover:shadow-blue-500/20 hover:shadow-lg"
-                : "bg-gradient-to-r from-gray-700 to-gray-600 text-white hover:shadow-gray-700/20 hover:shadow-lg"
-            }`}
+            className={`relative overflow-hidden rounded-lg font-medium py-2.5 px-4 text-center flex items-center justify-center transition-all duration-200 shadow-sm 
+              ${
+                isMintLive
+                  ? "bg-gradient-to-r from-blue-600 to-blue-500 text-white hover:shadow-blue-500/20 hover:shadow-lg hover:translate-y-[-1px]"
+                  : "bg-gradient-to-r from-gray-700 to-gray-600 text-white hover:shadow-gray-700/20 hover:shadow-lg hover:translate-y-[-1px]"
+              }`}
           >
             {isMintLive ? (
               <>
@@ -615,7 +575,7 @@ export function TestnetMintCard({
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="ml-2"
+                  className="ml-2 transition-transform duration-200 group-hover:translate-x-1"
                 >
                   <path d="M5 12h14"></path>
                   <path d="m12 5 7 7-7 7"></path>
@@ -634,7 +594,7 @@ export function TestnetMintCard({
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="ml-2"
+                  className="ml-2 transition-transform duration-200 group-hover:translate-x-1"
                 >
                   <path d="M5 12h14"></path>
                   <path d="m12 5 7 7-7 7"></path>
