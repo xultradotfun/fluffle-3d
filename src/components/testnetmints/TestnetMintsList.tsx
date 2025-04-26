@@ -550,27 +550,10 @@ export function TestnetMintsList() {
   if (error) {
     return (
       <div className="bg-red-50 border border-red-200 text-red-800 rounded-lg p-4 my-4">
-        <p className="font-medium">Error loading testnet mints</p>
-        <p className="text-sm">{error}</p>
-        <p className="text-sm mt-2">
-          This error occurs when we can't find any MegaETH Testnet mints
-          (chain_id: 6342) in the API response. Please check the browser console
-          for more debugging information, including the available chain IDs.
+        <p className="font-medium">Unable to fetch testnet mints</p>
+        <p className="text-sm">
+          We can't connect to Kingdomly at this time. Please try again later.
         </p>
-        <p className="text-sm mt-2">
-          <strong>Possible issues:</strong>
-        </p>
-        <ul className="text-sm list-disc pl-5">
-          <li>
-            The Kingdomly API may not be returning any MegaETH Testnet mints
-          </li>
-          <li>
-            There may be a formatting difference in how chain_id is represented
-          </li>
-          <li>
-            The API key might not be configured correctly in your .env file
-          </li>
-        </ul>
       </div>
     );
   }
