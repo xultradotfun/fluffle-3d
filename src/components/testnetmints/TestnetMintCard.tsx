@@ -255,6 +255,38 @@ export function TestnetMintCard({
           </div>
         </div>
 
+        {/* Countdown for upcoming projects */}
+        {isUpcoming &&
+          timeLeft &&
+          timeLeft.days + timeLeft.hours + timeLeft.minutes + timeLeft.seconds >
+            0 && (
+            <div className="absolute top-3 right-3 z-10 bg-black/60 backdrop-blur-sm px-2.5 py-1.5 rounded-lg flex items-center gap-1.5">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-amber-400"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
+              <span className="text-xs font-medium text-white">
+                {timeLeft.days > 0 && `${timeLeft.days}d `}
+                {timeLeft.hours > 0 && `${timeLeft.hours}h `}
+                {timeLeft.minutes > 0 && `${timeLeft.minutes}m `}
+                {timeLeft.days === 0 &&
+                  timeLeft.hours === 0 &&
+                  `${timeLeft.seconds}s`}
+              </span>
+            </div>
+          )}
+
         {/* Header Image */}
         <div className="relative h-40 w-full overflow-hidden">
           <Image
@@ -387,26 +419,6 @@ export function TestnetMintCard({
           </div>
         </div>
 
-        {/* Mint groups */}
-        {mintGroups.length > 0 && (
-          <div className="space-y-2 mb-3">
-            {mintGroups.map((group, i) => (
-              <div
-                key={i}
-                className="flex items-center justify-between py-2 px-3 rounded-lg bg-gray-800/80"
-              >
-                <div>
-                  <div className="font-medium text-white">{group.name}</div>
-                  <div className="text-xs text-gray-400">
-                    {group.size.toLocaleString()} items
-                  </div>
-                </div>
-                <div className="text-blue-400 font-bold">{group.price} ETH</div>
-              </div>
-            ))}
-          </div>
-        )}
-
         {/* Footer section with votes and CTA */}
         <div className="mt-auto flex flex-col gap-3">
           {/* Voting Section */}
@@ -512,33 +524,10 @@ export function TestnetMintCard({
             target="_blank"
             rel="noopener noreferrer"
             className={`relative overflow-hidden rounded-lg font-medium py-2.5 px-4 text-center flex items-center justify-center ${
-              isSoldOut
-                ? "bg-gray-700 text-white"
-                : isMintLive
-                ? "bg-blue-600 text-white"
-                : "bg-amber-600 text-white"
+              isMintLive ? "bg-blue-600 text-white" : "bg-gray-700 text-white"
             }`}
           >
-            {isSoldOut ? (
-              <>
-                <span>View Collection</span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="ml-2"
-                >
-                  <path d="M5 12h14"></path>
-                  <path d="m12 5 7 7-7 7"></path>
-                </svg>
-              </>
-            ) : isMintLive ? (
+            {isMintLive ? (
               <>
                 <span>Mint Now</span>
                 <svg
