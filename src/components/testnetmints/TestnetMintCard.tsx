@@ -515,19 +515,19 @@ export function TestnetMintCard({
             {votes ? (
               <div className="flex items-center gap-2">
                 {/* Vote buttons in a pill shape */}
-                <div className="bg-gray-800/80 rounded-full flex overflow-hidden shadow-sm border border-gray-700">
+                <div className="bg-gray-800/90 rounded-lg flex overflow-hidden shadow-sm border border-gray-700/50">
                   {/* Upvote */}
-                  <div className="flex items-center border-r border-gray-700">
+                  <div className="flex items-center border-r border-gray-700/50">
                     <div
-                      className={`flex items-center justify-center px-2 py-1 ${
+                      className={`flex items-center justify-center px-2.5 py-1.5 ${
                         votes.userVote === "up"
-                          ? "text-green-500 bg-green-500/10"
-                          : "text-green-500"
-                      }`}
+                          ? "bg-gradient-to-r from-green-500/20 to-green-600/10 text-green-400"
+                          : "text-green-500 hover:bg-gray-700/30"
+                      } transition-colors duration-150`}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
+                        className="h-4 w-4"
                         fill={votes.userVote === "up" ? "currentColor" : "none"}
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -548,15 +548,15 @@ export function TestnetMintCard({
                   {/* Downvote */}
                   <div className="flex items-center">
                     <div
-                      className={`flex items-center justify-center px-2 py-1 ${
+                      className={`flex items-center justify-center px-2.5 py-1.5 ${
                         votes.userVote === "down"
-                          ? "text-red-500 bg-red-500/10"
-                          : "text-red-500"
-                      }`}
+                          ? "bg-gradient-to-r from-red-500/20 to-red-600/10 text-red-400"
+                          : "text-red-500 hover:bg-gray-700/30"
+                      } transition-colors duration-150`}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
+                        className="h-4 w-4"
                         fill={
                           votes.userVote === "down" ? "currentColor" : "none"
                         }
@@ -579,11 +579,13 @@ export function TestnetMintCard({
 
                 {/* Use the separate component for tooltip - moved to the right of the vote buttons */}
                 {hasVoteBreakdown && (
-                  <VoteBreakdownTooltip breakdown={voteBreakdown} />
+                  <div className="flex items-center justify-center w-7 h-7 bg-gray-800/90 shadow-sm hover:bg-gray-700/80 transition-colors duration-150 rounded-lg border border-gray-700/50">
+                    <VoteBreakdownTooltip breakdown={voteBreakdown} />
+                  </div>
                 )}
               </div>
             ) : (
-              <div className="text-sm text-gray-400 font-medium">
+              <div className="text-sm text-gray-400 font-medium px-3 py-1.5 bg-gray-800/80 rounded-lg border border-gray-700/30">
                 Unavailable
               </div>
             )}
