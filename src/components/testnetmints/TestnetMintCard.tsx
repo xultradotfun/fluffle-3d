@@ -10,7 +10,6 @@ const formatDate = (date: Date): string => {
   return new Intl.DateTimeFormat("en-US", {
     month: "short",
     day: "numeric",
-    year: "numeric",
     hour: "numeric",
     minute: "2-digit",
     hour12: true,
@@ -449,13 +448,13 @@ export function TestnetMintCard({
         <div className="grid grid-cols-2 gap-3 mb-3">
           <div className="bg-gray-800/80 rounded-lg p-2">
             <div className="text-xs text-gray-400 uppercase">SUPPLY</div>
-            <div className="text-lg font-bold text-white">
+            <div className="text-base font-bold text-white">
               {totalSupply.toLocaleString()}
             </div>
           </div>
           <div className="bg-gray-800/80 rounded-lg p-2">
             <div className="text-xs text-gray-400 uppercase">MINT DATE</div>
-            <div className="text-sm font-bold text-white">
+            <div className="text-base font-bold text-white">
               {formatDate(mintDate)}
             </div>
           </div>
