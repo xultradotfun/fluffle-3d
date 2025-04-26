@@ -305,21 +305,15 @@ export function TestnetMintCard({
               href={twitter}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-7 h-7 bg-blue-500/80 hover:bg-blue-600/90 text-white rounded-full transition-colors"
+              className="flex items-center justify-center w-7 h-7 bg-blue-500/80 hover:bg-blue-600/90 text-white rounded-full transition-colors shadow-sm"
               aria-label="Twitter"
             >
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
+                className="w-3.5 h-3.5"
                 viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                fill="currentColor"
               >
-                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                <path d="M21.543 7.104c.015.211.015.423.015.636 0 6.507-4.954 14.01-14.01 14.01v-.003A13.94 13.94 0 0 1 0 19.539a9.88 9.88 0 0 0 7.287-2.041 4.93 4.93 0 0 1-4.6-3.42 4.916 4.916 0 0 0 2.223-.084A4.926 4.926 0 0 1 .96 9.167v-.062a4.887 4.887 0 0 0 2.235.616A4.928 4.928 0 0 1 1.67 3.148 13.98 13.98 0 0 0 11.82 8.292a4.929 4.929 0 0 1 8.39-4.49 9.868 9.868 0 0 0 3.128-1.196 4.941 4.941 0 0 1-2.165 2.724A9.828 9.828 0 0 0 24 4.555a10.019 10.019 0 0 1-2.457 2.549z" />
               </svg>
             </Link>
           )}
@@ -329,25 +323,15 @@ export function TestnetMintCard({
               href={discord}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-7 h-7 bg-indigo-500/80 hover:bg-indigo-600/90 text-white rounded-full transition-colors"
+              className="flex items-center justify-center w-7 h-7 bg-indigo-500/80 hover:bg-indigo-600/90 text-white rounded-full transition-colors shadow-sm"
               aria-label="Discord"
             >
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
+                className="w-3.5 h-3.5"
                 viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+                fill="currentColor"
               >
-                <path d="M9 12a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"></path>
-                <path d="M15 12a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"></path>
-                <path d="M8.6 19.5 5 17.4l.3-2.9c-.3-.2-1-1.3-1.5-2.5-.8-1.7-.8-3.8 0-6 2-5 6-5 8.1-5h.2c2.2 0 6.1 0 8.1 5 .5 1.3.8 2.5.8 3.8.1 1.3-.4 2.5-.9 3.4l-.6 1 .4 2.8-4.4 2.5"></path>
-                <path d="M8.5 14.5s1.5 2 3.5 2 3.5-2 3.5-2"></path>
-                <path d="M7 17c2 2 6.5 2.5 10 0"></path>
+                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515a.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0a12.64 12.64 0 0 0-.617-1.25a.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057a19.9 19.9 0 0 0 5.993 3.03a.078.078 0 0 0 .084-.028a14.09 14.09 0 0 0 1.226-1.994a.076.076 0 0 0-.041-.106a13.107 13.107 0 0 1-1.872-.892a.077.077 0 0 1-.008-.128a10.2 10.2 0 0 0 .372-.292a.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127a12.299 12.299 0 0 1-1.873.892a.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028a19.839 19.839 0 0 0 6.002-3.03a.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.956-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419c0-1.333.955-2.419 2.157-2.419c1.21 0 2.176 1.096 2.157 2.42c0 1.333-.946 2.418-2.157 2.418z" />
               </svg>
             </Link>
           )}
@@ -357,23 +341,39 @@ export function TestnetMintCard({
               href={website}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center w-7 h-7 bg-gray-500/80 hover:bg-gray-600/90 text-white rounded-full transition-colors"
+              className="flex items-center justify-center w-7 h-7 bg-gray-500/80 hover:bg-gray-600/90 text-white rounded-full transition-colors shadow-sm"
               aria-label="Website"
             >
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
+                className="w-3.5 h-3.5"
                 fill="none"
+                viewBox="0 0 24 24"
                 stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
               >
-                <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z"></path>
-                <path d="M2 12h20"></path>
-                <path d="M12 2v20"></path>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.5}
+                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                />
+              </svg>
+            </Link>
+          )}
+
+          {telegram && telegram !== "" && (
+            <Link
+              href={telegram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center w-7 h-7 bg-blue-400/80 hover:bg-blue-500/90 text-white rounded-full transition-colors shadow-sm"
+              aria-label="Telegram"
+            >
+              <svg
+                className="w-3.5 h-3.5"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M11.99432,2a10,10,0,1,0,10,10A9.99917,9.99917,0,0,0,11.99432,2Zm3.17951,15.15247a.70547.70547,0,0,1-1.002.3515l-2.71467-2.10938L9.71484,17.002a.29969.29969,0,0,1-.285.03894l.334-3.23242,5.90283-5.90283a.31193.31193,0,0,0-.37573-.49219L8.73438,12.552,5.69873,11.4502a.28978.28978,0,0,1,.00361-.54394l12.54718-4.8418a.29832.29832,0,0,1,.39844.41015Z" />
               </svg>
             </Link>
           )}
