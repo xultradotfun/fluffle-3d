@@ -3,7 +3,7 @@
     "name": "ITS",
     "twitter": "megatruther",
     "description": "Imagine the smell",
-    "longDescription": "ITS is an alternate reality game that introduces players to a maze of puzzles at the crossroads of basic cryptography, computer science, blockchain analysis and logic. No prior computer science experience is required to enter the world of ITS, just grit and patience. Every few weeks, a new puzzle sequence ('epoch') drops on ITS's X page (@megatruther). The first few to solve the puzzle are rewarded with the megamind role on Megaeth's Discord.",
+    "longDescription": "ITS is an alternate reality game that introduces players to a maze of puzzles at the crossroads of basic cryptography, computer science, blockchain analysis and logic. No prior computer science experience is required to enter the world of ITS, just grit and patience. Every few weeks, a new puzzle sequence (“epoch”) drops on ITS’s X page (@megatruther). The first few to solve the puzzle are rewarded with the megamind role on MegaETH's Discord.",
     "features": [],
     "currentStatus": "Game is live with regular epoch drops and community engagement."
   },
@@ -60,9 +60,92 @@
             ]
           }
         ]
+      },
+      {
+        "id": "eli5-guide",
+        "title": "ELI5 Guide to Truthing",
+        "steps": [
+          {
+            "id": "step-6",
+            "title": "",
+            "content": "If you just joined ITS and want to start truthing, these are hint blocks for all three past epochs:",
+            "completable": false
+          },
+          {
+            "id": "step-7",
+            "title": "Epoch 1",
+            "content": "a) Start with https://imaginethesmell.xyz/terminal\nb) One of the documents in there links to a zora contract. Try to find that connection\nc) Keep following the thread\nd) Submissions for epoch 1 happen in the terminal with the --pk flag: do not submit your own private keys! The solution of epoch 1 is a private key for you to find",
+            "completable": false,
+            "links": [
+              {
+                "text": "Begin",
+                "url": "https://imaginethesmell.xyz/terminal"
+              }
+            ],
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/megatruther/1.png"
+              }
+            ]
+          },
+          {
+            "id": "step-8",
+            "title": "Epoch 2",
+            "content": "a) Start with this tweet: https://x.com/megatruther/status/1903125254475599895\nb) The image linked to this tweet is a multi-layered puzzle that will lead you to the next step\nc) Throughout the puzzle, keep using the resources in https://imaginethesmell.xyz/terminal to move forward\nd) Submissions for epoch 2 happen in the terminal with the --secret flag",
+            "completable": false,
+            "links": [
+              {
+                "text": "Begin",
+                "url": "https://x.com/megatruther/status/1903125254475599895"
+              }
+            ],
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/megatruther/2.png"
+              }
+            ]
+          },
+          {
+            "id": "step-9",
+            "title": "Epoch 3",
+            "content": "a) Starts with this link: https://imaginethesmell.xyz/sokoban\nb) In order to move past the sokoban, you can make use of these two tweets as hints (linked below)\nc) The expected submission for the epoch 3 is clarified by the tweets linked below\nd) Submissions for epoch 3 happen in the terminal with the --secret flag",
+            "completable": false,
+            "links": [
+              {
+                "text": "Begin",
+                "url": "https://imaginethesmell.xyz/sokoban"
+              },
+              {
+                "text": "Sokoban Hint 1",
+                "url": "https://x.com/megatruther/status/1911054697953468664"
+              },
+              {
+                "text": "Sokoban Hint 2",
+                "url": "https://x.com/megatruther/status/1909888413483802822"
+              },
+              {
+                "text": "Clarification 1",
+                "url": "https://x.com/megatruther/status/1910674035983212850"
+              },
+              {
+                "text": "Clarification 2",
+                "url": "https://x.com/megatruther/status/1910943838920749161"
+              },
+              {
+                "text": "Clarification 3",
+                "url": "https://x.com/megatruther/status/1910957865809912069"
+              }
+            ],
+            "images": [
+              {
+                "url": "https://mega-eco.b-cdn.net/megatruther/3.png"
+              }
+            ]
+          }
+        ]
       }
     ],
     "requirements": ["None"],
-    "lastUpdated": "2025-04-10"
+    "lastUpdated": "2025-04-29"
   }
 }
