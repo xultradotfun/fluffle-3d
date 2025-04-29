@@ -12,7 +12,7 @@ const securityHeaders = {
 };
 
 // Whitelist of project IDs allowed to use this endpoint
-const ALLOWED_PROJECT_IDS = new Set([27, 94]); // valhalla, badbunnz
+const ALLOWED_PROJECT_IDS = new Set([27, 92, 94]); // valhalla, megatruther, badbunnz
 
 // Input sanitization utilities
 function sanitizeUserId(userId: string): string {
