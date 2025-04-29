@@ -11,6 +11,9 @@ const securityHeaders = {
   "Referrer-Policy": "strict-origin-when-cross-origin",
 };
 
+// Whitelist of project IDs allowed to use this endpoint
+const ALLOWED_PROJECT_IDS = new Set([94]);
+
 // Input sanitization utilities
 function sanitizeUserId(userId: string): string {
   // Remove any non-numeric characters as Discord IDs are numeric
@@ -83,6 +86,23 @@ export async function GET(request: Request) {
         }),
         {
           status: 400,
+          headers: {
+            "Content-Type": "application/json",
+            ...securityHeaders,
+          },
+        }
+      );
+    }
+
+    // Check if project is allowed to use this endpoint
+    if (!ALLOWED_PROJECT_IDS.has(projectIdNum)) {
+      return new NextResponse(
+        JSON.stringify({
+          error: "Unauthorized project",
+          details: "This project is not authorized to use this endpoint",
+        }),
+        {
+          status: 403,
           headers: {
             "Content-Type": "application/json",
             ...securityHeaders,
