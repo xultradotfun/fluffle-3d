@@ -12,7 +12,7 @@ const securityHeaders = {
 };
 
 // Whitelist of project IDs allowed to use this endpoint
-const ALLOWED_PROJECT_IDS = new Set([27, 92, 94]); // valhalla, megatruther, badbunnz
+const ALLOWED_PROJECT_IDS = new Set([27, 41, 92, 94]); // valhalla, rainmakr, megatruther, badbunnz
 
 // Input sanitization utilities
 function sanitizeUserId(userId: string): string {
@@ -111,7 +111,7 @@ export async function GET(request: Request) {
       );
     }
 
-    // Check if user has upvoted the project
+    // Check if user has voted on the project (any vote type)
     const vote = await prisma.vote.findUnique({
       where: {
         userId_projectId: {
@@ -124,10 +124,10 @@ export async function GET(request: Request) {
       },
     });
 
-    // Return whether the user has upvoted (type === "up")
+    // Return whether the user has voted at all (any vote type)
     return NextResponse.json(
       {
-        hasUpvoted: vote?.type === "up",
+        hasVoted: vote !== null,
       },
       {
         headers: {
@@ -137,10 +137,10 @@ export async function GET(request: Request) {
       }
     );
   } catch (error) {
-    console.error("Failed to check upvote status:", error);
+    console.error("Failed to check vote status:", error);
     return new NextResponse(
       JSON.stringify({
-        error: "Failed to check upvote status",
+        error: "Failed to check vote status",
         details: "An internal error occurred while checking the vote status",
       }),
       {
