@@ -159,11 +159,10 @@
       "guide": true
     },
     {
-      "name": "Teko",
-      "twitter": "tekofinance",
-      "website": "https://teko.finance/waitlist?ref_id=LVLQHNJZQ",
-      "discord": "https://discord.gg/tByhhB8u",
-      "description": "A money market with leveraged strategies + margin trading",
+      "name": "World Capital Markets",
+      "twitter": "wcm_inc",
+      "website": "http://wcm.inc/waitlist?ref_id=ZEKWYETON",
+      "description": "The marketplace for spot, perps, and lending - all CLOBS, all cross-margined, fully onchain",
       "category": "DeFi",
       "megaMafia": true,
       "native": true,

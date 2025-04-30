@@ -1,7 +1,7 @@
 {
   "project": {
-    "name": "Teko",
-    "twitter": "tekofinance",
+    "name": "World Capital Markets",
+    "twitter": "wcm_inc",
     "description": "A money market with leveraged strategies + margin trading",
     "longDescription": "Teko Finance is a cutting-edge money market protocol built on MegaETH, offering a comprehensive suite of lending, borrowing, and leveraged trading features. Our platform combines traditional lending markets with innovative leveraged strategies, providing users with enhanced yield opportunities and flexible borrowing options.",
     "features": [
@@ -26,7 +26,7 @@
         "description": "Trade with leverage while maintaining full control over your positions and risk exposure."
       }
     ],
-    "currentStatus": "The testnet is live with core lending and borrowing functionality. Users can mint test tokens, provide liquidity, and experiment with borrowing features. Leveraged strategies and margin trading coming soon."
+    "currentStatus": "The testnet is live with core lending and borrowing functionality. Users can mint test tokens, provide liquidity, and experiment with borrowing features. Leveraged strategies and margin trading coming soon. [Recently changed from Teko to WCM]"
   },
   "guide": {
     "sections": [
