@@ -497,9 +497,14 @@ export function TestnetMintsList() {
 
   // If we have data, show it regardless of error state
   if (mints.length > 0) {
-    // Sort mints: live first, then upcoming, then sold out
+    // Sort mints: primarily by mint date (latest first), then by status
     const sortedMints = [...mints].sort((a, b) => {
-      // Define priority order: live > upcoming > sold_out
+      // Primary sort: mint timestamp (latest first)
+      if (a.mintTimestamp !== b.mintTimestamp) {
+        return b.mintTimestamp - a.mintTimestamp;
+      }
+
+      // Secondary sort: status priority (live > upcoming > sold_out)
       const getPriority = (status: string | undefined) => {
         if (status === "live") return 0;
         if (status === "upcoming") return 1;
