@@ -64,6 +64,18 @@ export function EcosystemDashboard() {
     type: "score",
     direction: "desc",
   });
+  const [highlightedProject, setHighlightedProject] = useState<string | null>(
+    null
+  );
+
+  // Read query parameter on mount
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const cardParam = params.get("card");
+    if (cardParam) {
+      setHighlightedProject(cardParam.toLowerCase());
+    }
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
@@ -218,6 +230,16 @@ export function EcosystemDashboard() {
       );
     })
     .sort((a, b) => {
+      // Prioritize the highlighted project
+      const aIsHighlighted =
+        highlightedProject && a.twitter.toLowerCase() === highlightedProject;
+      const bIsHighlighted =
+        highlightedProject && b.twitter.toLowerCase() === highlightedProject;
+
+      if (aIsHighlighted && !bIsHighlighted) return -1;
+      if (!aIsHighlighted && bIsHighlighted) return 1;
+
+      // If neither or both are highlighted, use the selected sort method
       if (sortMethod.type === "score") {
         const scoreA = getProjectScore(a);
         const scoreB = getProjectScore(b);
@@ -270,16 +292,8 @@ export function EcosystemDashboard() {
             totalProjects={projects.length}
           />
 
-          {/* Results and Sort */}
-          <div className="flex items-center justify-between">
-            <div className="text-sm text-gray-600 dark:text-gray-300">
-              Showing {filteredProjects.length} projects
-              {isLoadingVotes && (
-                <span className="ml-2 text-blue-500 dark:text-blue-400">
-                  Loading votes...
-                </span>
-              )}
-            </div>
+          {/* Sort Controls */}
+          <div className="flex justify-end">
             <SortSelector
               sortMethod={sortMethod}
               onSortChange={setSortMethod}
@@ -287,11 +301,11 @@ export function EcosystemDashboard() {
           </div>
         </div>
 
-        {/* Project Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Projects Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProjects.map((project) => (
             <ProjectCard
-              key={project.name}
+              key={project.twitter}
               project={project}
               isLoadingVotes={isLoadingVotes}
             />
