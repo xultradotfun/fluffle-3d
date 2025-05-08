@@ -1153,6 +1153,16 @@
       "megaMafia": false,
       "native": false,
       "testnet": false
+    },
+    {
+      "name": "Koan",
+      "twitter": "koanpay",
+      "website": "https://koan.network/",
+      "description": "Secure, confidential cross-chain asset transfers across EVM and UTXO chains using MPC and decentralized validators",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
     }
   ]
 }
