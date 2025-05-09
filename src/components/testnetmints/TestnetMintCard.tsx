@@ -663,7 +663,7 @@ export function TestnetMintCard({
                   {totalSupply.toLocaleString()}
                 </>
               ) : (
-                "-"
+                "Unlimited"
               )}
             </div>
           </div>
