@@ -1,5 +1,12 @@
 import { NextResponse } from "next/server";
 
+// Helper function to check if a collection is on MegaETH
+const isMegaETHCollection = (collection: any): boolean => {
+  if (!collection?.chain?.chain_id) return false;
+  const chainId = collection.chain.chain_id;
+  return chainId === 6342 || String(chainId) === "6342";
+};
+
 export async function GET() {
   try {
     const apiUrl = "https://kingdomly.app/api/fetchPartnerMints";
@@ -48,14 +55,56 @@ export async function GET() {
       } mints`
     );
 
-    // Log the structure of the response
-    console.log("[Proxy] Response data structure:", {
-      isArray: Array.isArray(data),
-      topLevelKeys: data ? Object.keys(data) : [],
-      hasPartnerCollections: data && data.partnerCollections ? true : false,
-    });
+    // Filter for MegaETH collections and structure the response
+    if (data && data.partnerCollections) {
+      const filteredData = {
+        partnerCollections: {
+          live: (data.partnerCollections.live || []).filter(
+            isMegaETHCollection
+          ),
+          upcoming: (data.partnerCollections.upcoming || []).filter(
+            isMegaETHCollection
+          ),
+          sold_out: (data.partnerCollections.sold_out || []).filter(
+            isMegaETHCollection
+          ),
+        },
+      };
 
-    return NextResponse.json(data);
+      console.log("[Proxy] MegaETH collections found:", {
+        live: filteredData.partnerCollections.live.length,
+        upcoming: filteredData.partnerCollections.upcoming.length,
+        sold_out: filteredData.partnerCollections.sold_out.length,
+      });
+
+      return NextResponse.json(filteredData);
+    }
+
+    // If data structure is different, try to filter at top level
+    if (Array.isArray(data)) {
+      const filteredData = {
+        partnerCollections: {
+          live: data.filter(isMegaETHCollection),
+          upcoming: [],
+          sold_out: [],
+        },
+      };
+
+      console.log(
+        "[Proxy] MegaETH collections found:",
+        filteredData.partnerCollections.live.length
+      );
+      return NextResponse.json(filteredData);
+    }
+
+    // If we can't process the data, return empty collections
+    return NextResponse.json({
+      partnerCollections: {
+        live: [],
+        upcoming: [],
+        sold_out: [],
+      },
+    });
   } catch (error) {
     console.error("[Proxy] Error fetching mints:", error);
     return NextResponse.json(

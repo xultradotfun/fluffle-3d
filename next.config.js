@@ -14,6 +14,8 @@ const nextConfig = {
       "mega-eco.b-cdn.net",
       "mega-bingo.b-cdn.net",
       "firebasestorage.googleapis.com",
+      "testnet-bff.rarible.fun",
+      "testnet.rarible.fun",
     ],
   },
 };

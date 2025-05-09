@@ -49,6 +49,7 @@ interface TestnetMintProps {
   status?: "live" | "upcoming" | "sold_out";
   ecosystemProject?: any;
   votes?: VoteData;
+  source: "kingdomly" | "rarible";
 }
 
 // Simple component to display vote breakdown with a custom tooltip
@@ -230,6 +231,89 @@ const VoteBreakdownTooltip = ({
   );
 };
 
+// Add a helper function to check if URL is for animated content
+const isAnimatedImage = (url: string): boolean => {
+  const ext = url.split(".").pop()?.toLowerCase();
+  return ext === "gif" || ext === "webp";
+};
+
+// Add a helper function to check if URL is for video content
+const isVideo = (url: string): boolean => {
+  const ext = url.split(".").pop()?.toLowerCase();
+  return ext === "mp4" || ext === "webm" || ext === "mov";
+};
+
+// Add a MediaDisplay component to handle different media types
+const MediaDisplay = ({
+  url,
+  alt,
+  className,
+  fallbackUrl,
+  isHeader = false,
+}: {
+  url: string;
+  alt: string;
+  className?: string;
+  fallbackUrl?: string;
+  isHeader?: boolean;
+}) => {
+  // If this is a header and we have no URL but have a fallback, create a blurred background
+  if (isHeader && !url && fallbackUrl) {
+    return (
+      <div className="relative w-full h-full">
+        {/* Blurred background image */}
+        <Image
+          src={fallbackUrl}
+          alt={alt}
+          fill
+          className={cn("object-cover scale-110", className)}
+          unoptimized={isAnimatedImage(fallbackUrl)}
+          style={{ filter: "blur(20px) brightness(0.7)" }}
+        />
+        {/* Centered profile image */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="w-24 h-24 relative">
+            <Image
+              src={fallbackUrl}
+              alt={alt}
+              fill
+              className="object-cover rounded-lg"
+              unoptimized={isAnimatedImage(fallbackUrl)}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (isVideo(url)) {
+    return (
+      <video
+        src={url}
+        className={className}
+        autoPlay
+        loop
+        muted
+        playsInline
+        style={{ objectFit: "cover" }}
+      />
+    );
+  }
+
+  return (
+    <Image
+      src={url || fallbackUrl || "/placeholder-header.png"}
+      alt={alt}
+      fill
+      className={cn(
+        "object-cover transition-transform duration-700 hover:scale-105",
+        className
+      )}
+      unoptimized={isAnimatedImage(url || fallbackUrl || "")}
+    />
+  );
+};
+
 export function TestnetMintCard({
   name,
   description,
@@ -247,6 +331,7 @@ export function TestnetMintCard({
   status,
   ecosystemProject,
   votes,
+  source,
 }: TestnetMintProps) {
   // Use timestamp for fallback only if status is not provided
   const isMintLive =
@@ -366,7 +451,7 @@ export function TestnetMintCard({
       {/* Header section with image */}
       <div className="relative">
         {/* Status indicators */}
-        <div className="absolute top-3 left-3 z-10">
+        <div className="absolute top-3 left-3 z-10 flex items-center gap-2">
           <div
             className={`px-3 py-1.5 rounded-full text-xs font-bold flex items-center shadow-sm ${statusConfig.badgeClass}`}
           >
@@ -375,6 +460,21 @@ export function TestnetMintCard({
             {isMintLive && (
               <span className="ml-1.5 h-2 w-2 rounded-full bg-white inline-block animate-pulse shadow-glow"></span>
             )}
+          </div>
+
+          {/* Marketplace source icon */}
+          <div className="w-7 h-7 rounded-full bg-black/60 backdrop-blur-sm flex items-center justify-center shadow-sm">
+            <Image
+              src={
+                source === "kingdomly"
+                  ? "/kingdomlylogo.png"
+                  : "/rariblelogo.png"
+              }
+              alt={`${source} marketplace`}
+              width={20}
+              height={20}
+              className="rounded-full"
+            />
           </div>
         </div>
 
@@ -412,11 +512,11 @@ export function TestnetMintCard({
 
         {/* Header Image with improved gradient overlay */}
         <div className="relative h-40 w-full overflow-hidden">
-          <Image
-            src={headerImgUrl || "/placeholder-header.png"}
+          <MediaDisplay
+            url={headerImgUrl}
+            fallbackUrl={profileImgUrl}
             alt={`${name} header`}
-            fill
-            className="object-cover transition-transform duration-700 hover:scale-105"
+            isHeader={true}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/90"></div>
         </div>
@@ -463,12 +563,11 @@ export function TestnetMintCard({
 
         {/* Profile image with enhanced styling */}
         <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 h-16 w-16 rounded-full overflow-hidden border-2 border-gray-900 shadow-lg ring-2 ring-blue-500/30 transition-all duration-300 hover:ring-blue-500/50">
-          <Image
-            src={profileImgUrl || "/placeholder-profile.png"}
+          <MediaDisplay
+            url={profileImgUrl}
+            fallbackUrl="/placeholder-profile.png"
             alt={`${name} profile`}
-            width={64}
-            height={64}
-            className="object-cover"
+            className="!static"
           />
         </div>
       </div>
@@ -504,7 +603,7 @@ export function TestnetMintCard({
               </div>
             </div>
             <div className="text-base font-bold text-white">
-              {totalSupply.toLocaleString()}
+              {totalSupply ? totalSupply.toLocaleString() : "-"}
             </div>
           </div>
           <div className="bg-gray-800/80 rounded-lg p-3 flex flex-col hover:bg-gray-800/95 transition-colors duration-200">

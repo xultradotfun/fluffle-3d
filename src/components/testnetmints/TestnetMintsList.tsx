@@ -5,6 +5,7 @@ import { TestnetMintCard } from "./TestnetMintCard";
 import Image from "next/image";
 import Link from "next/link";
 import ecosystemData from "@/data/ecosystem.json";
+import { findMatchingAlias } from "@/data/nft-aliases";
 
 interface MintGroup {
   name: string;
@@ -46,6 +47,7 @@ interface ApiMint {
     telegram?: string;
   };
   mint_group_data: ApiMintGroup[];
+  author?: string; // Added for Rarible collections
 }
 
 // Add interface for vote data
@@ -79,6 +81,8 @@ interface TestnetMint {
   status?: "live" | "upcoming" | "sold_out";
   ecosystemProject?: any; // Store matched ecosystem project
   votes?: VoteData; // Add votes data
+  source: "kingdomly" | "rarible"; // Add source field
+  author?: string; // Added for Rarible collections
 }
 
 export function TestnetMintsList() {
@@ -87,6 +91,9 @@ export function TestnetMintsList() {
   const [error, setError] = useState<string | null>(null);
   const [hasAttemptedLoad, setHasAttemptedLoad] = useState(false);
   const [votesData, setVotesData] = useState<ProjectVotes[]>([]);
+  const [activeFilter, setActiveFilter] = useState<
+    "upcoming" | "live" | "sold_out" | "all"
+  >("all");
 
   // Add a ref to track fetch requests and prevent duplication
   const isFetchingRef = useRef(false);
@@ -136,178 +143,94 @@ export function TestnetMintsList() {
         setLoading(true);
         setError(null);
 
-        // Try the proxy endpoint first
-        const proxyUrl = "/api/proxy-mints";
-        console.log("Fetching mints from proxy:", proxyUrl);
+        // Fetch from both Kingdomly and Rarible APIs
+        const [kingdomlyResponse, raribleResponse] = await Promise.allSettled([
+          fetch("/api/proxy-mints", {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              "Cache-Control": "no-cache",
+            },
+            cache: "no-store",
+            next: { revalidate: 0 },
+          }),
+          fetch("/api/proxy-rarible", {
+            method: "GET",
+            headers: {
+              Accept: "application/json",
+              "Cache-Control": "no-cache",
+            },
+            cache: "no-store",
+            next: { revalidate: 0 },
+          }),
+        ]);
 
-        const response = await fetch(proxyUrl, {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Cache-Control": "no-cache",
-          },
-          cache: "no-store",
-          next: { revalidate: 0 },
-        });
+        let kingdomlyData;
+        let raribleData;
+        let errors: string[] = [];
 
-        console.log("Proxy response status:", response.status);
+        // Process Kingdomly response
+        if (
+          kingdomlyResponse.status === "fulfilled" &&
+          kingdomlyResponse.value.ok
+        ) {
+          kingdomlyData = await kingdomlyResponse.value.json();
+        } else {
+          console.error("Failed to fetch Kingdomly data");
+          errors.push("Kingdomly");
+        }
 
-        if (!response.ok) {
+        // Process Rarible response
+        if (
+          raribleResponse.status === "fulfilled" &&
+          raribleResponse.value.ok
+        ) {
+          raribleData = await raribleResponse.value.json();
+        } else {
+          console.error("Failed to fetch Rarible data");
+          errors.push("Rarible");
+        }
+
+        // If both APIs failed, show error
+        if (errors.length === 2) {
           throw new Error(
-            `Proxy fetch failed: ${response.status} ${response.statusText}`
+            `Failed to fetch data from both Kingdomly and Rarible`
           );
         }
 
-        const responseData = await response.json();
-        console.log("Received data from proxy:", responseData);
-
-        // Add detailed logging to understand the response structure
-        console.log("Response data structure:", {
-          isArray: Array.isArray(responseData),
-          topLevelKeys: responseData ? Object.keys(responseData) : [],
-          hasPartnerCollections:
-            responseData && responseData.partnerCollections ? true : false,
-          partnerCollectionKeys:
-            responseData && responseData.partnerCollections
-              ? Object.keys(responseData.partnerCollections)
-              : [],
-        });
-
-        if (responseData && responseData.partnerCollections) {
-          console.log(
-            "Live collections:",
-            responseData.partnerCollections.live?.length || 0
-          );
-          console.log(
-            "Upcoming collections:",
-            responseData.partnerCollections.upcoming?.length || 0
-          );
-          console.log(
-            "Sold out collections:",
-            responseData.partnerCollections.sold_out?.length || 0
-          );
-        }
-
-        // Extract mints from the response
-        // The structure might be an array directly or might be inside an object
-        let allMints: ApiMint[] = [];
-        let megaEthMints: (ApiMint & { status?: string })[] = [];
-
-        // Helper function to check if the chain ID matches MegaETH Testnet
-        const isMegaETHChain = (chain: any): boolean => {
-          if (!chain || !chain.chain_id) return false;
-          const chainId = chain.chain_id;
-          return chainId === 6342 || String(chainId) === "6342";
+        // Combine collections from both sources
+        const combinedCollections = {
+          live: [
+            ...(kingdomlyData?.partnerCollections?.live || []).map(
+              (mint: any) => ({ ...mint, source: "kingdomly" })
+            ),
+            ...(raribleData?.partnerCollections?.live || []).map(
+              (mint: any) => ({ ...mint, source: "rarible" })
+            ),
+          ],
+          upcoming: [
+            ...(kingdomlyData?.partnerCollections?.upcoming || []).map(
+              (mint: any) => ({ ...mint, source: "kingdomly" })
+            ),
+            ...(raribleData?.partnerCollections?.upcoming || []).map(
+              (mint: any) => ({ ...mint, source: "rarible" })
+            ),
+          ],
+          sold_out: [
+            ...(kingdomlyData?.partnerCollections?.sold_out || []).map(
+              (mint: any) => ({ ...mint, source: "kingdomly" })
+            ),
+            ...(raribleData?.partnerCollections?.sold_out || []).map(
+              (mint: any) => ({ ...mint, source: "rarible" })
+            ),
+          ],
         };
 
-        if (Array.isArray(responseData)) {
-          allMints = responseData as ApiMint[];
-          megaEthMints = allMints.filter(
-            (item: ApiMint) => item.chain && isMegaETHChain(item.chain)
-          );
-        } else if (responseData && typeof responseData === "object") {
-          if (responseData.partnerCollections) {
-            // Handle the nested partnerCollections structure and preserve status
-            const { partnerCollections } = responseData;
-
-            if (
-              partnerCollections.live &&
-              Array.isArray(partnerCollections.live)
-            ) {
-              const liveMints = partnerCollections.live
-                .filter(
-                  (item: ApiMint) => item.chain && isMegaETHChain(item.chain)
-                )
-                .map((item: ApiMint) => ({ ...item, status: "live" }));
-              megaEthMints = [...megaEthMints, ...liveMints];
-            }
-
-            if (
-              partnerCollections.upcoming &&
-              Array.isArray(partnerCollections.upcoming)
-            ) {
-              const upcomingMints = partnerCollections.upcoming
-                .filter(
-                  (item: ApiMint) => item.chain && isMegaETHChain(item.chain)
-                )
-                .map((item: ApiMint) => ({ ...item, status: "upcoming" }));
-              megaEthMints = [...megaEthMints, ...upcomingMints];
-            }
-
-            if (
-              partnerCollections.sold_out &&
-              Array.isArray(partnerCollections.sold_out)
-            ) {
-              const soldOutMints = partnerCollections.sold_out
-                .filter(
-                  (item: ApiMint) => item.chain && isMegaETHChain(item.chain)
-                )
-                .map((item: ApiMint) => ({ ...item, status: "sold_out" }));
-              megaEthMints = [...megaEthMints, ...soldOutMints];
-            }
-          } else {
-            // Try other properties as before
-            if (Array.isArray(responseData.partners_results)) {
-              allMints = responseData.partners_results as ApiMint[];
-            } else if (Array.isArray(responseData.other_partner_mints)) {
-              allMints = responseData.other_partner_mints as ApiMint[];
-            } else {
-              // Try to find any array property that might contain our mints
-              for (const key in responseData) {
-                if (Array.isArray(responseData[key])) {
-                  allMints = [...allMints, ...(responseData[key] as ApiMint[])];
-                }
-              }
-            }
-
-            megaEthMints = allMints.filter(
-              (item: ApiMint) => item.chain && isMegaETHChain(item.chain)
-            );
-          }
-        }
-
-        // Log chain_ids to help debug
-        if (
-          responseData &&
-          typeof responseData === "object" &&
-          responseData.partnerCollections
-        ) {
-          const allChainIds = new Set();
-
-          // Check chain_ids in each collection type
-          ["live", "upcoming", "sold_out"].forEach((status) => {
-            if (Array.isArray(responseData.partnerCollections[status])) {
-              responseData.partnerCollections[status].forEach(
-                (item: ApiMint) => {
-                  if (item.chain && item.chain.chain_id) {
-                    allChainIds.add(item.chain.chain_id);
-                    // Log each chain to see specific values
-                    console.log(
-                      `Chain in ${status}:`,
-                      item.chain.chain_id,
-                      typeof item.chain.chain_id,
-                      item.collection_name
-                    );
-                  }
-                }
-              );
-            }
-          });
-
-          console.log(
-            "All chain_ids found in response:",
-            Array.from(allChainIds)
-          );
-        }
-
-        console.log("Found MegaETH Testnet mints:", megaEthMints.length);
-
-        // If we have MegaETH mints, format them and display them
-        if (megaEthMints.length > 0) {
-          // Format the data to match our expected structure
-          const formattedMints = megaEthMints.map(
-            (mint: ApiMint & { status?: string }) => {
-              // Extract just the Twitter handle from the URL (if it exists)
+        // Format the mints
+        const formattedMints = Object.entries(combinedCollections).flatMap(
+          ([status, collections]) =>
+            collections.map((mint: any) => {
+              // Extract Twitter handle from the URL (if it exists)
               let twitterHandle = "";
               if (mint.socials?.twitter) {
                 const twitterUrl = mint.socials.twitter;
@@ -333,48 +256,45 @@ export function TestnetMintsList() {
                 profileImgUrl: mint.profile_image,
                 headerImgUrl: mint.header_image,
                 totalSupply: mint.total_supply,
-                mintTimestamp: Math.floor(mint.mint_live_timestamp / 1000), // Convert milliseconds to seconds
+                mintTimestamp: Math.floor(mint.mint_live_timestamp / 1000),
                 mintLink: mint.mint_page_link,
                 twitter: mint.socials?.twitter || "",
                 discord: mint.socials?.discord || "",
                 website: mint.socials?.website || "",
                 telegram: mint.socials?.telegram || "",
                 mintGroups: Array.isArray(mint.mint_group_data)
-                  ? mint.mint_group_data.map((group: ApiMintGroup) => ({
+                  ? mint.mint_group_data.map((group: any) => ({
                       name: group.name,
                       size: group.allocation,
                       price: group.price,
                       startTime: Math.floor(
                         (group.startTime || mint.mint_live_timestamp) / 1000
                       ),
+                      endTime: group.endTime
+                        ? Math.floor(group.endTime / 1000)
+                        : undefined,
                     }))
                   : [],
                 chain: mint.chain.chain_name,
-                status: mint.status as
-                  | "live"
-                  | "upcoming"
-                  | "sold_out"
-                  | undefined,
+                status: status as "live" | "upcoming" | "sold_out",
                 ecosystemProject: ecosystemProject,
+                source: mint.source,
               };
-            }
-          );
+            })
+        );
 
-          // Clear any errors and set the data
-          setError(null);
-          setMints(formattedMints);
-        } else {
-          // No MegaETH Testnet mints found - set empty array without any mock data
-          setMints([]);
-          setError(
-            "No MegaETH Testnet mints (chain_id: 6342) were found in the API response."
-          );
-        }
+        // Clear any errors and set the data
+        setError(
+          errors.length > 0
+            ? `Failed to fetch data from ${errors.join(" and ")}`
+            : null
+        );
+        setMints(formattedMints);
 
         // Only after successfully processing the data, mark as attempted
         setHasAttemptedLoad(true);
       } catch (err) {
-        console.error("Error fetching from proxy:", err);
+        console.error("Error fetching mints:", err);
 
         // Mark as attempted load even if there was an error
         setHasAttemptedLoad(true);
@@ -429,39 +349,43 @@ export function TestnetMintsList() {
 
         const twitterHandle = extractTwitterHandle(mint.twitter);
 
-        // Log the mint details for debugging
-        console.log(
-          `Processing mint: ${mint.name}, Twitter: ${mint.twitter}, Handle: ${twitterHandle}`
-        );
+        // Check for any matching alias rules
+        const aliasRule = findMatchingAlias({
+          name: mint.name,
+          twitter: twitterHandle,
+          description: mint.description,
+          author: mint.source === "rarible" ? mint.author : undefined,
+        });
 
-        // Enhanced special case: Check both name and Twitter handle for fimmonaci
-        if (
-          mint.name.toLowerCase().includes("fimmonaci") ||
-          twitterHandle.includes("fimmonaci") ||
-          mint.description.toLowerCase().includes("fimmonaci")
-        ) {
-          console.log("Found fimmonaci project, looking for meganacci data");
-
-          // Find votes for meganacci
-          const meganacciVotes = votesData.find(
-            (p) => p.twitter.toLowerCase() === "meganacci"
+        if (aliasRule) {
+          console.log(
+            `Found alias rule for ${mint.name} → ${aliasRule.target.twitter}`
           );
 
-          // Find ecosystem data for meganacci
-          const meganacciEcosystem = ecosystemData.projects.find(
-            (project) =>
-              project.twitter && project.twitter.toLowerCase() === "meganacci"
+          // Find votes for the target collection
+          const targetVotes = votesData.find(
+            (p) =>
+              p.twitter.toLowerCase() === aliasRule.target.twitter.toLowerCase()
           );
 
-          console.log("Meganacci votes found:", !!meganacciVotes);
-          console.log("Meganacci ecosystem found:", !!meganacciEcosystem);
+          // Find ecosystem data for the target collection if override is enabled
+          const targetEcosystem = aliasRule.target.ecosystemOverride
+            ? ecosystemData.projects.find(
+                (project) =>
+                  project.twitter &&
+                  project.twitter.toLowerCase() ===
+                    aliasRule.target.twitter.toLowerCase()
+              )
+            : mint.ecosystemProject;
 
-          if (meganacciVotes) {
-            console.log("Applied special mapping: fimmonaci → meganacci");
+          if (targetVotes) {
+            console.log(
+              `Applied alias mapping: ${mint.name} → ${aliasRule.target.twitter}`
+            );
             return {
               ...mint,
-              votes: meganacciVotes.votes,
-              ecosystemProject: meganacciEcosystem || mint.ecosystemProject,
+              votes: targetVotes.votes,
+              ecosystemProject: targetEcosystem || mint.ecosystemProject,
             };
           }
         }
@@ -497,28 +421,111 @@ export function TestnetMintsList() {
 
   // If we have data, show it regardless of error state
   if (mints.length > 0) {
-    // Sort mints: primarily by mint date (latest first), then by status
+    // Sort mints: primarily by status (upcoming > live > sold_out), then by mint timestamp
     const sortedMints = [...mints].sort((a, b) => {
-      // Primary sort: mint timestamp (latest first)
-      if (a.mintTimestamp !== b.mintTimestamp) {
-        return b.mintTimestamp - a.mintTimestamp;
-      }
-
-      // Secondary sort: status priority (live > upcoming > sold_out)
+      // Primary sort: status priority (upcoming > live > sold_out)
       const getPriority = (status: string | undefined) => {
-        if (status === "live") return 0;
-        if (status === "upcoming") return 1;
+        if (status === "upcoming") return 0;
+        if (status === "live") return 1;
         if (status === "sold_out") return 2;
         return 3; // For undefined or any other value
       };
 
-      return getPriority(a.status) - getPriority(b.status);
+      const priorityA = getPriority(a.status);
+      const priorityB = getPriority(b.status);
+
+      if (priorityA !== priorityB) {
+        return priorityA - priorityB;
+      }
+
+      // Secondary sort: within each status group, sort by timestamp
+      // For upcoming: show soonest first
+      // For live: show most recently launched first
+      // For sold out: show most recently sold out first
+      if (a.status === "upcoming") {
+        return a.mintTimestamp - b.mintTimestamp; // Ascending for upcoming (soonest first)
+      } else {
+        return b.mintTimestamp - a.mintTimestamp; // Descending for live and sold out (newest first)
+      }
     });
+
+    // Calculate counts for each status
+    const counts = {
+      upcoming: sortedMints.filter((mint) => mint.status === "upcoming").length,
+      live: sortedMints.filter((mint) => mint.status === "live").length,
+      sold_out: sortedMints.filter((mint) => mint.status === "sold_out").length,
+    };
+
+    // Filter mints based on active filter
+    const filteredMints =
+      activeFilter === "all"
+        ? sortedMints
+        : sortedMints.filter((mint) => mint.status === activeFilter);
 
     return (
       <div className="space-y-8">
+        {/* Filter buttons */}
+        <div className="flex justify-center gap-3">
+          <button
+            onClick={() => setActiveFilter("all")}
+            className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2
+              ${
+                activeFilter === "all"
+                  ? "bg-blue-500 text-white shadow-lg shadow-blue-500/20"
+                  : "bg-gray-800/80 text-gray-300 hover:bg-gray-800"
+              }`}
+          >
+            <span>All</span>
+            <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs">
+              {sortedMints.length}
+            </span>
+          </button>
+          <button
+            onClick={() => setActiveFilter("upcoming")}
+            className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2
+              ${
+                activeFilter === "upcoming"
+                  ? "bg-amber-500 text-white shadow-lg shadow-amber-500/20"
+                  : "bg-gray-800/80 text-gray-300 hover:bg-gray-800"
+              }`}
+          >
+            <span>Upcoming</span>
+            <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs">
+              {counts.upcoming}
+            </span>
+          </button>
+          <button
+            onClick={() => setActiveFilter("live")}
+            className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2
+              ${
+                activeFilter === "live"
+                  ? "bg-green-500 text-white shadow-lg shadow-green-500/20"
+                  : "bg-gray-800/80 text-gray-300 hover:bg-gray-800"
+              }`}
+          >
+            <span>Minting</span>
+            <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs">
+              {counts.live}
+            </span>
+          </button>
+          <button
+            onClick={() => setActiveFilter("sold_out")}
+            className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2
+              ${
+                activeFilter === "sold_out"
+                  ? "bg-gray-500 text-white shadow-lg shadow-gray-500/20"
+                  : "bg-gray-800/80 text-gray-300 hover:bg-gray-800"
+              }`}
+          >
+            <span>Sold Out</span>
+            <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs">
+              {counts.sold_out}
+            </span>
+          </button>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sortedMints.map((mint, index) => (
+          {filteredMints.map((mint, index) => (
             <TestnetMintCard
               key={`mint-${index}`}
               name={mint.name}
@@ -537,6 +544,7 @@ export function TestnetMintsList() {
               status={mint.status}
               ecosystemProject={mint.ecosystemProject}
               votes={mint.votes}
+              source={mint.source}
             />
           ))}
         </div>
@@ -544,23 +552,42 @@ export function TestnetMintsList() {
         {/* Powered by Kingdomly section */}
         <div className="mt-12 pt-8 flex flex-col items-center justify-center">
           <p className="text-gray-500 mb-3">Powered by</p>
-          <Link
-            href="https://kingdomly.app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center"
-          >
-            <Image
-              src="/kingdomlylogo.png"
-              alt="Kingdomly Logo"
-              width={40}
-              height={40}
-              className="rounded-md"
-            />
-            <span className="ml-2 text-lg font-semibold text-gray-800 dark:text-white">
-              Kingdomly
-            </span>
-          </Link>
+          <div className="flex items-center gap-8">
+            <Link
+              href="https://kingdomly.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center"
+            >
+              <Image
+                src="/kingdomlylogo.png"
+                alt="Kingdomly Logo"
+                width={40}
+                height={40}
+                className="rounded-md"
+              />
+              <span className="ml-2 text-lg font-semibold text-gray-800 dark:text-white">
+                Kingdomly
+              </span>
+            </Link>
+            <Link
+              href="https://testnet.rarible.fun"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center"
+            >
+              <Image
+                src="/rariblelogo.png"
+                alt="Rarible Logo"
+                width={40}
+                height={40}
+                className="rounded-md"
+              />
+              <span className="ml-2 text-lg font-semibold text-gray-800 dark:text-white">
+                Rarible
+              </span>
+            </Link>
+          </div>
         </div>
       </div>
     );
