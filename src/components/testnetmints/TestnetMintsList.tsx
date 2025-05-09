@@ -92,8 +92,8 @@ export function TestnetMintsList() {
   const [hasAttemptedLoad, setHasAttemptedLoad] = useState(false);
   const [votesData, setVotesData] = useState<ProjectVotes[]>([]);
   const [activeFilter, setActiveFilter] = useState<
-    "upcoming" | "live" | "sold_out" | "all"
-  >("all");
+    "upcoming" | "live" | "sold_out" | null
+  >(null);
 
   // Add source filter state
   const [activeSourceFilter, setActiveSourceFilter] = useState<
@@ -467,7 +467,7 @@ export function TestnetMintsList() {
     // Filter mints based on both active filters
     const filteredMints = sortedMints.filter((mint) => {
       const matchesStatus =
-        activeFilter === "all" || mint.status === activeFilter;
+        activeFilter === null || mint.status === activeFilter;
       const matchesSource =
         activeSourceFilter === null || mint.source === activeSourceFilter;
       return matchesStatus && matchesSource;
@@ -477,24 +477,12 @@ export function TestnetMintsList() {
       <div className="space-y-8">
         {/* Status filter buttons */}
         <div className="flex flex-col gap-4 items-center">
-          <div className="flex justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-2">
             <button
-              onClick={() => setActiveFilter("all")}
-              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2
-                ${
-                  activeFilter === "all"
-                    ? "bg-blue-500 text-white shadow-lg shadow-blue-500/20"
-                    : "bg-gray-100 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800"
-                }`}
-            >
-              <span>All</span>
-              <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs text-white">
-                {sortedMints.length}
-              </span>
-            </button>
-            <button
-              onClick={() => setActiveFilter("upcoming")}
-              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2
+              onClick={() =>
+                setActiveFilter(activeFilter === "upcoming" ? null : "upcoming")
+              }
+              className={`px-3 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2 whitespace-nowrap
                 ${
                   activeFilter === "upcoming"
                     ? "bg-amber-500 text-white shadow-lg shadow-amber-500/20"
@@ -507,8 +495,10 @@ export function TestnetMintsList() {
               </span>
             </button>
             <button
-              onClick={() => setActiveFilter("live")}
-              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2
+              onClick={() =>
+                setActiveFilter(activeFilter === "live" ? null : "live")
+              }
+              className={`px-3 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2 whitespace-nowrap
                 ${
                   activeFilter === "live"
                     ? "bg-green-500 text-white shadow-lg shadow-green-500/20"
@@ -521,8 +511,10 @@ export function TestnetMintsList() {
               </span>
             </button>
             <button
-              onClick={() => setActiveFilter("sold_out")}
-              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2
+              onClick={() =>
+                setActiveFilter(activeFilter === "sold_out" ? null : "sold_out")
+              }
+              className={`px-3 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2 whitespace-nowrap
                 ${
                   activeFilter === "sold_out"
                     ? "bg-gray-500 text-white shadow-lg shadow-gray-500/20"
@@ -537,14 +529,14 @@ export function TestnetMintsList() {
           </div>
 
           {/* Source filter buttons */}
-          <div className="flex justify-center gap-3">
+          <div className="flex flex-wrap justify-center gap-2">
             <button
               onClick={() =>
                 setActiveSourceFilter(
                   activeSourceFilter === "kingdomly" ? null : "kingdomly"
                 )
               }
-              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2
+              className={`px-3 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2 whitespace-nowrap
                 ${
                   activeSourceFilter === "kingdomly"
                     ? "bg-purple-500 text-white shadow-lg shadow-purple-500/20"
@@ -569,7 +561,7 @@ export function TestnetMintsList() {
                   activeSourceFilter === "rarible" ? null : "rarible"
                 )
               }
-              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2
+              className={`px-3 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2 whitespace-nowrap
                 ${
                   activeSourceFilter === "rarible"
                     ? "bg-purple-500 text-white shadow-lg shadow-purple-500/20"

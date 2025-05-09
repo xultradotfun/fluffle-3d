@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
 import { cn } from "@/lib/utils";
 import { useEffect, useState, useMemo, useRef } from "react";
+import { createPortal } from "react-dom";
 
 // Helper function to format dates
 const formatDate = (date: Date): string => {
@@ -64,6 +65,45 @@ const VoteBreakdownTooltip = ({
 }) => {
   if (!breakdown || Object.keys(breakdown).length === 0) return children;
 
+  const [isHovered, setIsHovered] = useState(false);
+  const [tooltipPosition, setTooltipPosition] = useState({
+    x: 0,
+    y: 0,
+    shift: 0,
+  });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const tooltipWidth = 260; // Width of the tooltip
+
+  useEffect(() => {
+    if (isHovered && containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const viewportWidth = window.innerWidth;
+
+      // Calculate the ideal center position
+      let xPos = rect.left + rect.width / 2;
+      let shift = 0;
+
+      // Check if tooltip would go off-screen to the right
+      if (xPos + tooltipWidth / 2 > viewportWidth - 16) {
+        // Calculate how much we need to shift left to keep 16px margin
+        shift = xPos + tooltipWidth / 2 - (viewportWidth - 16);
+        xPos -= shift;
+      }
+      // Check if tooltip would go off-screen to the left
+      else if (xPos - tooltipWidth / 2 < 16) {
+        // Calculate how much we need to shift right to keep 16px margin
+        shift = 16 - (xPos - tooltipWidth / 2);
+        xPos += shift;
+      }
+
+      setTooltipPosition({
+        x: xPos,
+        y: rect.top - 8,
+        shift: shift,
+      });
+    }
+  }, [isHovered]);
+
   // Calculate trusted score (sum of all roles except MiniETH)
   const trustedScore = Object.entries(breakdown).reduce(
     (total, [role, counts]) => {
@@ -76,109 +116,137 @@ const VoteBreakdownTooltip = ({
   );
 
   return (
-    <div className="group/tooltip relative">
-      {children}
-      <div className="opacity-0 invisible group-hover/tooltip:opacity-100 group-hover/tooltip:visible absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 w-[260px] bg-gradient-to-b from-gray-800 to-gray-900 rounded-lg shadow-xl border border-gray-700/70 text-white text-xs overflow-hidden transform origin-bottom transition-all duration-200">
-        {/* Header */}
-        <div className="px-3 py-2.5 bg-gradient-to-r from-blue-900/40 to-blue-800/30 border-b border-gray-700/80">
-          <div className="flex items-center">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              className="w-3.5 h-3.5 text-blue-400 mr-1.5"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
-            </svg>
-            <h4 className="font-medium text-white tracking-wide">
-              Vote Breakdown
-            </h4>
-          </div>
-        </div>
-
-        {/* Content */}
-        <div className="p-3 bg-gradient-to-b from-transparent to-black/20">
-          <div className="space-y-2">
-            {Object.entries(breakdown).map(([role, counts]) => (
-              <div
-                key={role}
-                className="flex justify-between items-center py-1.5 px-2 rounded-md hover:bg-white/5 transition-colors duration-150"
-              >
-                <span className="font-medium text-white truncate mr-3">
-                  {role}
-                </span>
-                <div className="flex items-center gap-3 flex-shrink-0">
-                  <span className="flex items-center text-green-400 font-medium whitespace-nowrap">
-                    <svg
-                      className="w-3 h-3 mr-1 opacity-90"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                    >
-                      <path d="m5 15 7-7 7 7" />
-                    </svg>
-                    {counts.up}
-                  </span>
-                  <span className="text-gray-500 mx-0.5 opacity-60">/</span>
-                  <span className="flex items-center text-red-400 font-medium whitespace-nowrap">
-                    <svg
-                      className="w-3 h-3 mr-1 opacity-90"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                    >
-                      <path d="m19 9-7 7-7-7" />
-                    </svg>
-                    {counts.down}
-                  </span>
+    <>
+      <div
+        ref={containerRef}
+        className="inline-block"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {children}
+      </div>
+      {isHovered &&
+        typeof window !== "undefined" &&
+        createPortal(
+          <div
+            className="fixed z-[100] pointer-events-none"
+            style={{
+              left: `${tooltipPosition.x}px`,
+              top: `${tooltipPosition.y}px`,
+              transform: "translate(-50%, -100%)",
+            }}
+          >
+            <div className="w-[260px] bg-gradient-to-b from-gray-800 to-gray-900 rounded-lg shadow-xl border border-gray-700/70 text-white text-xs overflow-hidden">
+              {/* Header */}
+              <div className="px-3 py-2.5 bg-gradient-to-r from-blue-900/40 to-blue-800/30 border-b border-gray-700/80">
+                <div className="flex items-center">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    className="w-3.5 h-3.5 text-blue-400 mr-1.5"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+                  </svg>
+                  <h4 className="font-medium text-white tracking-wide">
+                    Vote Breakdown
+                  </h4>
                 </div>
               </div>
-            ))}
-          </div>
 
-          {/* Trusted score section */}
-          <div className="mt-3 pt-3 border-t border-gray-700/50">
-            <div className="flex justify-between items-center py-1.5 px-2 rounded-md bg-blue-500/10 border border-blue-400/20">
-              <div className="flex items-center">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  className="w-3.5 h-3.5 text-blue-400 mr-1.5"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                </svg>
-                <span className="font-medium text-blue-300">
-                  Trusted Score:
-                </span>
+              {/* Content */}
+              <div className="p-3 bg-gradient-to-b from-transparent to-black/20">
+                <div className="space-y-2">
+                  {Object.entries(breakdown).map(([role, counts]) => (
+                    <div
+                      key={role}
+                      className="flex justify-between items-center py-1.5 px-2 rounded-md hover:bg-white/5 transition-colors duration-150"
+                    >
+                      <span className="font-medium text-white truncate mr-3">
+                        {role}
+                      </span>
+                      <div className="flex items-center gap-3 flex-shrink-0">
+                        <span className="flex items-center text-green-400 font-medium whitespace-nowrap">
+                          <svg
+                            className="w-3 h-3 mr-1 opacity-90"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                          >
+                            <path d="m5 15 7-7 7 7" />
+                          </svg>
+                          {counts.up}
+                        </span>
+                        <span className="text-gray-500 mx-0.5 opacity-60">
+                          /
+                        </span>
+                        <span className="flex items-center text-red-400 font-medium whitespace-nowrap">
+                          <svg
+                            className="w-3 h-3 mr-1 opacity-90"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                          >
+                            <path d="m19 9-7 7-7-7" />
+                          </svg>
+                          {counts.down}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Trusted score section */}
+                <div className="mt-3 pt-3 border-t border-gray-700/50">
+                  <div className="flex justify-between items-center py-1.5 px-2 rounded-md bg-blue-500/10 border border-blue-400/20">
+                    <div className="flex items-center">
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        className="w-3.5 h-3.5 text-blue-400 mr-1.5"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                      >
+                        <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                      </svg>
+                      <span className="font-medium text-blue-300">
+                        Trusted Score:
+                      </span>
+                    </div>
+                    <span
+                      className={`font-bold text-sm ${
+                        trustedScore > 0
+                          ? "text-green-400"
+                          : trustedScore < 0
+                          ? "text-red-400"
+                          : "text-gray-400"
+                      }`}
+                    >
+                      {trustedScore > 0 ? "+" : ""}
+                      {trustedScore}
+                    </span>
+                  </div>
+                  <div className="mt-2 text-[10px] text-gray-400 opacity-60 italic text-center">
+                    Sum of all roles excluding MiniETH
+                  </div>
+                </div>
               </div>
-              <span
-                className={`font-bold text-sm ${
-                  trustedScore > 0
-                    ? "text-green-400"
-                    : trustedScore < 0
-                    ? "text-red-400"
-                    : "text-gray-400"
-                }`}
-              >
-                {trustedScore > 0 ? "+" : ""}
-                {trustedScore}
-              </span>
-            </div>
-            <div className="mt-2 text-[10px] text-gray-400 opacity-60 italic text-center">
-              Sum of all roles excluding MiniETH
-            </div>
-          </div>
-        </div>
 
-        {/* Arrow */}
-        <div className="absolute bottom-[-8px] left-1/2 -translate-x-1/2 transform rotate-45 h-4 w-4 bg-gray-900 border-r border-b border-gray-700/70 shadow-lg"></div>
-      </div>
-    </div>
+              {/* Arrow */}
+              <div
+                className="absolute bottom-[-8px] transform rotate-45 h-4 w-4 bg-gray-900 border-r border-b border-gray-700/70 shadow-lg"
+                style={{
+                  left: `calc(50% + ${tooltipPosition.shift}px)`,
+                }}
+              ></div>
+            </div>
+          </div>,
+          document.body
+        )}
+    </>
   );
 };
 
