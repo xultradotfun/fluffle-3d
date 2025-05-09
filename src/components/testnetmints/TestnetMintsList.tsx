@@ -95,6 +95,11 @@ export function TestnetMintsList() {
     "upcoming" | "live" | "sold_out" | "all"
   >("all");
 
+  // Add source filter state
+  const [activeSourceFilter, setActiveSourceFilter] = useState<
+    "kingdomly" | "rarible" | null
+  >(null);
+
   // Add a ref to track fetch requests and prevent duplication
   const isFetchingRef = useRef(false);
 
@@ -449,79 +454,141 @@ export function TestnetMintsList() {
       }
     });
 
-    // Calculate counts for each status
+    // Calculate counts for each status and source
     const counts = {
       upcoming: sortedMints.filter((mint) => mint.status === "upcoming").length,
       live: sortedMints.filter((mint) => mint.status === "live").length,
       sold_out: sortedMints.filter((mint) => mint.status === "sold_out").length,
+      kingdomly: sortedMints.filter((mint) => mint.source === "kingdomly")
+        .length,
+      rarible: sortedMints.filter((mint) => mint.source === "rarible").length,
     };
 
-    // Filter mints based on active filter
-    const filteredMints =
-      activeFilter === "all"
-        ? sortedMints
-        : sortedMints.filter((mint) => mint.status === activeFilter);
+    // Filter mints based on both active filters
+    const filteredMints = sortedMints.filter((mint) => {
+      const matchesStatus =
+        activeFilter === "all" || mint.status === activeFilter;
+      const matchesSource =
+        activeSourceFilter === null || mint.source === activeSourceFilter;
+      return matchesStatus && matchesSource;
+    });
 
     return (
       <div className="space-y-8">
-        {/* Filter buttons */}
-        <div className="flex justify-center gap-3">
-          <button
-            onClick={() => setActiveFilter("all")}
-            className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2
-              ${
-                activeFilter === "all"
-                  ? "bg-blue-500 text-white shadow-lg shadow-blue-500/20"
-                  : "bg-gray-800/80 text-gray-300 hover:bg-gray-800"
-              }`}
-          >
-            <span>All</span>
-            <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs">
-              {sortedMints.length}
-            </span>
-          </button>
-          <button
-            onClick={() => setActiveFilter("upcoming")}
-            className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2
-              ${
-                activeFilter === "upcoming"
-                  ? "bg-amber-500 text-white shadow-lg shadow-amber-500/20"
-                  : "bg-gray-800/80 text-gray-300 hover:bg-gray-800"
-              }`}
-          >
-            <span>Upcoming</span>
-            <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs">
-              {counts.upcoming}
-            </span>
-          </button>
-          <button
-            onClick={() => setActiveFilter("live")}
-            className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2
-              ${
-                activeFilter === "live"
-                  ? "bg-green-500 text-white shadow-lg shadow-green-500/20"
-                  : "bg-gray-800/80 text-gray-300 hover:bg-gray-800"
-              }`}
-          >
-            <span>Minting</span>
-            <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs">
-              {counts.live}
-            </span>
-          </button>
-          <button
-            onClick={() => setActiveFilter("sold_out")}
-            className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2
-              ${
-                activeFilter === "sold_out"
-                  ? "bg-gray-500 text-white shadow-lg shadow-gray-500/20"
-                  : "bg-gray-800/80 text-gray-300 hover:bg-gray-800"
-              }`}
-          >
-            <span>Sold Out</span>
-            <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs">
-              {counts.sold_out}
-            </span>
-          </button>
+        {/* Status filter buttons */}
+        <div className="flex flex-col gap-4 items-center">
+          <div className="flex justify-center gap-3">
+            <button
+              onClick={() => setActiveFilter("all")}
+              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2
+                ${
+                  activeFilter === "all"
+                    ? "bg-blue-500 text-white shadow-lg shadow-blue-500/20"
+                    : "bg-gray-800/80 text-gray-300 hover:bg-gray-800"
+                }`}
+            >
+              <span>All</span>
+              <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs">
+                {sortedMints.length}
+              </span>
+            </button>
+            <button
+              onClick={() => setActiveFilter("upcoming")}
+              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2
+                ${
+                  activeFilter === "upcoming"
+                    ? "bg-amber-500 text-white shadow-lg shadow-amber-500/20"
+                    : "bg-gray-800/80 text-gray-300 hover:bg-gray-800"
+                }`}
+            >
+              <span>Upcoming</span>
+              <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs">
+                {counts.upcoming}
+              </span>
+            </button>
+            <button
+              onClick={() => setActiveFilter("live")}
+              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2
+                ${
+                  activeFilter === "live"
+                    ? "bg-green-500 text-white shadow-lg shadow-green-500/20"
+                    : "bg-gray-800/80 text-gray-300 hover:bg-gray-800"
+                }`}
+            >
+              <span>Minting</span>
+              <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs">
+                {counts.live}
+              </span>
+            </button>
+            <button
+              onClick={() => setActiveFilter("sold_out")}
+              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2
+                ${
+                  activeFilter === "sold_out"
+                    ? "bg-gray-500 text-white shadow-lg shadow-gray-500/20"
+                    : "bg-gray-800/80 text-gray-300 hover:bg-gray-800"
+                }`}
+            >
+              <span>Sold Out</span>
+              <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs">
+                {counts.sold_out}
+              </span>
+            </button>
+          </div>
+
+          {/* Source filter buttons */}
+          <div className="flex justify-center gap-3">
+            <button
+              onClick={() =>
+                setActiveSourceFilter(
+                  activeSourceFilter === "kingdomly" ? null : "kingdomly"
+                )
+              }
+              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2
+                ${
+                  activeSourceFilter === "kingdomly"
+                    ? "bg-purple-500 text-white shadow-lg shadow-purple-500/20"
+                    : "bg-gray-800/80 text-gray-300 hover:bg-gray-800"
+                }`}
+            >
+              <Image
+                src="/kingdomlylogo.png"
+                alt="Kingdomly"
+                width={20}
+                height={20}
+                className="rounded-sm"
+              />
+              <span>Kingdomly</span>
+              <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs">
+                {counts.kingdomly}
+              </span>
+            </button>
+            <button
+              onClick={() =>
+                setActiveSourceFilter(
+                  activeSourceFilter === "rarible" ? null : "rarible"
+                )
+              }
+              className={`px-4 py-2 rounded-lg font-medium text-sm transition-all duration-200 flex items-center gap-2
+                ${
+                  activeSourceFilter === "rarible"
+                    ? "bg-purple-500 text-white shadow-lg shadow-purple-500/20"
+                    : "bg-gray-800/80 text-gray-300 hover:bg-gray-800"
+                }`}
+            >
+              <Image
+                src="/rariblelogo.png"
+                alt="Rarible"
+                width={20}
+                height={20}
+                className="rounded-sm"
+              />
+              <span>Rarible</span>
+              <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs">
+                {counts.rarible}
+              </span>
+            </button>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

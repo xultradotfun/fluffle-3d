@@ -83,8 +83,7 @@ export default function TestnetMintsPage() {
             What's Minting on Testnet?
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Discover all NFT projects launching on the MegaETH
-            Testnet.
+            Discover all NFT projects launching on MegaETH Testnet.
           </p>
         </div>
 
