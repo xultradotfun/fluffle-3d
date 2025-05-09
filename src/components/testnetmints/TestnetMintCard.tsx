@@ -478,21 +478,53 @@ export function TestnetMintCard({
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30"></div>
 
         {/* Status Badge */}
-        <div className="absolute top-3 left-3 z-10 flex items-center gap-2">
+        <div className="absolute top-3 left-3 z-10">
           <div
-            className={`px-2.5 py-0.5 rounded-full text-xs font-medium flex items-center ${
-              isSoldOut
-                ? "bg-gray-900/90 text-gray-100"
-                : isMintLive
-                ? "bg-green-500/90 text-white"
-                : "bg-amber-500/90 text-white"
-            }`}
+            className={`
+              inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium
+              backdrop-blur-sm shadow-sm border transition-all duration-300
+              ${
+                isSoldOut
+                  ? "bg-gray-900/70 border-gray-700/50 text-gray-200"
+                  : isMintLive
+                  ? "bg-green-500/70 border-green-400/50 text-white"
+                  : "bg-amber-500/70 border-amber-400/50 text-white"
+              }
+            `}
           >
-            {statusConfig.icon}
-            {statusConfig.text}
-            {isMintLive && (
-              <span className="ml-1.5 h-1.5 w-1.5 rounded-full bg-white inline-block animate-pulse"></span>
+            {isSoldOut ? (
+              <svg
+                className="w-3 h-3"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M18 6 6 18" />
+                <path d="m6 6 12 12" />
+              </svg>
+            ) : isMintLive ? (
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+              </span>
+            ) : (
+              <svg
+                className="w-3 h-3"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <polyline points="12 6 12 12 16 14" />
+              </svg>
             )}
+            {statusConfig.text}
           </div>
         </div>
 
@@ -656,7 +688,7 @@ export function TestnetMintCard({
                 <span
                   className={`relative z-10 font-semibold ${
                     source === "kingdomly"
-                      ? "text-[#C5A05C] dark:text-[#C5A05C] group-hover:text-[#C5A05C] dark:group-hover:text-[#C5A05C]"
+                      ? "text-[#C5A05C] dark:text-[#C5A05C] group-hover:text-[#C5A05C]"
                       : "text-[#FFE600] dark:text-[#FFE600] group-hover:text-[#FFE600] dark:group-hover:text-[#FFE600]"
                   }`}
                 >
