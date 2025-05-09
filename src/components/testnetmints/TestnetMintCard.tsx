@@ -51,6 +51,7 @@ interface TestnetMintProps {
   ecosystemProject?: any;
   votes?: VoteData;
   source: "kingdomly" | "rarible";
+  minted_supply?: number;
 }
 
 // Simple component to display vote breakdown with a custom tooltip
@@ -351,12 +352,24 @@ export function TestnetMintCard({
   ecosystemProject,
   votes,
   source,
+  minted_supply,
 }: TestnetMintProps) {
   // Use timestamp for fallback only if status is not provided
   const isMintLive =
-    status === "live" ||
-    (status === undefined && Date.now() >= mintTimestamp * 1000);
-  const isSoldOut = status === "sold_out";
+    (status === "live" ||
+      (status === undefined && Date.now() >= mintTimestamp * 1000)) &&
+    !(
+      totalSupply !== null &&
+      minted_supply !== undefined &&
+      minted_supply >= totalSupply
+    );
+
+  const isSoldOut =
+    status === "sold_out" ||
+    (totalSupply !== null &&
+      minted_supply !== undefined &&
+      minted_supply >= totalSupply);
+
   const mintDate = new Date(mintTimestamp * 1000);
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -366,7 +379,7 @@ export function TestnetMintCard({
   });
   const isUpcoming =
     status === "upcoming" ||
-    (status === undefined && !isMintLive && timeLeft.days > 0);
+    (status === undefined && !isMintLive && !isSoldOut && timeLeft.days > 0);
 
   // Memoize status config to prevent unnecessary recalculations
   const statusConfig = useMemo(() => {
@@ -640,7 +653,18 @@ export function TestnetMintCard({
               Supply
             </div>
             <div className="text-base font-semibold text-gray-900 dark:text-white">
-              {totalSupply ? totalSupply.toLocaleString() : "-"}
+              {totalSupply ? (
+                <>
+                  {minted_supply !== undefined && (
+                    <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
+                      {minted_supply.toLocaleString()} /{" "}
+                    </span>
+                  )}
+                  {totalSupply.toLocaleString()}
+                </>
+              ) : (
+                "-"
+              )}
             </div>
           </div>
           <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-3">
