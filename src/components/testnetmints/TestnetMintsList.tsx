@@ -484,11 +484,11 @@ export function TestnetMintsList() {
                 ${
                   activeFilter === "all"
                     ? "bg-blue-500 text-white shadow-lg shadow-blue-500/20"
-                    : "bg-gray-800/80 text-gray-300 hover:bg-gray-800"
+                    : "bg-gray-100 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800"
                 }`}
             >
               <span>All</span>
-              <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs">
+              <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs text-white">
                 {sortedMints.length}
               </span>
             </button>
@@ -498,11 +498,11 @@ export function TestnetMintsList() {
                 ${
                   activeFilter === "upcoming"
                     ? "bg-amber-500 text-white shadow-lg shadow-amber-500/20"
-                    : "bg-gray-800/80 text-gray-300 hover:bg-gray-800"
+                    : "bg-gray-100 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800"
                 }`}
             >
               <span>Upcoming</span>
-              <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs">
+              <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs text-white">
                 {counts.upcoming}
               </span>
             </button>
@@ -512,11 +512,11 @@ export function TestnetMintsList() {
                 ${
                   activeFilter === "live"
                     ? "bg-green-500 text-white shadow-lg shadow-green-500/20"
-                    : "bg-gray-800/80 text-gray-300 hover:bg-gray-800"
+                    : "bg-gray-100 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800"
                 }`}
             >
               <span>Minting</span>
-              <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs">
+              <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs text-white">
                 {counts.live}
               </span>
             </button>
@@ -526,11 +526,11 @@ export function TestnetMintsList() {
                 ${
                   activeFilter === "sold_out"
                     ? "bg-gray-500 text-white shadow-lg shadow-gray-500/20"
-                    : "bg-gray-800/80 text-gray-300 hover:bg-gray-800"
+                    : "bg-gray-100 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800"
                 }`}
             >
               <span>Sold Out</span>
-              <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs">
+              <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs text-white">
                 {counts.sold_out}
               </span>
             </button>
@@ -548,7 +548,7 @@ export function TestnetMintsList() {
                 ${
                   activeSourceFilter === "kingdomly"
                     ? "bg-purple-500 text-white shadow-lg shadow-purple-500/20"
-                    : "bg-gray-800/80 text-gray-300 hover:bg-gray-800"
+                    : "bg-gray-100 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800"
                 }`}
             >
               <Image
@@ -559,7 +559,7 @@ export function TestnetMintsList() {
                 className="rounded-sm"
               />
               <span>Kingdomly</span>
-              <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs">
+              <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs text-white">
                 {counts.kingdomly}
               </span>
             </button>
@@ -573,7 +573,7 @@ export function TestnetMintsList() {
                 ${
                   activeSourceFilter === "rarible"
                     ? "bg-purple-500 text-white shadow-lg shadow-purple-500/20"
-                    : "bg-gray-800/80 text-gray-300 hover:bg-gray-800"
+                    : "bg-gray-100 dark:bg-gray-800/80 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-800"
                 }`}
             >
               <Image
@@ -584,7 +584,7 @@ export function TestnetMintsList() {
                 className="rounded-sm"
               />
               <span>Rarible</span>
-              <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs">
+              <span className="bg-black/30 px-2 py-0.5 rounded-md text-xs text-white">
                 {counts.rarible}
               </span>
             </button>
