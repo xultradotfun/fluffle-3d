@@ -679,10 +679,10 @@ export function TestnetMintCard({
               <VoteBreakdownTooltip breakdown={voteBreakdown}>
                 <div className="flex overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700">
                   <button
-                    className={`flex items-center px-3 py-3 gap-1 ${
+                    className={`flex items-center px-3 py-3 gap-1 transition-colors duration-200 ${
                       votes.userVote === "up"
                         ? "bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400"
-                        : "hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+                        : "hover:bg-green-50/50 dark:hover:bg-green-900/10 text-green-600/60 dark:text-green-400/60"
                     }`}
                   >
                     <svg
@@ -703,10 +703,10 @@ export function TestnetMintCard({
                   </button>
                   <div className="w-px bg-gray-200 dark:bg-gray-700" />
                   <button
-                    className={`flex items-center px-3 py-3 gap-1 ${
+                    className={`flex items-center px-3 py-3 gap-1 transition-colors duration-200 ${
                       votes.userVote === "down"
                         ? "bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400"
-                        : "hover:bg-gray-50 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
+                        : "hover:bg-red-50/50 dark:hover:bg-red-900/10 text-red-600/60 dark:text-red-400/60"
                     }`}
                   >
                     <svg
