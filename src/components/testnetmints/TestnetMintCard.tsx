@@ -627,15 +627,41 @@ export function TestnetMintCard({
             href={mintLink}
             target="_blank"
             rel="noopener noreferrer"
-            className={`flex-1 inline-flex items-center justify-center rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200 ${
-              isMintLive
-                ? "bg-blue-500 text-white hover:bg-blue-600"
-                : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700"
-            }`}
+            className={`flex-1 inline-flex items-center justify-center rounded-xl px-4 py-3 text-sm font-medium transition-all duration-300
+              relative group overflow-hidden backdrop-blur-sm
+              ${
+                !isMintLive
+                  ? "bg-gray-100 dark:bg-gray-800/80 hover:bg-gray-200 dark:hover:bg-gray-700/80"
+                  : `${
+                      source === "kingdomly"
+                        ? "bg-[#1B3A27]/5 dark:bg-[#1B3A27]/10"
+                        : "bg-[#FFE600]/5 dark:bg-[#FFE600]/10"
+                    }
+                  before:absolute before:inset-0 before:rounded-xl before:transition-all before:duration-300
+                  ${
+                    source === "kingdomly"
+                      ? "before:bg-gradient-to-r before:from-[#C5A05C]/20 before:to-[#1B3A27]/20 before:group-hover:from-[#C5A05C]/30 before:group-hover:to-[#1B3A27]/30"
+                      : "before:bg-gradient-to-r before:from-[#FFE600]/20 before:to-[#FFE600]/20 before:group-hover:from-[#FFE600]/30 before:group-hover:to-[#FFE600]/30"
+                  }
+                  after:absolute after:inset-0 after:rounded-xl after:transition-all after:duration-300
+                  ${
+                    source === "kingdomly"
+                      ? "after:shadow-[0_0_15px_rgba(197,160,92,0.2)] after:group-hover:shadow-[0_0_25px_rgba(197,160,92,0.3)]"
+                      : "after:shadow-[0_0_15px_rgba(255,230,0,0.15)] after:group-hover:shadow-[0_0_25px_rgba(255,230,0,0.25)]"
+                  }`
+              }`}
           >
             {isMintLive ? (
               <>
-                <span>Mint Now</span>
+                <span
+                  className={`relative z-10 font-semibold ${
+                    source === "kingdomly"
+                      ? "text-[#C5A05C] dark:text-[#C5A05C] group-hover:text-[#C5A05C] dark:group-hover:text-[#C5A05C]"
+                      : "text-[#FFE600] dark:text-[#FFE600] group-hover:text-[#FFE600] dark:group-hover:text-[#FFE600]"
+                  }`}
+                >
+                  Mint Now
+                </span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -646,7 +672,11 @@ export function TestnetMintCard({
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="ml-2"
+                  className={`relative z-10 ml-2 transition-transform duration-300 group-hover:translate-x-0.5 ${
+                    source === "kingdomly"
+                      ? "text-[#C5A05C] group-hover:text-[#C5A05C]"
+                      : "text-[#FFE600] group-hover:text-[#FFE600]"
+                  }`}
                 >
                   <path d="M5 12h14" />
                   <path d="m12 5 7 7-7 7" />
@@ -654,7 +684,9 @@ export function TestnetMintCard({
               </>
             ) : (
               <>
-                <span>View Collection</span>
+                <span className="relative z-10 text-gray-700 dark:text-gray-300">
+                  View Collection
+                </span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -665,7 +697,7 @@ export function TestnetMintCard({
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="ml-2"
+                  className="relative z-10 ml-2 text-gray-500 dark:text-gray-400 transition-transform duration-300 group-hover:translate-x-0.5"
                 >
                   <path d="M5 12h14" />
                   <path d="m12 5 7 7-7 7" />
