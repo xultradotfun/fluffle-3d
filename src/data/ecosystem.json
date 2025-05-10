@@ -210,7 +210,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": true,
-      "testnet": true
+      "testnet": true,
+      "guide": true
     },
     {
       "name": "ComLayer",
