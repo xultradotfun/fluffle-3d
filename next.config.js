@@ -16,6 +16,8 @@ const nextConfig = {
       "firebasestorage.googleapis.com",
       "testnet-bff.rarible.fun",
       "testnet.rarible.fun",
+      "ipfs.raribleuserdata.com",
+      "wlbl-s3.wlbl.xyz",
     ],
   },
 };

@@ -52,6 +52,7 @@ interface TestnetMintProps {
   votes?: VoteData;
   source: "kingdomly" | "rarible";
   minted_supply?: number;
+  media_type?: string;
 }
 
 // Simple component to display vote breakdown with a custom tooltip
@@ -270,12 +271,14 @@ const MediaDisplay = ({
   className,
   fallbackUrl,
   isHeader = false,
+  mediaType = "image",
 }: {
   url: string;
   alt: string;
   className?: string;
   fallbackUrl?: string;
   isHeader?: boolean;
+  mediaType?: string;
 }) => {
   // If this is a header and we have no URL but have a fallback, create a blurred background
   if (isHeader && !url && fallbackUrl) {
@@ -306,17 +309,25 @@ const MediaDisplay = ({
     );
   }
 
-  if (isVideo(url)) {
+  // Handle video media type
+  if (mediaType === "video") {
     return (
-      <video
-        src={url}
-        className={className}
-        autoPlay
-        loop
-        muted
-        playsInline
-        style={{ objectFit: "cover" }}
-      />
+      <div className="relative w-full h-full">
+        <video
+          src={url}
+          className={cn(
+            "absolute inset-0 w-full h-full object-cover",
+            className
+          )}
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+        {isHeader && (
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
+        )}
+      </div>
     );
   }
 
@@ -353,6 +364,7 @@ export function TestnetMintCard({
   votes,
   source,
   minted_supply,
+  media_type = "image",
 }: TestnetMintProps) {
   // Use timestamp for fallback only if status is not provided
   const isMintLive =
@@ -487,6 +499,7 @@ export function TestnetMintCard({
           fallbackUrl={profileImgUrl}
           alt={`${name} header`}
           isHeader={true}
+          mediaType={media_type}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30"></div>
 

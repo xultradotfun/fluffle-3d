@@ -50,6 +50,7 @@ interface FormattedMint {
   }>;
   author: string;
   minted_supply?: number;
+  media_type: string;
 }
 
 export async function GET() {
@@ -59,35 +60,68 @@ export async function GET() {
 
     console.log(`[Rarible Proxy] Fetching drops from: ${apiUrl}`);
 
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-api-key": apiKey,
-        Accept: "application/json",
-        "Cache-Control": "no-cache",
-        Pragma: "no-cache",
-      },
-      cache: "no-store",
-      body: JSON.stringify({}),
-    });
+    // Make two requests with different caching settings
+    const [cachedResponse, uncachedResponse] = await Promise.all([
+      // Regular request (with default caching)
+      fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
+          Accept: "application/json",
+        },
+        body: JSON.stringify({}),
+      }),
+      // No-cache request
+      fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
+          Accept: "application/json",
+          "Cache-Control": "no-cache",
+          Pragma: "no-cache",
+        },
+        cache: "no-store",
+        body: JSON.stringify({}),
+      }),
+    ]);
 
-    if (!response.ok) {
+    if (!cachedResponse.ok && !uncachedResponse.ok) {
       console.error(
-        `[Rarible Proxy] API responded with status: ${response.status}`
+        `[Rarible Proxy] Both API requests failed. Cached status: ${cachedResponse.status}, Uncached status: ${uncachedResponse.status}`
       );
       return NextResponse.json(
-        { error: `API responded with status: ${response.status}` },
-        { status: response.status }
+        { error: `API requests failed` },
+        { status: 500 }
       );
     }
 
-    const drops: RaribleDrop[] = await response.json();
-    console.log(`[Rarible Proxy] Successfully retrieved ${drops.length} drops`);
+    // Get both sets of drops
+    const cachedDrops: RaribleDrop[] = cachedResponse.ok
+      ? await cachedResponse.json()
+      : [];
+    const uncachedDrops: RaribleDrop[] = uncachedResponse.ok
+      ? await uncachedResponse.json()
+      : [];
+
+    // Combine drops and remove duplicates based on id
+    const seenIds = new Set<string>();
+    const allDrops = [...cachedDrops, ...uncachedDrops].filter((drop) => {
+      if (seenIds.has(drop.id)) {
+        return false;
+      }
+      seenIds.add(drop.id);
+      return true;
+    });
+
+    console.log(
+      `[Rarible Proxy] Successfully retrieved ${allDrops.length} unique drops (${cachedDrops.length} cached, ${uncachedDrops.length} uncached)`
+    );
 
     // Transform Rarible drops to match Kingdomly format
     const formattedMints: FormattedMint[] = await Promise.all(
-      drops.map(async (drop) => {
+      allDrops.map(async (drop) => {
         // Convert ISO date string to timestamp in milliseconds
         const startTimestamp = new Date(drop.startDate).getTime();
         const endTimestamp = drop.endDate
@@ -160,11 +194,25 @@ export async function GET() {
           endTime: endTimestamp,
         };
 
+        // Helper function to get appropriate media URL based on type
+        const getMediaUrl = (media: { type: string; url: string }) => {
+          // If it's a direct URL, use it as is
+          if (media.url.startsWith("http")) {
+            // For videos, we could either:
+            // 1. Use the first frame as a thumbnail (if available)
+            // 2. Use a fallback image
+            // 3. Or use the video URL directly and let the frontend handle it
+            return media.url;
+          }
+          // For relative URLs from Rarible
+          return `https://testnet.rarible.fun${media.url}`;
+        };
+
         const formattedMint = {
           collection_name: drop.title,
           description: drop.description,
-          profile_image: `https://testnet.rarible.fun${drop.media.url}`,
-          header_image: `https://testnet.rarible.fun${drop.media.url}`,
+          profile_image: getMediaUrl(drop.media),
+          header_image: getMediaUrl(drop.media),
           total_supply: drop.quantity || null,
           mint_live_timestamp: startTimestamp,
           mint_page_link: `https://testnet.rarible.fun/collections/megaethtestnet/${contractAddress}/drops`,
@@ -176,6 +224,8 @@ export async function GET() {
           mint_group_data: [mintGroup],
           author: drop.author,
           minted_supply: mintedSupply,
+          // Add media type information for frontend handling
+          media_type: drop.media.type,
         };
 
         // Debug log for supply check
