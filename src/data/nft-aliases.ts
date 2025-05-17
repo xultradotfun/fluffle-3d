@@ -82,11 +82,6 @@ const matchesPattern = (
   return patterns.some((pattern) => {
     const normalizedPattern = normalizeString(pattern);
     const matches = normalizedValue.includes(normalizedPattern);
-    if (matches) {
-      console.log(
-        `Match found! Value: "${value}" (normalized: "${normalizedValue}") matches pattern: "${pattern}" (normalized: "${normalizedPattern}")`
-      );
-    }
     return matches;
   });
 };
@@ -98,13 +93,6 @@ export function findMatchingAlias(collection: {
   description: string;
   author?: string;
 }): AliasRule | null {
-  console.log("Checking collection for aliases:", {
-    name: collection.name,
-    twitter: collection.twitter,
-    description: collection.description,
-    author: collection.author,
-  });
-
   return (
     nftAliases.find((rule) => {
       // Check each field using the matchesPattern helper
