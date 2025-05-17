@@ -65,7 +65,10 @@ export async function GET() {
         "Content-Type": "application/json",
         "x-api-key": apiKey,
         Accept: "application/json",
+        "Cache-Control": "no-cache",
+        Pragma: "no-cache",
       },
+      cache: "no-store",
       body: JSON.stringify({}),
     });
 
