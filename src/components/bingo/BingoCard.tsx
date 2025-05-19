@@ -232,7 +232,7 @@ export function BingoCard({
           id="bingo-card"
           className="bg-gray-100 dark:bg-gray-800/50 p-4 rounded-xl"
         >
-          <div className="grid grid-cols-5 gap-3">
+          <div className="grid grid-cols-6 gap-3">
             {tasks.map((task, index) => {
               const isCompleted = completedTaskIds.includes(task.id);
               return (
@@ -353,14 +353,14 @@ export function BingoCard({
               );
             })}
             {/* Coming Soon Message */}
-            {tasks.length % 5 !== 0 && (
+            {tasks.length % 6 !== 0 && (
               <div
                 className="group relative w-full rounded-xl overflow-hidden ring-1 ring-gray-200 dark:ring-gray-700 bg-gradient-to-br from-teal-50 via-emerald-50 to-teal-50 dark:from-teal-900/20 dark:via-emerald-900/20 dark:to-teal-900/20"
                 style={{
-                  gridColumn: `${(tasks.length % 5) + 1} / span ${
-                    5 - (tasks.length % 5)
+                  gridColumn: `${(tasks.length % 6) + 1} / span ${
+                    6 - (tasks.length % 6)
                   }`,
-                  aspectRatio: 5 - (tasks.length % 5) + 0.15,
+                  aspectRatio: 6 - (tasks.length % 6) + 0.15,
                 }}
               >
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(20,184,166,0.1)_0%,transparent_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(20,184,166,0.2)_0%,transparent_70%)]" />
@@ -438,7 +438,7 @@ export function BingoCard({
             </div>
 
             {/* Bingo Grid */}
-            <div className="grid grid-cols-5 gap-3">
+            <div className="grid grid-cols-6 gap-3">
               {tasks.map((task, index) => {
                 const isTaskCompleted = completedTaskIds.includes(task.id);
 
@@ -522,14 +522,14 @@ export function BingoCard({
                 );
               })}
               {/* Coming Soon Message for Share Preview */}
-              {tasks.length % 5 !== 0 && (
+              {tasks.length % 6 !== 0 && (
                 <div
                   className="group relative w-full rounded-xl overflow-hidden ring-1 ring-white/10 bg-gray-900"
                   style={{
-                    gridColumn: `${(tasks.length % 5) + 1} / span ${
-                      5 - (tasks.length % 5)
+                    gridColumn: `${(tasks.length % 6) + 1} / span ${
+                      6 - (tasks.length % 6)
                     }`,
-                    aspectRatio: 5 - (tasks.length % 5) + 0.15,
+                    aspectRatio: 6 - (tasks.length % 6) + 0.15,
                   }}
                 >
                   <div className="absolute inset-0">
