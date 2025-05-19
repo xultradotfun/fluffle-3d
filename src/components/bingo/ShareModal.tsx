@@ -26,7 +26,7 @@ export function ShareModal({
 
   const getShareText = () => {
     const percentage = Math.round((completedCount / totalTasks) * 100);
-    let text = `${completedCount}/${totalTasks} tiles completed (${percentage}%) on @megaeth_labs Community Bingo!`;
+    let text = `${completedCount}/${totalTasks} tiles completed (${percentage}%) on @megaeth_labs Testnet Bingo!`;
 
     if (completedLines > 0) {
       text += `\n${completedLines} bingo line${
@@ -42,7 +42,8 @@ export function ShareModal({
       text += "\nHalfway there!";
     }
 
-    text += "\n\nGet your own bingo card at fluffle.tools/#bingo";
+    text +=
+      "\n\nGet your unique bingo card and start exploring real-time apps at fluffle.tools/#bingo";
     return text;
   };
 

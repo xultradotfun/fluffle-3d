@@ -594,7 +594,7 @@ export function BingoCard({
             {/* Share Footer */}
             <div className="mt-6 flex items-center justify-center">
               <div className="text-sm text-gray-500 dark:text-gray-400 font-medium">
-                Get your own MegaETH Bingo Card at{" "}
+                Get your unique bingo card and start exploring real-time apps at{" "}
                 <span className="text-teal-600 dark:text-teal-400">
                   fluffle.tools
                 </span>
