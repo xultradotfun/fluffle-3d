@@ -181,6 +181,71 @@
       "projects": ["avon_xyz"],
       "culturalElement": "General",
       "links": ["http://avon.xyz/portfolio/6342"]
+    },
+    {
+      "id": "20",
+      "title": "The Art of the Deal",
+      "description": "Get the best rates on your swaps on Rubic.",
+      "category": "DeFi",
+      "projects": ["CryptoRubic"],
+      "culturalElement": "General",
+      "links": [
+        "https://testnet.rubic.exchange/?fromChain=MEGAETH_TESTNET&toChain=MEGAETH_TESTNET&from=USDC&to=MEGA"
+      ]
+    },
+    {
+      "id": "21",
+      "title": "Real-Time Capital Markets",
+      "description": "Ride the green dino to generational wealth on Bronto.",
+      "category": "DeFi",
+      "projects": ["bronto_finance"],
+      "culturalElement": "General",
+      "links": ["https://bronto.finance/swap"]
+    },
+    {
+      "id": "22",
+      "title": "Right-click, Save",
+      "description": "Own pristine digital artwork, trade them on RaribleFUN",
+      "category": "NFT",
+      "projects": ["rarible"],
+      "culturalElement": "General",
+      "links": ["https://testnet.rarible.fun/"]
+    },
+    {
+      "id": "23",
+      "title": "Kings of Hype",
+      "description": "Keep up with hyped mints or launch your own on Kingdomly",
+      "category": "NFT",
+      "projects": ["KingdomlyApp"],
+      "culturalElement": "General",
+      "links": ["https://www.kingdomly.app/"]
+    },
+    {
+      "id": "24",
+      "title": "Bunny Hop Fast",
+      "description": "Experience real-time gaming on Crossy Fluffle.",
+      "category": "Gaming",
+      "projects": ["megaeth_labs"],
+      "culturalElement": "General",
+      "links": ["https://game.megaeth.com/crossy-fluffle"]
+    },
+    {
+      "id": "25",
+      "title": "Bunny Crush",
+      "description": "Match the bunnies and get a high score on Block Battles.",
+      "category": "Gaming",
+      "projects": ["realchriswilder"],
+      "culturalElement": "General",
+      "links": ["https://mega.gaswars.fun/"]
+    },
+    {
+      "id": "26",
+      "title": "Push It To The Limit",
+      "description": "Check out Mega Testnet's capabilities on Ravenium's benchmark suite.",
+      "category": "DeFi",
+      "projects": ["RaveniumNFT"],
+      "culturalElement": "General",
+      "links": ["https://mega-benchmark.vercel.app/"]
     }
   ]
 }
