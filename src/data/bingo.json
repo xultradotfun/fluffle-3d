@@ -23,7 +23,7 @@
       ]
     },
     {
-      "id": "03",
+      "id": "3",
       "title": "Hats Cabal Tribute",
       "description": "Mint cUSD on CAP / and use it in DeFi apps on MegaETH.",
       "category": "DeFi",
@@ -32,7 +32,7 @@
       "links": ["https://cap.app/mint"]
     },
     {
-      "id": "3",
+      "id": "4",
       "title": "Fluffle Believer",
       "description": "Launch or locate/purchase an asset associated to your favorite Fluffle cabal/tribe on GTE/XL",
       "category": "Community",
@@ -44,7 +44,7 @@
       ]
     },
     {
-      "id": "4",
+      "id": "5",
       "title": "Fluffle Cabal",
       "description": "Join Fluffle Cabal communities on Lemonade and stake the related token after buying it on GTE/XL",
       "category": "Community",
@@ -52,7 +52,7 @@
       "culturalElement": "The Fluffle Cabals"
     },
     {
-      "id": "5",
+      "id": "6",
       "title": "Party @ World Computer",
       "description": "Create a MegaETH themed event on Lemonade",
       "category": "Social",
@@ -61,7 +61,7 @@
       "links": ["https://lemonade.social/s/megaeth"]
     },
     {
-      "id": "6",
+      "id": "7",
       "title": "Founder's Pet",
       "description": "Organize/Join a Lemonade raid Event to make Brother Bing tweet a keyword or phrase. Launch/Trade the related token on GTE",
       "category": "Social",
@@ -70,7 +70,7 @@
       "links": ["https://lemonade.social/s/megaeth", "https://testnet.gte.xyz"]
     },
     {
-      "id": "7",
+      "id": "8",
       "title": "ETH to Valhalla",
       "description": "ETH wont mega itself. Long ETH 5 times on Valhalla. Never exit.",
       "category": "Trading",
@@ -79,7 +79,7 @@
       "links": ["https://app.valhalla.exchange/trade/BTC"]
     },
     {
-      "id": "8",
+      "id": "9",
       "title": "This or That?",
       "description": "Play guess.best and build up a streak of 5",
       "category": "Gaming",
@@ -90,7 +90,7 @@
       ]
     },
     {
-      "id": "9",
+      "id": "10",
       "title": "Mega Money",
       "description": "Mint cUSD. Swap for MEGA on GTE",
       "category": "DeFi",
@@ -99,7 +99,7 @@
       "links": ["https://testnet.gte.xyz", "https://cap.app/testnet"]
     },
     {
-      "id": "10",
+      "id": "11",
       "title": "Heavy Metal Chain",
       "description": "Launch/Trade tokens on GTE/XL for your fave Megadeth track",
       "category": "Trading",
@@ -111,7 +111,7 @@
       ]
     },
     {
-      "id": "11",
+      "id": "12",
       "title": "Chubby Bunny Smash",
       "description": "Act on your cuteness aggression on AWE. Whack the Fluffles",
       "category": "Gaming",
@@ -120,7 +120,7 @@
       "links": ["https://testnet.awe.box"]
     },
     {
-      "id": "12",
+      "id": "13",
       "title": "$LOVE Is Onchain",
       "description": "Interact with AI agents and swap some $LOVE on Nectar AI",
       "category": "AI",
@@ -129,7 +129,7 @@
       "links": ["https://love.nectar.ai"]
     },
     {
-      "id": "13",
+      "id": "14",
       "title": "Make Noise",
       "description": "Put your money on your hottest take. Trade Pre-TGE project mindshare on Noise",
       "category": "Trading",
@@ -138,7 +138,7 @@
       "links": ["https://app.noise.xyz/"]
     },
     {
-      "id": "14",
+      "id": "15",
       "title": "Is This Web2?",
       "description": "Use social sign-in + spam 'Quick Buy' on GTE's Dash page to get a truly real-time experience",
       "category": "Trading",
@@ -147,7 +147,7 @@
       "links": ["https://testnet.gte.xyz"]
     },
     {
-      "id": "15",
+      "id": "16",
       "title": "See You, Space Cowboy",
       "description": "Trade your favourite tokens on Bebop",
       "category": "Trading",
@@ -156,7 +156,7 @@
       "links": ["https://bebop.xyz/trade?network=megaeth"]
     },
     {
-      "id": "16",
+      "id": "17",
       "title": "Make It rAIn",
       "description": "Launch and Trade AI agents on Rainmakr",
       "category": "AI",
@@ -165,7 +165,7 @@
       "links": ["https://rainmakr.xyz/en/rainai"]
     },
     {
-      "id": "17",
+      "id": "18",
       "title": "Gotta Catch Em All",
       "description": "Collect, mix and mint your fave Pokemon NFTs.",
       "category": "Gaming",
@@ -174,7 +174,7 @@
       "links": ["https://mega-merge.vercel.app/"]
     },
     {
-      "id": "18",
+      "id": "19",
       "title": "See You In The Orderbooks",
       "description": "Trade fast, win faster on GTE's fully onchain spot CLOB.",
       "category": "Trading",
@@ -183,7 +183,7 @@
       "links": ["http://testnet.gte.xyz/clob"]
     },
     {
-      "id": "19",
+      "id": "20",
       "title": "Just Use Avon.",
       "description": "Set market & limit orders for lend/borrow on Avon.",
       "category": "DeFi",
@@ -192,7 +192,7 @@
       "links": ["http://avon.xyz/portfolio/6342"]
     },
     {
-      "id": "20",
+      "id": "21",
       "title": "The Art of the Deal",
       "description": "Get the best rates on your swaps on Rubic.",
       "category": "DeFi",
@@ -203,7 +203,7 @@
       ]
     },
     {
-      "id": "21",
+      "id": "22",
       "title": "Real-Time Capital Markets",
       "description": "Ride the green dino to generational wealth on Bronto.",
       "category": "DeFi",
@@ -212,7 +212,7 @@
       "links": ["https://bronto.finance/swap"]
     },
     {
-      "id": "22",
+      "id": "23",
       "title": "Right-click, Save",
       "description": "Own pristine digital artwork, trade them on RaribleFUN",
       "category": "NFT",
@@ -221,7 +221,7 @@
       "links": ["https://testnet.rarible.fun/"]
     },
     {
-      "id": "23",
+      "id": "24",
       "title": "Kings of Hype",
       "description": "Keep up with hyped mints or launch your own on Kingdomly",
       "category": "NFT",
@@ -230,7 +230,7 @@
       "links": ["https://www.kingdomly.app/"]
     },
     {
-      "id": "24",
+      "id": "25",
       "title": "Bunny Hop Fast",
       "description": "Experience real-time gaming on Crossy Fluffle.",
       "category": "Gaming",
@@ -239,7 +239,7 @@
       "links": ["https://game.megaeth.com/crossy-fluffle"]
     },
     {
-      "id": "25",
+      "id": "26",
       "title": "Bunny Crush",
       "description": "Match the bunnies and get a high score on Block Battles.",
       "category": "Gaming",
@@ -248,7 +248,7 @@
       "links": ["https://mega.gaswars.fun/"]
     },
     {
-      "id": "26",
+      "id": "27",
       "title": "Push It To The Limit",
       "description": "Check out Mega Testnet's capabilities on Ravenium's benchmark suite.",
       "category": "DeFi",
