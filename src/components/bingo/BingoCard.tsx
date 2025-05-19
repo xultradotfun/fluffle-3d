@@ -289,16 +289,15 @@ export function BingoCard({
                     <div className="absolute bottom-3 left-0 right-0 flex items-center justify-center gap-1">
                       {task.projects.map((twitter: string) => {
                         const project = projectMap.get(twitter);
-                        if (!project) return null;
                         return (
                           <div
                             key={twitter}
                             className="relative w-6 h-6 rounded-full overflow-hidden ring-1 ring-white/30 bg-white dark:bg-gray-800 shadow-sm"
-                            title={project.name}
+                            title={project?.name || twitter}
                           >
                             <Image
                               src={`/avatars/${twitter}.jpg`}
-                              alt={project.name}
+                              alt={project?.name || twitter}
                               fill
                               className="object-cover"
                               unoptimized
@@ -500,16 +499,15 @@ export function BingoCard({
                         <div className="absolute bottom-3 left-0 right-0 flex items-center justify-center gap-1">
                           {task.projects.map((twitter: string) => {
                             const project = projectMap.get(twitter);
-                            if (!project) return null;
                             return (
                               <div
                                 key={twitter}
                                 className="relative w-6 h-6 rounded-full overflow-hidden ring-1 ring-white/30 bg-white dark:bg-gray-800 shadow-sm"
-                                title={project.name}
+                                title={project?.name || twitter}
                               >
                                 <Image
                                   src={`/avatars/${twitter}.jpg`}
-                                  alt={project.name}
+                                  alt={project?.name || twitter}
                                   fill
                                   className="object-cover"
                                   unoptimized
