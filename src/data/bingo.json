@@ -23,6 +23,15 @@
       ]
     },
     {
+      "id": "03",
+      "title": "Hats Cabal Tribute",
+      "description": "Mint cUSD on CAP / and use it in DeFi apps on MegaETH.",
+      "category": "DeFi",
+      "projects": ["capmoney_"],
+      "culturalElement": "Hats Cabal",
+      "links": ["https://cap.app/mint"]
+    },
+    {
       "id": "3",
       "title": "Fluffle Believer",
       "description": "Launch or locate/purchase an asset associated to your favorite Fluffle cabal/tribe on GTE/XL",
