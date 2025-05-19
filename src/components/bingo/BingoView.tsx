@@ -13,9 +13,22 @@ export function BingoView() {
   const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [guestName, setGuestName] = useState<string>("");
+  const [showGuestInput, setShowGuestInput] = useState(false);
+  const [tempGuestName, setTempGuestName] = useState("");
 
   const handleLogin = () => {
     login("/#bingo");
+  };
+
+  const handleGuestStart = () => {
+    setShowGuestInput(true);
+    setTempGuestName(guestName || "");
+  };
+
+  const handleGuestConfirm = () => {
+    setGuestName(tempGuestName.trim() || "Guest");
+    setShowGuestInput(false);
   };
 
   // Check for mobile device on mount and window resize
@@ -58,6 +71,37 @@ export function BingoView() {
     loadProgress();
   }, [user]);
 
+  // Load guestName and completedTaskIds from localStorage if not logged in
+  useEffect(() => {
+    if (!user) {
+      const storedGuestName = localStorage.getItem("bingo_guest_name");
+      if (storedGuestName) setGuestName(storedGuestName);
+      const storedCompleted = localStorage.getItem("bingo_guest_completed");
+      if (storedCompleted) {
+        try {
+          setCompletedTaskIds(JSON.parse(storedCompleted));
+        } catch {}
+      }
+    }
+  }, [user]);
+
+  // Save guestName to localStorage when it changes (for guests only)
+  useEffect(() => {
+    if (!user && guestName) {
+      localStorage.setItem("bingo_guest_name", guestName);
+    }
+  }, [guestName, user]);
+
+  // Save completedTaskIds to localStorage when they change (for guests only)
+  useEffect(() => {
+    if (!user) {
+      localStorage.setItem(
+        "bingo_guest_completed",
+        JSON.stringify(completedTaskIds)
+      );
+    }
+  }, [completedTaskIds, user]);
+
   // Merge completed state with base tasks
   const tasks = bingoConfig.tasks.map((task) => ({
     ...task,
@@ -70,7 +114,18 @@ export function BingoView() {
   );
 
   const handleTaskToggle = async (taskId: string) => {
-    if (!user) return;
+    if (!user) {
+      // For guests, just update local state (and localStorage will sync via effect)
+      setCompletedTaskIds((prevIds) => {
+        const isCompleted = prevIds.includes(taskId);
+        if (isCompleted) {
+          return prevIds.filter((id) => id !== taskId);
+        } else {
+          return [...prevIds, taskId];
+        }
+      });
+      return;
+    }
 
     // Optimistically update the UI
     setCompletedTaskIds((prevIds) => {
@@ -226,32 +281,18 @@ export function BingoView() {
                 <span className="font-medium">Logout</span>
               </button>
             </div>
-          ) : (
-            <div className="space-y-4">
-              <button
-                onClick={handleLogin}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-teal-50 hover:bg-teal-100 dark:bg-teal-500/[0.08] dark:hover:bg-teal-500/[0.16] border border-teal-200/50 dark:border-teal-500/20 text-teal-600 dark:text-teal-400 transition-all"
-              >
-                <Trophy className="w-5 h-5" />
-                <span className="font-medium">
-                  Connect with Discord to Start
-                </span>
-              </button>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
-                Your progress will be saved and synced across devices
-              </p>
-            </div>
-          )}
+          ) : null}
         </div>
 
         {/* Bingo Card */}
         <div className="max-w-5xl mx-auto">
-          {user ? (
+          {user || guestName ? (
             <BingoCard
               tasks={tasks}
               onTaskToggle={handleTaskToggle}
               completedTaskIds={completedTaskIds}
               projectMap={projectMap}
+              guestName={guestName || undefined}
             />
           ) : (
             <div className="relative">
@@ -269,13 +310,53 @@ export function BingoView() {
                     Sign in with Discord to get your personal bingo card and
                     start tracking your progress!
                   </p>
-                  <button
-                    onClick={handleLogin}
-                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-teal-50 hover:bg-teal-100 dark:bg-teal-500/[0.08] dark:hover:bg-teal-500/[0.16] border border-teal-200/50 dark:border-teal-500/20 text-teal-600 dark:text-teal-400 transition-all"
-                  >
-                    <Trophy className="w-5 h-5" />
-                    <span className="font-medium">Connect with Discord</span>
-                  </button>
+                  {!showGuestInput && (
+                    <div className="flex flex-col items-center">
+                      <button
+                        onClick={handleLogin}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-teal-50 hover:bg-teal-100 dark:bg-teal-500/[0.08] dark:hover:bg-teal-500/[0.16] border border-teal-200/50 dark:border-teal-500/20 text-teal-600 dark:text-teal-400 transition-all"
+                      >
+                        <Trophy className="w-5 h-5" />
+                        <span className="font-medium">
+                          Connect with Discord
+                        </span>
+                      </button>
+                      <button
+                        onClick={handleGuestStart}
+                        className="mt-2 inline-flex items-center gap-2 px-2 py-1 rounded bg-transparent text-gray-500 hover:text-teal-600 dark:text-gray-400 dark:hover:text-teal-400 text-sm font-normal underline-offset-2 hover:underline focus:underline border-none shadow-none transition-all"
+                      >
+                        <Smartphone className="w-4 h-4" />
+                        <span className="font-normal">Play without login</span>
+                      </button>
+                    </div>
+                  )}
+                  {showGuestInput && !user && !guestName && (
+                    <div className="mt-4 flex flex-col items-center gap-2">
+                      <input
+                        type="text"
+                        className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        placeholder="Enter your name"
+                        value={tempGuestName}
+                        onChange={(e) => setTempGuestName(e.target.value)}
+                        maxLength={24}
+                        autoFocus
+                      />
+                      <div className="flex gap-2">
+                        <button
+                          onClick={handleGuestConfirm}
+                          className="px-4 py-2 rounded-lg bg-teal-500 text-white font-semibold hover:bg-teal-600 transition"
+                        >
+                          Start Playing
+                        </button>
+                        <button
+                          onClick={() => setShowGuestInput(false)}
+                          className="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
               {/* Show a non-interactive preview of the bingo card */}

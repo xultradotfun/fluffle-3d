@@ -14,6 +14,7 @@ interface BingoCardProps {
   onTaskToggle: (taskId: string) => void;
   completedTaskIds: string[];
   isPreview?: boolean;
+  guestName?: string;
 }
 
 export function BingoCard({
@@ -22,6 +23,7 @@ export function BingoCard({
   onTaskToggle,
   completedTaskIds,
   isPreview = false,
+  guestName,
 }: BingoCardProps) {
   const { user } = useDiscordAuth();
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
@@ -180,19 +182,31 @@ export function BingoCard({
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              {avatarUrl && (
-                <div className="relative">
-                  <div className="absolute -inset-0.5 bg-gradient-to-br from-teal-500/30 to-emerald-500/30 dark:from-teal-500/20 dark:to-emerald-500/20 rounded-full blur" />
-                  <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-white/20 dark:ring-white/10">
-                    <Image
-                      src={avatarUrl}
-                      alt={user?.username || "User avatar"}
-                      fill
-                      className="object-cover"
-                      unoptimized
-                    />
-                  </div>
+              {guestName ? (
+                <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-white/20 dark:ring-white/10 bg-gray-200 dark:bg-gray-700">
+                  <Image
+                    src="/avatars/megaeth_labs.jpg"
+                    alt="MegaETH Guest Avatar"
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
                 </div>
+              ) : (
+                avatarUrl && (
+                  <div className="relative">
+                    <div className="absolute -inset-0.5 bg-gradient-to-br from-teal-500/30 to-emerald-500/30 dark:from-teal-500/20 dark:to-emerald-500/20 rounded-full blur" />
+                    <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-white/20 dark:ring-white/10">
+                      <Image
+                        src={avatarUrl}
+                        alt={user?.username || "User avatar"}
+                        fill
+                        className="object-cover"
+                        unoptimized
+                      />
+                    </div>
+                  </div>
+                )
               )}
               <div>
                 <div className="flex items-center gap-3 mb-0.5">
@@ -213,6 +227,11 @@ export function BingoCard({
                 <p className="text-sm text-gray-500 dark:text-gray-400">
                   {completedTaskIds.length} of {tasks.length} tiles completed
                 </p>
+                {guestName && (
+                  <p className="text-xs text-gray-400 dark:text-gray-500 font-medium mt-1">
+                    {guestName}
+                  </p>
+                )}
               </div>
             </div>
             {!isPreview && (
@@ -412,21 +431,35 @@ export function BingoCard({
                 </div>
                 <div className="w-px h-8 bg-gray-200 dark:bg-gray-700" />
                 <div className="flex items-center gap-3">
-                  {avatarUrl && (
-                    <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-gray-200 dark:ring-gray-700 shadow-sm">
+                  {guestName ? (
+                    <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-gray-200 dark:ring-gray-700 shadow-sm bg-gray-200 dark:bg-gray-700">
                       <Image
-                        src={avatarUrl}
-                        alt={user?.username || "User avatar"}
-                        width={48}
-                        height={48}
-                        className="w-full h-full object-cover"
+                        src="/avatars/megaeth_labs.jpg"
+                        alt="MegaETH Guest Avatar"
+                        fill
+                        className="object-cover"
                         unoptimized
                       />
                     </div>
+                  ) : (
+                    avatarUrl && (
+                      <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-gray-200 dark:ring-gray-700 shadow-sm">
+                        <Image
+                          src={avatarUrl}
+                          alt={user?.username || "User avatar"}
+                          width={48}
+                          height={48}
+                          className="w-full h-full object-cover"
+                          unoptimized
+                        />
+                      </div>
+                    )
                   )}
                   <div>
                     <h2 className="text-lg font-bold text-gray-900 dark:text-white">
-                      {user?.username || "Anon"}'s Bingo Progress
+                      {guestName
+                        ? `${guestName}'s Bingo Progress`
+                        : `${user?.username || "Anon"}'s Bingo Progress`}
                     </h2>
                     <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
                       {completedTaskIds.length} of {tasks.length} tasks
