@@ -172,7 +172,7 @@ export function BingoCard({
 
   return (
     <>
-      <div className="w-full max-w-4xl mx-auto space-y-6">
+      <div className="w-full max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div className="relative px-6 py-4 bg-white/50 dark:bg-white/[0.03] rounded-2xl border border-gray-200/50 dark:border-white/[0.05] backdrop-blur-sm">
           <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-teal-500/20 to-transparent" />
