@@ -24,15 +24,6 @@
     },
     {
       "id": "3",
-      "title": "Hats Cabal Tribute",
-      "description": "Mint cUSD on CAP or lend tokens in a pool involving cUSD on WCM",
-      "category": "DeFi",
-      "projects": ["capmoney_", "wcm_inc"],
-      "culturalElement": "Hats Cabal",
-      "links": ["https://cap.app/testnet", "https://testnet.teko.finance"]
-    },
-    {
-      "id": "4",
       "title": "Fluffle Believer",
       "description": "Launch or locate/purchase an asset associated to your favorite Fluffle cabal/tribe on GTE/XL",
       "category": "Community",
@@ -44,7 +35,7 @@
       ]
     },
     {
-      "id": "5",
+      "id": "4",
       "title": "Fluffle Cabal",
       "description": "Join Fluffle Cabal communities on Lemonade and stake the related token after buying it on GTE/XL",
       "category": "Community",
@@ -52,16 +43,7 @@
       "culturalElement": "The Fluffle Cabals"
     },
     {
-      "id": "6",
-      "title": "Just Use Teko",
-      "description": "Supply & Borrow assets on Teko",
-      "category": "DeFi",
-      "projects": ["wcm_inc"],
-      "culturalElement": "Real-Time",
-      "links": ["https://testnet.teko.finance"]
-    },
-    {
-      "id": "7",
+      "id": "5",
       "title": "Party @ World Computer",
       "description": "Create a MegaETH themed event on Lemonade",
       "category": "Social",
@@ -70,7 +52,7 @@
       "links": ["https://lemonade.social/s/megaeth"]
     },
     {
-      "id": "8",
+      "id": "6",
       "title": "Founder's Pet",
       "description": "Organize/Join a Lemonade raid Event to make Brother Bing tweet a keyword or phrase. Launch/Trade the related token on GTE",
       "category": "Social",
@@ -79,7 +61,16 @@
       "links": ["https://lemonade.social/s/megaeth", "https://testnet.gte.xyz"]
     },
     {
-      "id": "9",
+      "id": "7",
+      "title": "ETH to Valhalla",
+      "description": "ETH wont mega itself. Long ETH 5 times on Valhalla. Never exit.",
+      "category": "Trading",
+      "projects": ["valhalla_defi"],
+      "culturalElement": "ETH Wont Mega Itself",
+      "links": ["https://app.valhalla.exchange/trade/BTC"]
+    },
+    {
+      "id": "8",
       "title": "This or That?",
       "description": "Play guess.best and build up a streak of 5",
       "category": "Gaming",
@@ -90,20 +81,16 @@
       ]
     },
     {
-      "id": "10",
+      "id": "9",
       "title": "Mega Money",
-      "description": "Mint tkUSD or cUSD. Swap for MEGA on GTE",
+      "description": "Mint cUSD. Swap for MEGA on GTE",
       "category": "DeFi",
-      "projects": ["GTE_XYZ", "capmoney_", "wcm_inc"],
+      "projects": ["GTE_XYZ", "capmoney_"],
       "culturalElement": "MEGA",
-      "links": [
-        "https://testnet.gte.xyz",
-        "https://cap.app/testnet",
-        "https://testnet.teko.finance"
-      ]
+      "links": ["https://testnet.gte.xyz", "https://cap.app/testnet"]
     },
     {
-      "id": "11",
+      "id": "10",
       "title": "Heavy Metal Chain",
       "description": "Launch/Trade tokens on GTE/XL for your fave Megadeth track",
       "category": "Trading",
@@ -115,7 +102,7 @@
       ]
     },
     {
-      "id": "12",
+      "id": "11",
       "title": "Chubby Bunny Smash",
       "description": "Act on your cuteness aggression on AWE. Whack the Fluffles",
       "category": "Gaming",
@@ -124,7 +111,7 @@
       "links": ["https://testnet.awe.box"]
     },
     {
-      "id": "13",
+      "id": "12",
       "title": "$LOVE Is Onchain",
       "description": "Interact with AI agents and swap some $LOVE on Nectar AI",
       "category": "AI",
@@ -133,7 +120,7 @@
       "links": ["https://love.nectar.ai"]
     },
     {
-      "id": "14",
+      "id": "13",
       "title": "Make Noise",
       "description": "Put your money on your hottest take. Trade Pre-TGE project mindshare on Noise",
       "category": "Trading",
@@ -142,7 +129,7 @@
       "links": ["https://app.noise.xyz/"]
     },
     {
-      "id": "15",
+      "id": "14",
       "title": "Is This Web2?",
       "description": "Use social sign-in + spam 'Quick Buy' on GTE's Dash page to get a truly real-time experience",
       "category": "Trading",
@@ -151,7 +138,7 @@
       "links": ["https://testnet.gte.xyz"]
     },
     {
-      "id": "16",
+      "id": "15",
       "title": "See You, Space Cowboy",
       "description": "Trade your favourite tokens on Bebop",
       "category": "Trading",
@@ -160,13 +147,40 @@
       "links": ["https://bebop.xyz/trade?network=megaeth"]
     },
     {
-      "id": "17",
+      "id": "16",
       "title": "Make It rAIn",
       "description": "Launch and Trade AI agents on Rainmakr",
       "category": "AI",
       "projects": ["RainMakr_xyz"],
       "culturalElement": "General",
       "links": ["https://rainmakr.xyz/en/rainai"]
+    },
+    {
+      "id": "17",
+      "title": "Gotta Catch Em All",
+      "description": "Collect, mix and mint your fave Pokemon NFTs.",
+      "category": "Gaming",
+      "projects": ["niwde_tan"],
+      "culturalElement": "General",
+      "links": ["https://mega-merge.vercel.app/"]
+    },
+    {
+      "id": "18",
+      "title": "See You In The Orderbooks",
+      "description": "Trade fast, win faster on GTE's fully onchain spot CLOB.",
+      "category": "Trading",
+      "projects": ["GTE_XYZ"],
+      "culturalElement": "General",
+      "links": ["http://testnet.gte.xyz/clob"]
+    },
+    {
+      "id": "19",
+      "title": "Just Use Avon.",
+      "description": "Set market & limit orders for lend/borrow on Avon.",
+      "category": "DeFi",
+      "projects": ["avon_xyz"],
+      "culturalElement": "General",
+      "links": ["http://avon.xyz/portfolio/6342"]
     }
   ]
 }
