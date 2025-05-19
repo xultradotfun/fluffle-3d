@@ -1164,6 +1164,17 @@
       "megaMafia": false,
       "native": false,
       "testnet": true
+    },
+    {
+      "name": "Enjoyooors",
+      "twitter": "enjoyooors",
+      "website": "https://enjoyooors.com",
+      "discord": "https://discord.gg/tvb2UUxEwk",
+      "description": "NFT Collection",
+      "category": "NFT",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
     }
   ]
 }
