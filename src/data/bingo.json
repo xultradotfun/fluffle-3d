@@ -49,7 +49,12 @@
       "description": "Join Fluffle Cabal communities on Lemonade and stake the related token after buying it on GTE/XL",
       "category": "Community",
       "projects": ["lemonade_events", "GTE_XYZ", "XLmemeCom"],
-      "culturalElement": "The Fluffle Cabals"
+      "culturalElement": "The Fluffle Cabals",
+      "links": [
+        "https://lemonade.social/s/megaeth",
+        "https://testnet.gte.xyz",
+        "https://testnet.xlmeme.com/megaeth"
+      ]
     },
     {
       "id": "6",
