@@ -584,7 +584,7 @@ export function BingoCard({
                   </div>
                   <div className="absolute inset-0 flex flex-col items-end justify-end p-4">
                     <p className="text-sm font-medium text-white/90">
-                      fluffle.tools
+                      bingo.fluffle.tools
                     </p>
                   </div>
                 </div>
