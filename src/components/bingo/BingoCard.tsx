@@ -596,7 +596,7 @@ export function BingoCard({
               <div className="text-sm text-gray-500 dark:text-gray-400 font-medium">
                 Get your unique bingo card and start exploring real-time apps at{" "}
                 <span className="text-teal-600 dark:text-teal-400">
-                  fluffle.tools
+                  bingo.fluffle.tools
                 </span>
               </div>
             </div>

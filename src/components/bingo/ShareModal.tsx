@@ -43,7 +43,7 @@ export function ShareModal({
     }
 
     text +=
-      "\n\nGet your unique bingo card and start exploring real-time apps at fluffle.tools/#bingo";
+      "\n\nGet your unique bingo card and start exploring real-time apps at bingo.fluffle.tools";
     return text;
   };
 
