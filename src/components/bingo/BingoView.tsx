@@ -31,6 +31,16 @@ export function BingoView() {
     setShowGuestInput(false);
   };
 
+  const handleGuestLogout = () => {
+    // Clear guest data from localStorage
+    localStorage.removeItem("bingo_guest_name");
+    localStorage.removeItem("bingo_guest_completed");
+
+    // Reset state
+    setGuestName("");
+    setCompletedTaskIds([]);
+  };
+
   // Check for mobile device on mount and window resize
   useEffect(() => {
     const checkMobile = () => {
@@ -279,6 +289,24 @@ export function BingoView() {
               >
                 <LogOut className="w-4 h-4" />
                 <span className="font-medium">Logout</span>
+              </button>
+            </div>
+          ) : guestName ? (
+            <div className="flex items-center justify-center gap-3">
+              <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/[0.08] backdrop-blur-sm">
+                <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                  <Smartphone className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                </div>
+                <span className="text-sm font-medium text-gray-900 dark:text-white">
+                  {guestName}
+                </span>
+              </div>
+              <button
+                onClick={handleGuestLogout}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-50 hover:bg-red-100 dark:bg-red-500/[0.08] dark:hover:bg-red-500/[0.16] border border-red-200/50 dark:border-red-500/20 text-red-600 dark:text-red-400 transition-all"
+              >
+                <LogOut className="w-4 h-4" />
+                <span className="font-medium">Exit Guest Mode</span>
               </button>
             </div>
           ) : null}
