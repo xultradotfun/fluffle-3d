@@ -4,6 +4,7 @@ const ALLOWED_BASE_URLS = [
   "https://mega.xultra.fun",
   "https://www.fluffle.tools",
   "https://fluffle.tools",
+  "https://bingo.fluffle.tools",
 ] as const;
 
 /**
