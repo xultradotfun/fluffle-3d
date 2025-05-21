@@ -1,10 +1,20 @@
 import { NextResponse } from "next/server";
 
-// Helper function to check if a collection is on MegaETH
+// Helper function to check if a collection is on MegaETH or is Bad Bunnz
 const isMegaETHCollection = (collection: any): boolean => {
   if (!collection?.chain?.chain_id) return false;
   const chainId = collection.chain.chain_id;
-  return chainId === 6342 || String(chainId) === "6342";
+
+  // Check if it's a MegaETH collection
+  const isMegaETH = chainId === 6342 || String(chainId) === "6342";
+
+  // Check if it's the Bad Bunnz collection on Ethereum mainnet
+  const isBadBunnz =
+    chainId === 1 &&
+    collection.contract_address?.toLowerCase() ===
+      "0x48003fc38f46759a652c4705929fa801e2c22c26";
+
+  return isMegaETH || isBadBunnz;
 };
 
 export async function GET() {

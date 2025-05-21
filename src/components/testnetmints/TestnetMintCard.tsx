@@ -504,7 +504,7 @@ export function TestnetMintCard({
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30"></div>
 
         {/* Status Badge */}
-        <div className="absolute top-3 left-3 z-10">
+        <div className="absolute top-3 left-3 z-10 flex items-center gap-2">
           <div
             className={`
               inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium
@@ -551,6 +551,21 @@ export function TestnetMintCard({
               </svg>
             )}
             {statusConfig.text}
+          </div>
+
+          {/* Chain Badge */}
+          <div className="w-7 h-7 rounded-lg bg-white/90 dark:bg-gray-800/90 shadow-lg flex items-center justify-center backdrop-blur-sm">
+            <Image
+              src={
+                chain.toLowerCase() === "ethereum"
+                  ? "/tokens/eth.svg"
+                  : "/tokens/mega.png"
+              }
+              alt={`${chain} chain`}
+              width={20}
+              height={20}
+              className="rounded-sm"
+            />
           </div>
         </div>
 
