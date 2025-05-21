@@ -58,8 +58,6 @@ export async function GET() {
     const apiUrl = "https://testnet-bff.rarible.fun/api/drops/search";
     const apiKey = "aaa88771-62ce-40d6-b588-e6d9600d60e9";
 
-    console.log(`[Rarible Proxy] Fetching drops from: ${apiUrl}`);
-
     // Make two requests with different caching settings
     const [cachedResponse, uncachedResponse] = await Promise.all([
       // Regular request (with default caching)
@@ -88,9 +86,6 @@ export async function GET() {
     ]);
 
     if (!cachedResponse.ok && !uncachedResponse.ok) {
-      console.error(
-        `[Rarible Proxy] Both API requests failed. Cached status: ${cachedResponse.status}, Uncached status: ${uncachedResponse.status}`
-      );
       return NextResponse.json(
         { error: `API requests failed` },
         { status: 500 }
@@ -115,10 +110,6 @@ export async function GET() {
       return true;
     });
 
-    console.log(
-      `[Rarible Proxy] Successfully retrieved ${allDrops.length} unique drops (${cachedDrops.length} cached, ${uncachedDrops.length} uncached)`
-    );
-
     // Transform Rarible drops to match Kingdomly format
     const formattedMints: FormattedMint[] = await Promise.all(
       allDrops.map(async (drop) => {
@@ -128,12 +119,6 @@ export async function GET() {
           ? new Date(drop.endDate).getTime()
           : undefined;
 
-        // Extract contract address from drop.id
-        console.log(`[Rarible Proxy] ${drop.title} - Raw drop.id:`, drop.id);
-        console.log(
-          `[Rarible Proxy] ${drop.title} - Drop data:`,
-          JSON.stringify(drop, null, 2)
-        );
         const contractAddress = drop.id.split(":")[1];
 
         // Fetch minted supply for this drop
@@ -164,14 +149,6 @@ export async function GET() {
           if (supplyResponse.ok) {
             const supplyData = await supplyResponse.json();
             mintedSupply = parseInt(supplyData.minted);
-          } else {
-            console.error(
-              `[Rarible Proxy] Failed to fetch minted supply for ${drop.title}:`,
-              `\n- Contract: ${contractAddress}`,
-              `\n- Status: ${supplyResponse.status}`,
-              `\n- Status Text: ${supplyResponse.statusText}`,
-              `\n- Error Body: ${await supplyResponse.text()}`
-            );
           }
         } catch (error) {
           console.error(
@@ -228,19 +205,6 @@ export async function GET() {
           media_type: drop.media.type,
         };
 
-        // Debug log for supply check
-        if (formattedMint.total_supply !== null) {
-          console.log(
-            `[Rarible Proxy] ${drop.title} - Supply Check:`,
-            `\n- Total Supply: ${formattedMint.total_supply}`,
-            `\n- Minted Supply: ${mintedSupply ?? "unknown"}`,
-            `\n- Is Sold Out: ${
-              mintedSupply !== undefined &&
-              mintedSupply >= formattedMint.total_supply
-            }`
-          );
-        }
-
         return formattedMint;
       })
     );
@@ -259,18 +223,6 @@ export async function GET() {
         const isLive =
           now >= startTime && (!endTime || now <= endTime) && !isSoldOut;
 
-        if (mint.collection_name === "G-420: FUN Simulation Cartridge") {
-          console.log(
-            `[Rarible Proxy] G-420 Status Check:`,
-            `\n- Start Time Check: ${now >= startTime}`,
-            `\n- End Time Check: ${!endTime || now <= endTime}`,
-            `\n- Total Supply: ${mint.total_supply}`,
-            `\n- Minted Supply: ${mint.minted_supply}`,
-            `\n- Is Sold Out: ${isSoldOut}`,
-            `\n- Final Live Status: ${isLive}`
-          );
-        }
-
         return isLive;
       }),
       upcoming: formattedMints.filter((mint) => {
@@ -288,14 +240,6 @@ export async function GET() {
         return (endTime && now > endTime) || isSoldOut;
       }),
     };
-
-    // Log final categorization counts
-    console.log(
-      `[Rarible Proxy] Final categorization:`,
-      `\n- Live: ${categorizedCollections.live.length}`,
-      `\n- Upcoming: ${categorizedCollections.upcoming.length}`,
-      `\n- Sold Out: ${categorizedCollections.sold_out.length}`
-    );
 
     return NextResponse.json({ partnerCollections: categorizedCollections });
   } catch (error) {

@@ -259,7 +259,12 @@ const isAnimatedImage = (url: string): boolean => {
 };
 
 // Add a helper function to check if URL is for video content
-const isVideo = (url: string): boolean => {
+const isVideo = (url: string, mediaType?: string): boolean => {
+  // If mediaType is explicitly set, use that
+  if (mediaType === "video") return true;
+  if (mediaType === "image") return false;
+
+  // For non-IPFS URLs, check extension
   const ext = url.split(".").pop()?.toLowerCase();
   return ext === "mp4" || ext === "webm" || ext === "mov";
 };
@@ -280,6 +285,29 @@ const MediaDisplay = ({
   isHeader?: boolean;
   mediaType?: string;
 }) => {
+  const [isVideoLoading, setIsVideoLoading] = useState(true);
+  const [videoError, setVideoError] = useState(false);
+  const [contentType, setContentType] = useState<string | null>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Effect to check content type for IPFS URLs
+  useEffect(() => {
+    if (!url || !url.includes("ipfs.raribleuserdata.com/ipfs/")) return;
+
+    const checkContentType = async () => {
+      try {
+        const response = await fetch(url, { method: "HEAD" });
+        const type = response.headers.get("content-type");
+        setContentType(type);
+      } catch (error) {
+        console.error("Error checking content type:", error);
+        setContentType(null);
+      }
+    };
+
+    checkContentType();
+  }, [url]);
+
   // If this is a header and we have no URL but have a fallback, create a blurred background
   if (isHeader && !url && fallbackUrl) {
     return (
@@ -309,28 +337,67 @@ const MediaDisplay = ({
     );
   }
 
-  // Handle video media type
-  if (mediaType === "video") {
+  // For IPFS URLs, wait for content type check
+  if (url?.includes("ipfs.raribleuserdata.com/ipfs/") && contentType === null) {
     return (
       <div className="relative w-full h-full">
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-900/20 backdrop-blur-sm">
+          <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+        </div>
+      </div>
+    );
+  }
+
+  const shouldDisplayVideo =
+    mediaType === "video" ||
+    contentType?.includes("video/") ||
+    (!url?.includes("ipfs.raribleuserdata.com/ipfs/") &&
+      isVideo(url, mediaType));
+
+  // Handle video content
+  if (shouldDisplayVideo) {
+    return (
+      <div className="relative w-full h-full">
+        {isVideoLoading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-900/20 backdrop-blur-sm">
+            <div className="w-8 h-8 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+          </div>
+        )}
         <video
+          ref={videoRef}
           src={url}
           className={cn(
             "absolute inset-0 w-full h-full object-cover",
-            className
+            className,
+            videoError ? "hidden" : "block"
           )}
           autoPlay
           loop
           muted
           playsInline
+          controls={false}
+          crossOrigin="anonymous"
+          onLoadStart={() => setIsVideoLoading(true)}
+          onLoadedData={() => setIsVideoLoading(false)}
+          onError={(e) => {
+            console.error("Video loading error for URL:", url, e);
+            setVideoError(true);
+            setIsVideoLoading(false);
+          }}
         />
-        {isHeader && (
+        {isHeader && !videoError && (
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/30" />
+        )}
+        {videoError && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-900/90 text-white text-sm">
+            Failed to load video
+          </div>
         )}
       </div>
     );
   }
 
+  // Handle IPFS and regular images
   return (
     <Image
       src={url || fallbackUrl || "/placeholder-header.png"}
@@ -340,7 +407,7 @@ const MediaDisplay = ({
         "object-cover transition-transform duration-700 hover:scale-105",
         className
       )}
-      unoptimized={isAnimatedImage(url || fallbackUrl || "")}
+      unoptimized={true}
     />
   );
 };
