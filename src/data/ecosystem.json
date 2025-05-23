@@ -1173,7 +1173,28 @@
       "description": "NFT Collection",
       "category": "NFT",
       "megaMafia": false,
+      "native": true,
+      "testnet": false
+    },
+    {
+      "name": "ENVIO",
+      "twitter": "envio_indexer",
+      "website": "https://envio.dev/",
+      "discord": "https://discord.gg/Q9qt8gZ2fX",
+      "telegram": "https://t.me/+5mI61oZibEM5OGQ8",
+      "description": "Multi-chain EVM blockchain indexer for querying real-time and historical data",
+      "category": "Infrastructure",
+      "megaMafia": false,
       "native": false,
+      "testnet": false
+    },
+    {
+      "name": "MegaCarrot",
+      "twitter": "MegaCarrotNFT",
+      "description": "NFT Collection",
+      "category": "NFT",
+      "megaMafia": false,
+      "native": true,
       "testnet": false
     }
   ]
