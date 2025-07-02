@@ -1196,6 +1196,38 @@
       "megaMafia": false,
       "native": true,
       "testnet": false
+    },
+    {
+      "name": "megafknwizards",
+      "twitter": "megafknwizards",
+      "description": "NFT Collection",
+      "website": "https://megafknwizards.com",
+      "category": "NFT",
+      "megaMafia": false,
+      "native": true,
+      "testnet": false
+    },
+    {
+      "name": "Euclid Protocol",
+      "twitter": "Euclidprotocol",
+      "description": "Liquidity Consensus Layer that allows chains and dApps to access liquidity from anywhere—across all assets, networks, and ecosystems, without bridging.",
+      "website": "https://www.euclidprotocol.io/",
+      "telegram": "https://t.me/Euclid_Protocol",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
+    },
+    {
+      "name": "Tapout",
+      "twitter": "tapout_game",
+      "description": "Last person to tap, wins.",
+      "website": "https://www.tapout.pro",
+      "telegram": "https://t.me/tapout_game",
+      "category": "Gaming",
+      "megaMafia": false,
+      "native": true,
+      "testnet": false
     }
   ]
 }
