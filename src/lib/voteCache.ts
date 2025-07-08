@@ -25,7 +25,7 @@ interface CacheEntry {
 class VoteCache {
   private static instance: VoteCache;
   private cache: CacheEntry | null = null;
-  private readonly TTL = 60000; // 1 minute cache TTL
+  private readonly TTL = 300000; // 5 minute cache TTL
 
   private constructor() {}
 

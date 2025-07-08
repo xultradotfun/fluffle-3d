@@ -83,13 +83,7 @@ export function EcosystemDashboard() {
     const fetchVotes = async () => {
       try {
         setIsLoadingVotes(true);
-        const response = await fetch("/api/votes", {
-          headers: {
-            "Cache-Control": "no-cache, no-store, must-revalidate",
-            Pragma: "no-cache",
-            Expires: "0",
-          },
-        });
+        const response = await fetch("/api/votes");
 
         if (!response.ok) {
           throw new Error("Failed to fetch votes");
@@ -134,7 +128,7 @@ export function EcosystemDashboard() {
     return () => {
       isMounted = false;
     };
-  }, [user]);
+  }, [user]); // Only refetch when user changes, not on every mount
 
   // Get unique categories and count projects per category
   const categories = Array.from(

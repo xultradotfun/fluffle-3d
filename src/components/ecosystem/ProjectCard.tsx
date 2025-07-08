@@ -110,9 +110,6 @@ export function ProjectCard({ project, isLoadingVotes }: ProjectCardProps) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Cache-Control": "no-cache, no-store, must-revalidate",
-          Pragma: "no-cache",
-          Expires: "0",
         },
         body: JSON.stringify({
           twitter: project.twitter,

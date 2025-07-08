@@ -208,79 +208,86 @@ export async function GET() {
     if (cachedData) {
       return NextResponse.json(cachedData, {
         headers: {
-          "Cache-Control": "public, max-age=60, stale-while-revalidate=300",
+          "Cache-Control": "public, max-age=300, stale-while-revalidate=600",
           "X-Cache": "HIT",
           ...securityHeaders,
         },
       });
     }
 
-    // Get all projects with their votes
+    // Get user ID from cookies if available
+    const cookieStore = cookies();
+    const userData = cookieStore.get("discord_user");
+    const userId = userData ? JSON.parse(userData.value).id : null;
+
+    // Optimized query: Get projects with aggregated vote counts and user votes in one query
     const projects = await prisma.project.findMany({
-      include: {
+      select: {
+        id: true,
+        twitter: true,
+        name: true,
         votes: {
           select: {
             userId: true,
             type: true,
-            roleId: true,
             roleName: true,
           },
         },
       },
     });
 
-    // Get unique voter count
-    const uniqueVoters = await prisma.vote.findMany({
-      select: {
-        userId: true,
-      },
-      distinct: ["userId"],
+    // Get unique voter count efficiently
+    const uniqueVoters = await prisma.vote.groupBy({
+      by: ["userId"],
     });
 
-    // Get user ID from cookies if available
-    const cookieStore = cookies();
-    const userData = cookieStore.get("discord_user");
-    const userId = userData ? JSON.parse(userData.value).id : null;
-
-    // Format the response with vote counts and breakdown
+    // Process the data efficiently
     const voteCounts = projects.map((project) => {
-      const votesByRole = project.votes.reduce(
-        (acc: Record<string, { up: number; down: number }>, vote) => {
-          if (!acc[vote.roleName]) {
-            acc[vote.roleName] = { up: 0, down: 0 };
-          }
-          if (vote.type === "up" || vote.type === "down") {
-            acc[vote.roleName][vote.type]++;
-          }
-          return acc;
-        },
-        {}
-      );
+      // Group votes by role and type
+      const votesByRole: Record<string, { up: number; down: number }> = {};
+      let upvotes = 0;
+      let downvotes = 0;
+      let userVote: string | null = null;
 
-      const votes = {
-        upvotes: project.votes.filter((vote) => vote.type === "up").length,
-        downvotes: project.votes.filter((vote) => vote.type === "down").length,
-        userVote: userId
-          ? project.votes.find((vote) => vote.userId === userId)?.type || null
-          : null,
-        breakdown: votesByRole,
-      };
+      project.votes.forEach((vote) => {
+        // Count total votes
+        if (vote.type === "up") upvotes++;
+        else if (vote.type === "down") downvotes++;
+
+        // Track user's vote
+        if (userId && vote.userId === userId) {
+          userVote = vote.type;
+        }
+
+        // Group by role
+        if (!votesByRole[vote.roleName]) {
+          votesByRole[vote.roleName] = { up: 0, down: 0 };
+        }
+        if (vote.type === "up" || vote.type === "down") {
+          votesByRole[vote.roleName][vote.type]++;
+        }
+      });
 
       return {
         twitter: project.twitter,
         name: project.name,
-        votes,
+        votes: {
+          upvotes,
+          downvotes,
+          userVote,
+          breakdown: votesByRole,
+        },
       };
     });
+
+    // Get total vote count efficiently
+    const totalVotesCount = await prisma.vote.count();
 
     const response = {
       projects: voteCounts,
       stats: {
         uniqueVoters: uniqueVoters.length,
-        totalVotes: projects.reduce(
-          (acc, project) => acc + project.votes.length,
-          0
-        ),
+        totalVotes: totalVotesCount,
       },
     };
 
@@ -289,7 +296,7 @@ export async function GET() {
 
     return NextResponse.json(response, {
       headers: {
-        "Cache-Control": "public, max-age=60, stale-while-revalidate=300",
+        "Cache-Control": "public, max-age=300, stale-while-revalidate=600",
         "X-Cache": "MISS",
         ...securityHeaders,
       },
