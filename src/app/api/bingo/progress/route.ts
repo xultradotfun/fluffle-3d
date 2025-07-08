@@ -5,6 +5,8 @@ import { prisma } from "@/lib/prisma";
 import { isAllowedBaseUrl } from "@/utils/baseUrl";
 import bingoConfig from "@/data/bingo.json";
 
+const REQUIRED_SERVER_ID = "1219739501673451551";
+
 // Constants for rate limiting
 const RATE_LIMIT = {
   USER: {
@@ -76,6 +78,11 @@ async function verifyUserAuth(cookieStore: ReturnType<typeof cookies>) {
     // Verify the user data format
     if (!user.id || !user.username || !Array.isArray(user.guildIds)) {
       throw new Error("Invalid user data format");
+    }
+
+    // Verify server membership
+    if (!user.guildIds.includes(REQUIRED_SERVER_ID)) {
+      throw new Error("Must be a member of the required Discord server");
     }
 
     // Verify the user exists in our database and has the claimed ID

@@ -149,13 +149,15 @@ export async function GET(request: Request) {
     // Create the response first
     const response = NextResponse.redirect(new URL(returnTo, request.url));
 
-    // Store minimal user data
+    // Store only relevant guild IDs - secure and space-efficient
+    const relevantGuildIds = isInServer ? [REQUIRED_SERVER_ID] : [];
+
     const minimalUserData = {
       id: userData.id,
       username: userData.username,
       discriminator: userData.discriminator,
       avatar: userData.avatar,
-      guildIds: guildsData.map((g: any) => g.id),
+      guildIds: relevantGuildIds, // Only store guilds we care about
       hasRequiredRole,
     };
 
@@ -184,6 +186,9 @@ export async function GET(request: Request) {
     console.log("Cookie values:", {
       access_token: tokenData.access_token.substring(0, 10) + "...",
       user_data: JSON.stringify(minimalUserData).substring(0, 50) + "...",
+      user_data_length: JSON.stringify(minimalUserData).length,
+      user_id: userData.id,
+      username: userData.username,
     });
 
     return response;

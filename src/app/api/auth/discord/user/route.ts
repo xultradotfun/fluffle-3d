@@ -17,7 +17,16 @@ export async function GET() {
     console.log("Cookies present:", {
       userData: !!userData,
       accessToken: !!accessToken,
+      userDataLength: userData?.value?.length || 0,
+      accessTokenLength: accessToken?.value?.length || 0,
     });
+
+    if (userData) {
+      console.log(
+        "User data preview:",
+        userData.value.substring(0, 100) + "..."
+      );
+    }
 
     if (!userData || !accessToken) {
       console.log("Missing required cookies");
@@ -33,7 +42,7 @@ export async function GET() {
     console.log("User authenticated:", {
       id: user.id,
       username: user.username,
-      guildCount: user.guildIds?.length || 0,
+      relevantGuilds: user.guildIds?.length || 0,
     });
 
     // Verify the data format
