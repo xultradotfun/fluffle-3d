@@ -203,8 +203,20 @@ const securityHeaders = {
 
 export async function GET() {
   try {
-    // Check cache first
-    const cachedData = voteCache.get();
+    // Get user ID from cookies if available
+    const cookieStore = cookies();
+    const userData = cookieStore.get("discord_user");
+    const userId = userData ? JSON.parse(userData.value).id : null;
+
+    console.log("Votes API - User authentication:", {
+      hasUserData: !!userData,
+      userId: userId || "anonymous",
+      willUseCache: !userId,
+    });
+
+    // For authenticated users, skip cache to ensure they see their correct votes
+    const cachedData = !userId ? voteCache.get() : null;
+
     if (cachedData) {
       return NextResponse.json(cachedData, {
         headers: {
@@ -214,11 +226,6 @@ export async function GET() {
         },
       });
     }
-
-    // Get user ID from cookies if available
-    const cookieStore = cookies();
-    const userData = cookieStore.get("discord_user");
-    const userId = userData ? JSON.parse(userData.value).id : null;
 
     // Optimized query: Get projects with aggregated vote counts and user votes in one query
     const projects = await prisma.project.findMany({
@@ -291,12 +298,16 @@ export async function GET() {
       },
     };
 
-    // Cache the response
-    voteCache.set(response);
+    // Only cache for anonymous users to ensure logged-in users see fresh data
+    if (!userId) {
+      voteCache.set(response);
+    }
 
     return NextResponse.json(response, {
       headers: {
-        "Cache-Control": "public, max-age=300, stale-while-revalidate=600",
+        "Cache-Control": userId
+          ? "private, max-age=60" // Short cache for authenticated users
+          : "public, max-age=300, stale-while-revalidate=600", // Longer cache for anonymous
         "X-Cache": "MISS",
         ...securityHeaders,
       },
