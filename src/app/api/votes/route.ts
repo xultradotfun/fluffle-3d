@@ -208,12 +208,6 @@ export async function GET() {
     const userData = cookieStore.get("discord_user");
     const userId = userData ? JSON.parse(userData.value).id : null;
 
-    console.log("Votes API - User authentication:", {
-      hasUserData: !!userData,
-      userId: userId || "anonymous",
-      willUseCache: !userId,
-    });
-
     // For authenticated users, skip cache to ensure they see their correct votes
     const cachedData = !userId ? voteCache.get() : null;
 

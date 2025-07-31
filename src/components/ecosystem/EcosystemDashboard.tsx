@@ -38,7 +38,7 @@ interface Project {
 type VoteFilter = "all" | "voted" | "not_voted";
 
 export function EcosystemDashboard() {
-  const { user } = useDiscordAuth();
+  const { user, isLoading } = useDiscordAuth();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [showMegaMafiaOnly, setShowMegaMafiaOnly] = useState(false);
   const [showNativeOnly, setShowNativeOnly] = useState(false);
@@ -78,11 +78,21 @@ export function EcosystemDashboard() {
   }, []);
 
   useEffect(() => {
+    // Wait for authentication to be fully loaded before fetching votes
+    if (isLoading) {
+      return;
+    }
+
     let isMounted = true;
 
     const fetchVotes = async () => {
       try {
         setIsLoadingVotes(true);
+        console.log(
+          "Frontend: Fetching votes for user:",
+          user?.id || "anonymous"
+        );
+
         const response = await fetch("/api/votes");
 
         if (!response.ok) {
@@ -90,6 +100,10 @@ export function EcosystemDashboard() {
         }
 
         const votesData = await response.json();
+        console.log(
+          "Frontend: Received votes data, sample userVote:",
+          votesData.projects[0]?.votes?.userVote || "none"
+        );
 
         if (!isMounted) return;
 
@@ -118,17 +132,13 @@ export function EcosystemDashboard() {
       }
     };
 
+    // Only fetch once when auth is settled
     fetchVotes();
-
-    // Re-fetch votes when user changes
-    if (user) {
-      fetchVotes();
-    }
 
     return () => {
       isMounted = false;
     };
-  }, [user]); // Only refetch when user changes, not on every mount
+  }, [user, isLoading]); // Refetch when user OR loading state changes
 
   // Get unique categories and count projects per category
   const categories = Array.from(
