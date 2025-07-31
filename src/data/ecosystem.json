@@ -1238,6 +1238,16 @@
       "megaMafia": false,
       "native": true,
       "testnet": false
+    },
+    {
+      "name": "dontworry",
+      "twitter": "probablyapp",
+      "description": "don't worry",
+      "website": "https://dontworryprobably.app",
+      "category": "Secret",
+      "megaMafia": true,
+      "native": true,
+      "testnet": false
     }
   ]
 }
