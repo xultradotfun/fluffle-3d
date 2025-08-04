@@ -140,7 +140,7 @@
       "discord": "https://discord.gg/gte-xyz",
       "description": "The world's fastest decentralized exchange.",
       "category": "DeFi",
-      "megaMafia": true,
+      "megaMafia": false,
       "native": true,
       "testnet": true,
       "guide": true
