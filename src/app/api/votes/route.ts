@@ -216,6 +216,7 @@ export async function GET() {
         headers: {
           "Cache-Control": "public, max-age=300, stale-while-revalidate=600",
           "X-Cache": "HIT",
+          "X-User-ID": userId || "anonymous", // Debug header
           ...securityHeaders,
         },
       });
@@ -300,9 +301,10 @@ export async function GET() {
     return NextResponse.json(response, {
       headers: {
         "Cache-Control": userId
-          ? "private, max-age=60" // Short cache for authenticated users
+          ? "private, no-cache, no-store, must-revalidate" // No cache for authenticated users in production
           : "public, max-age=300, stale-while-revalidate=600", // Longer cache for anonymous
         "X-Cache": "MISS",
+        "X-User-ID": userId || "anonymous", // Debug header
         ...securityHeaders,
       },
     });

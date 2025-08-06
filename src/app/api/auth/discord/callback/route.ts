@@ -161,28 +161,44 @@ export async function GET(request: Request) {
       hasRequiredRole,
     };
 
-    // Set cookies with minimal data
+    // Set cookies with minimal data - environment-aware security settings
+    const isProduction = process.env.NODE_ENV === "production";
+    const baseUrl = getBaseUrl();
+    const isHttps = baseUrl.startsWith("https://");
+
+    const cookieOptions = {
+      httpOnly: true,
+      secure: isHttps, // Use secure cookies for HTTPS, regular for HTTP
+      sameSite: "lax" as const,
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+      path: "/",
+      // Add domain for production to ensure cookies work across subdomains
+      ...(isProduction &&
+        isHttps && {
+          domain: baseUrl.includes("vercel.app") ? undefined : ".fluffle.tools",
+        }),
+    };
+
     response.cookies.set({
       name: "discord_access_token",
       value: tokenData.access_token,
-      httpOnly: true,
-      secure: false,
-      sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 7,
-      path: "/",
+      ...cookieOptions,
     });
 
     response.cookies.set({
       name: "discord_user",
       value: JSON.stringify(minimalUserData),
-      httpOnly: true,
-      secure: false,
-      sameSite: "lax",
-      maxAge: 60 * 60 * 24 * 7,
-      path: "/",
+      ...cookieOptions,
     });
 
     console.log("Auth successful, redirecting with cookies set");
+    console.log("Cookie configuration:", {
+      isProduction,
+      baseUrl,
+      isHttps,
+      secure: cookieOptions.secure,
+      sameSite: cookieOptions.sameSite,
+    });
     console.log("Cookie values:", {
       access_token: tokenData.access_token.substring(0, 10) + "...",
       user_data: JSON.stringify(minimalUserData).substring(0, 50) + "...",
