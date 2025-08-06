@@ -1248,6 +1248,17 @@
       "megaMafia": true,
       "native": true,
       "testnet": false
+    },
+    {
+      "name": "MegaHeroes",
+      "twitter": "MegaheroesHQ",
+      "description": "NFT Collection",
+      "discord": "https://discord.gg/dQWqMbg68J",
+      "website": "https://www.megaheroes.xyz/",
+      "category": "NFT",
+      "megaMafia": false,
+      "native": true,
+      "testnet": false
     }
   ]
 }
