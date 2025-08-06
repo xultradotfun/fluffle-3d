@@ -47,8 +47,9 @@ export function EcosystemDashboard() {
   const [voteFilter, setVoteFilter] = useState<VoteFilter>("all");
   const [isLoadingVotes, setIsLoadingVotes] = useState(true);
   const [projects, setProjects] = useState<Project[]>(
-    ecosystemData.projects.map((project) => ({
+    ecosystemData.projects.map((project, index) => ({
       ...project,
+      originalIndex: index, // Add index for "latest added" sorting
       votes: {
         upvotes: 0,
         downvotes: 0,
@@ -58,7 +59,7 @@ export function EcosystemDashboard() {
     }))
   );
   const [sortMethod, setSortMethod] = useState<{
-    type: "alphabetical" | "score";
+    type: "alphabetical" | "score" | "latest";
     direction: "asc" | "desc";
   }>({
     type: "score",
@@ -108,12 +109,13 @@ export function EcosystemDashboard() {
         if (!isMounted) return;
 
         setProjects(
-          ecosystemData.projects.map((project) => {
+          ecosystemData.projects.map((project, index) => {
             const projectVotes = votesData.projects.find(
               (v: any) => v.twitter === project.twitter
             )?.votes;
             return {
               ...project,
+              originalIndex: index, // Preserve index for "latest added" sorting
               votes: projectVotes || {
                 upvotes: 0,
                 downvotes: 0,
@@ -256,6 +258,13 @@ export function EcosystemDashboard() {
         return sortMethod.direction === "desc"
           ? b.name.localeCompare(a.name)
           : a.name.localeCompare(b.name);
+      } else if (sortMethod.type === "latest") {
+        // Latest added sort (higher index = more recent)
+        const indexA = (a as any).originalIndex || 0;
+        const indexB = (b as any).originalIndex || 0;
+        return sortMethod.direction === "desc"
+          ? indexB - indexA // Most recent first
+          : indexA - indexB; // Oldest first
       } else {
         // Alphabetical sort
         return sortMethod.direction === "desc"

@@ -4,11 +4,11 @@ import { useState } from "react";
 
 interface SortSelectorProps {
   sortMethod: {
-    type: "alphabetical" | "score";
+    type: "alphabetical" | "score" | "latest";
     direction: "asc" | "desc";
   };
   onSortChange: (method: {
-    type: "alphabetical" | "score";
+    type: "alphabetical" | "score" | "latest";
     direction: "asc" | "desc";
   }) => void;
 }
@@ -16,7 +16,7 @@ interface SortSelectorProps {
 export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
   const [tooltipOpen, setTooltipOpen] = useState(false);
 
-  const handleSortClick = (type: "alphabetical" | "score") => {
+  const handleSortClick = (type: "alphabetical" | "score" | "latest") => {
     if (sortMethod.type === type) {
       // Toggle direction if same type
       onSortChange({
@@ -27,7 +27,7 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
       // Set default direction for new type
       onSortChange({
         type,
-        direction: type === "alphabetical" ? "asc" : "desc",
+        direction: type === "alphabetical" ? "asc" : "desc", // "latest" defaults to "desc" (newest first)
       });
     }
   };
@@ -100,6 +100,37 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
               <span>A-Z</span>
             </div>
           </button>
+
+          <button
+            onClick={() => handleSortClick("latest")}
+            className={`relative px-2.5 py-1 rounded text-sm font-medium transition-all ${
+              sortMethod.type === "latest"
+                ? "bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow-sm"
+                : "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-white/[0.04]"
+            }`}
+          >
+            <div className="flex items-center gap-1.5">
+              <svg
+                className={cn(
+                  "w-4 h-4 transition-transform",
+                  sortMethod.type === "latest" &&
+                    sortMethod.direction === "asc" &&
+                    "rotate-180"
+                )}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <span>Latest</span>
+            </div>
+          </button>
         </div>
 
         <Tooltip.Root open={tooltipOpen} onOpenChange={setTooltipOpen}>
@@ -149,10 +180,20 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
               onPointerDownOutside={() => setTooltipOpen(false)}
               onEscapeKeyDown={() => setTooltipOpen(false)}
             >
-              <p className="leading-relaxed">
-                All votes are shown in counts, but MiniETH votes are excluded
-                from sorting to prioritize higher-tier roles.
-              </p>
+              <div className="space-y-2">
+                <p className="leading-relaxed">
+                  <strong>Score:</strong> All votes are shown in counts, but
+                  MiniETH votes are excluded from sorting to prioritize
+                  higher-tier roles.
+                </p>
+                <p className="leading-relaxed">
+                  <strong>A-Z:</strong> Alphabetical sorting by project name.
+                </p>
+                <p className="leading-relaxed">
+                  <strong>Latest:</strong> Shows most recently added projects
+                  first.
+                </p>
+              </div>
               <Tooltip.Arrow className="fill-white/95 dark:fill-gray-900/95" />
             </Tooltip.Content>
           </Tooltip.Portal>
