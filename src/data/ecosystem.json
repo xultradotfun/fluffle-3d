@@ -1259,6 +1259,34 @@
       "megaMafia": false,
       "native": true,
       "testnet": false
+    },
+    {
+      "name": "MegaRafia",
+      "twitter": "MegaRafia",
+      "description": "NFT Collection",
+      "category": "NFT",
+      "megaMafia": false,
+      "native": true,
+      "testnet": false
+    },
+    {
+      "name": "barry",
+      "twitter": "badlydrawnbarry",
+      "description": "NFT Collection",
+      "category": "NFT",
+      "megaMafia": false,
+      "native": true,
+      "testnet": false
+    },
+    {
+      "name": "MTRKR (MegaTracker)",
+      "twitter": "juliencoppola",
+      "website": "https://www.mtrkr.xyz/",
+      "description": "MTRKR is the first wallet visualizer 100% dedicated to the MegaETH ecosystem.",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": true,
+      "testnet": true
     }
   ]
 }
