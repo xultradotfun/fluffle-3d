@@ -16,41 +16,26 @@ export default function Hero() {
 
   return (
     <>
-      {/* Spacer for fixed header */}
-      <div className={`transition-all duration-300 ${isScrolled ? "h-16" : "h-32"}`} />
-
       {/* Fixed Editorial Header */}
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled 
-            ? "bg-background/95 backdrop-blur border-b border-border" 
-            : "bg-background"
-        }`}
-      >
-        <div className="container mx-auto px-8 py-4">
-          <div className={`flex items-center justify-between transition-all duration-300 ${
-            isScrolled ? "py-2" : "py-4"
-          }`}>
+      <header className="fixed top-0 left-0 right-0 z-50 bg-background border-b-2 border-foreground">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="flex items-center justify-between py-4">
             {/* Logo/Brand */}
-            <div className="flex items-center space-x-4">
-              <div className="w-8 h-8 bg-foreground"></div>
-              <a href="/" className="hover:opacity-80 transition-opacity">
-                <span className={`font-black uppercase tracking-wider transition-all duration-300 ${
-                  isScrolled ? "text-lg" : "text-xl"
-                }`}>
-                  Fluffle Tools
-                </span>
-              </a>
-            </div>
+            <a href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
+              <div className="w-6 h-6 bg-foreground"></div>
+              <span className="text-lg font-black uppercase tracking-wider">
+                Fluffle Tools
+              </span>
+            </a>
 
             {/* Right side actions */}
             <div className="flex items-center space-x-6">
-              <nav className="hidden md:flex items-center space-x-8">
+              <nav className="hidden md:flex items-center space-x-6">
                 <a 
                   href="https://opensea.io/collection/megaeth-nft-1" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="font-medium uppercase tracking-wide text-sm hover:opacity-70 transition-opacity"
+                  className="text-sm font-bold uppercase tracking-wide hover:opacity-70 transition-opacity"
                 >
                   Collection
                 </a>
@@ -58,7 +43,7 @@ export default function Hero() {
                   href="https://x.com/intent/follow?screen_name=0x_ultra" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="font-medium uppercase tracking-wide text-sm hover:opacity-70 transition-opacity"
+                  className="text-sm font-bold uppercase tracking-wide hover:opacity-70 transition-opacity"
                 >
                   Twitter
                 </a>
@@ -66,55 +51,78 @@ export default function Hero() {
               <ThemeToggle />
             </div>
           </div>
-
-          {/* Editorial Line */}
-          {!isScrolled && (
-            <div className="editorial-line w-full mt-4"></div>
-          )}
         </div>
       </header>
 
-      {/* Main Hero Section */}
-      <section className="min-h-[70vh] flex items-center justify-start">
-        <div className="container mx-auto px-8">
-          <div className="max-w-6xl">
-            {/* Main headline */}
-            <h1 className="text-editorial-large mb-8 animate-fadeIn">
-              FLUFFLE<br />
-              TOOLS
-            </h1>
+      {/* Spacer for fixed header */}
+      <div className="h-20" />
 
-            {/* Description */}
-            <div className="editorial-section mb-12">
-              <p className="text-xl md:text-2xl font-medium leading-relaxed max-w-2xl">
-                Utilities for{" "}
-                <span className="font-black uppercase">MegaETH</span>{" "}
-                explorers and{" "}
-                <span className="font-black uppercase">Fluffle</span>{" "}
-                holders
-              </p>
+      {/* Main Hero Section */}
+      <section className="py-16 lg:py-24">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            {/* Left Content */}
+            <div className="lg:col-span-8">
+              {/* Main headline */}
+              <div className="mb-8">
+                <h1 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black uppercase tracking-tight leading-[0.85] mb-4">
+                  FLUFFLE
+                </h1>
+                <h1 className="text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black uppercase tracking-tight leading-[0.85]">
+                  TOOLS
+                </h1>
+              </div>
+
+              {/* Description */}
+              <div className="mb-12">
+                <div className="w-16 h-1 bg-foreground mb-6"></div>
+                <p className="text-lg md:text-xl font-medium leading-relaxed max-w-lg">
+                  Utilities for{" "}
+                  <span className="font-black">MegaETH</span>{" "}
+                  explorers and{" "}
+                  <span className="font-black">Fluffle</span>{" "}
+                  holders
+                </p>
+              </div>
             </div>
 
-            {/* Stats and Follow Button */}
-            <div className="flex items-center space-x-12 mb-16">
-              <div className="flex items-center space-x-12 text-sm uppercase tracking-wider font-medium">
-                <div>
-                  <span className="block text-2xl font-black">5,000</span>
-                  <span className="text-muted-foreground">Rabbits</span>
+            {/* Right Content - Stats and CTA */}
+            <div className="lg:col-span-4 space-y-12">
+              {/* Stats Grid */}
+              <div className="grid grid-cols-2 gap-8">
+                <div className="space-y-2">
+                  <div className="text-4xl lg:text-5xl font-black tracking-tight">
+                    5,000
+                  </div>
+                  <div className="text-sm font-bold uppercase tracking-wide opacity-70">
+                    Rabbits
+                  </div>
                 </div>
-                <div>
-                  <span className="block text-2xl font-black">16</span>
-                  <span className="text-muted-foreground">Tribes</span>
+                <div className="space-y-2">
+                  <div className="text-4xl lg:text-5xl font-black tracking-tight">
+                    16
+                  </div>
+                  <div className="text-sm font-bold uppercase tracking-wide opacity-70">
+                    Tribes
+                  </div>
                 </div>
               </div>
-              <a 
-                href="https://x.com/intent/follow?screen_name=0x_ultra"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-brutalist whitespace-nowrap"
-              >
-                Follow 0x_ultra
-              </a>
+
+              {/* CTA Button */}
+              <div className="space-y-4">
+                <div className="w-16 h-1 bg-foreground"></div>
+                <a 
+                  href="https://x.com/intent/follow?screen_name=0x_ultra"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-foreground text-background px-8 py-4 font-black uppercase tracking-wide text-sm hover:bg-background hover:text-foreground border-2 border-foreground transition-all duration-200"
+                >
+                  Follow 0x_ultra
+                </a>
+                <p className="text-sm opacity-60 font-medium">
+                  Stay updated with the latest tools and features
+                </p>
+              </div>
             </div>
           </div>
         </div>
