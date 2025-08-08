@@ -280,11 +280,25 @@ export function EcosystemDashboard() {
       {/* Projects Section */}
       <div className="space-y-12">
         {/* Controls */}
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
-          <h2 className="text-editorial-medium">
-            PROJECTS ({filteredProjects.length})
-          </h2>
-          <div className="flex flex-col sm:flex-row gap-4">
+        <div className="space-y-8">
+          {/* Title Section */}
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+            <h2 className="text-editorial-medium">
+              PROJECTS ({filteredProjects.length})
+            </h2>
+            <div className="flex items-center gap-6">
+              <SortSelector
+                sortMethod={sortMethod}
+                onSortChange={setSortMethod}
+              />
+            </div>
+          </div>
+
+          {/* Filters Section */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-black uppercase tracking-wide">
+              FILTERS
+            </h3>
             <FilterControls
               selectedCategory={selectedCategory}
               setSelectedCategory={setSelectedCategory}
@@ -307,10 +321,6 @@ export function EcosystemDashboard() {
               getUserVotedCount={getUserVotedCount}
               getUserNotVotedCount={getUserNotVotedCount}
               totalProjects={projects.length}
-            />
-            <SortSelector
-              sortMethod={sortMethod}
-              onSortChange={setSortMethod}
             />
           </div>
         </div>

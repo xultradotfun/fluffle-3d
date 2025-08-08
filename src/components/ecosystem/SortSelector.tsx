@@ -35,8 +35,8 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
   return (
     <Tooltip.Provider delayDuration={300} skipDelayDuration={0}>
       <div className="flex items-center gap-4">
-        <span className="font-medium uppercase tracking-wide text-sm">
-          Sort:
+        <span className="font-black uppercase tracking-wide text-sm">
+          SORT BY:
         </span>
         <div className="flex gap-2">
           <button
