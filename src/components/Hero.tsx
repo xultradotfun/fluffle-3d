@@ -95,25 +95,23 @@ export default function Hero() {
               </p>
             </div>
 
-            {/* Stats */}
-            <div className="flex items-center space-x-12 text-sm uppercase tracking-wider font-medium mb-16">
-              <div>
-                <span className="block text-2xl font-black">5,000</span>
-                <span className="text-muted-foreground">Rabbits</span>
+            {/* Stats and Follow Button */}
+            <div className="flex items-center space-x-12 mb-16">
+              <div className="flex items-center space-x-12 text-sm uppercase tracking-wider font-medium">
+                <div>
+                  <span className="block text-2xl font-black">5,000</span>
+                  <span className="text-muted-foreground">Rabbits</span>
+                </div>
+                <div>
+                  <span className="block text-2xl font-black">16</span>
+                  <span className="text-muted-foreground">Tribes</span>
+                </div>
               </div>
-              <div>
-                <span className="block text-2xl font-black">16</span>
-                <span className="text-muted-foreground">Tribes</span>
-              </div>
-            </div>
-
-            {/* CTA Actions */}
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md">
               <a 
                 href="https://x.com/intent/follow?screen_name=0x_ultra"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-brutalist"
+                className="btn-brutalist whitespace-nowrap"
               >
                 Follow 0x_ultra
               </a>
