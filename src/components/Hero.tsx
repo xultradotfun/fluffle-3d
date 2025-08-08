@@ -110,20 +110,12 @@ export default function Hero() {
             {/* CTA Actions */}
             <div className="flex flex-col sm:flex-row gap-4 max-w-md">
               <a 
-                href="https://opensea.io/collection/megaeth-nft-1"
+                href="https://x.com/intent/follow?screen_name=0x_ultra"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-brutalist"
               >
-                View Collection
-              </a>
-              <a 
-                href="https://x.com/intent/follow?screen_name=0x_ultra"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border-2 border-foreground px-8 py-4 font-bold uppercase tracking-wider hover:bg-foreground hover:text-background transition-colors"
-              >
-                Follow Updates
+                Follow 0x_ultra
               </a>
             </div>
           </div>
