@@ -13,18 +13,18 @@ interface NFTCardProps {
 export function NFTCard({ id, urls, traits, onRemove }: NFTCardProps) {
   return (
     <Card
-      variant="glass"
-      className="group relative animate-fade-in overflow-hidden bg-white dark:bg-white/[0.02] border-gray-200 dark:border-white/10"
+      variant="default"
+      className="group relative animate-fadeIn overflow-hidden"
     >
       {/* Dismiss Button */}
       {onRemove && (
         <button
           onClick={() => onRemove(id)}
-          className="absolute top-4 right-4 z-20 p-2 rounded-xl bg-white/80 dark:bg-black/50 backdrop-blur-sm border border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-black/70 hover:border-red-500/50 transition-all duration-200 opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none"
+          className="absolute top-4 right-4 z-20 p-2 bg-background border-2 border-foreground hover:bg-foreground hover:text-background transition-all duration-200 opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none"
           title="Remove NFT"
         >
           <svg
-            className="w-4 h-4 text-gray-400 hover:text-red-500 transition-colors"
+            className="w-4 h-4"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

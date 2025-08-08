@@ -36,90 +36,62 @@ export function EcosystemHeader() {
 
   return (
     <Tooltip.Provider delayDuration={300} skipDelayDuration={0}>
-      <div className="text-center max-w-3xl mx-auto relative">
-        <div
-          dangerouslySetInnerHTML={{
-            __html: `<!-- 
------BEGIN PGP MESSAGE-----
-
-hF4DE9NOaOzmJc0SAQdAqNKnViIq4EorfjAwpWxJcsD0iUkY0gOcU/c0zyw492kw
-WWroR4EC65+Vd1drdkJxCAsASXENS1TFKFTJzcX1qA7sI1MRD34gEgGhbyefxZws
-1G8BCQIQDypF/i8/nbyWalNSyGplA8IySIokLgSwGMqwmRnDb0OJsXHWCaFYBJye
-ddX5nXTrOlcbJmSytNdZJPWyZzNRgj7DkqDG5plD0Bez4hMXFAhjTAIBhLFdOrej
-jEr32f0NXNjHpwG++DJNddk=
-=phrv
------END PGP MESSAGE-----
--->`,
-          }}
-        />
-        <div className="absolute inset-x-0 top-6 -bottom-6 bg-gradient-to-b from-pink-500/10 via-purple-500/5 to-transparent dark:from-pink-500/[0.07] dark:via-purple-500/[0.03] dark:to-transparent blur-2xl -z-10 rounded-[100%]" />
-        <div className="relative">
-          <h2 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 dark:from-pink-400 dark:via-purple-400 dark:to-indigo-400 bg-clip-text text-transparent mb-5 tracking-tight leading-[1.15]">
-            Ecosystem Projects
-          </h2>
-          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto font-light">
+      <div className="max-w-6xl mx-auto mb-16">
+        {/* Main Editorial Header */}
+        <div className="editorial-section mb-12">
+          <h1 className="text-editorial-large mb-8">
+            ECOSYSTEM<br />
+            PROJECTS
+          </h1>
+          <p className="text-xl md:text-2xl font-medium leading-relaxed max-w-3xl">
             Discover and vote on the growing ecosystem of projects building on{" "}
-            <span className="relative inline-block">
-              <span className="relative z-10 inline-flex items-center">
-                <Image
-                  src="/megalogo.png"
-                  alt="MegaETH"
-                  width={140}
-                  height={28}
-                  className="h-6 sm:h-7 w-auto brightness-0 opacity-80 dark:opacity-100 dark:invert"
-                  priority
-                />
-              </span>
-              <span className="absolute -inset-y-2 -inset-x-3 bg-gradient-to-r from-pink-100 via-purple-100 to-indigo-100 dark:from-pink-500/10 dark:via-purple-500/10 dark:to-indigo-500/10 opacity-75 blur-lg -z-0 rounded-[28px]" />
-            </span>
+            <span className="font-black uppercase">MegaETH</span>
           </p>
-
-          <div className="flex items-center justify-center gap-8 mt-8">
-            <div className="text-center">
-              <div className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-indigo-500 dark:from-pink-400 dark:to-indigo-400 bg-clip-text text-transparent">
-                {stats ? stats.totalVotes.toLocaleString() : "-"}
-              </div>
-              <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                Total Votes
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold bg-gradient-to-r from-pink-500 to-indigo-500 dark:from-pink-400 dark:to-indigo-400 bg-clip-text text-transparent">
-                {stats ? stats.uniqueVoters.toLocaleString() : "-"}
-              </div>
-              <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                Unique Voters
-              </div>
-            </div>
-          </div>
-
-          {/* Discord connection reset button - when user is logged in */}
-          {user && (
-            <div className="mt-3">
-              <button
-                onClick={logout}
-                className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
-              >
-                Reset Discord connection
-              </button>
-            </div>
-          )}
         </div>
 
-        {/* Side-by-side buttons with modals */}
-        <div className="mt-6 flex gap-3 justify-center">
+        {/* Stats Section */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+          <div className="text-center">
+            <div className="text-4xl font-black mb-2">
+              {stats ? stats.totalVotes.toLocaleString() : "-"}
+            </div>
+            <div className="text-sm uppercase tracking-wider font-medium text-muted-foreground">
+              Total Votes
+            </div>
+          </div>
+          <div className="text-center">
+            <div className="text-4xl font-black mb-2">
+              {stats ? stats.uniqueVoters.toLocaleString() : "-"}
+            </div>
+            <div className="text-sm uppercase tracking-wider font-medium text-muted-foreground">
+              Unique Voters
+            </div>
+          </div>
+        </div>
+
+        {/* Discord connection reset button */}
+        {user && (
+          <div className="mb-8 text-center">
+            <button
+              onClick={logout}
+              className="text-sm font-medium uppercase tracking-wide hover:opacity-70 transition-opacity"
+            >
+              Reset Discord Connection
+            </button>
+          </div>
+        )}
+        
+        <div className="editorial-line mb-12"></div>
+
+        {/* Action buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Dialog.Root
             open={isVotingModalOpen}
             onOpenChange={setIsVotingModalOpen}
           >
             <Dialog.Trigger asChild>
-              <button className="flex flex-row items-center gap-2 px-4 py-2.5 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm hover:bg-white/70 dark:hover:bg-white/[0.04] transition-all duration-200 shadow-sm">
-                <div className="flex-shrink-0 w-6 h-6 rounded-lg bg-gradient-to-br from-blue-500/10 to-blue-600/10 dark:from-blue-500/20 dark:to-blue-600/20 p-1 border border-blue-500/20 dark:border-blue-500/30">
-                  <Rabbit className="w-full h-full text-blue-600 dark:text-blue-400" />
-                </div>
-                <span className="text-sm font-medium text-gray-800 dark:text-gray-200">
-                  Voting Guide
-                </span>
+              <button className="btn-brutalist">
+                Voting Guide
               </button>
             </Dialog.Trigger>
 
@@ -286,13 +258,8 @@ jEr32f0NXNjHpwG++DJNddk=
             onOpenChange={setIsAddProjectModalOpen}
           >
             <Dialog.Trigger asChild>
-              <button className="flex flex-row items-center gap-2 px-4 py-2.5 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 backdrop-blur-sm hover:bg-white/70 dark:hover:bg-white/[0.04] transition-all duration-200 shadow-sm">
-                <div className="flex-shrink-0 w-6 h-6 rounded-lg bg-gradient-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-500/20 dark:to-pink-500/20 p-1 border border-purple-500/20 dark:border-purple-500/30">
-                  <Plus className="w-full h-full text-purple-600 dark:text-purple-400" />
-                </div>
-                <span className="text-sm font-medium text-gray-800 dark:text-gray-200">
-                  Add Project
-                </span>
+              <button className="border-2 border-foreground px-8 py-4 font-bold uppercase tracking-wider hover:bg-foreground hover:text-background transition-colors">
+                Add Project
               </button>
             </Dialog.Trigger>
 

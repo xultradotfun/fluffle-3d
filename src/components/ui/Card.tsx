@@ -4,16 +4,18 @@ import { type VariantProps, cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const cardVariants = cva(
-  "rounded-2xl border bg-card text-card-foreground shadow-sm transition-all duration-200",
+  "border bg-card text-card-foreground transition-all duration-200",
   {
     variants: {
       variant: {
         default:
-          "bg-gradient-to-br from-white/[0.03] to-white/[0.01] border-white/5 hover:border-white/10",
-        glass:
-          "backdrop-blur-md bg-white/5 border-white/10 hover:border-white/20",
-        solid:
-          "bg-gradient-to-br from-blue-500/10 to-purple-500/10 border-blue-500/20 hover:border-blue-500/30",
+          "bg-background border-2 border-foreground hover:shadow-[8px_8px_0_hsl(var(--foreground))] hover:-translate-x-1 hover:-translate-y-1",
+        outline:
+          "bg-background border-2 border-foreground",
+        filled:
+          "bg-foreground text-background border-2 border-foreground",
+        minimal:
+          "bg-background border-l-4 border-foreground border-t-0 border-r-0 border-b-0",
       },
     },
     defaultVariants: {
@@ -39,9 +41,7 @@ interface CardHeaderProps {
 
 export function CardHeader({ children, className = "" }: CardHeaderProps) {
   return (
-    <div
-      className={`absolute top-0 left-0 right-0 z-10 p-4 bg-gradient-to-b from-black/90 via-black/50 to-transparent ${className}`}
-    >
+    <div className={`p-6 border-b-2 border-foreground font-bold uppercase tracking-wider ${className}`}>
       {children}
     </div>
   );

@@ -1,34 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* Light mode colors - clean modern look */
-    --background: 0 0% 0% / 0; /* transparent background */
-    --foreground: 225 25% 20%; /* Dark gray for text */
+    /* MegaETH-inspired color palette */
+    --background: 40 8% 94%; /* Cream/beige background like MegaETH */
+    --foreground: 0 0% 8%; /* Almost black text */
     --card: 0 0% 100%; /* Pure white for cards */
-    --card-foreground: 225 25% 20%; /* Dark gray for card text */
-    --border: 225 25% 90%; /* Light gray for borders */
-    --input: 225 25% 90%; /* Light gray for inputs */
-    --primary: 235 85% 65%; /* Bright blue for primary actions */
-    --primary-foreground: 0 0% 100%; /* White */
-    --muted: 225 25% 90%; /* Light gray for muted elements */
-    --muted-foreground: 225 25% 40%; /* Medium gray for muted text */
+    --card-foreground: 0 0% 8%; /* Almost black for card text */
+    --border: 0 0% 20%; /* Dark borders for strong contrast */
+    --input: 0 0% 98%; /* Very light gray for inputs */
+    --primary: 0 0% 8%; /* Black for primary actions */
+    --primary-foreground: 0 0% 100%; /* White text on black */
+    --muted: 0 0% 88%; /* Light gray for muted elements */
+    --muted-foreground: 0 0% 45%; /* Medium gray for muted text */
+    --accent: 0 0% 8%; /* Black accent */
+    --accent-foreground: 0 0% 100%; /* White on black accent */
   }
 
   .dark {
-    /* Dark mode colors */
-    --background: 0 0% 0% / 0; /* transparent background */
-    --foreground: 0 0% 98%; /* off-white */
-    --card: 240 10% 4%; /* very dark gray */
-    --card-foreground: 0 0% 98%; /* off-white */
-    --border: 240 4% 16%; /* dark gray */
-    --input: 240 4% 16%; /* dark gray */
-    --primary: 217 91% 60%; /* blue */
-    --primary-foreground: 0 0% 100%; /* white */
-    --muted: 240 4% 16%; /* dark gray */
-    --muted-foreground: 240 5% 65%; /* light gray */
+    /* Dark mode - inverse of light mode for high contrast */
+    --background: 0 0% 8%; /* Very dark background */
+    --foreground: 40 8% 94%; /* Light cream text */
+    --card: 0 0% 12%; /* Dark cards */
+    --card-foreground: 40 8% 94%; /* Light text on dark cards */
+    --border: 0 0% 80%; /* Light borders in dark mode */
+    --input: 0 0% 15%; /* Dark inputs */
+    --primary: 40 8% 94%; /* Light primary in dark mode */
+    --primary-foreground: 0 0% 8%; /* Dark text on light primary */
+    --muted: 0 0% 20%; /* Dark muted elements */
+    --muted-foreground: 0 0% 60%; /* Medium light muted text */
+    --accent: 40 8% 94%; /* Light accent in dark mode */
+    --accent-foreground: 0 0% 8%; /* Dark text on light accent */
   }
 }
 
@@ -38,184 +44,125 @@
   }
 
   body {
-    @apply text-foreground transition-colors duration-300;
+    @apply bg-background text-foreground transition-colors duration-300;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    font-variation-settings: 'opsz' 32;
+  }
+
+  /* Bold typography system inspired by MegaETH */
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 8vw, 8rem);
+    font-weight: 900;
+    letter-spacing: -0.05em;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 6vw, 5rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+  }
+
+  h3 {
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
   }
 }
 
 @layer utilities {
-  .bg-background {
-    background: transparent !important;
+  /* Editorial-style geometric elements */
+  .editorial-line {
+    height: 2px;
+    background: hsl(var(--foreground));
+    margin: 2rem 0;
   }
 
-  /* Add fadeIn animation for tooltips */
+  .editorial-section {
+    border-left: 4px solid hsl(var(--foreground));
+    padding-left: 2rem;
+  }
+
+  /* Typography utilities */
+  .text-editorial-large {
+    font-size: clamp(3rem, 10vw, 12rem);
+    font-weight: 900;
+    line-height: 0.85;
+    letter-spacing: -0.06em;
+  }
+
+  .text-editorial-medium {
+    font-size: clamp(1.5rem, 5vw, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+  }
+
+  /* Animation utilities */
   @keyframes fadeIn {
     from {
       opacity: 0;
-      transform: scale(0.95) translateY(5px);
+      transform: translateY(20px);
     }
     to {
       opacity: 1;
-      transform: scale(1) translateY(0);
+      transform: translateY(0);
     }
   }
 
   .animate-fadeIn {
-    animation: fadeIn 0.15s ease-out forwards;
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+
+  /* Brutalist button style */
+  .btn-brutalist {
+    background: hsl(var(--foreground));
+    color: hsl(var(--background));
+    border: 2px solid hsl(var(--foreground));
+    padding: 1rem 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.2s ease;
+  }
+
+  .btn-brutalist:hover {
+    background: transparent;
+    color: hsl(var(--foreground));
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0 hsl(var(--foreground));
   }
 }
 
-/* Light mode background effects */
+/* Clean, minimal background - MegaETH style */
 :root body {
-  background: linear-gradient(
-    to bottom right,
-    rgb(254, 254, 255),
-    rgb(250, 251, 254)
-  );
+  background: hsl(var(--background));
 }
 
-/* Dark mode background effects */
 .dark body {
-  background-color: rgb(5, 5, 8);
-  background-image: radial-gradient(
-      circle at top left,
-      rgb(12, 12, 17),
-      rgba(12, 12, 17, 0) 70%
-    ),
-    radial-gradient(
-      circle at top right,
-      rgb(17, 12, 22),
-      rgba(17, 12, 22, 0) 70%
-    ),
-    radial-gradient(
-      circle at bottom left,
-      rgb(12, 15, 22),
-      rgba(12, 15, 22, 0) 70%
-    ),
-    linear-gradient(to bottom right, rgb(10, 10, 15), rgb(5, 5, 8));
+  background: hsl(var(--background));
 }
 
-/* Add a subtle noise texture overlay */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
-  pointer-events: none;
-  opacity: 0.02;
-  z-index: -2;
-  mix-blend-mode: overlay;
+/* Editorial-style scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
 }
 
-/* Add ambient glow effects - Light Mode */
-:root body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(
-      120% 120% at 50% -20%,
-      rgba(79, 70, 229, 0.15),
-      transparent 50%
-    ),
-    radial-gradient(
-      70% 70% at 90% 20%,
-      rgba(236, 72, 153, 0.12),
-      transparent 50%
-    ),
-    radial-gradient(
-      80% 80% at -20% 50%,
-      rgba(52, 211, 153, 0.15),
-      transparent 50%
-    ),
-    radial-gradient(
-      60% 60% at 95% 90%,
-      rgba(139, 92, 246, 0.15),
-      transparent 50%
-    );
-  pointer-events: none;
-  z-index: -1;
-  mix-blend-mode: multiply;
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
 }
 
-/* Add ambient glow effects - Dark Mode */
-.dark body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(
-      80% 80% at 50% -20%,
-      rgba(30, 64, 175, 0.15),
-      transparent 100%
-    ),
-    radial-gradient(
-      50% 50% at 80% 10%,
-      rgba(112, 26, 117, 0.15),
-      transparent 100%
-    ),
-    radial-gradient(
-      60% 60% at -10% 50%,
-      rgba(13, 148, 136, 0.15),
-      transparent 100%
-    ),
-    radial-gradient(
-      40% 40% at 90% 90%,
-      rgba(67, 56, 202, 0.15),
-      transparent 100%
-    );
-  pointer-events: none;
-  z-index: -1;
-  mix-blend-mode: screen;
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--foreground));
+  border-radius: 0;
 }
 
-/* Custom scrollbar - Light Mode */
-:root ::-webkit-scrollbar {
-  width: 10px;
-}
-
-:root ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 5px;
-}
-
-:root ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-}
-
-:root ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.15);
-}
-
-/* Custom scrollbar - Dark Mode */
-.dark ::-webkit-scrollbar {
-  width: 10px;
-}
-
-.dark ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 5px;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 5px;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-/* Animations */
-@keyframes fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fade-in {
-  animation: fade-in 0.5s ease-out forwards;
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
 }

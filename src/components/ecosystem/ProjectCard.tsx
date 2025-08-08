@@ -163,15 +163,11 @@ export function ProjectCard({ project, isLoadingVotes }: ProjectCardProps) {
   return (
     <Tooltip.Provider delayDuration={0} skipDelayDuration={0}>
       <div
-        className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white to-gray-50/80 dark:from-white/[0.03] dark:to-white/[0.02] border border-gray-200 dark:border-white/5 hover:border-blue-500/30 dark:hover:border-blue-500/20 transition-all duration-300 shadow-sm hover:shadow-md dark:shadow-none dark:hover:shadow-blue-500/5 ${
+        className={`group bg-background border-2 border-foreground hover:shadow-[8px_8px_0_hsl(var(--foreground))] hover:-translate-x-1 hover:-translate-y-1 transition-all duration-200 ${
           isLoadingVotes ? "opacity-75" : ""
         }`}
       >
-        {/* Enhanced Background Effects */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.08),transparent)] dark:bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.06),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.05),transparent)] dark:bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.04),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-        <div className="relative p-6 sm:p-8 flex flex-col h-full">
+        <div className="p-6 flex flex-col h-full">
           <ProjectHeader
             name={project.name}
             twitter={project.twitter}
@@ -180,11 +176,11 @@ export function ProjectCard({ project, isLoadingVotes }: ProjectCardProps) {
             testnet={project.testnet}
           />
 
-          <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 flex-grow leading-relaxed">
+          <p className="text-base leading-relaxed mb-6 flex-grow">
             {project.description}
           </p>
 
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-auto pt-4 border-t border-gray-200/80 dark:border-white/[0.06]">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-auto pt-4 border-t-2 border-foreground">
             <div className="flex items-center gap-3">
               <ProjectLinks
                 website={project.website}

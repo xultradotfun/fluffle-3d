@@ -165,49 +165,44 @@ export default function Home() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <Hero />
 
-      {/* Desktop View Switcher */}
-      <div className="relative z-20 mb-8">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center">
-            <ViewSwitcher
-              activeView={activeView}
-              onViewChange={handleViewChange}
-            />
-          </div>
-        </div>
-      </div>
+      {/* Navigation */}
+      <ViewSwitcher
+        activeView={activeView}
+        onViewChange={handleViewChange}
+      />
 
       {/* Form Section - Only show in viewer mode */}
       {activeView === "viewer" && (
-        <section className="relative z-10 pt-12 sm:pt-20">
-          <div className="mx-auto max-w-xl px-4 sm:px-6 lg:px-8">
-            <div className="overflow-hidden rounded-xl bg-card shadow-lg ring-1 ring-border backdrop-blur-lg transition-all hover:bg-card/80">
-              <div className="p-4">
-                <NFTInput
-                  onLoad={handleNFTLoad}
-                  onError={handleNFTError}
-                  loadedIds={viewers.map((v) => v.id)}
-                />
-                {error && (
-                  <div className="mt-4 rounded-lg bg-red-500/10 border border-red-500/30 px-4 py-3 text-sm text-red-400 animate-slide-down">
-                    {error}
-                  </div>
-                )}
-              </div>
+        <section className="container mx-auto px-8 py-12">
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-background border-2 border-foreground p-6">
+              <h2 className="font-black uppercase tracking-wider text-lg mb-4">
+                Load NFT
+              </h2>
+              <NFTInput
+                onLoad={handleNFTLoad}
+                onError={handleNFTError}
+                loadedIds={viewers.map((v) => v.id)}
+              />
+              {error && (
+                <div className="mt-4 p-4 bg-red-100 border-2 border-red-600 text-red-800 font-medium">
+                  {error}
+                </div>
+              )}
             </div>
           </div>
         </section>
       )}
 
-      {/* Content Section */}
-      <section className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 py-6 sm:py-12 pb-24">
+      {/* Main Content Section */}
+      <main className="container mx-auto px-8 py-12 pb-32 lg:pb-12">
         {activeView === "ecosystem" && <EcosystemDashboard />}
         {activeView === "viewer" && (
-          <div className="max-w-7xl mx-auto space-y-12">
+          <div className="space-y-16">
             {viewers.map((viewer) => (
               <NFTCard
                 key={`${viewer.id}-${viewer.timestamp}`}
@@ -225,13 +220,13 @@ export default function Home() {
         {activeView === "build" && <BuildersView />}
         {activeView === "builder" && <NFTBuilder />}
         {activeView === "guides" && (
-          <div className="max-w-7xl mx-auto">
+          <div>
             <GuidesHeader />
             <GuidesList />
           </div>
         )}
         {activeView === "bingo" && <BingoView />}
-      </section>
+      </main>
     </div>
   );
 }

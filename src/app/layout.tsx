@@ -63,7 +63,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <ThemeProvider>
           <DiscordAuthProvider>
-            <div className="relative min-h-screen antialiased bg-background text-foreground">
+            <div className="min-h-screen bg-background text-foreground">
               {children}
               <Footer />
             </div>
@@ -71,16 +71,16 @@ export default function RootLayout({
         </ThemeProvider>
         <Toaster
           richColors
-          position="top-center"
+          position="top-right"
           expand={true}
           toastOptions={{
             style: {
-              background: "var(--card)",
-              color: "var(--card-foreground)",
-              border: "1px solid var(--border)",
-              backdropFilter: "blur(8px)",
+              background: "hsl(var(--background))",
+              color: "hsl(var(--foreground))",
+              border: "2px solid hsl(var(--foreground))",
+              borderRadius: "0",
             },
-            className: "text-sm font-medium rounded-xl",
+            className: "text-sm font-bold uppercase tracking-wide",
           }}
         />
       </body>

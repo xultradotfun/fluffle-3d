@@ -12,17 +12,17 @@ export function ProjectLinks({
   guide,
 }: ProjectLinksProps) {
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-2">
       {website && (
         <a
           href={website}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center w-9 h-9 rounded-xl bg-white dark:bg-white/[0.05] shadow-[0_2px_4px_rgba(0,0,0,0.02)] dark:shadow-none text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-200 group"
+          className="flex items-center justify-center w-9 h-9 bg-background border-2 border-foreground text-foreground hover:bg-foreground hover:text-background transition-all duration-200"
           title="Website"
         >
           <svg
-            className="w-[18px] h-[18px] transition-transform duration-200 group-hover:scale-105"
+            className="w-[18px] h-[18px]"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -31,7 +31,7 @@ export function ProjectLinks({
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth={1.5}
-              d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+              d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 919-9"
             />
           </svg>
         </a>
@@ -41,11 +41,11 @@ export function ProjectLinks({
           href={discord}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center w-9 h-9 rounded-xl bg-white dark:bg-white/[0.05] shadow-[0_2px_4px_rgba(0,0,0,0.02)] dark:shadow-none text-[#5865F2]/70 dark:text-[#5865F2]/50 hover:text-[#5865F2] dark:hover:text-[#5865F2] transition-all duration-200 group"
+          className="flex items-center justify-center w-9 h-9 bg-background border-2 border-foreground text-foreground hover:bg-foreground hover:text-background transition-all duration-200"
           title="Discord"
         >
           <svg
-            className="w-[18px] h-[18px] transition-transform duration-200 group-hover:scale-105"
+            className="w-[18px] h-[18px]"
             viewBox="0 0 24 24"
             fill="currentColor"
           >
@@ -58,11 +58,11 @@ export function ProjectLinks({
           href={telegram}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center w-9 h-9 rounded-xl bg-white dark:bg-white/[0.05] shadow-[0_2px_4px_rgba(0,0,0,0.02)] dark:shadow-none text-[#229ED9]/70 dark:text-[#229ED9]/50 hover:text-[#229ED9] dark:hover:text-[#229ED9] transition-all duration-200 group"
+          className="flex items-center justify-center w-9 h-9 bg-background border-2 border-foreground text-foreground hover:bg-foreground hover:text-background transition-all duration-200"
           title="Telegram"
         >
           <svg
-            className="w-[18px] h-[18px] transition-transform duration-200 group-hover:scale-105"
+            className="w-[18px] h-[18px]"
             viewBox="0 0 24 24"
             fill="currentColor"
           >
@@ -73,11 +73,11 @@ export function ProjectLinks({
       {guide && (
         <a
           href={guide}
-          className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-400/10 dark:to-pink-400/10 shadow-[0_2px_4px_rgba(0,0,0,0.02),0_0_0_1px_rgba(168,85,247,0.1)] dark:shadow-[0_0_0_1px_rgba(168,85,247,0.15)] dark:shadow-purple-400/10 text-purple-500 dark:text-purple-400 hover:text-purple-600 dark:hover:text-purple-300 hover:shadow-[0_4px_8px_rgba(168,85,247,0.15),0_0_0_1px_rgba(168,85,247,0.2)] dark:hover:shadow-[0_4px_8px_rgba(168,85,247,0.2),0_0_0_1px_rgba(168,85,247,0.25)] transition-all duration-200 group"
+          className="flex items-center justify-center w-9 h-9 bg-foreground text-background border-2 border-foreground hover:bg-background hover:text-foreground transition-all duration-200"
           title="View Guide"
         >
           <svg
-            className="w-[18px] h-[18px] transition-transform duration-200 group-hover:scale-105"
+            className="w-[18px] h-[18px]"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"

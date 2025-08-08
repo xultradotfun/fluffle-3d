@@ -274,39 +274,40 @@ export function EcosystemDashboard() {
     });
 
   return (
-    <div className="space-y-12 animate-fade-in">
+    <div className="animate-fadeIn">
       <EcosystemHeader />
 
-      <div className="space-y-8">
-        {/* Controls Header */}
-        <div className="flex flex-col gap-4">
-          {/* Filter Controls */}
-          <FilterControls
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-            showMegaMafiaOnly={showMegaMafiaOnly}
-            setShowMegaMafiaOnly={setShowMegaMafiaOnly}
-            showNativeOnly={showNativeOnly}
-            setShowNativeOnly={setShowNativeOnly}
-            showTestnetOnly={showTestnetOnly}
-            setShowTestnetOnly={setShowTestnetOnly}
-            showGuideOnly={showGuideOnly}
-            setShowGuideOnly={setShowGuideOnly}
-            voteFilter={voteFilter}
-            setVoteFilter={setVoteFilter}
-            categories={categories}
-            getCategoryCount={getCategoryCount}
-            getMegaMafiaCount={getMegaMafiaCount}
-            getNativeCount={getNativeCount}
-            getTestnetCount={getTestnetCount}
-            getGuideCount={getGuideCount}
-            getUserVotedCount={getUserVotedCount}
-            getUserNotVotedCount={getUserNotVotedCount}
-            totalProjects={projects.length}
-          />
-
-          {/* Sort Controls */}
-          <div className="flex justify-end">
+      {/* Projects Section */}
+      <div className="space-y-12">
+        {/* Controls */}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+          <h2 className="text-editorial-medium">
+            PROJECTS ({filteredProjects.length})
+          </h2>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <FilterControls
+              selectedCategory={selectedCategory}
+              setSelectedCategory={setSelectedCategory}
+              showMegaMafiaOnly={showMegaMafiaOnly}
+              setShowMegaMafiaOnly={setShowMegaMafiaOnly}
+              showNativeOnly={showNativeOnly}
+              setShowNativeOnly={setShowNativeOnly}
+              showTestnetOnly={showTestnetOnly}
+              setShowTestnetOnly={setShowTestnetOnly}
+              showGuideOnly={showGuideOnly}
+              setShowGuideOnly={setShowGuideOnly}
+              voteFilter={voteFilter}
+              setVoteFilter={setVoteFilter}
+              categories={categories}
+              getCategoryCount={getCategoryCount}
+              getMegaMafiaCount={getMegaMafiaCount}
+              getNativeCount={getNativeCount}
+              getTestnetCount={getTestnetCount}
+              getGuideCount={getGuideCount}
+              getUserVotedCount={getUserVotedCount}
+              getUserNotVotedCount={getUserNotVotedCount}
+              totalProjects={projects.length}
+            />
             <SortSelector
               sortMethod={sortMethod}
               onSortChange={setSortMethod}
@@ -314,8 +315,10 @@ export function EcosystemDashboard() {
           </div>
         </div>
 
+        <div className="editorial-line"></div>
+
         {/* Projects Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((project) => (
             <ProjectCard
               key={project.twitter}

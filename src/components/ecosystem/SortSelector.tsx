@@ -34,102 +34,42 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
 
   return (
     <Tooltip.Provider delayDuration={300} skipDelayDuration={0}>
-      <div className="flex items-center gap-2">
-        <span className="text-sm text-gray-600 dark:text-gray-300">
-          Sort by:
+      <div className="flex items-center gap-4">
+        <span className="font-medium uppercase tracking-wide text-sm">
+          Sort:
         </span>
-        <div className="flex rounded-lg border border-gray-200/80 dark:border-white/[0.06] bg-white/80 dark:bg-white/[0.03] p-0.5">
+        <div className="flex gap-2">
           <button
             onClick={() => handleSortClick("score")}
-            className={`relative px-2.5 py-1 rounded text-sm font-medium transition-all ${
+            className={`px-4 py-2 font-bold uppercase tracking-wide text-sm transition-all border-2 ${
               sortMethod.type === "score"
-                ? "bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow-sm"
-                : "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-white/[0.04]"
+                ? "bg-foreground text-background border-foreground"
+                : "bg-background text-foreground border-foreground hover:bg-foreground hover:text-background"
             }`}
           >
-            <div className="flex items-center gap-1.5">
-              <svg
-                className={cn(
-                  "w-4 h-4 transition-transform",
-                  sortMethod.type === "score" &&
-                    sortMethod.direction === "asc" &&
-                    "rotate-180"
-                )}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                />
-              </svg>
-              <span>Score</span>
-            </div>
+            Score {sortMethod.type === "score" && (sortMethod.direction === "desc" ? "↓" : "↑")}
           </button>
 
           <button
             onClick={() => handleSortClick("alphabetical")}
-            className={`relative px-2.5 py-1 rounded text-sm font-medium transition-all ${
+            className={`px-4 py-2 font-bold uppercase tracking-wide text-sm transition-all border-2 ${
               sortMethod.type === "alphabetical"
-                ? "bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow-sm"
-                : "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-white/[0.04]"
+                ? "bg-foreground text-background border-foreground"
+                : "bg-background text-foreground border-foreground hover:bg-foreground hover:text-background"
             }`}
           >
-            <div className="flex items-center gap-1.5">
-              <svg
-                className={cn(
-                  "w-4 h-4 transition-transform",
-                  sortMethod.type === "alphabetical" &&
-                    sortMethod.direction === "desc" &&
-                    "rotate-180"
-                )}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
-                />
-              </svg>
-              <span>A-Z</span>
-            </div>
+            A-Z {sortMethod.type === "alphabetical" && (sortMethod.direction === "asc" ? "↓" : "↑")}
           </button>
 
           <button
             onClick={() => handleSortClick("latest")}
-            className={`relative px-2.5 py-1 rounded text-sm font-medium transition-all ${
+            className={`px-4 py-2 font-bold uppercase tracking-wide text-sm transition-all border-2 ${
               sortMethod.type === "latest"
-                ? "bg-gradient-to-br from-blue-500 to-indigo-500 text-white shadow-sm"
-                : "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-white/[0.04]"
+                ? "bg-foreground text-background border-foreground"
+                : "bg-background text-foreground border-foreground hover:bg-foreground hover:text-background"
             }`}
           >
-            <div className="flex items-center gap-1.5">
-              <svg
-                className={cn(
-                  "w-4 h-4 transition-transform",
-                  sortMethod.type === "latest" &&
-                    sortMethod.direction === "asc" &&
-                    "rotate-180"
-                )}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <span>Latest</span>
-            </div>
+            Latest {sortMethod.type === "latest" && (sortMethod.direction === "desc" ? "↓" : "↑")}
           </button>
         </div>
 
@@ -137,7 +77,7 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
           <Tooltip.Trigger asChild>
             <button
               type="button"
-              className="p-1.5 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-white/[0.08] rounded transition-all touch-manipulation"
+              className="p-2 bg-background border-2 border-foreground text-foreground hover:bg-foreground hover:text-background transition-all touch-manipulation"
               aria-label="Learn more about score sorting"
               onClick={() => setTooltipOpen(true)}
             >
@@ -173,7 +113,7 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
               side="top"
               align="center"
               sideOffset={5}
-              className="z-50 max-w-[320px] bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl px-4 py-3 rounded-lg text-sm text-gray-600 dark:text-gray-300 shadow-lg border border-gray-200/50 dark:border-white/[0.08] select-none touch-none"
+              className="z-50 max-w-[320px] bg-background border-2 border-foreground px-4 py-3 text-sm text-foreground select-none touch-none"
               avoidCollisions={true}
               collisionPadding={16}
               sticky="partial"
@@ -194,7 +134,7 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
                   first.
                 </p>
               </div>
-              <Tooltip.Arrow className="fill-white/95 dark:fill-gray-900/95" />
+              <Tooltip.Arrow className="fill-background" />
             </Tooltip.Content>
           </Tooltip.Portal>
         </Tooltip.Root>

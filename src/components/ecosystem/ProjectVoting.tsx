@@ -164,28 +164,24 @@ export function ProjectVoting({
             <button
               onClick={() => onVote("up")}
               disabled={isVoting || cooldown}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium transition-all duration-200
+              className={`flex items-center gap-2 px-3 py-2 border-2 text-sm font-bold uppercase tracking-wide transition-all duration-200
                 ${
                   userVote === "up"
-                    ? "bg-emerald-100 dark:bg-emerald-500/30 text-emerald-700 dark:text-emerald-300 ring-1 ring-emerald-500/30 dark:ring-emerald-500/50"
-                    : "bg-white dark:bg-white/[0.05] text-emerald-600/60 dark:text-emerald-400/60 shadow-[0_2px_4px_rgba(0,0,0,0.02)] dark:shadow-none hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-500/10"
+                    ? "bg-foreground text-background border-foreground"
+                    : "bg-background text-foreground border-foreground hover:bg-foreground hover:text-background"
                 }
                 ${
                   (isVoting || cooldown) &&
-                  "cursor-not-allowed opacity-50 hover:bg-white dark:hover:bg-white/[0.05]"
+                  "cursor-not-allowed opacity-50"
                 }
               `}
             >
               <svg
-                className={`h-4 w-4 transition-transform duration-200 ${
-                  userVote === "up"
-                    ? "text-emerald-600 dark:text-emerald-300"
-                    : "text-emerald-500/60 dark:text-emerald-400/60"
-                }`}
+                className="h-4 w-4"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth={1.75}
+                strokeWidth={2}
               >
                 <path
                   strokeLinecap="round"
@@ -203,7 +199,7 @@ export function ProjectVoting({
               side="top"
               align="center"
               sideOffset={5}
-              className="z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl px-4 py-3 rounded-xl text-sm text-gray-900 dark:text-gray-100 shadow-xl border border-gray-200/50 dark:border-white/[0.08] select-none touch-none"
+              className="z-50 bg-background border-2 border-foreground px-4 py-3 text-sm text-foreground select-none touch-none"
               avoidCollisions={true}
               collisionPadding={16}
               sticky="partial"
@@ -227,7 +223,7 @@ export function ProjectVoting({
               <div className="min-w-[180px] space-y-1">
                 {getVoteBreakdownText("up")}
               </div>
-              <Tooltip.Arrow className="fill-white/95 dark:fill-gray-900/95" />
+              <Tooltip.Arrow className="fill-background" />
             </Tooltip.Content>
           </Tooltip.Portal>
         </Tooltip.Root>
@@ -237,28 +233,24 @@ export function ProjectVoting({
             <button
               onClick={() => onVote("down")}
               disabled={isVoting || cooldown}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium transition-all duration-200
+              className={`flex items-center gap-2 px-3 py-2 border-2 text-sm font-bold uppercase tracking-wide transition-all duration-200
                 ${
                   userVote === "down"
-                    ? "bg-red-100 dark:bg-red-500/30 text-red-700 dark:text-red-300 ring-1 ring-red-500/30 dark:ring-red-500/50"
-                    : "bg-white dark:bg-white/[0.05] text-red-600/60 dark:text-red-400/60 shadow-[0_2px_4px_rgba(0,0,0,0.02)] dark:shadow-none hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50/50 dark:hover:bg-red-500/10"
+                    ? "bg-foreground text-background border-foreground"
+                    : "bg-background text-foreground border-foreground hover:bg-foreground hover:text-background"
                 }
                 ${
                   (isVoting || cooldown) &&
-                  "cursor-not-allowed opacity-50 hover:bg-white dark:hover:bg-white/[0.05]"
+                  "cursor-not-allowed opacity-50"
                 }
               `}
             >
               <svg
-                className={`h-4 w-4 transition-transform duration-200 ${
-                  userVote === "down"
-                    ? "text-red-600 dark:text-red-300"
-                    : "text-red-500/60 dark:text-red-400/60"
-                }`}
+                className="h-4 w-4"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth={1.75}
+                strokeWidth={2}
               >
                 <path
                   strokeLinecap="round"
@@ -276,7 +268,7 @@ export function ProjectVoting({
               side="top"
               align="center"
               sideOffset={5}
-              className="z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl px-4 py-3 rounded-xl text-sm text-gray-900 dark:text-gray-100 shadow-xl border border-gray-200/50 dark:border-white/[0.08] select-none touch-none"
+              className="z-50 bg-background border-2 border-foreground px-4 py-3 text-sm text-foreground select-none touch-none"
               avoidCollisions={true}
               collisionPadding={16}
               sticky="partial"
@@ -300,7 +292,7 @@ export function ProjectVoting({
               <div className="min-w-[180px] space-y-1">
                 {getVoteBreakdownText("down")}
               </div>
-              <Tooltip.Arrow className="fill-white/95 dark:fill-gray-900/95" />
+              <Tooltip.Arrow className="fill-background" />
             </Tooltip.Content>
           </Tooltip.Portal>
         </Tooltip.Root>
@@ -314,7 +306,7 @@ export function ProjectVoting({
       >
         <Tooltip.Trigger asChild>
           <button
-            className="sm:hidden flex items-center justify-center w-9 h-9 rounded-xl bg-white dark:bg-white/[0.05] shadow-[0_2px_4px_rgba(0,0,0,0.02)] dark:shadow-none text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/[0.08] transition-all duration-200"
+            className="sm:hidden flex items-center justify-center w-9 h-9 bg-background border-2 border-foreground text-foreground hover:bg-foreground hover:text-background transition-all duration-200"
             aria-label="Vote breakdown"
             onClick={() => setIsMobileTooltipOpen(true)}
           >
