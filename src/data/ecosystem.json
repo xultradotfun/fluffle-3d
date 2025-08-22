@@ -1287,6 +1287,16 @@
       "megaMafia": false,
       "native": true,
       "testnet": true
+    },
+    {
+      "name": "MegaEth Dogs",
+      "twitter": "MegaEth_Dogs",
+      "discord": "https://discord.gg/FaAKE6HA",
+      "description": "NFT Collection",
+      "category": "NFT",
+      "megaMafia": false,
+      "native": true,
+      "testnet": false
     }
   ]
 }
