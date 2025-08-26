@@ -1408,6 +1408,106 @@
       "megaMafia": false,
       "native": false,
       "testnet": false
+    },
+    {
+      "name": "Clique",
+      "twitter": "Clique2046",
+      "website": "https://clique.tech/",
+      "description": "Leading provider of bespoke token launch solutions",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
+    },
+    {
+      "name": "Delegate",
+      "twitter": "delegatedotxyz",
+      "website": "https://delegate.xyz/",
+      "description": "Keep your vaulted NFTs and ERC20s safe by linking wallets together. Claim airdrops, prove token ownership, and more from your hot wallet.",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
+    },
+    {
+      "name": "Mynt",
+      "twitter": "myntusd",
+      "website": "https://myntusd.com/",
+      "description": "The first stablecoin built for Privacy and Compliance",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
+    },
+    {
+      "name": "Haifu",
+      "twitter": "haifudotfun",
+      "website": "https://haifu.fun",
+      "description": "DeFAI wAIfu Launchpad",
+      "category": "AI",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
+    },
+    {
+      "name": "Standard Protocol",
+      "twitter": "standardweb3",
+      "website": "https://standardweb3.com/",
+      "description": "Trade high float, high cap coins",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
+    },
+    {
+      "name": "Fjord Foundry",
+      "twitter": "fjordfoundry",
+      "website": "https://www.fjordfoundry.com/",
+      "description": "Decentralized launchpad",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
+    },
+    {
+      "name": "Reland Network",
+      "twitter": "relend_network",
+      "website": "https://relend.network/",
+      "description": "Building rUSDC-mega: Providing scalable stablecoin credit for MegaETH's money markets.",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
+    },
+    {
+      "name": "Layerhub",
+      "twitter": "layerhub",
+      "website": "https://layerhub.xyz/",
+      "description": "User-centered analytics platform, designed for ecosystems and dApps that want to engage community through data insights",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
+    },
+    {
+      "name": "TopStrike",
+      "twitter": "TopStrikeIO",
+      "website": "https://www.topstrike.io/",
+      "description": "On-chain football (soccer) player trading game where users buy, sell, and earn from real-time player performance and market dynamics.",
+      "category": "Gaming",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
+    },
+    {
+      "name": "multipli.fi",
+      "twitter": "multiplifi",
+      "website": "https://multipli.fi/",
+      "description": "RWA-yield protocol built to unlock superior, risk-adjusted returns on assets that typically don't generate yield like BTC, PAXG, XRP along with stablecoins",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
     }
   ]
 }
