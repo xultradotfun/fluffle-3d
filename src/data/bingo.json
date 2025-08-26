@@ -17,10 +17,7 @@
       "category": "Trading",
       "projects": ["GTE_XYZ", "xldotfun"],
       "culturalElement": "Food-related stuff",
-      "links": [
-        "https://testnet.gte.xyz",
-        "https://alpha-testnet.xl.fun/megaeth"
-      ]
+      "links": ["https://testnet.gte.xyz", "https://testnet.xl.fun/megaeth"]
     },
     {
       "id": "3",
@@ -38,10 +35,7 @@
       "category": "Community",
       "projects": ["xldotfun", "GTE_XYZ"],
       "culturalElement": "The Fluffle Cabals",
-      "links": [
-        "https://testnet.gte.xyz",
-        "https://alpha-testnet.xl.fun/megaeth"
-      ]
+      "links": ["https://testnet.gte.xyz", "https://testnet.xl.fun/megaeth"]
     },
     {
       "id": "5",
@@ -110,10 +104,7 @@
       "category": "Trading",
       "projects": ["xldotfun", "GTE_XYZ"],
       "culturalElement": "Heavy Metal Chain",
-      "links": [
-        "https://testnet.gte.xyz",
-        "https://alpha-testnet.xl.fun/megaeth"
-      ]
+      "links": ["https://testnet.gte.xyz", "https://testnet.xl.fun/megaeth"]
     },
     {
       "id": "12",

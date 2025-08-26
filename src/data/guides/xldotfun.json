@@ -22,7 +22,7 @@
         "description": "Easy-to-use platform for buying and selling memecoins."
       }
     ],
-    "currentStatus": "XL is currently available on MegaETH testnet at alpha-testnet.xl.fun/megaeth"
+    "currentStatus": "XL is currently available on MegaETH testnet at testnet.xl.fun/megaeth"
   },
   "guide": {
     "sections": [
@@ -46,7 +46,7 @@
             "links": [
               {
                 "text": "Trade on Testnet",
-                "url": "https://alpha-testnet.xl.fun/megaeth"
+                "url": "https://testnet.xl.fun/megaeth"
               }
             ]
           }
@@ -72,7 +72,7 @@
             "links": [
               {
                 "text": "Launch on Testnet",
-                "url": "https://alpha-testnet.xl.fun/megaeth"
+                "url": "https://testnet.xl.fun/megaeth"
               }
             ]
           }
