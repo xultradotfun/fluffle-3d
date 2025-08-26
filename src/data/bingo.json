@@ -15,11 +15,11 @@
       "title": "Food Coin Meta",
       "description": "Trade MegaETH Food Coins (Hotpot, Burger, Bread, Toast, Da Bing, Pancake, Brekkie Ice Cream, Carrot, Timothy) on GTE/XL",
       "category": "Trading",
-      "projects": ["GTE_XYZ", "XLmemeCom"],
+      "projects": ["GTE_XYZ", "xldotfun"],
       "culturalElement": "Food-related stuff",
       "links": [
         "https://testnet.gte.xyz",
-        "https://alpha-testnet.xlmeme.com/megaeth"
+        "https://alpha-testnet.xl.fun/megaeth"
       ]
     },
     {
@@ -36,11 +36,11 @@
       "title": "Fluffle Believer",
       "description": "Launch or locate/purchase an asset associated to your favorite Fluffle cabal/tribe on GTE/XL",
       "category": "Community",
-      "projects": ["XLmemeCom", "GTE_XYZ"],
+      "projects": ["xldotfun", "GTE_XYZ"],
       "culturalElement": "The Fluffle Cabals",
       "links": [
         "https://testnet.gte.xyz",
-        "https://alpha-testnet.xlmeme.com/megaeth"
+        "https://alpha-testnet.xl.fun/megaeth"
       ]
     },
     {
@@ -48,12 +48,12 @@
       "title": "Fluffle Cabal",
       "description": "Join Fluffle Cabal communities on Lemonade and stake the related token after buying it on GTE/XL",
       "category": "Community",
-      "projects": ["lemonade_events", "GTE_XYZ", "XLmemeCom"],
+      "projects": ["lemonade_events", "GTE_XYZ", "xldotfun"],
       "culturalElement": "The Fluffle Cabals",
       "links": [
         "https://lemonade.social/s/megaeth",
         "https://testnet.gte.xyz",
-        "https://testnet.xlmeme.com/megaeth"
+        "https://testnet.xl.fun/megaeth"
       ]
     },
     {
@@ -108,11 +108,11 @@
       "title": "Heavy Metal Chain",
       "description": "Launch/Trade tokens on GTE/XL for your fave Megadeth track",
       "category": "Trading",
-      "projects": ["XLmemeCom", "GTE_XYZ"],
+      "projects": ["xldotfun", "GTE_XYZ"],
       "culturalElement": "Heavy Metal Chain",
       "links": [
         "https://testnet.gte.xyz",
-        "https://alpha-testnet.xlmeme.com/megaeth"
+        "https://alpha-testnet.xl.fun/megaeth"
       ]
     },
     {

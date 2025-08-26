@@ -1,7 +1,7 @@
 {
   "project": {
     "name": "XL",
-    "twitter": "XLmemeCom",
+    "twitter": "xldotfun",
     "description": "A multichain memecoin launchpad designed for fair launches—no snipers, creator-first.",
     "longDescription": "XL is a multichain memecoin launchpad designed for fair launches—no snipers, creator-first. It simplifies token creation and trading, giving users a seamless way to explore and launch new memes across multiple blockchains. The MegaETH testnet deployment is the latest step in expanding its reach.",
     "features": [
@@ -22,7 +22,7 @@
         "description": "Easy-to-use platform for buying and selling memecoins."
       }
     ],
-    "currentStatus": "XL is currently available on MegaETH testnet at alpha-testnet.xlmeme.com/megaeth"
+    "currentStatus": "XL is currently available on MegaETH testnet at alpha-testnet.xl.fun/megaeth"
   },
   "guide": {
     "sections": [
@@ -46,7 +46,7 @@
             "links": [
               {
                 "text": "Trade on Testnet",
-                "url": "https://alpha-testnet.xlmeme.com/megaeth"
+                "url": "https://alpha-testnet.xl.fun/megaeth"
               }
             ]
           }
@@ -72,7 +72,7 @@
             "links": [
               {
                 "text": "Launch on Testnet",
-                "url": "https://alpha-testnet.xlmeme.com/megaeth"
+                "url": "https://alpha-testnet.xl.fun/megaeth"
               }
             ]
           }
