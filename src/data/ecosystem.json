@@ -1297,6 +1297,117 @@
       "megaMafia": false,
       "native": true,
       "testnet": false
+    },
+    {
+      "name": "Pebbles",
+      "twitter": "pebbles_pay",
+      "website": "https://www.pebbles.cash/",
+      "telegram": "https://t.me/+gSMYXFHq0lYzMGY9",
+      "description": "Smart savings & social payments on Telegram—earn, spend, and send effortlessly with the next generation of PayFi",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
+    },
+    {
+      "name": "Dynamic",
+      "twitter": "dynamic_xyz",
+      "website": "https://www.dynamic.xyz",
+      "description": "Authentication, smart wallets, and secure key management into one flexible SDK",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
+    },
+    {
+      "name": "Pimlico",
+      "twitter": "pimlicoHQ",
+      "website": "https://www.pimlico.io",
+      "description": "Easily integrate smart accounts and gasless transactions through paymasters into your applications",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
+    },
+    {
+      "name": "Privy",
+      "twitter": "privy_io",
+      "website": "https://www.privy.io/",
+      "description": "Onboarding system and wallet infrastructure with embedded wallets for email or social logins",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
+    },
+    {
+      "name": "ZeroDev",
+      "twitter": "zerodev_app",
+      "website": "https://zerodev.app/",
+      "description": "Build Web3 experiences without complexities such as seed phrases, gas, confirmations, and bridging",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
+    },
+    {
+      "name": "Thirdweb",
+      "twitter": "thirdweb",
+      "website": "https://thirdweb.com/",
+      "description": "Unified framework for building web3 apps, games and agents",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
+    },
+    {
+      "name": "Fufuture",
+      "twitter": "fufuture_io",
+      "website": "https://www.fufuture.io/",
+      "description": "The world's first decentralized token-based perpetual options trading platform",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
+    },
+    {
+      "name": "Reown",
+      "twitter": "reown_",
+      "website": "https://reown.com",
+      "description": "Tools to build user experiences that make digital ownership effortless, intuitive, and secure",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
+    },
+    {
+      "name": "Etherspot",
+      "twitter": "etherspot",
+      "website": "https://etherspot.io/",
+      "description": "Powerful Account & Chain Abstraction development infrastructure",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
+    },
+    {
+      "name": "Hyperlane",
+      "twitter": "hyperlane",
+      "website": "https://hyperlane.xyz/",
+      "description": "Permissionless interoperability protocol for cross-chain communication",
+      "category": "Infrastructure",
+      "megaMafia": false,
+      "native": false,
+      "testnet": true
+    },
+    {
+      "name": "Nunchi",
+      "twitter": "nunchitrade",
+      "website": "https://www.nunchi.trade/",
+      "description": "The first perpetuals protocol for yield itself",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": false,
+      "testnet": false
     }
   ]
 }
