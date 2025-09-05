@@ -1508,6 +1508,26 @@
       "megaMafia": false,
       "native": false,
       "testnet": false
+    },
+    {
+      "name": "RemikoNFT",
+      "twitter": "RemikoNFT",
+      "discord": "https://discord.gg/remikonft",
+      "description": "NFT collection",
+      "category": "NFT",
+      "megaMafia": false,
+      "native": true,
+      "testnet": false
+    },
+    {
+      "name": "Voistra",
+      "twitter": "@voistra_",
+      "website": "https://voistra.xyz",
+      "description": "Share, Discover, Earn. All on-chain.",
+      "category": "DeFi",
+      "megaMafia": false,
+      "native": true,
+      "testnet": false
     }
   ]
 }
