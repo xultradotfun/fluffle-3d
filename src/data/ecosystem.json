@@ -1240,10 +1240,10 @@
       "testnet": false
     },
     {
-      "name": "dontworry",
-      "twitter": "probablyapp",
+      "name": "hunch",
+      "twitter": "hunchlol",
       "description": "don't worry",
-      "website": "https://dontworryprobably.app",
+      "website": "https://hunch.lol",
       "category": "Secret",
       "megaMafia": true,
       "native": true,
