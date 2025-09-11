@@ -161,6 +161,9 @@ export const API_ENDPOINTS = {
     PROGRESS: "api/bingo/progress", // Backend route with JWT
   },
 
+  // Mints (combined endpoint with caching)
+  MINTS: "api/mints",
+
   // Proxy
   PROXY: {
     MINTS: "api/proxy/mints",

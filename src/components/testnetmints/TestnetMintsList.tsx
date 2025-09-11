@@ -125,42 +125,38 @@ export function TestnetMintsList() {
   }, []);
 
   useEffect(() => {
-    // Skip if already fetching to prevent double requests
-    if (isFetchingRef.current) return;
-
-    const fetchMints = async () => {
+    const fetchData = async () => {
       try {
-        // Set fetching flag to prevent duplicate requests
-        isFetchingRef.current = true;
-
         setLoading(true);
         setError(null);
 
-        // Fetch from both Kingdomly and Rarible APIs
-        const [kingdomlyResponse, raribleResponse] = await Promise.allSettled([
-          apiClient.raw(API_ENDPOINTS.PROXY.MINTS, {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-              "Cache-Control": "no-cache",
-            },
-            cache: "no-store",
-          }),
-          apiClient.raw(API_ENDPOINTS.PROXY.RARIBLE, {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-              "Cache-Control": "no-cache",
-            },
-            cache: "no-store",
-          }),
+        // Fetch both mints and votes data from backend
+        const [mintsData, votesData] = await Promise.all([
+          apiClient.get(API_ENDPOINTS.MINTS),
+          apiClient.get(API_ENDPOINTS.VOTES.LIST),
         ]);
 
-        let kingdomlyData;
-        let raribleData;
-        let errors: string[] = [];
+        setMints(mintsData || []);
+        setVotesData(votesData.projects || []);
+        setHasAttemptedLoad(true);
+        
+        console.log(`Backend returned ${mintsData?.length || 0} mints and ${votesData.projects?.length || 0} projects`);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError(err instanceof Error ? err.message : "Failed to fetch data");
+        setMints([]);
+        setVotesData([]);
+        setHasAttemptedLoad(true);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-        // Process Kingdomly response
+    fetchData();
+  }, []);
+
+  // Simplified vote data integration
+  useEffect(() => {
         if (
           kingdomlyResponse.status === "fulfilled" &&
           kingdomlyResponse.value.ok
