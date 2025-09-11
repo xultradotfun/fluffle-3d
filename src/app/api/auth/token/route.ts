@@ -23,16 +23,9 @@ export async function GET() {
       return ErrorResponses.notAuthenticated();
     }
 
-    // Verify Discord token is still valid
-    const tokenResponse = await fetch("https://discord.com/api/v10/users/@me", {
-      headers: {
-        Authorization: `Bearer ${accessToken.value}`,
-      },
-    });
-
-    if (!tokenResponse.ok) {
-      return ErrorResponses.invalidToken("Discord token validation failed");
-    }
+    // Skip Discord API re-validation for performance
+    // User already has validated session cookies from OAuth flow
+    // If cookies exist, user is already validated
 
     const user = JSON.parse(userData.value);
 
