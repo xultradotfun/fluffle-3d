@@ -37,6 +37,7 @@ interface TestnetMint {
     upvotes: number;
     downvotes: number;
     userVote: string | null;
+    breakdown: Record<string, { up: number; down: number }>;
   };
 }
 
@@ -72,13 +73,17 @@ export function TestnetMintsList() {
             matchingProject = votesData.projects?.find(
               (p: any) =>
                 p.twitter === mint.twitter ||
-                p.twitter === mint.twitter.replace("@", "")
+                (mint.twitter && p.twitter === mint.twitter.replace("@", ""))
             );
           }
 
           // If no direct match, try ecosystem data matching
           if (!matchingProject && mint.name) {
-            const alias = findMatchingAlias(mint.name);
+            const alias = findMatchingAlias({
+              name: mint.name,
+              twitter: mint.twitter,
+              description: mint.description || "",
+            });
             if (alias) {
               matchingProject = votesData.projects?.find(
                 (p: any) => p.twitter === alias

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
 import { apiClient, API_ENDPOINTS } from "@/lib/api";
+import { useBingoConfig } from "@/hooks/useBingoConfig";
 import { BingoCard } from "./BingoCard";
 import { Trophy, Smartphone, LogOut } from "lucide-react";
 import ecosystemData from "@/data/ecosystem.json";
@@ -9,6 +10,7 @@ import type { BingoTask, Project } from "@/types/bingo";
 
 export function BingoView() {
   const { user, login, logout } = useDiscordAuth();
+  const { bingoConfig, configLoading, configError } = useBingoConfig();
   const [completedTaskIds, setCompletedTaskIds] = useState<string[]>([]);
   const [isMobile, setIsMobile] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -16,8 +18,6 @@ export function BingoView() {
   const [guestName, setGuestName] = useState<string>("");
   const [showGuestInput, setShowGuestInput] = useState(false);
   const [tempGuestName, setTempGuestName] = useState("");
-  const [bingoConfig, setBingoConfig] = useState<any>(null);
-  const [configLoading, setConfigLoading] = useState(true);
 
   const handleLogin = () => {
     login("/#bingo");
@@ -43,22 +43,7 @@ export function BingoView() {
     setCompletedTaskIds([]);
   };
 
-  // Load bingo configuration from API
-  useEffect(() => {
-    const loadBingoConfig = async () => {
-      try {
-        const config = await apiClient.get(API_ENDPOINTS.BINGO.CONFIG);
-        setBingoConfig(config);
-        setConfigLoading(false);
-      } catch (error) {
-        console.error("Failed to load bingo config:", error);
-        setError("Failed to load bingo configuration");
-        setConfigLoading(false);
-      }
-    };
-
-    loadBingoConfig();
-  }, []);
+  // Config loading is now handled by useBingoConfig hook
 
   // Check for mobile device on mount and window resize
   useEffect(() => {
@@ -167,27 +152,26 @@ export function BingoView() {
 
     try {
       const isCompleted = completedTaskIds.includes(taskId);
-      const response = await fetch("/api/bingo/progress", {
-        method: isCompleted ? "DELETE" : "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ taskId }),
-      });
 
-      if (!response.ok) {
-        // Revert the optimistic update on error
-        setCompletedTaskIds((prevIds) => {
-          if (isCompleted) {
-            return [...prevIds, taskId];
-          } else {
-            return prevIds.filter((id) => id !== taskId);
-          }
-        });
-        const data = await response.json();
-        throw new Error(data.error || "Failed to update progress");
+      if (isCompleted) {
+        // Remove task completion
+        await apiClient.delete(API_ENDPOINTS.BINGO.PROGRESS, { taskId });
+      } else {
+        // Mark task as completed
+        await apiClient.post(API_ENDPOINTS.BINGO.PROGRESS, { taskId });
       }
 
       setError(null);
     } catch (error) {
+      // Revert the optimistic update on error
+      setCompletedTaskIds((prevIds) => {
+        const wasCompleted = completedTaskIds.includes(taskId);
+        if (wasCompleted) {
+          return [...prevIds, taskId]; // Re-add if it was completed
+        } else {
+          return prevIds.filter((id) => id !== taskId); // Remove if it wasn't completed
+        }
+      });
       console.error("Error updating task completion:", error);
       setError("Failed to update progress");
     }

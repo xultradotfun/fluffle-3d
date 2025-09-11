@@ -157,7 +157,7 @@ export const API_ENDPOINTS = {
 
   // Bingo
   BINGO: {
-    CONFIG: "api/bingo/config",
+    CONFIG: "api/bingo/config", // Backend route
     PROGRESS: "api/bingo/progress", // Backend route with JWT
   },
 
