@@ -1,14 +1,11 @@
 import { NextResponse } from "next/server";
 import { getBaseUrl } from "@/utils/baseUrl";
-
-const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID;
-const REDIRECT_URI = `${getBaseUrl()}/api/auth/discord/callback`;
+import { DISCORD_CONFIG } from "@/lib/constants";
+import { ErrorResponses } from "@/lib/errors";
 
 export async function GET(request: Request) {
-  if (!DISCORD_CLIENT_ID) {
-    return new NextResponse("Discord client ID not configured", {
-      status: 500,
-    });
+  if (!DISCORD_CONFIG.CLIENT_ID) {
+    return ErrorResponses.internalError("Discord client ID not configured");
   }
 
   const { searchParams } = new URL(request.url);
@@ -19,8 +16,8 @@ export async function GET(request: Request) {
   const state = JSON.stringify({ random: randomState, returnTo });
 
   const params = new URLSearchParams({
-    client_id: DISCORD_CLIENT_ID,
-    redirect_uri: REDIRECT_URI,
+    client_id: DISCORD_CONFIG.CLIENT_ID,
+    redirect_uri: `${getBaseUrl()}/api/auth/discord/callback`,
     response_type: "code",
     scope: "identify guilds",
     state: state,

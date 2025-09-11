@@ -2,25 +2,19 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { getBaseUrl } from "@/utils/baseUrl";
-
-const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID;
-const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET;
-const REDIRECT_URI = `${getBaseUrl()}/api/auth/discord/callback`;
-const REQUIRED_SERVER_ID = "1219739501673451551";
-const REQUIRED_ROLE_ID = "1227046192316285041";
+import { DISCORD_CONFIG } from "@/lib/constants";
+import { ErrorResponses, logError } from "@/lib/errors";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get("code");
 
   if (!code) {
-    return new NextResponse("No code provided", { status: 400 });
+    return ErrorResponses.invalidInput("No authorization code provided");
   }
 
-  if (!DISCORD_CLIENT_ID || !DISCORD_CLIENT_SECRET) {
-    return new NextResponse("Discord credentials not configured", {
-      status: 500,
-    });
+  if (!DISCORD_CONFIG.CLIENT_ID || !DISCORD_CONFIG.CLIENT_SECRET) {
+    return ErrorResponses.internalError("Discord credentials not configured");
   }
 
   try {
@@ -33,11 +27,11 @@ export async function GET(request: Request) {
         "Content-Type": "application/x-www-form-urlencoded",
       },
       body: new URLSearchParams({
-        client_id: DISCORD_CLIENT_ID,
-        client_secret: DISCORD_CLIENT_SECRET,
+        client_id: DISCORD_CONFIG.CLIENT_ID,
+        client_secret: DISCORD_CONFIG.CLIENT_SECRET,
         grant_type: "authorization_code",
         code: code,
-        redirect_uri: REDIRECT_URI,
+        redirect_uri: `${getBaseUrl()}/api/auth/discord/callback`,
       }).toString(),
     });
 
@@ -87,14 +81,14 @@ export async function GET(request: Request) {
 
     // Check if user is in the required server
     const isInServer = guildsData.some(
-      (guild: any) => guild.id === REQUIRED_SERVER_ID
+      (guild: any) => guild.id === DISCORD_CONFIG.REQUIRED_SERVER_ID
     );
     let hasRequiredRole = false;
 
     if (isInServer) {
       // Get member data for the required server
       const memberResponse = await fetch(
-        `https://discord.com/api/v10/guilds/${REQUIRED_SERVER_ID}/members/${userData.id}`,
+        `https://discord.com/api/v10/guilds/${DISCORD_CONFIG.REQUIRED_SERVER_ID}/members/${userData.id}`,
         {
           headers: {
             Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
@@ -104,7 +98,9 @@ export async function GET(request: Request) {
 
       if (memberResponse.ok) {
         const memberData = await memberResponse.json();
-        hasRequiredRole = memberData.roles.includes(REQUIRED_ROLE_ID);
+        hasRequiredRole = memberData.roles.includes(
+          DISCORD_CONFIG.REQUIRED_ROLE_ID
+        );
         console.log("Role check:", {
           hasRequiredRole,
           roles: memberData.roles,
@@ -150,7 +146,9 @@ export async function GET(request: Request) {
     const response = NextResponse.redirect(new URL(returnTo, request.url));
 
     // Store only relevant guild IDs - secure and space-efficient
-    const relevantGuildIds = isInServer ? [REQUIRED_SERVER_ID] : [];
+    const relevantGuildIds = isInServer
+      ? [DISCORD_CONFIG.REQUIRED_SERVER_ID]
+      : [];
 
     const minimalUserData = {
       id: userData.id,
@@ -209,17 +207,14 @@ export async function GET(request: Request) {
 
     return response;
   } catch (error) {
-    console.error("Discord auth error:", error);
-    return new NextResponse(
-      JSON.stringify({
-        error: error instanceof Error ? error.message : "Authentication failed",
-      }),
-      {
-        status: 500,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    logError(error, "discord-oauth-callback");
+
+    const frontendUrl =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000"
+        : "https://fluffle.tools";
+
+    // Redirect to frontend with error instead of JSON response
+    return NextResponse.redirect(`${frontendUrl}/?auth_error=1`);
   }
 }

@@ -3,16 +3,19 @@
  * Single source of truth for all configuration values
  */
 
-// Discord Configuration
+// Discord Configuration (load env vars once)
 export const DISCORD_CONFIG = {
   REQUIRED_SERVER_ID: "1219739501673451551",
   REQUIRED_ROLE_ID: "1227046192316285041", // MiniETH role
+  CLIENT_ID: process.env.DISCORD_CLIENT_ID || "",
+  CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET || "",
+  BOT_TOKEN: process.env.DISCORD_BOT_TOKEN || "",
 } as const;
 
 // Discord Roles with Hierarchy
 export const DISCORD_ROLES = {
   MINIETH: "1227046192316285041",
-  MEGALEVEL: "1245309734362288138", 
+  MEGALEVEL: "1245309734362288138",
   ORIGINAL_MAFIA: "1254432472180064286",
   FLUFFLE_HOLDER: "1333412653384728728",
   MEGAMIND: "1302317210160861185",
@@ -28,7 +31,11 @@ export const ROLE_TIERS = [
   { id: DISCORD_ROLES.FLUFFLE_HOLDER, name: "Fluffle Holder", weight: 400 },
   { id: DISCORD_ROLES.MEGAMIND, name: "Megamind", weight: 500 },
   { id: DISCORD_ROLES.CHUBBY_BUNNY, name: "Chubby Bunny", weight: 600 },
-  { id: DISCORD_ROLES.BIG_SEQUENCER, name: "Big Sequencer Energy", weight: 700 },
+  {
+    id: DISCORD_ROLES.BIG_SEQUENCER,
+    name: "Big Sequencer Energy",
+    weight: 700,
+  },
 ] as const;
 
 // Rate Limiting Configuration
@@ -51,7 +58,7 @@ export const RATE_LIMITS = {
 export const SECURITY_HEADERS = {
   "Content-Security-Policy": "default-src 'self'",
   "X-Content-Type-Options": "nosniff",
-  "X-Frame-Options": "DENY", 
+  "X-Frame-Options": "DENY",
   "X-XSS-Protection": "1; mode=block",
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
   "Referrer-Policy": "strict-origin-when-cross-origin",
@@ -59,7 +66,8 @@ export const SECURITY_HEADERS = {
 
 // JWT Configuration
 export const JWT_CONFIG = {
-  SECRET: process.env.JWT_SECRET || "fluffle-default-secret-change-in-production",
+  SECRET:
+    process.env.JWT_SECRET || "fluffle-default-secret-change-in-production",
   EXPIRY: 60 * 60, // 1 hour in seconds
 } as const;
 
@@ -113,7 +121,6 @@ export const EXTERNAL_APIS = {
   },
   RARIBLE: {
     TESTNET_URL: "https://testnet-bff.rarible.fun/api/drops/search",
-    API_KEY: "aaa88771-62ce-40d6-b588-e6d9600d60e9",
   },
 } as const;
 
