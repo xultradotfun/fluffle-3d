@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
+import { apiClient, API_ENDPOINTS } from "@/lib/api";
 import { BingoCard } from "./BingoCard";
 import { Trophy, Smartphone, LogOut } from "lucide-react";
-import bingoConfig from "@/data/bingo.json";
 import ecosystemData from "@/data/ecosystem.json";
 import Image from "next/image";
 import type { BingoTask, Project } from "@/types/bingo";
@@ -16,6 +16,8 @@ export function BingoView() {
   const [guestName, setGuestName] = useState<string>("");
   const [showGuestInput, setShowGuestInput] = useState(false);
   const [tempGuestName, setTempGuestName] = useState("");
+  const [bingoConfig, setBingoConfig] = useState<any>(null);
+  const [configLoading, setConfigLoading] = useState(true);
 
   const handleLogin = () => {
     login("/#bingo");
@@ -41,6 +43,23 @@ export function BingoView() {
     setCompletedTaskIds([]);
   };
 
+  // Load bingo configuration from API
+  useEffect(() => {
+    const loadBingoConfig = async () => {
+      try {
+        const config = await apiClient.get(API_ENDPOINTS.BINGO.CONFIG);
+        setBingoConfig(config);
+        setConfigLoading(false);
+      } catch (error) {
+        console.error("Failed to load bingo config:", error);
+        setError("Failed to load bingo configuration");
+        setConfigLoading(false);
+      }
+    };
+
+    loadBingoConfig();
+  }, []);
+
   // Check for mobile device on mount and window resize
   useEffect(() => {
     const checkMobile = () => {
@@ -63,10 +82,8 @@ export function BingoView() {
       }
 
       try {
-        const response = await fetch("/api/bingo/progress");
-        if (!response.ok) throw new Error("Failed to fetch progress");
-
-        const data = await response.json();
+        // Use backend API with JWT authentication
+        const data = await apiClient.get(API_ENDPOINTS.BINGO.PROGRESS);
         // Handle case where user has no completions - data.completedTasks will be an empty array
         setCompletedTaskIds(data.completedTasks.map((t: any) => t.taskId));
         setError(null);
@@ -113,10 +130,11 @@ export function BingoView() {
   }, [completedTaskIds, user]);
 
   // Merge completed state with base tasks
-  const tasks = bingoConfig.tasks.map((task) => ({
-    ...task,
-    completed: completedTaskIds.includes(task.id),
-  }));
+  const tasks =
+    bingoConfig?.tasks?.map((task: any) => ({
+      ...task,
+      completed: completedTaskIds.includes(task.id),
+    })) || [];
 
   // Create a map of Twitter handles to project data for quick lookup
   const projectMap = new Map<string, Project>(
@@ -176,10 +194,16 @@ export function BingoView() {
   };
 
   // Get unique categories and calculate stats
-  const categories = [...new Set(tasks.map((task) => task.category))].sort();
+  const categories = [
+    ...new Set(tasks.map((task: any) => task.category)),
+  ].sort();
   const categoryStats = categories.map((category) => {
-    const categoryTasks = tasks.filter((task) => task.category === category);
-    const completed = categoryTasks.filter((task) => task.completed).length;
+    const categoryTasks = tasks.filter(
+      (task: any) => task.category === category
+    );
+    const completed = categoryTasks.filter(
+      (task: any) => task.completed
+    ).length;
     return {
       category,
       completed,
@@ -206,6 +230,19 @@ export function BingoView() {
           <p className="text-gray-600 dark:text-gray-300">
             The MegaETH Testnet Bingo is optimized for desktop viewing. Please
             visit this page on a desktop device for the best experience.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (configLoading || !bingoConfig) {
+    return (
+      <div className="min-h-[50vh] flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-500 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-300">
+            Loading bingo configuration...
           </p>
         </div>
       </div>

@@ -3,6 +3,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
+import { apiClient, API_ENDPOINTS } from "@/lib/api";
 import { Rabbit, Plus, X } from "lucide-react";
 
 export function EcosystemHeader() {
@@ -18,9 +19,7 @@ export function EcosystemHeader() {
   useEffect(() => {
     const fetchVoteStats = async () => {
       try {
-        const response = await fetch("/api/votes");
-        if (!response.ok) throw new Error("Failed to fetch votes");
-        const data = await response.json();
+        const data = await apiClient.get(API_ENDPOINTS.VOTES.LIST);
 
         setStats({
           totalVotes: data.stats.totalVotes,

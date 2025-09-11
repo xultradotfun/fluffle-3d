@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
+import { apiClient, API_ENDPOINTS } from "@/lib/api";
 import { toast } from "sonner";
 import { ProjectHeader } from "./ProjectHeader";
 import { ProjectLinks } from "./ProjectLinks";
@@ -106,29 +107,13 @@ export function ProjectCard({ project, isLoadingVotes }: ProjectCardProps) {
         setCooldown(false);
       }, 1000);
 
-      const response = await fetch("/api/votes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          twitter: project.twitter,
-          vote,
-          userId: user.id,
-        }),
+      const data = await apiClient.post(API_ENDPOINTS.VOTES.SUBMIT, {
+        twitter: project.twitter,
+        vote,
+        userId: user.id,
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        if (response.status === 429) {
-          throw new Error(
-            "Rate limit reached: You can cast up to 15 votes every 5 minutes. This helps prevent spam and ensures fair voting. Please try again later."
-          );
-        }
-        throw new Error(data.error || "Failed to vote");
-      }
-
+      // Backend now returns the same format as original Next.js API
       setVotes({
         upvotes: data.upvotes,
         downvotes: data.downvotes,
@@ -136,6 +121,7 @@ export function ProjectCard({ project, isLoadingVotes }: ProjectCardProps) {
       });
       setUserVote(data.userVote);
 
+      // Update the project data for other components
       if (project.votes) {
         project.votes.upvotes = data.upvotes;
         project.votes.downvotes = data.downvotes;

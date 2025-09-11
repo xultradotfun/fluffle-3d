@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { TestnetMintCard } from "./TestnetMintCard";
+import { apiClient, API_ENDPOINTS } from "@/lib/api";
 import Image from "next/image";
 import Link from "next/link";
 import ecosystemData from "@/data/ecosystem.json";
@@ -110,20 +111,7 @@ export function TestnetMintsList() {
   useEffect(() => {
     const fetchVotes = async () => {
       try {
-        const response = await fetch("/api/votes", {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-          },
-          cache: "no-store",
-        });
-
-        if (!response.ok) {
-          console.warn("Failed to fetch votes data:", response.status);
-          return;
-        }
-
-        const data = await response.json();
+        const data = await apiClient.get(API_ENDPOINTS.VOTES.LIST);
         if (data.projects && Array.isArray(data.projects)) {
           setVotesData(data.projects);
           console.log("Votes data loaded:", data.projects.length, "projects");
@@ -150,23 +138,21 @@ export function TestnetMintsList() {
 
         // Fetch from both Kingdomly and Rarible APIs
         const [kingdomlyResponse, raribleResponse] = await Promise.allSettled([
-          fetch("/api/proxy-mints", {
+          apiClient.raw(API_ENDPOINTS.PROXY.MINTS, {
             method: "GET",
             headers: {
               Accept: "application/json",
               "Cache-Control": "no-cache",
             },
             cache: "no-store",
-            next: { revalidate: 0 },
           }),
-          fetch("/api/proxy-rarible", {
+          apiClient.raw(API_ENDPOINTS.PROXY.RARIBLE, {
             method: "GET",
             headers: {
               Accept: "application/json",
               "Cache-Control": "no-cache",
             },
             cache: "no-store",
-            next: { revalidate: 0 },
           }),
         ]);
 

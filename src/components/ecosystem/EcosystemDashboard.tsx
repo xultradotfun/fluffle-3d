@@ -7,6 +7,7 @@ import { EcosystemHeader } from "./EcosystemHeader";
 import { FilterControls } from "./FilterControls";
 import { SortSelector } from "./SortSelector";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
+import { apiClient, API_ENDPOINTS } from "@/lib/api";
 
 interface VoteBreakdown {
   [roleName: string]: {
@@ -94,13 +95,7 @@ export function EcosystemDashboard() {
           user?.id || "anonymous"
         );
 
-        const response = await fetch("/api/votes");
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch votes");
-        }
-
-        const votesData = await response.json();
+        const votesData = await apiClient.get(API_ENDPOINTS.VOTES.LIST);
         console.log(
           "Frontend: Received votes data, sample userVote:",
           votesData.projects[0]?.votes?.userVote || "none"
