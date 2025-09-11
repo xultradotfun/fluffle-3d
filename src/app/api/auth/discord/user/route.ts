@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
-
-const REQUIRED_SERVER_ID = "1219739501673451551";
-const REQUIRED_ROLE_ID = "1227046192316285041";
+import { DISCORD_CONFIG } from "@/lib/constants";
+import { validateUserData, validateServerMembership } from "@/lib/validation";
+import { ErrorResponses, logError } from "@/lib/errors";
 
 export const dynamic = "force-dynamic";
 
@@ -30,12 +30,7 @@ export async function GET() {
 
     if (!userData || !accessToken) {
       console.log("Missing required cookies");
-      return new NextResponse(JSON.stringify({ error: "Not authenticated" }), {
-        status: 401,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      return ErrorResponses.notAuthenticated("No authentication cookies found");
     }
 
     const user = JSON.parse(userData.value);
@@ -46,8 +41,8 @@ export async function GET() {
     });
 
     // Verify the data format
-    if (!user.id || !user.username || !Array.isArray(user.guildIds)) {
-      throw new Error("Invalid user data format");
+    if (!validateUserData(user)) {
+      return ErrorResponses.invalidInput("Invalid user data format");
     }
 
     // Get user data from database
@@ -56,16 +51,17 @@ export async function GET() {
     });
 
     // Check if user is in the required server and has the required role
-    const isServerMember = user.guildIds.includes(REQUIRED_SERVER_ID);
-    const hasRequiredRole = dbUser?.roles.includes(REQUIRED_ROLE_ID) ?? false;
+    const isServerMember = validateServerMembership(user.guildIds);
+    const hasRequiredRole =
+      dbUser?.roles.includes(DISCORD_CONFIG.REQUIRED_ROLE_ID) ?? false;
     const canVote = isServerMember && hasRequiredRole;
 
     console.log("Authorization check:", {
       isServerMember,
       hasRequiredRole,
       canVote,
-      requiredServer: REQUIRED_SERVER_ID,
-      requiredRole: REQUIRED_ROLE_ID,
+      requiredServer: DISCORD_CONFIG.REQUIRED_SERVER_ID,
+      requiredRole: DISCORD_CONFIG.REQUIRED_ROLE_ID,
       storedRoles: dbUser?.roles,
     });
 
@@ -75,12 +71,11 @@ export async function GET() {
       roles: dbUser?.roles ?? [],
     });
   } catch (error) {
-    console.error("Error processing user data:", error);
-    return new NextResponse(JSON.stringify({ error: "Invalid user data" }), {
-      status: 500,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    logError(error, "discord-user-check");
+    return ErrorResponses.internalError(
+      error instanceof Error
+        ? error.message
+        : "Failed to check user authentication"
+    );
   }
 }
