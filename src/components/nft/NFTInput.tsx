@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 import { loadNFTModels } from "@/utils/nftLoader";
+import { validateNftIds } from "@/lib/validation";
 import type { NFTTrait } from "@/utils/nftLoader";
 
 interface NFTInputProps {
@@ -25,61 +26,9 @@ export function NFTInput({
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
-  const validateAndParseIds = (
-    input: string
-  ): { validIds: string[]; errors: string[]; duplicates: string[] } => {
-    const ids = input
-      .split(",")
-      .map((id) => id.trim())
-      .filter(Boolean);
-
-    const errors: string[] = [];
-    const validIds: string[] = [];
-    const duplicates: string[] = [];
-    const seenIds = new Set<string>();
-
-    // Check if adding these IDs would exceed the maxNFTs limit
-    if (maxNFTs && loadedIds.length + ids.length > maxNFTs) {
-      errors.push(
-        `You can only load up to ${maxNFTs} NFT${maxNFTs === 1 ? "" : "s"}`
-      );
-      return { validIds, errors, duplicates };
-    }
-
-    ids.forEach((id) => {
-      // Check if it's a valid number
-      const num = parseInt(id);
-      if (isNaN(num)) {
-        errors.push(`"${id}" is not a valid number`);
-        return;
-      }
-
-      // Check range
-      if (num < 0 || num > 4999) {
-        errors.push(
-          `NFT ID ${num} is out of range (must be between 0 and 4999)`
-        );
-        return;
-      }
-
-      // Check for duplicates in current input
-      if (seenIds.has(id)) {
-        duplicates.push(id);
-        return;
-      }
-
-      // Check if NFT is already loaded
-      if (loadedIds.includes(id)) {
-        duplicates.push(id);
-        return;
-      }
-
-      seenIds.add(id);
-      validIds.push(id);
-    });
-
-    return { validIds, errors, duplicates };
-  };
+  // Use centralized validation
+  const validateAndParseIds = (input: string) => 
+    validateNftIds(input, loadedIds, maxNFTs);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;

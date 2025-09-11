@@ -2,13 +2,12 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import jwt from "jsonwebtoken";
+import { DISCORD_CONFIG, JWT_CONFIG } from "@/lib/constants";
+import { validateUserData, validateServerMembership } from "@/lib/validation";
+import { ErrorResponses, logError } from "@/lib/errors";
 
 // Force dynamic rendering for this route
 export const dynamic = "force-dynamic";
-
-const JWT_SECRET =
-  process.env.JWT_SECRET || "fluffle-default-secret-change-in-production";
-const REQUIRED_SERVER_ID = "1219739501673451551";
 
 /**
  * GET /api/auth/token
@@ -21,7 +20,7 @@ export async function GET() {
     const accessToken = cookieStore.get("discord_access_token");
 
     if (!userData || !accessToken) {
-      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+      return ErrorResponses.notAuthenticated();
     }
 
     // Verify Discord token is still valid
@@ -32,25 +31,19 @@ export async function GET() {
     });
 
     if (!tokenResponse.ok) {
-      return NextResponse.json(
-        { error: "Invalid Discord token" },
-        { status: 401 }
-      );
+      return ErrorResponses.invalidToken("Discord token validation failed");
     }
 
     const user = JSON.parse(userData.value);
 
     // Verify user data format
-    if (!user.id || !user.username || !Array.isArray(user.guildIds)) {
-      return NextResponse.json({ error: "Invalid user data" }, { status: 400 });
+    if (!validateUserData(user)) {
+      return ErrorResponses.invalidInput("Invalid user data format");
     }
 
     // Verify server membership
-    if (!user.guildIds.includes(REQUIRED_SERVER_ID)) {
-      return NextResponse.json(
-        { error: "Server membership required" },
-        { status: 403 }
-      );
+    if (!validateServerMembership(user.guildIds)) {
+      return ErrorResponses.serverMembershipRequired();
     }
 
     // Get user from database to get latest roles
@@ -60,18 +53,12 @@ export async function GET() {
     });
 
     if (!dbUser) {
-      return NextResponse.json(
-        { error: "User not found in database" },
-        { status: 404 }
-      );
+      return ErrorResponses.userNotFound();
     }
 
     // Verify username matches to prevent ID spoofing
     if (dbUser.username !== user.username) {
-      return NextResponse.json(
-        { error: "User data mismatch" },
-        { status: 403 }
-      );
+      return ErrorResponses.userDataMismatch();
     }
 
     // Create JWT token with user info
@@ -83,7 +70,7 @@ export async function GET() {
         iat: Math.floor(Date.now() / 1000),
         exp: Math.floor(Date.now() / 1000) + 60 * 60, // 1 hour expiry
       },
-      JWT_SECRET
+      JWT_CONFIG.SECRET
     );
 
     return NextResponse.json({
@@ -95,10 +82,7 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error("Error generating auth token:", error);
-    return NextResponse.json(
-      { error: "Failed to generate auth token" },
-      { status: 500 }
-    );
+    logError(error, "auth-token-generation");
+    return ErrorResponses.internalError("Failed to generate auth token");
   }
 }
