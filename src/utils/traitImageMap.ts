@@ -1,4 +1,5 @@
 import { TraitImageMap, TraitType } from "@/types/traits";
+import { ENV } from "@/lib/constants";
 
 // Map of all available trait images
 export const traitImageMap: TraitImageMap = {
@@ -305,7 +306,7 @@ const CDN_URL = "https://fluffle-traits.b-cdn.net";
 export function getTraitImageUrl(type: TraitType, id: string): string {
   const traitInfo = traitImageMap[type]?.[id];
   if (!traitInfo) {
-    if (process.env.NODE_ENV === "development") {
+    if (ENV.NODE_ENV === "development") {
       console.warn(`No trait found for type ${type} and id ${id}`);
     }
     return "";

@@ -3,17 +3,17 @@
  * Handles both local development and production API endpoints
  */
 
+import { ENV } from "./constants";
+
 // API Base URL Configuration
 const getApiBaseUrl = (): string => {
   // In development, use the backend server
-  if (process.env.NODE_ENV === "development") {
-    return process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+  if (ENV.NODE_ENV === "development") {
+    return ENV.NEXT_PUBLIC_API_URL || "http://localhost:3001";
   }
 
   // In production, use the deployed backend
-  return (
-    process.env.NEXT_PUBLIC_API_URL || "https://your-backend-url.railway.app"
-  );
+  return ENV.NEXT_PUBLIC_API_URL || "https://your-backend-url.railway.app";
 };
 
 export const API_BASE_URL = getApiBaseUrl();

@@ -1,3 +1,5 @@
+import { ENV } from "@/lib/constants";
+
 const ALLOWED_BASE_URLS = [
   "http://localhost:3000",
   "https://fluffle-3d-git-feat-ecosystem-voting-xultra.vercel.app",
@@ -23,7 +25,7 @@ export function getBaseUrl(): string {
   }
 
   // For development, default to localhost
-  if (process.env.NODE_ENV === "development") {
+  if (ENV.NODE_ENV === "development") {
     return "http://localhost:3000";
   }
 
@@ -48,4 +50,17 @@ export function isAllowedBaseUrl(url: string): boolean {
 export function getApiUrl(path: string): string {
   const baseUrl = getBaseUrl();
   return `${baseUrl}/api${path}`;
+}
+
+/**
+ * Gets allowed CORS origins based on environment
+ */
+export function getCorsOrigins(): string[] {
+  const origins = ENV.NEXT_PUBLIC_API_URL?.split(",") || [];
+
+  if (ENV.NODE_ENV === "development") {
+    origins.push("http://localhost:3000", "http://localhost:3001");
+  }
+
+  return [...new Set(origins)]; // Remove duplicates
 }

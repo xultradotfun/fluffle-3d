@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { getBaseUrl } from "@/utils/baseUrl";
-import { DISCORD_CONFIG } from "@/lib/constants";
+import { DISCORD_CONFIG, ENV } from "@/lib/constants";
 import { ErrorResponses, logError } from "@/lib/errors";
 
 export async function GET(request: Request) {
@@ -91,7 +91,7 @@ export async function GET(request: Request) {
         `https://discord.com/api/v10/guilds/${DISCORD_CONFIG.REQUIRED_SERVER_ID}/members/${userData.id}`,
         {
           headers: {
-            Authorization: `Bot ${process.env.DISCORD_BOT_TOKEN}`,
+            Authorization: `Bot ${DISCORD_CONFIG.BOT_TOKEN}`,
           },
         }
       );
@@ -160,7 +160,7 @@ export async function GET(request: Request) {
     };
 
     // Set cookies with minimal data - environment-aware security settings
-    const isProduction = process.env.NODE_ENV === "production";
+    const isProduction = ENV.NODE_ENV === "production";
     const baseUrl = getBaseUrl();
     const isHttps = baseUrl.startsWith("https://");
 
@@ -210,7 +210,7 @@ export async function GET(request: Request) {
     logError(error, "discord-oauth-callback");
 
     const frontendUrl =
-      process.env.NODE_ENV === "development"
+      ENV.NODE_ENV === "development"
         ? "http://localhost:3000"
         : "https://fluffle.tools";
 
