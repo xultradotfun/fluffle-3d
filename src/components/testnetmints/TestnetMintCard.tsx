@@ -5,17 +5,12 @@ import { Card } from "@/components/ui/Card";
 import { cn } from "@/lib/utils";
 import { useEffect, useState, useMemo, useRef } from "react";
 import { createPortal } from "react-dom";
-
-// Helper function to format dates
-const formatDate = (date: Date): string => {
-  return new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  }).format(date);
-};
+import {
+  formatDate,
+  isAnimatedImage,
+  isVideo,
+  calculateTimeLeft,
+} from "@/utils/mediaHelpers";
 
 interface MintGroup {
   name: string;
@@ -252,22 +247,7 @@ const VoteBreakdownTooltip = ({
   );
 };
 
-// Add a helper function to check if URL is for animated content
-const isAnimatedImage = (url: string): boolean => {
-  const ext = url.split(".").pop()?.toLowerCase();
-  return ext === "gif" || ext === "webp";
-};
-
-// Add a helper function to check if URL is for video content
-const isVideo = (url: string, mediaType?: string): boolean => {
-  // If mediaType is explicitly set, use that
-  if (mediaType === "video") return true;
-  if (mediaType === "image") return false;
-
-  // For non-IPFS URLs, check extension
-  const ext = url.split(".").pop()?.toLowerCase();
-  return ext === "mp4" || ext === "webm" || ext === "mov";
-};
+// Helper functions now imported from @/utils/mediaHelpers
 
 // Add a MediaDisplay component to handle different media types
 const MediaDisplay = ({
@@ -521,32 +501,13 @@ export function TestnetMintCard({
     }
   }, [isSoldOut, isMintLive]);
 
-  // Calculate time until mint
+  // Calculate time until mint using extracted utility
   useEffect(() => {
     if (mintTimestamp * 1000 <= Date.now()) return;
 
-    const calculateTimeLeft = () => {
-      const difference = mintTimestamp * 1000 - Date.now();
-      if (difference <= 0) {
-        return {
-          days: 0,
-          hours: 0,
-          minutes: 0,
-          seconds: 0,
-        };
-      }
-
-      return {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      };
-    };
-
-    setTimeLeft(calculateTimeLeft());
+    setTimeLeft(calculateTimeLeft(mintTimestamp));
     const timer = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
+      setTimeLeft(calculateTimeLeft(mintTimestamp));
     }, 1000);
 
     return () => clearInterval(timer);
