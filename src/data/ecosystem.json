@@ -250,6 +250,8 @@
       "name": "Mega Buddies",
       "twitter": "mega_buddies",
       "description": "NFT collection",
+      "website": "https://megabuddies.fun",
+      "telegram": "https://t.me/megabuddies",
       "category": "NFT",
       "megaMafia": false,
       "native": true,
