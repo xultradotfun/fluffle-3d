@@ -1540,6 +1540,56 @@
       "megaMafia": false,
       "native": true,
       "testnet": false
+    },
+    {
+      "name": "Legend",
+      "twitter": "legenddottrade",
+      "website": "https://legend.trade",
+      "description": "Become Legend in the Arena",
+      "category": "DeFi",
+      "megaMafia": true,
+      "native": true,
+      "testnet": false
+    },
+    {
+      "name": "Ubitel",
+      "twitter": "ubi_tel",
+      "website": "https://ubi.tel",
+      "description": "Decentralized mobile internet",
+      "category": "DePin",
+      "megaMafia": true,
+      "native": true,
+      "testnet": false
+    },
+    {
+      "name": "Blitzo",
+      "twitter": "blitzo_xyz",
+      "website": "https://blitzo.xyz",
+      "description": "Gamified payments app",
+      "category": "Payments",
+      "megaMafia": true,
+      "native": true,
+      "testnet": false
+    },
+    {
+      "name": "Cilium",
+      "twitter": "Cilium_xyz",
+      "website": "https://cilium.xyz",
+      "description": "Real-time motion graph for the future of movement",
+      "category": "DePin",
+      "megaMafia": true,
+      "native": true,
+      "testnet": false
+    },
+    {
+      "name": "Dorado",
+      "twitter": "CasinoDorado",
+      "website": "https://dorado.casino",
+      "description": "Trust the code. Be the house.",
+      "category": "GambleFi",
+      "megaMafia": true,
+      "native": true,
+      "testnet": false
     }
   ]
 }
