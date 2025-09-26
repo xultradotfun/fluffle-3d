@@ -1552,6 +1552,15 @@
       "megaMafia": true,
       "native": true,
       "testnet": false
+    },
+    {
+      "name": "Blobz",
+      "twitter": "MegaBlobz",
+      "description": "NFT Collection",
+      "category": "NFT",
+      "megaMafia": false,
+      "native": true,
+      "testnet": false
     }
   ]
 }
