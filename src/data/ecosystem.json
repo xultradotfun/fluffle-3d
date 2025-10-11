@@ -1561,6 +1561,51 @@
       "megaMafia": false,
       "native": true,
       "testnet": false
+    },
+    {
+      "name": "Rocket",
+      "twitter": "userocket_app",
+      "description": "Call any price. Win from any move.",
+      "category": "DeFi",
+      "megaMafia": true,
+      "native": true,
+      "testnet": false
+    },
+    {
+      "name": "Brix",
+      "twitter": "brix_money",
+      "description": "Emerging capital markets",
+      "category": "DeFi",
+      "megaMafia": true,
+      "native": true,
+      "testnet": false
+    },
+    {
+      "name": "Benchmark",
+      "twitter": "BenchmarkFi",
+      "description": "Credit layer for real‑time markets",
+      "category": "DeFi",
+      "megaMafia": true,
+      "native": true,
+      "testnet": false
+    },
+    {
+      "name": "Kumbaya",
+      "twitter": "kumbaya_xyz",
+      "description": "Cult formation venue",
+      "category": "SocialFi",
+      "megaMafia": true,
+      "native": true,
+      "testnet": false
+    },
+    {
+      "name": "Stomp",
+      "twitter": "stompdotgg",
+      "description": "Build your team and battle it out",
+      "category": "Gaming",
+      "megaMafia": true,
+      "native": true,
+      "testnet": false
     }
   ]
 }
