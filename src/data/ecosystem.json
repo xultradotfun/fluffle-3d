@@ -9,7 +9,8 @@
       "category": "DeFi",
       "megaMafia": true,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "AWE",
@@ -21,7 +22,8 @@
       "megaMafia": true,
       "native": true,
       "live": true,
-      "guide": true
+      "guide": true,
+      "img": ""
     },
     {
       "name": "Sweep",
@@ -32,7 +34,8 @@
       "category": "Gaming",
       "megaMafia": true,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Avon",
@@ -42,7 +45,8 @@
       "category": "DeFi",
       "megaMafia": true,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Funes",
@@ -52,7 +56,8 @@
       "category": "Infrastructure",
       "megaMafia": true,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "NectarAI",
@@ -64,7 +69,8 @@
       "megaMafia": true,
       "native": true,
       "live": true,
-      "guide": true
+      "guide": true,
+      "img": ""
     },
     {
       "name": "Lemonade",
@@ -75,7 +81,8 @@
       "megaMafia": true,
       "native": true,
       "live": true,
-      "guide": true
+      "guide": true,
+      "img": ""
     },
     {
       "name": "Hop Network",
@@ -86,7 +93,8 @@
       "category": "Infrastructure",
       "megaMafia": true,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Noise",
@@ -97,7 +105,8 @@
       "megaMafia": true,
       "native": true,
       "live": true,
-      "guide": true
+      "guide": true,
+      "img": ""
     },
     {
       "name": "Showdown",
@@ -109,7 +118,8 @@
       "megaMafia": true,
       "native": true,
       "live": true,
-      "guide": true
+      "guide": true,
+      "img": ""
     },
     {
       "name": "Pump Party",
@@ -119,7 +129,8 @@
       "category": "Gaming",
       "megaMafia": true,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Valhalla",
@@ -131,7 +142,8 @@
       "megaMafia": true,
       "native": true,
       "live": true,
-      "guide": true
+      "guide": true,
+      "img": ""
     },
     {
       "name": "GTE",
@@ -143,7 +155,8 @@
       "megaMafia": false,
       "native": true,
       "live": true,
-      "guide": true
+      "guide": true,
+      "img": ""
     },
     {
       "name": "cap",
@@ -156,7 +169,8 @@
       "megaMafia": true,
       "native": true,
       "live": true,
-      "guide": true
+      "guide": true,
+      "img": ""
     },
     {
       "name": "WCM",
@@ -168,7 +182,8 @@
       "megaMafia": true,
       "native": true,
       "live": true,
-      "guide": false
+      "guide": false,
+      "img": ""
     },
     {
       "name": "Alien Rabbits",
@@ -177,7 +192,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Biomes",
@@ -188,7 +204,8 @@
       "category": "Gaming",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Bright Union",
@@ -200,7 +217,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Bronto",
@@ -211,7 +229,8 @@
       "megaMafia": false,
       "native": true,
       "live": true,
-      "guide": true
+      "guide": true,
+      "img": ""
     },
     {
       "name": "ComLayer",
@@ -221,7 +240,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Kingdomly",
@@ -232,7 +252,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "Kontos Protocol",
@@ -244,7 +265,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Mega Buddies",
@@ -255,7 +277,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Mega Cheetah",
@@ -265,7 +288,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "MegaBot",
@@ -274,7 +298,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "MegaDex Labs",
@@ -284,7 +309,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "MegaFrog",
@@ -293,7 +319,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "MegaHub",
@@ -303,7 +330,8 @@
       "category": "Community",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "MegaPunks",
@@ -312,7 +340,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "MegaRabbits",
@@ -322,7 +351,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Megaton",
@@ -331,7 +361,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Mekaeth",
@@ -340,7 +371,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Paw",
@@ -349,7 +381,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Rabbit Mafia",
@@ -358,7 +391,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "RainMakr",
@@ -368,7 +402,8 @@
       "megaMafia": false,
       "native": true,
       "live": true,
-      "guide": true
+      "guide": true,
+      "img": ""
     },
     {
       "name": "Ren",
@@ -379,7 +414,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "StakeStone",
@@ -391,7 +427,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "StackUp",
@@ -400,7 +437,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Battlefold",
@@ -410,7 +448,8 @@
       "category": "Gaming",
       "megaMafia": false,
       "native": true,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "R2",
@@ -422,7 +461,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Dx Protocol",
@@ -432,7 +472,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Digit Rabbits",
@@ -441,7 +482,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Mega Babe",
@@ -450,7 +492,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Mega Names",
@@ -459,7 +502,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "MAI",
@@ -469,7 +513,8 @@
       "category": "AI",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Chainbills",
@@ -480,7 +525,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Stryke",
@@ -492,7 +538,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "3700 (Eternal AI)",
@@ -502,7 +549,8 @@
       "category": "AI",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Shogun",
@@ -514,7 +562,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Magpie Protocol",
@@ -526,7 +575,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Ajna",
@@ -537,7 +587,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "tBTC",
@@ -549,7 +600,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Yelay",
@@ -560,7 +612,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "PERQ",
@@ -572,7 +625,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Wysdom",
@@ -582,7 +636,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Orange Finance",
@@ -593,7 +648,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Blockend",
@@ -603,7 +659,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "XR One",
@@ -615,7 +672,8 @@
       "category": "Gaming",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Jones DAO",
@@ -626,7 +684,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Lanca",
@@ -637,7 +696,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Mellow",
@@ -648,7 +708,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "PistachioFi",
@@ -660,7 +721,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Gearbox Protocol",
@@ -672,7 +734,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "Kaiju Finance",
@@ -683,7 +746,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Sirio",
@@ -696,7 +760,8 @@
       "megaMafia": false,
       "native": false,
       "live": true,
-      "guide": true
+      "guide": true,
+      "img": ""
     },
     {
       "name": "Zeru",
@@ -708,7 +773,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Jackpot",
@@ -717,7 +783,8 @@
       "category": "Gaming",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Summerstone",
@@ -727,7 +794,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Rarible",
@@ -737,7 +805,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "XL",
@@ -748,7 +817,8 @@
       "megaMafia": false,
       "native": false,
       "live": true,
-      "guide": true
+      "guide": true,
+      "img": ""
     },
     {
       "name": "Fluffle Tools xultra.fun",
@@ -758,7 +828,8 @@
       "category": "Community",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Stork",
@@ -769,7 +840,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "MegaETH Times",
@@ -779,7 +851,8 @@
       "category": "Community",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "ShinyEX",
@@ -790,7 +863,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Hyperfy",
@@ -801,7 +875,8 @@
       "category": "Gaming",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Meganacci",
@@ -810,7 +885,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Covenant",
@@ -821,7 +897,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Guess.best",
@@ -833,7 +910,8 @@
       "megaMafia": false,
       "native": false,
       "live": true,
-      "guide": true
+      "guide": true,
+      "img": ""
     },
     {
       "name": "games.fun",
@@ -843,7 +921,8 @@
       "category": "Gaming",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Bebop",
@@ -855,7 +934,8 @@
       "megaMafia": false,
       "native": false,
       "live": true,
-      "guide": true
+      "guide": true,
+      "img": ""
     },
     {
       "name": "Mega Docs",
@@ -865,7 +945,8 @@
       "category": "Community",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "NFTs2Me",
@@ -877,7 +958,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Gasyard",
@@ -888,7 +970,8 @@
       "megaMafia": false,
       "native": false,
       "live": true,
-      "guide": true
+      "guide": true,
+      "img": ""
     },
     {
       "name": "ITS",
@@ -900,7 +983,8 @@
       "megaMafia": false,
       "native": true,
       "live": false,
-      "guide": true
+      "guide": true,
+      "img": ""
     },
     {
       "name": "Bolt",
@@ -909,7 +993,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "ZNS Connect",
@@ -921,7 +1006,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Gasp",
@@ -933,7 +1019,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Bad Bunnz",
@@ -942,7 +1029,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "RedStone",
@@ -954,7 +1042,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "AikaVerse",
@@ -965,7 +1054,8 @@
       "category": "AI",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Blocksense Network",
@@ -977,7 +1067,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Gelato",
@@ -989,7 +1080,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "Caddy Finance",
@@ -1001,7 +1093,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Canary Protocol",
@@ -1011,7 +1104,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Curve",
@@ -1023,7 +1117,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "Cyclo",
@@ -1034,7 +1129,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Mach Exchange",
@@ -1046,7 +1142,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "Orbiter Finance",
@@ -1057,7 +1154,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "Pike Finance",
@@ -1069,7 +1167,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Poster",
@@ -1079,7 +1178,8 @@
       "category": "Gaming",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Rubic",
@@ -1091,7 +1191,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Tokenops",
@@ -1101,7 +1202,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "Wasabi",
@@ -1113,7 +1215,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Zapper",
@@ -1125,7 +1228,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Zyfai",
@@ -1137,7 +1241,8 @@
       "category": "AI",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Megalio Civilization",
@@ -1146,7 +1251,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Koan",
@@ -1156,7 +1262,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "Enjoyooors",
@@ -1167,7 +1274,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "ENVIO",
@@ -1179,7 +1287,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Euclid Protocol",
@@ -1190,7 +1299,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Tapout",
@@ -1201,7 +1311,8 @@
       "category": "Gaming",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "BunniesAI",
@@ -1211,7 +1322,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "hunch",
@@ -1221,7 +1333,8 @@
       "category": "Secret",
       "megaMafia": true,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "MegaHeroes",
@@ -1232,7 +1345,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "MegaRafia",
@@ -1241,7 +1355,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "barry",
@@ -1250,7 +1365,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "MTRKR (MegaTracker)",
@@ -1260,7 +1376,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": true,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "MegaEth Dogs",
@@ -1270,7 +1387,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Pebbles",
@@ -1281,7 +1399,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Dynamic",
@@ -1291,7 +1410,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "Pimlico",
@@ -1301,7 +1421,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "Privy",
@@ -1311,7 +1432,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "ZeroDev",
@@ -1321,7 +1443,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "Thirdweb",
@@ -1331,7 +1454,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "Fufuture",
@@ -1341,7 +1465,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "Reown",
@@ -1351,7 +1476,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Etherspot",
@@ -1361,7 +1487,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Hyperlane",
@@ -1371,7 +1498,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "Nunchi",
@@ -1381,7 +1509,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Clique",
@@ -1391,7 +1520,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Delegate",
@@ -1401,7 +1531,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "Mynt",
@@ -1411,7 +1542,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "Haifu",
@@ -1421,7 +1553,8 @@
       "category": "AI",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "Standard Protocol",
@@ -1431,7 +1564,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "Fjord Foundry",
@@ -1441,7 +1575,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "Reland Network",
@@ -1451,7 +1586,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Layerhub",
@@ -1461,7 +1597,8 @@
       "category": "Infrastructure",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "TopStrike",
@@ -1471,7 +1608,8 @@
       "category": "Gaming",
       "megaMafia": false,
       "native": false,
-      "live": true
+      "live": true,
+      "img": ""
     },
     {
       "name": "multipli.fi",
@@ -1481,7 +1619,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": false,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Voistra",
@@ -1491,7 +1630,8 @@
       "category": "DeFi",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "ApeKult",
@@ -1501,7 +1641,8 @@
       "category": "SocialFi",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Legend",
@@ -1511,7 +1652,8 @@
       "category": "DeFi",
       "megaMafia": true,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Ubitel",
@@ -1521,7 +1663,8 @@
       "category": "DePin",
       "megaMafia": true,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Blitzo",
@@ -1531,7 +1674,8 @@
       "category": "Payments",
       "megaMafia": true,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Cilium",
@@ -1541,7 +1685,8 @@
       "category": "DePin",
       "megaMafia": true,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Dorado",
@@ -1551,7 +1696,8 @@
       "category": "GambleFi",
       "megaMafia": true,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Blobz",
@@ -1560,7 +1706,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Rocket",
@@ -1570,7 +1717,8 @@
       "category": "DeFi",
       "megaMafia": true,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Brix",
@@ -1581,7 +1729,8 @@
       "category": "DeFi",
       "megaMafia": true,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Benchmark",
@@ -1591,7 +1740,8 @@
       "category": "DeFi",
       "megaMafia": true,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Kumbaya",
@@ -1601,7 +1751,8 @@
       "category": "SocialFi",
       "megaMafia": true,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Stomp",
@@ -1611,7 +1762,8 @@
       "category": "Gaming",
       "megaMafia": true,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Void.Eth",
@@ -1620,7 +1772,8 @@
       "category": "Gaming",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     },
     {
       "name": "Glitchy Bunnies",
@@ -1629,7 +1782,8 @@
       "category": "NFT",
       "megaMafia": false,
       "native": true,
-      "live": false
+      "live": false,
+      "img": ""
     }
   ]
 }

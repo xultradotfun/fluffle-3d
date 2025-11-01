@@ -143,7 +143,9 @@ function ProjectCardComponent({
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
-                backgroundImage: `url(/avatars/${project.twitter}.jpg)`,
+                backgroundImage: `url(${
+                  project.img || `/avatars/${project.twitter}.jpg`
+                })`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
@@ -168,6 +170,7 @@ function ProjectCardComponent({
                 category={project.category}
                 megaMafia={project.megaMafia}
                 live={project.live}
+                img={project.img}
               />
 
               <p className="text-sm font-bold uppercase mb-6 flex-grow leading-snug text-white">

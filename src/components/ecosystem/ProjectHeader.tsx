@@ -8,6 +8,7 @@ interface ProjectHeaderProps {
   category: string;
   megaMafia: boolean;
   live: boolean;
+  img?: string;
 }
 
 function ProjectHeaderComponent({
@@ -16,13 +17,14 @@ function ProjectHeaderComponent({
   category,
   megaMafia,
   live,
+  img,
 }: ProjectHeaderProps) {
   return (
     <div className="flex items-start gap-4 mb-6">
       {/* Logo */}
       <div className="w-16 h-16 flex-shrink-0 border-3 border-white bg-[#e0e0e0]">
         <Image
-          src={`/avatars/${twitter}.jpg`}
+          src={img || `/avatars/${twitter}.jpg`}
           alt={`${name} Logo`}
           width={64}
           height={64}

@@ -24,6 +24,7 @@ export interface Project {
   native: boolean;
   live: boolean;
   guide?: boolean;
+  img?: string;
   votes?: ProjectVotes;
   originalIndex?: number; // For sorting by latest added
 }
