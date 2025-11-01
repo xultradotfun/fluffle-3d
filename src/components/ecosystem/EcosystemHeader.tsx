@@ -30,21 +30,44 @@ export function EcosystemHeader() {
 
   return (
     <div className="space-y-6">
-      {/* Main Header - outer div has clip-path and black bg, inner has gray bg */}
-      <div style={{ clipPath: clipMain }}>
-        <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
-          <div className="bg-[#e0e0e0] p-8" style={{ clipPath: clipMain }}>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-3 h-8 bg-foreground" />
-              <h2 className="text-4xl sm:text-5xl font-black uppercase leading-none pt-2">
-                MEGAETH ECOSYSTEM
-              </h2>
-            </div>
-            <p className="text-base font-bold uppercase max-w-3xl ml-[calc(0.75rem+12px)]">
-              DISCOVER AND VOTE ON PROJECTS BUILDING ON{" "}
-              <span className="bg-pink text-foreground px-2 py-1">MEGAETH</span>
-            </p>
+      {/* Main Header with Video Background */}
+      <div
+        className="relative overflow-hidden"
+        style={{
+          clipPath:
+            "polygon(24px 0, calc(100% - 48px) 0, 100% 48px, 100% 100%, 0 100%, 0 24px)",
+        }}
+      >
+        {/* Video Background */}
+        <video
+          loop
+          muted
+          autoPlay
+          playsInline
+          className="absolute top-0 right-0 w-full h-full object-cover"
+          poster="/ui/oversubscription.webp"
+        >
+          <source src="/ui/oversubscription.mp4" type="video/mp4" />
+        </video>
+
+        {/* Dark Overlay */}
+        <div
+          className="absolute top-0 right-0 w-full h-full"
+          style={{ backgroundColor: "rgba(25, 25, 26, 0.5)" }}
+        />
+
+        {/* Content */}
+        <div className="relative p-8" style={{ color: "#fff" }}>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-3 h-8" style={{ backgroundColor: "#fff" }} />
+            <h2 className="text-4xl sm:text-5xl font-black uppercase leading-none pt-2">
+              ECOSYSTEM
+            </h2>
           </div>
+          <p className="text-base font-bold uppercase max-w-3xl ml-[calc(0.75rem+12px)]">
+            DISCOVER AND VOTE ON PROJECTS BUILDING ON{" "}
+            <span className="bg-pink text-foreground px-2 py-1">MEGAETH</span>
+          </p>
         </div>
       </div>
 
