@@ -20,7 +20,7 @@ function ProjectHeaderComponent({
   return (
     <div className="flex items-start gap-4 mb-6">
       {/* Logo */}
-      <div className="w-16 h-16 flex-shrink-0 border-3 border-foreground bg-[#e0e0e0]">
+      <div className="w-16 h-16 flex-shrink-0 border-3 border-white bg-[#e0e0e0]">
         <Image
           src={`/avatars/${twitter}.jpg`}
           alt={`${name} Logo`}
@@ -35,11 +35,11 @@ function ProjectHeaderComponent({
       {/* Name and Badges */}
       <div className="flex-1 min-w-0">
         <div className="flex flex-wrap items-center gap-2 mb-3">
-          <h3 className="text-2xl font-black uppercase truncate">
+          <h3 className="text-2xl font-black uppercase truncate text-white">
             {name}
           </h3>
           {megaMafia && (
-            <div className="w-6 h-6 border-2 border-foreground bg-pink flex items-center justify-center">
+            <div className="w-6 h-6 border-2 border-white bg-pink flex items-center justify-center">
               <Image
                 src="/icons/logo-02.png"
                 alt="MegaMafia"
@@ -52,20 +52,20 @@ function ProjectHeaderComponent({
             </div>
           )}
           {testnet && (
-            <div className="w-6 h-6 border-2 border-foreground bg-green flex items-center justify-center">
+            <div className="w-6 h-6 border-2 border-white bg-green flex items-center justify-center">
               <FlaskConical className="w-4 h-4 text-background" strokeWidth={3} />
             </div>
           )}
         </div>
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="inline-flex items-center px-2 py-1 border-2 border-foreground bg-foreground text-background text-xs font-black uppercase">
+          <span className="inline-flex items-center px-2 py-1 border-2 border-white bg-foreground text-white text-xs font-black uppercase">
             {category}
           </span>
           <a
             href={`https://x.com/${twitter}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 px-2 py-1 border-2 border-foreground bg-[#e0e0e0] hover:bg-pink text-xs font-bold uppercase"
+            className="inline-flex items-center gap-1 px-2 py-1 border-2 border-white bg-transparent hover:bg-pink text-white text-xs font-bold uppercase"
           >
             <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
               <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
