@@ -1,20 +1,14 @@
 import { cn } from "@/lib/utils";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { ROLE_TIERS } from "@/lib/constants";
-import { useState } from "react";
-
-interface VoteBreakdown {
-  [roleName: string]: {
-    up: number;
-    down: number;
-  };
-}
+import { useState, memo, useMemo } from "react";
+import type { VoteBreakdown } from "@/types/ecosystem";
 
 interface ProjectVotingProps {
   votes: {
     upvotes: number;
     downvotes: number;
-    breakdown?: Record<string, { up: number; down: number }>;
+    breakdown?: VoteBreakdown;
   };
   userVote: "up" | "down" | null;
   isVoting: boolean;
@@ -23,7 +17,7 @@ interface ProjectVotingProps {
   onVote: (vote: "up" | "down") => void;
 }
 
-export function ProjectVoting({
+function ProjectVotingComponent({
   votes,
   userVote,
   isVoting,
@@ -33,7 +27,7 @@ export function ProjectVoting({
 }: ProjectVotingProps) {
   const [isMobileTooltipOpen, setIsMobileTooltipOpen] = useState(false);
 
-  const getFilteredVoteCounts = () => {
+  const filteredVotes = useMemo(() => {
     if (!votes.breakdown) {
       return {
         upvotes: votes.upvotes || 0,
@@ -46,9 +40,7 @@ export function ProjectVoting({
       upvotes: votes.upvotes,
       downvotes: votes.downvotes,
     };
-  };
-
-  const filteredVotes = getFilteredVoteCounts();
+  }, [votes]);
 
   const getVoteBreakdownText = (voteType: "up" | "down") => {
     if (!votes.breakdown)
@@ -359,3 +351,5 @@ export function ProjectVoting({
     </div>
   );
 }
+
+export const ProjectVoting = memo(ProjectVotingComponent);

@@ -1,15 +1,15 @@
+import { memo } from "react";
+
 interface ProjectLinksProps {
   website?: string;
   discord?: string;
   telegram?: string;
-  guide?: string;
 }
 
-export function ProjectLinks({
+function ProjectLinksComponent({
   website,
   discord,
   telegram,
-  guide,
 }: ProjectLinksProps) {
   return (
     <div className="flex items-center gap-3">
@@ -70,27 +70,8 @@ export function ProjectLinks({
           </svg>
         </a>
       )}
-      {guide && (
-        <a
-          href={guide}
-          className="flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500/10 to-pink-500/10 dark:from-purple-400/10 dark:to-pink-400/10 shadow-[0_2px_4px_rgba(0,0,0,0.02),0_0_0_1px_rgba(168,85,247,0.1)] dark:shadow-[0_0_0_1px_rgba(168,85,247,0.15)] dark:shadow-purple-400/10 text-purple-500 dark:text-purple-400 hover:text-purple-600 dark:hover:text-purple-300 hover:shadow-[0_4px_8px_rgba(168,85,247,0.15),0_0_0_1px_rgba(168,85,247,0.2)] dark:hover:shadow-[0_4px_8px_rgba(168,85,247,0.2),0_0_0_1px_rgba(168,85,247,0.25)] transition-all duration-200 group"
-          title="View Guide"
-        >
-          <svg
-            className="w-[18px] h-[18px] transition-transform duration-200 group-hover:scale-105"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={1.5}
-              d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-            />
-          </svg>
-        </a>
-      )}
     </div>
   );
 }
+
+export const ProjectLinks = memo(ProjectLinksComponent);

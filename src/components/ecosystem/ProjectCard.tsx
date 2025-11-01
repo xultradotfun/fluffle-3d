@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, memo } from "react";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
 import { apiClient, API_ENDPOINTS } from "@/lib/api";
 import { toast } from "sonner";
@@ -8,39 +8,19 @@ import { ProjectHeader } from "./ProjectHeader";
 import { ProjectLinks } from "./ProjectLinks";
 import { ProjectVoting } from "./ProjectVoting";
 import * as Tooltip from "@radix-ui/react-tooltip";
-
-interface VoteBreakdown {
-  [roleName: string]: {
-    up: number;
-    down: number;
-  };
-}
-
-interface Project {
-  name: string;
-  twitter: string;
-  website?: string;
-  discord?: string;
-  telegram?: string;
-  description: string;
-  category: string;
-  megaMafia: boolean;
-  testnet: boolean;
-  guide?: boolean;
-  votes?: {
-    upvotes: number;
-    downvotes: number;
-    userVote: "up" | "down" | null;
-    breakdown: VoteBreakdown;
-  };
-}
+import type { Project } from "@/types/ecosystem";
 
 interface ProjectCardProps {
   project: Project;
   isLoadingVotes: boolean;
+  onVoteUpdate?: (twitter: string, voteData: any) => void;
 }
 
-export function ProjectCard({ project, isLoadingVotes }: ProjectCardProps) {
+function ProjectCardComponent({ 
+  project, 
+  isLoadingVotes,
+  onVoteUpdate 
+}: ProjectCardProps) {
   const { user, login } = useDiscordAuth();
   const [isVoting, setIsVoting] = useState(false);
   const [cooldown, setCooldown] = useState(false);
@@ -52,10 +32,6 @@ export function ProjectCard({ project, isLoadingVotes }: ProjectCardProps) {
   const [userVote, setUserVote] = useState<"up" | "down" | null>(
     project.votes?.userVote || null
   );
-
-  const guideUrl = project.guide
-    ? `/explore/${project.twitter.toLowerCase()}`
-    : undefined;
 
   useEffect(() => {
     if (project.votes) {
@@ -72,7 +48,7 @@ export function ProjectCard({ project, isLoadingVotes }: ProjectCardProps) {
     }
   }, [project.votes, user]);
 
-  const handleVote = async (vote: "up" | "down") => {
+  const handleVote = useCallback(async (vote: "up" | "down") => {
     if (!user) {
       login();
       return;
@@ -93,12 +69,6 @@ export function ProjectCard({ project, isLoadingVotes }: ProjectCardProps) {
       return;
     }
 
-    const previousVotes = { ...votes };
-    const previousUserVote = userVote;
-    const previousBreakdown = votes.breakdown
-      ? { ...votes.breakdown }
-      : undefined;
-
     try {
       setIsVoting(true);
       setCooldown(true);
@@ -113,7 +83,7 @@ export function ProjectCard({ project, isLoadingVotes }: ProjectCardProps) {
         userId: user.id,
       });
 
-      // Backend now returns the same format as original Next.js API
+      // Update local state
       setVotes({
         upvotes: data.upvotes,
         downvotes: data.downvotes,
@@ -121,12 +91,9 @@ export function ProjectCard({ project, isLoadingVotes }: ProjectCardProps) {
       });
       setUserVote(data.userVote);
 
-      // Update the project data for other components
-      if (project.votes) {
-        project.votes.upvotes = data.upvotes;
-        project.votes.downvotes = data.downvotes;
-        project.votes.userVote = data.userVote;
-        project.votes.breakdown = data.breakdown;
+      // Notify parent component to update the project data
+      if (onVoteUpdate) {
+        onVoteUpdate(project.twitter, data);
       }
     } catch (error) {
       console.error("Failed to vote:", error);
@@ -144,7 +111,7 @@ export function ProjectCard({ project, isLoadingVotes }: ProjectCardProps) {
     } finally {
       setIsVoting(false);
     }
-  };
+  }, [user, login, cooldown, isLoadingVotes, project.twitter, onVoteUpdate]);
 
   return (
     <Tooltip.Provider delayDuration={0} skipDelayDuration={0}>
@@ -176,7 +143,6 @@ export function ProjectCard({ project, isLoadingVotes }: ProjectCardProps) {
                 website={project.website}
                 discord={project.discord}
                 telegram={project.telegram}
-                guide={guideUrl}
               />
             </div>
             <div className="flex-shrink-0 self-end sm:self-auto">
@@ -195,3 +161,5 @@ export function ProjectCard({ project, isLoadingVotes }: ProjectCardProps) {
     </Tooltip.Provider>
   );
 }
+
+export const ProjectCard = memo(ProjectCardComponent);

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { FlaskConical } from "lucide-react";
+import { memo } from "react";
 
 interface ProjectHeaderProps {
   name: string;
@@ -9,7 +10,7 @@ interface ProjectHeaderProps {
   testnet: boolean;
 }
 
-export function ProjectHeader({
+function ProjectHeaderComponent({
   name,
   twitter,
   category,
@@ -91,3 +92,5 @@ export function ProjectHeader({
     </div>
   );
 }
+
+export const ProjectHeader = memo(ProjectHeaderComponent);

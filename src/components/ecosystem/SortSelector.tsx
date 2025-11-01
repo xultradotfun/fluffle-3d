@@ -1,22 +1,17 @@
 import { cn } from "@/lib/utils";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useState } from "react";
+import type { SortMethod, SortType } from "@/types/ecosystem";
 
 interface SortSelectorProps {
-  sortMethod: {
-    type: "alphabetical" | "score" | "latest";
-    direction: "asc" | "desc";
-  };
-  onSortChange: (method: {
-    type: "alphabetical" | "score" | "latest";
-    direction: "asc" | "desc";
-  }) => void;
+  sortMethod: SortMethod;
+  onSortChange: (method: SortMethod) => void;
 }
 
 export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
   const [tooltipOpen, setTooltipOpen] = useState(false);
 
-  const handleSortClick = (type: "alphabetical" | "score" | "latest") => {
+  const handleSortClick = (type: SortType) => {
     if (sortMethod.type === type) {
       // Toggle direction if same type
       onSortChange({

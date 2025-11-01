@@ -2,13 +2,15 @@
 
 import { ViewSwitcher } from "@/components/ViewSwitcher";
 import Hero from "@/components/Hero";
-import { EcosystemDashboard } from "@/components/ecosystem/EcosystemDashboard";
+import { BingoView } from "@/components/bingo/BingoView";
 import { useRouter } from "next/navigation";
 
-export default function Home() {
+export default function BingoPage() {
   const router = useRouter();
 
-  const handleViewChange = (view: "pfp" | "ecosystem" | "builder" | "bingo") => {
+  const handleViewChange = (
+    view: "pfp" | "ecosystem" | "builder" | "bingo"
+  ) => {
     if (view === "pfp") {
       router.push("/pfp");
     } else if (view === "builder") {
@@ -29,17 +31,14 @@ export default function Home() {
       <div className="relative z-20 mb-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center">
-            <ViewSwitcher
-              activeView="ecosystem"
-              onViewChange={handleViewChange}
-            />
+            <ViewSwitcher activeView="bingo" onViewChange={handleViewChange} />
           </div>
         </div>
       </div>
 
       {/* Content Section */}
       <section className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8 py-6 sm:py-12 pb-24">
-        <EcosystemDashboard />
+        <BingoView />
       </section>
     </div>
   );

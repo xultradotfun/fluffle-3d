@@ -1,4 +1,5 @@
 import { FlaskConical } from "lucide-react";
+import type { VoteFilter } from "@/types/ecosystem";
 
 interface FilterControlsProps {
   selectedCategory: string | null;
@@ -11,17 +12,10 @@ interface FilterControlsProps {
   setShowTestnetOnly: (show: boolean) => void;
   showGuideOnly: boolean;
   setShowGuideOnly: (show: boolean) => void;
-  voteFilter: "all" | "voted" | "not_voted";
-  setVoteFilter: (filter: "all" | "voted" | "not_voted") => void;
+  voteFilter: VoteFilter;
+  setVoteFilter: (filter: VoteFilter) => void;
   categories: string[];
-  getCategoryCount: (
-    category: string,
-    megaMafiaOnly?: boolean,
-    nativeOnly?: boolean,
-    testnetOnly?: boolean,
-    showGuideOnly?: boolean,
-    voteFilter?: "all" | "voted" | "not_voted"
-  ) => number;
+  getCategoryCount: (category: string) => number;
   getMegaMafiaCount: () => number;
   getNativeCount: () => number;
   getTestnetCount: () => number;
@@ -312,14 +306,7 @@ export function FilterControls({
                     : "bg-black/5 dark:bg-white/10"
                 }`}
               >
-                {getCategoryCount(
-                  category,
-                  showMegaMafiaOnly,
-                  showNativeOnly,
-                  showTestnetOnly,
-                  showGuideOnly,
-                  voteFilter
-                )}
+                {getCategoryCount(category)}
               </span>
             </div>
           </button>
