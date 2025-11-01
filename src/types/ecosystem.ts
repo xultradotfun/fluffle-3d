@@ -22,7 +22,7 @@ export interface Project {
   category: string;
   megaMafia: boolean;
   native: boolean;
-  testnet: boolean;
+  live: boolean;
   guide?: boolean;
   votes?: ProjectVotes;
   originalIndex?: number; // For sorting by latest added
@@ -42,7 +42,7 @@ export interface ProjectFilters {
   selectedCategory: string | null;
   showMegaMafiaOnly: boolean;
   showNativeOnly: boolean;
-  showTestnetOnly: boolean;
+  showLiveOnly: boolean;
   showGuideOnly: boolean;
   voteFilter: VoteFilter;
 }

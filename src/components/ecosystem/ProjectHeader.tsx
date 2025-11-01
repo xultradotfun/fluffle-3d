@@ -7,7 +7,7 @@ interface ProjectHeaderProps {
   twitter: string;
   category: string;
   megaMafia: boolean;
-  testnet: boolean;
+  live: boolean;
 }
 
 function ProjectHeaderComponent({
@@ -15,7 +15,7 @@ function ProjectHeaderComponent({
   twitter,
   category,
   megaMafia,
-  testnet,
+  live,
 }: ProjectHeaderProps) {
   return (
     <div className="flex items-start gap-4 mb-6">
@@ -51,7 +51,7 @@ function ProjectHeaderComponent({
               />
             </div>
           )}
-          {testnet && (
+          {live && (
             <div className="w-6 h-6 border-2 border-white bg-green flex items-center justify-center">
               <FlaskConical className="w-4 h-4 text-background" strokeWidth={3} />
             </div>

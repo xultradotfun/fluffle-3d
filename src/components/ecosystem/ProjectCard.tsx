@@ -167,7 +167,7 @@ function ProjectCardComponent({
                 twitter={project.twitter}
                 category={project.category}
                 megaMafia={project.megaMafia}
-                testnet={project.testnet}
+                live={project.live}
               />
 
               <p className="text-sm font-bold uppercase mb-6 flex-grow leading-snug text-white">

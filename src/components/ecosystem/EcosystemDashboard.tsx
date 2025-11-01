@@ -58,8 +58,8 @@ export function EcosystemDashboard() {
             setShowMegaMafiaOnly={setShowMegaMafiaOnly}
             showNativeOnly={filters.showNativeOnly}
             setShowNativeOnly={setShowNativeOnly}
-            showTestnetOnly={filters.showTestnetOnly}
-            setShowTestnetOnly={setShowTestnetOnly}
+            showLiveOnly={filters.showLiveOnly}
+            setShowLiveOnly={setShowTestnetOnly}
             showGuideOnly={filters.showGuideOnly}
             setShowGuideOnly={setShowGuideOnly}
             voteFilter={filters.voteFilter}
@@ -68,7 +68,7 @@ export function EcosystemDashboard() {
             getCategoryCount={getCategoryCount}
             getMegaMafiaCount={() => counts.megaMafia}
             getNativeCount={() => counts.native}
-            getTestnetCount={() => counts.testnet}
+            getLiveCount={() => counts.testnet}
             getGuideCount={() => counts.guide}
             getUserVotedCount={() => counts.voted}
             getUserNotVotedCount={() => counts.notVoted}

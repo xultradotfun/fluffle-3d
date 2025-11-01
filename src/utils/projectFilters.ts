@@ -15,7 +15,7 @@ export function filterProjects(
 
     const nativeMatch = filters.showNativeOnly ? project.native : true;
 
-    const testnetMatch = filters.showTestnetOnly ? project.testnet : true;
+    const liveMatch = filters.showLiveOnly ? project.live : true;
 
     const guideMatch = filters.showGuideOnly ? project.guide : true;
 
@@ -29,7 +29,7 @@ export function filterProjects(
       categoryMatch &&
       megaMafiaMatch &&
       nativeMatch &&
-      testnetMatch &&
+      liveMatch &&
       guideMatch &&
       userVoteMatch
     );
@@ -47,7 +47,7 @@ export function getCategoryCount(
       ? project.megaMafia
       : true;
     const nativeMatch = filters.showNativeOnly ? project.native : true;
-    const testnetMatch = filters.showTestnetOnly ? project.testnet : true;
+    const liveMatch = filters.showLiveOnly ? project.live : true;
     const guideMatch = filters.showGuideOnly ? project.guide : true;
     const voteMatch =
       !filters.voteFilter ||
@@ -60,7 +60,7 @@ export function getCategoryCount(
       categoryMatch &&
       megaMafiaMatch &&
       nativeMatch &&
-      testnetMatch &&
+      liveMatch &&
       guideMatch &&
       voteMatch
     );

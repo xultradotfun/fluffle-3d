@@ -8,8 +8,8 @@ interface FilterControlsProps {
   setShowMegaMafiaOnly: (show: boolean) => void;
   showNativeOnly: boolean;
   setShowNativeOnly: (show: boolean) => void;
-  showTestnetOnly: boolean;
-  setShowTestnetOnly: (show: boolean) => void;
+  showLiveOnly: boolean;
+  setShowLiveOnly: (show: boolean) => void;
   showGuideOnly: boolean;
   setShowGuideOnly: (show: boolean) => void;
   voteFilter: VoteFilter;
@@ -18,7 +18,7 @@ interface FilterControlsProps {
   getCategoryCount: (category: string) => number;
   getMegaMafiaCount: () => number;
   getNativeCount: () => number;
-  getTestnetCount: () => number;
+  getLiveCount: () => number;
   getGuideCount: () => number;
   getUserVotedCount: () => number;
   getUserNotVotedCount: () => number;
@@ -32,8 +32,8 @@ export function FilterControls({
   setShowMegaMafiaOnly,
   showNativeOnly,
   setShowNativeOnly,
-  showTestnetOnly,
-  setShowTestnetOnly,
+  showLiveOnly,
+  setShowLiveOnly,
   showGuideOnly,
   setShowGuideOnly,
   voteFilter,
@@ -42,7 +42,7 @@ export function FilterControls({
   getCategoryCount,
   getMegaMafiaCount,
   getNativeCount,
-  getTestnetCount,
+  getLiveCount,
   getGuideCount,
   getUserVotedCount,
   getUserNotVotedCount,
@@ -56,7 +56,7 @@ export function FilterControls({
           onClick={() => {
             setShowMegaMafiaOnly(!showMegaMafiaOnly);
             setShowNativeOnly(false);
-            setShowTestnetOnly(false);
+            setShowLiveOnly(false);
             setShowGuideOnly(false);
           }}
           className={`px-4 py-2 border-3 border-foreground font-bold uppercase text-xs ${
@@ -80,7 +80,7 @@ export function FilterControls({
           onClick={() => {
             setShowNativeOnly(!showNativeOnly);
             setShowMegaMafiaOnly(false);
-            setShowTestnetOnly(false);
+            setShowLiveOnly(false);
             setShowGuideOnly(false);
           }}
           className={`px-4 py-2 border-3 border-foreground font-bold uppercase text-xs ${
@@ -97,21 +97,21 @@ export function FilterControls({
 
         <button
           onClick={() => {
-            setShowTestnetOnly(!showTestnetOnly);
+            setShowLiveOnly(!showLiveOnly);
             setShowMegaMafiaOnly(false);
             setShowNativeOnly(false);
             setShowGuideOnly(false);
           }}
           className={`px-4 py-2 border-3 border-foreground font-bold uppercase text-xs ${
-            showTestnetOnly
+            showLiveOnly
               ? "bg-green text-background"
               : "bg-[#e0e0e0] hover:bg-green hover:text-background"
           }`}
         >
           <div className="flex items-center gap-2">
             <FlaskConical className="w-4 h-4" strokeWidth={3} />
-            <span>TESTNET</span>
-            <span className="font-black font-data">({getTestnetCount()})</span>
+            <span>LIVE</span>
+            <span className="font-black font-data">({getLiveCount()})</span>
           </div>
         </button>
       </div>

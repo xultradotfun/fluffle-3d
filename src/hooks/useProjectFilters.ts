@@ -7,7 +7,7 @@ export function useProjectFilters(projects: Project[]) {
     selectedCategory: null,
     showMegaMafiaOnly: false,
     showNativeOnly: false,
-    showTestnetOnly: false,
+    showLiveOnly: false,
     showGuideOnly: false,
     voteFilter: "all",
   });
@@ -54,7 +54,7 @@ export function useProjectFilters(projects: Project[]) {
     setShowNativeOnly: (show: boolean) =>
       setFilters((prev) => ({ ...prev, showNativeOnly: show })),
     setShowTestnetOnly: (show: boolean) =>
-      setFilters((prev) => ({ ...prev, showTestnetOnly: show })),
+      setFilters((prev) => ({ ...prev, showLiveOnly: show })),
     setShowGuideOnly: (show: boolean) =>
       setFilters((prev) => ({ ...prev, showGuideOnly: show })),
     setVoteFilter: (voteFilter: VoteFilter) =>
