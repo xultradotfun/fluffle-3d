@@ -16,18 +16,18 @@ export default function TraitCategoryTabs({
   return (
     <div className="flex flex-wrap gap-2">
       {TRAIT_CATEGORIES.map((type) => (
-        <button
-          key={type}
-          onClick={() => onCategorySelect(type)}
-          className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
-            activeCategory === type
-              ? "bg-primary text-primary-foreground"
-              : "bg-muted text-muted-foreground hover:bg-muted/80"
-          }`}
-        >
+              <button
+                key={type}
+                onClick={() => onCategorySelect(type)}
+                className={`px-3 py-2 border-3 border-foreground text-xs font-black uppercase transition-colors ${
+                  activeCategory === type
+                    ? "bg-pink text-foreground"
+                    : "bg-card-foreground text-background hover:bg-pink hover:text-foreground"
+                }`}
+              >
           {type.charAt(0).toUpperCase() + type.slice(1).replace(/_/g, " ")}
           {selectedTraits[type] && (
-            <span className="ml-2 w-2 h-2 rounded-full bg-green-500 inline-block" />
+            <span className="ml-2 w-2 h-2 bg-green border-2 border-foreground inline-block" />
           )}
         </button>
       ))}

@@ -51,77 +51,77 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
           >
             <span className="text-sm font-black uppercase" style={{ color: "#dfd9d9" }}>SORT:</span>
             <div className="flex gap-2">
-              <button
-                onClick={() => handleSortClick("score")}
+          <button
+            onClick={() => handleSortClick("score")}
                 className={`px-3 py-1.5 border-2 font-black uppercase text-xs transition-colors ${
-                  sortMethod.type === "score"
+              sortMethod.type === "score"
                     ? "bg-pink text-foreground border-foreground"
                     : "bg-transparent border-background hover:bg-muted"
-                }`}
+            }`}
                 style={sortMethod.type === "score" ? {} : { color: "#dfd9d9" }}
               >
                 SCORE
                 {sortMethod.type === "score" && (
                   <span className="ml-1">{sortMethod.direction === "desc" ? "↓" : "↑"}</span>
                 )}
-              </button>
+          </button>
 
-              <button
-                onClick={() => handleSortClick("alphabetical")}
+          <button
+            onClick={() => handleSortClick("alphabetical")}
                 className={`px-3 py-1.5 border-2 font-black uppercase text-xs transition-colors ${
-                  sortMethod.type === "alphabetical"
+              sortMethod.type === "alphabetical"
                     ? "bg-pink text-foreground border-foreground"
                     : "bg-transparent border-background hover:bg-muted"
-                }`}
+            }`}
                 style={sortMethod.type === "alphabetical" ? {} : { color: "#dfd9d9" }}
               >
                 A-Z
                 {sortMethod.type === "alphabetical" && (
                   <span className="ml-1">{sortMethod.direction === "asc" ? "↓" : "↑"}</span>
                 )}
-              </button>
+          </button>
 
-              <button
-                onClick={() => handleSortClick("latest")}
+          <button
+            onClick={() => handleSortClick("latest")}
                 className={`px-3 py-1.5 border-2 font-black uppercase text-xs transition-colors ${
-                  sortMethod.type === "latest"
+              sortMethod.type === "latest"
                     ? "bg-pink text-foreground border-foreground"
                     : "bg-transparent border-background hover:bg-muted"
-                }`}
+            }`}
                 style={sortMethod.type === "latest" ? {} : { color: "#dfd9d9" }}
               >
                 LATEST
                 {sortMethod.type === "latest" && (
                   <span className="ml-1">{sortMethod.direction === "desc" ? "↓" : "↑"}</span>
                 )}
-              </button>
-            </div>
+          </button>
+        </div>
 
-            <Tooltip.Root open={tooltipOpen} onOpenChange={setTooltipOpen}>
-              <Tooltip.Trigger asChild>
-                <button
-                  type="button"
+        <Tooltip.Root open={tooltipOpen} onOpenChange={setTooltipOpen}>
+          <Tooltip.Trigger asChild>
+            <button
+              type="button"
                   className="p-1.5 border-2 border-background bg-transparent hover:bg-muted transition-colors"
                   style={{ color: "#dfd9d9" }}
-                  onClick={() => setTooltipOpen(true)}
-                >
+              onClick={() => setTooltipOpen(true)}
+            >
                   <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-                  </svg>
-                </button>
-              </Tooltip.Trigger>
-              <Tooltip.Portal>
-                <Tooltip.Content
-                  side="top"
-                  align="center"
+              </svg>
+            </button>
+          </Tooltip.Trigger>
+          <Tooltip.Portal>
+            <Tooltip.Content
+              side="top"
+              align="center"
                   sideOffset={8}
                   className="z-50"
-                  onPointerDownOutside={() => setTooltipOpen(false)}
-                  onEscapeKeyDown={() => setTooltipOpen(false)}
+              onPointerDownOutside={() => setTooltipOpen(false)}
+              onEscapeKeyDown={() => setTooltipOpen(false)}
                   style={{
                     clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
                   }}
-                >
+            >
                   <div
                     style={{
                       backgroundColor: "#19191a",
@@ -145,20 +145,20 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
                           <strong className="font-black uppercase text-xs">A-Z:</strong>
                           <p className="mt-1 text-xs font-bold">
                             ALPHABETICAL BY PROJECT NAME
-                          </p>
+                </p>
                         </div>
                         <div>
                           <strong className="font-black uppercase text-xs">LATEST:</strong>
                           <p className="mt-1 text-xs font-bold">
                             MOST RECENTLY ADDED FIRST
-                          </p>
-                        </div>
+                </p>
+              </div>
                       </div>
                     </div>
                   </div>
-                </Tooltip.Content>
-              </Tooltip.Portal>
-            </Tooltip.Root>
+            </Tooltip.Content>
+          </Tooltip.Portal>
+        </Tooltip.Root>
           </div>
         </div>
       </div>

@@ -269,34 +269,68 @@ export function PFPGenerator() {
 
   return (
     <div className="space-y-6 sm:space-y-8 animate-fade-in">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6">
-        <div className="space-y-3 sm:space-y-4">
-          <div className="space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
+      {/* Header with video background like ecosystem */}
+      <div
+        className="relative overflow-hidden"
+        style={{
+          clipPath:
+            "polygon(24px 0, calc(100% - 48px) 0, 100% 48px, 100% 100%, 0 100%, 0 24px)",
+        }}
+      >
+        {/* Video Background */}
+        <video
+          loop
+          muted
+          autoPlay
+          playsInline
+          className="absolute top-0 right-0 w-full h-full object-cover"
+          poster="/ui/oversubscription.webp"
+        >
+          <source src="/ui/oversubscription.mp4" type="video/mp4" />
+        </video>
+
+        {/* Dark Overlay */}
+        <div
+          className="absolute top-0 right-0 w-full h-full"
+          style={{ backgroundColor: "rgba(25, 25, 26, 0.5)" }}
+        />
+
+        {/* Content */}
+        <div className="relative z-10 px-8 py-12" style={{ color: "#fff" }}>
+          <div className="flex items-center gap-3 mb-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="68"
+              height="68"
+              viewBox="0 0 68 68"
+              fill="none"
+              className="w-[50px] h-[50px] hidden md:block"
+            >
+              <path
+                d="M34 0C34.6638 18.4957 49.5043 33.3362 68 34C49.5043 34.6638 34.6638 49.5043 34 68C33.3362 49.5043 18.4957 34.6638 0 34C18.4957 33.3362 33.3362 18.4957 34 0Z"
+                fill="white"
+              />
+            </svg>
+            <h1 className="text-4xl sm:text-5xl font-black uppercase leading-none pt-2">
               PFP Generator
-            </h2>
-            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 max-w-lg">
-              Transform your Fluffle NFT into a beautiful profile picture with
-              our custom generator.
-            </p>
+            </h1>
           </div>
-          <div className="inline-flex items-center gap-2 text-xs sm:text-sm px-2 py-1 rounded-lg bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-500/10 dark:to-pink-500/10 border border-purple-100 dark:border-purple-500/10">
-            <span className="text-gray-500 dark:text-gray-400">
+          <p className="text-sm sm:text-base font-bold uppercase max-w-2xl">
+            Transform your Fluffle NFT into a beautiful profile picture
+          </p>
+          <div className="inline-flex items-center gap-2 text-xs px-2 py-1 bg-pink border-2 border-foreground mt-4">
+            <span className="text-foreground font-bold uppercase">
               Design by{" "}
               <a
                 href="https://x.com/juliencoppola"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-purple-600 dark:text-purple-400 hover:text-pink-600 dark:hover:text-pink-400 transition-colors font-medium"
+                className="text-foreground hover:text-background transition-colors font-black"
               >
                 @juliencoppola
               </a>
             </span>
           </div>
-        </div>
-        <div className="flex-shrink-0 hidden sm:block">
-          <NFTBadge selectedId={selectedNFT?.id} />
         </div>
       </div>
 

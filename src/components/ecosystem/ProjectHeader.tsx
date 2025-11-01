@@ -38,21 +38,21 @@ function ProjectHeaderComponent({
       <div className="flex-1 min-w-0">
         <div className="flex flex-wrap items-center gap-2 mb-3">
           <h3 className="text-2xl font-black uppercase truncate text-white">
-            {name}
-          </h3>
-          {megaMafia && (
+              {name}
+            </h3>
+            {megaMafia && (
             <div className="w-6 h-6 border-2 border-white bg-pink flex items-center justify-center">
-              <Image
-                src="/icons/logo-02.png"
-                alt="MegaMafia"
-                title="MegaMafia Project"
+                  <Image
+                    src="/icons/logo-02.png"
+                    alt="MegaMafia"
+                    title="MegaMafia Project"
                 width={16}
                 height={16}
                 className="w-4 h-4 object-contain"
-                priority={false}
-              />
-            </div>
-          )}
+                    priority={false}
+                  />
+              </div>
+            )}
         </div>
         <div className="flex items-center gap-2 flex-wrap">
           <span className="inline-flex items-center px-2 py-1 border-2 border-white bg-foreground text-white text-xs font-black uppercase">

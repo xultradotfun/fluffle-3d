@@ -10,7 +10,7 @@ export function NFTBadge({ selectedId }: NFTBadgeProps) {
       <Badge
         variant="default"
         size="md"
-        className="animate-fade-in glow bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-500/20 dark:to-purple-500/20 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-500/20 shadow-sm"
+        className="animate-fade-in bg-pink text-foreground border-2 border-foreground"
       >
         <div className="flex items-center gap-1.5">
           <svg
@@ -37,7 +37,7 @@ export function NFTBadge({ selectedId }: NFTBadgeProps) {
     <Badge
       variant="secondary"
       size="md"
-      className="hidden sm:flex bg-gray-50 dark:bg-white/5 text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-white/10"
+      className="hidden sm:flex bg-[#e0e0e0] text-foreground border-2 border-foreground"
     >
       <div className="flex items-center gap-1.5">
         <svg

@@ -15,16 +15,16 @@ export default function ActionButtons({
     <div className="flex flex-col sm:flex-row gap-3">
       <button
         onClick={onRandomize}
-        className="flex-1 px-4 py-2.5 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium"
+        className="flex-1 px-4 py-3 bg-pink text-foreground border-3 border-foreground hover:bg-foreground hover:text-background transition-colors font-black uppercase text-sm"
       >
         Randomize
       </button>
       <div className="flex gap-3">
-        <button
-          onClick={onCopy}
-          className="px-4 py-2.5 bg-muted text-muted-foreground rounded-lg hover:bg-muted/80 transition-colors relative group"
-          title="Copy to clipboard"
-        >
+              <button
+                onClick={onCopy}
+                className="px-4 py-3 bg-card-foreground text-background border-3 border-foreground hover:bg-pink hover:text-foreground transition-colors relative group"
+                title="Copy to clipboard"
+              >
           {isCopied ? (
             <svg
               className="w-5 h-5"
@@ -54,15 +54,15 @@ export default function ActionButtons({
               />
             </svg>
           )}
-          <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-popover text-popover-foreground text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-            {isCopied ? "Copied!" : "Copy to clipboard"}
+          <span className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-foreground text-background text-xs font-bold uppercase border-2 border-background opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+            {isCopied ? "Copied!" : "Copy"}
           </span>
         </button>
-        <button
-          onClick={onDownload}
-          className="px-4 py-2.5 bg-muted text-muted-foreground rounded-lg hover:bg-muted/80 transition-colors relative group"
-          title="Download"
-        >
+              <button
+                onClick={onDownload}
+                className="px-4 py-3 bg-card-foreground text-background border-3 border-foreground hover:bg-pink hover:text-foreground transition-colors relative group"
+                title="Download"
+              >
           <svg
             className="w-5 h-5"
             fill="none"
@@ -76,7 +76,7 @@ export default function ActionButtons({
               d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
             />
           </svg>
-          <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 bg-popover text-popover-foreground text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity">
+          <span className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-foreground text-background text-xs font-bold uppercase border-2 border-background opacity-0 group-hover:opacity-100 transition-opacity">
             Download
           </span>
         </button>

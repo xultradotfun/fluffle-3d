@@ -85,9 +85,13 @@ export default function Hero() {
                 style={{ color: "#dfd9d9" }}
               >
                 UTILITIES FOR{" "}
-                <span className="bg-pink text-foreground px-1">MEGAETH</span>{" "}
+                <span className="bg-pink px-1" style={{ color: "#fff" }}>
+                  MEGAETH
+                </span>{" "}
                 EXPLORERS AND{" "}
-                <span className="bg-pink text-foreground px-1">FLUFFLE</span>{" "}
+                <span className="bg-pink px-1" style={{ color: "#fff" }}>
+                  FLUFFLE
+                </span>{" "}
                 HOLDERS
               </p>
             </div>

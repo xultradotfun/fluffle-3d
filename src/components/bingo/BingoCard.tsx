@@ -531,22 +531,22 @@ export function BingoCard({
                       {task.projects && task.projects.length > 0 && (
                         <div className="absolute bottom-3 left-0 right-0 flex items-center justify-center gap-1">
                           {task.projects.map((twitter: string) => {
-                                const project = projectMap.get(twitter);
-                                return (
-                                  <div
-                                    key={twitter}
-                                    className="relative w-6 h-6 rounded-full overflow-hidden ring-1 ring-white/30 bg-white dark:bg-gray-800 shadow-sm"
-                                    title={project?.name || twitter}
-                                  >
-                                    <Image
+                            const project = projectMap.get(twitter);
+                            return (
+                              <div
+                                key={twitter}
+                                className="relative w-6 h-6 rounded-full overflow-hidden ring-1 ring-white/30 bg-white dark:bg-gray-800 shadow-sm"
+                                title={project?.name || twitter}
+                              >
+                                <Image
                                       src={project?.img || `/avatars/${twitter}.jpg`}
-                                      alt={project?.name || twitter}
-                                      fill
-                                      className="object-cover"
-                                      unoptimized
-                                    />
-                                  </div>
-                                );
+                                  alt={project?.name || twitter}
+                                  fill
+                                  className="object-cover"
+                                  unoptimized
+                                />
+                              </div>
+                            );
                           })}
                         </div>
                       )}
