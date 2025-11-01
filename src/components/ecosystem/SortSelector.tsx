@@ -28,148 +28,139 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
   };
 
   return (
-    <Tooltip.Provider delayDuration={300} skipDelayDuration={0}>
-      <div className="flex items-center gap-3">
-        <span className="text-sm font-bold uppercase">SORT:</span>
-        <div className="flex gap-2">
-          <button
-            onClick={() => handleSortClick("score")}
-            className={`px-4 py-2 border-3 border-foreground font-bold uppercase text-xs ${
-              sortMethod.type === "score"
-                ? "bg-pink text-foreground"
-                : "bg-[#e0e0e0] hover:bg-pink hover:text-foreground"
-            }`}
+    <Tooltip.Provider delayDuration={100} skipDelayDuration={0}>
+      {/* Outer wrapper with clip-path */}
+      <div
+        style={{
+          clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+        }}
+      >
+        {/* Middle layer - border */}
+        <div
+          style={{
+            backgroundColor: "#19191a",
+            padding: "2px",
+          }}
+        >
+          {/* Inner content layer */}
+          <div
+            className="flex items-center gap-3 px-4 py-3 bg-card-foreground"
+            style={{
+              clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+            }}
           >
-            <div className="flex items-center gap-2">
-              <svg
-                className={cn(
-                  "w-4 h-4",
-                  sortMethod.type === "score" &&
-                    sortMethod.direction === "asc" &&
-                    "rotate-180"
-                )}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={3}
+            <span className="text-sm font-black uppercase" style={{ color: "#dfd9d9" }}>SORT:</span>
+            <div className="flex gap-2">
+              <button
+                onClick={() => handleSortClick("score")}
+                className={`px-3 py-1.5 border-2 font-black uppercase text-xs transition-colors ${
+                  sortMethod.type === "score"
+                    ? "bg-pink text-foreground border-foreground"
+                    : "bg-transparent border-background hover:bg-muted"
+                }`}
+                style={sortMethod.type === "score" ? {} : { color: "#dfd9d9" }}
               >
-                <path
-                  strokeLinecap="square"
-                  strokeLinejoin="miter"
-                  d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                />
-              </svg>
-              <span>SCORE</span>
-            </div>
-          </button>
+                SCORE
+                {sortMethod.type === "score" && (
+                  <span className="ml-1">{sortMethod.direction === "desc" ? "↓" : "↑"}</span>
+                )}
+              </button>
 
-          <button
-            onClick={() => handleSortClick("alphabetical")}
-            className={`px-4 py-2 border-3 border-foreground font-bold uppercase text-xs ${
-              sortMethod.type === "alphabetical"
-                ? "bg-pink text-foreground"
-                : "bg-[#e0e0e0] hover:bg-pink hover:text-foreground"
-            }`}
-          >
-            <div className="flex items-center gap-2">
-              <svg
-                className={cn(
-                  "w-4 h-4",
-                  sortMethod.type === "alphabetical" &&
-                    sortMethod.direction === "desc" &&
-                    "rotate-180"
-                )}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={3}
+              <button
+                onClick={() => handleSortClick("alphabetical")}
+                className={`px-3 py-1.5 border-2 font-black uppercase text-xs transition-colors ${
+                  sortMethod.type === "alphabetical"
+                    ? "bg-pink text-foreground border-foreground"
+                    : "bg-transparent border-background hover:bg-muted"
+                }`}
+                style={sortMethod.type === "alphabetical" ? {} : { color: "#dfd9d9" }}
               >
-                <path
-                  strokeLinecap="square"
-                  strokeLinejoin="miter"
-                  d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"
-                />
-              </svg>
-              <span>A-Z</span>
-            </div>
-          </button>
+                A-Z
+                {sortMethod.type === "alphabetical" && (
+                  <span className="ml-1">{sortMethod.direction === "asc" ? "↓" : "↑"}</span>
+                )}
+              </button>
 
-          <button
-            onClick={() => handleSortClick("latest")}
-            className={`px-4 py-2 border-3 border-foreground font-bold uppercase text-xs ${
-              sortMethod.type === "latest"
-                ? "bg-pink text-foreground"
-                : "bg-[#e0e0e0] hover:bg-pink hover:text-foreground"
-            }`}
-          >
-            <div className="flex items-center gap-2">
-              <svg
-                className={cn(
-                  "w-4 h-4",
-                  sortMethod.type === "latest" &&
-                    sortMethod.direction === "asc" &&
-                    "rotate-180"
-                )}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={3}
+              <button
+                onClick={() => handleSortClick("latest")}
+                className={`px-3 py-1.5 border-2 font-black uppercase text-xs transition-colors ${
+                  sortMethod.type === "latest"
+                    ? "bg-pink text-foreground border-foreground"
+                    : "bg-transparent border-background hover:bg-muted"
+                }`}
+                style={sortMethod.type === "latest" ? {} : { color: "#dfd9d9" }}
               >
-                <path
-                  strokeLinecap="square"
-                  strokeLinejoin="miter"
-                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <span>LATEST</span>
+                LATEST
+                {sortMethod.type === "latest" && (
+                  <span className="ml-1">{sortMethod.direction === "desc" ? "↓" : "↑"}</span>
+                )}
+              </button>
             </div>
-          </button>
+
+            <Tooltip.Root open={tooltipOpen} onOpenChange={setTooltipOpen}>
+              <Tooltip.Trigger asChild>
+                <button
+                  type="button"
+                  className="p-1.5 border-2 border-background bg-transparent hover:bg-muted transition-colors"
+                  style={{ color: "#dfd9d9" }}
+                  onClick={() => setTooltipOpen(true)}
+                >
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                  </svg>
+                </button>
+              </Tooltip.Trigger>
+              <Tooltip.Portal>
+                <Tooltip.Content
+                  side="top"
+                  align="center"
+                  sideOffset={8}
+                  className="z-50"
+                  onPointerDownOutside={() => setTooltipOpen(false)}
+                  onEscapeKeyDown={() => setTooltipOpen(false)}
+                  style={{
+                    clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                  }}
+                >
+                  <div
+                    style={{
+                      backgroundColor: "#19191a",
+                      padding: "2px",
+                    }}
+                  >
+                    <div
+                      className="max-w-[320px] bg-[#e0e0e0] p-4"
+                      style={{
+                        clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                      }}
+                    >
+                      <div className="space-y-3">
+                        <div className="border-b-2 border-foreground pb-2">
+                          <strong className="font-black uppercase text-xs">SCORE:</strong>
+                          <p className="mt-1 text-xs font-bold">
+                            ALL VOTES SHOWN, MINIETH EXCLUDED FROM SORTING
+                          </p>
+                        </div>
+                        <div className="border-b-2 border-foreground pb-2">
+                          <strong className="font-black uppercase text-xs">A-Z:</strong>
+                          <p className="mt-1 text-xs font-bold">
+                            ALPHABETICAL BY PROJECT NAME
+                          </p>
+                        </div>
+                        <div>
+                          <strong className="font-black uppercase text-xs">LATEST:</strong>
+                          <p className="mt-1 text-xs font-bold">
+                            MOST RECENTLY ADDED FIRST
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Tooltip.Content>
+              </Tooltip.Portal>
+            </Tooltip.Root>
+          </div>
         </div>
-
-        <Tooltip.Root open={tooltipOpen} onOpenChange={setTooltipOpen}>
-          <Tooltip.Trigger asChild>
-            <button
-              type="button"
-              className="p-2 border-3 border-foreground bg-[#e0e0e0] hover:bg-pink"
-              onClick={() => setTooltipOpen(true)}
-            >
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-              </svg>
-            </button>
-          </Tooltip.Trigger>
-          <Tooltip.Portal>
-            <Tooltip.Content
-              side="top"
-              align="center"
-              sideOffset={8}
-              className="z-50 max-w-[320px] bg-[#e0e0e0] border-3 border-foreground p-4"
-              onPointerDownOutside={() => setTooltipOpen(false)}
-              onEscapeKeyDown={() => setTooltipOpen(false)}
-            >
-              <div className="space-y-3">
-                <div className="border-b-2 border-foreground pb-2">
-                  <strong className="font-black uppercase text-xs">SCORE:</strong>
-                  <p className="mt-1 text-xs font-bold">
-                    ALL VOTES SHOWN, MINIETH EXCLUDED FROM SORTING
-                  </p>
-                </div>
-                <div className="border-b-2 border-foreground pb-2">
-                  <strong className="font-black uppercase text-xs">A-Z:</strong>
-                  <p className="mt-1 text-xs font-bold">
-                    ALPHABETICAL BY PROJECT NAME
-                  </p>
-                </div>
-                <div>
-                  <strong className="font-black uppercase text-xs">LATEST:</strong>
-                  <p className="mt-1 text-xs font-bold">
-                    MOST RECENTLY ADDED FIRST
-                  </p>
-                </div>
-              </div>
-            </Tooltip.Content>
-          </Tooltip.Portal>
-        </Tooltip.Root>
       </div>
     </Tooltip.Provider>
   );
