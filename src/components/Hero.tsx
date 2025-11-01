@@ -62,48 +62,34 @@ export default function Hero() {
   return (
     <>
       {/* Placeholder */}
-      <div
-        className={`w-full ${
-          isScrolled ? "h-[60px]" : "h-[140px] sm:h-[150px]"
-        }`}
-      />
+      <div className="w-full h-[80px]" />
 
-      <section
-        className={`fixed top-0 left-0 right-0 z-10 border-b-4 border-foreground ${
-          isScrolled ? "" : ""
-        }`}
+      <nav
+        className="fixed top-0 left-0 right-0 z-10 border-b-4 border-foreground"
         style={{ backgroundColor: "#19191a" }}
       >
-        <div className="mx-auto max-w-6xl px-4 sm:px-6">
-          <div
-            className={`flex items-center justify-between ${
-              isScrolled ? "py-2" : "py-4"
-            }`}
-          >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6">
+          <div className="flex items-center justify-between py-3">
             {/* Logo and Description */}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4 sm:gap-6">
               <a href="/" className="hover:opacity-70 flex-shrink-0">
                 <img
                   src="/fluffletools.png"
                   alt="FluffleTools"
-                  className={`${
-                    isScrolled ? "h-14" : "h-28 sm:h-32"
-                  } object-contain transition-all duration-300`}
+                  className="h-12 sm:h-14 object-contain"
                   style={{ width: "auto" }}
                 />
               </a>
-              {!isScrolled && (
-                <p
-                  className="hidden md:block text-sm sm:text-base font-bold uppercase max-w-md"
-                  style={{ color: "#dfd9d9" }}
-                >
-                  UTILITIES FOR{" "}
-                  <span className="bg-pink text-foreground px-1">MEGAETH</span>{" "}
-                  EXPLORERS AND{" "}
-                  <span className="bg-pink text-foreground px-1">FLUFFLE</span>{" "}
-                  HOLDERS
-                </p>
-              )}
+              <p
+                className="hidden lg:block text-sm font-bold uppercase max-w-md"
+                style={{ color: "#dfd9d9" }}
+              >
+                UTILITIES FOR{" "}
+                <span className="bg-pink text-foreground px-1">MEGAETH</span>{" "}
+                EXPLORERS AND{" "}
+                <span className="bg-pink text-foreground px-1">FLUFFLE</span>{" "}
+                HOLDERS
+              </p>
             </div>
 
             {/* Right side actions */}
@@ -112,15 +98,10 @@ export default function Hero() {
                 href="https://x.com/intent/follow?screen_name=0x_ultra"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`flex items-center gap-2 ${
-                  isScrolled
-                    ? "px-2 sm:px-3 py-2 text-xs"
-                    : "px-3 sm:px-4 py-2 text-sm"
-                } border-3 border-background bg-pink hover:bg-pink/80 font-bold uppercase`}
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 text-sm border-3 border-background bg-pink hover:bg-pink/80 font-bold uppercase"
                 style={{
-                  clipPath: isScrolled
-                    ? "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)"
-                    : "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                  clipPath:
+                    "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
                   color: "#19191a",
                 }}
               >
@@ -136,7 +117,7 @@ export default function Hero() {
             </div>
           </div>
         </div>
-      </section>
+      </nav>
     </>
   );
 }
