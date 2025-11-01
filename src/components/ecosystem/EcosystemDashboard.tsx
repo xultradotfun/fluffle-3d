@@ -24,8 +24,7 @@ export function EcosystemDashboard() {
     setSelectedCategory,
     setShowMegaMafiaOnly,
     setShowNativeOnly,
-    setShowTestnetOnly,
-    setShowGuideOnly,
+    setShowLiveOnly,
     setVoteFilter,
   } = useProjectFilters(projects);
 
@@ -59,17 +58,14 @@ export function EcosystemDashboard() {
             showNativeOnly={filters.showNativeOnly}
             setShowNativeOnly={setShowNativeOnly}
             showLiveOnly={filters.showLiveOnly}
-            setShowLiveOnly={setShowTestnetOnly}
-            showGuideOnly={filters.showGuideOnly}
-            setShowGuideOnly={setShowGuideOnly}
+            setShowLiveOnly={setShowLiveOnly}
             voteFilter={filters.voteFilter}
             setVoteFilter={setVoteFilter}
             categories={categories}
             getCategoryCount={getCategoryCount}
             getMegaMafiaCount={() => counts.megaMafia}
             getNativeCount={() => counts.native}
-            getLiveCount={() => counts.testnet}
-            getGuideCount={() => counts.guide}
+            getLiveCount={() => counts.live}
             getUserVotedCount={() => counts.voted}
             getUserNotVotedCount={() => counts.notVoted}
             totalProjects={projects.length}
@@ -86,14 +82,38 @@ export function EcosystemDashboard() {
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sortedProjects.map((project) => (
-            <ProjectCard
-              key={project.twitter}
-              project={project}
-              isLoadingVotes={isLoadingVotes}
-              onVoteUpdate={updateProjectVote}
-            />
-          ))}
+          {isLoadingVotes ? (
+            // Show skeleton cards while loading
+            [1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
+              <div key={i} className="border-3 border-foreground bg-[#e0e0e0] p-6 h-80 animate-pulse">
+                <div className="flex gap-4 mb-4">
+                  <div className="w-16 h-16 bg-foreground/20 border-3 border-foreground"></div>
+                  <div className="flex-1">
+                    <div className="h-6 bg-foreground/20 w-3/4 mb-2"></div>
+                    <div className="h-4 bg-foreground/20 w-1/2"></div>
+                  </div>
+                </div>
+                <div className="space-y-2 mb-4">
+                  <div className="h-4 bg-foreground/20 w-full"></div>
+                  <div className="h-4 bg-foreground/20 w-5/6"></div>
+                  <div className="h-4 bg-foreground/20 w-4/6"></div>
+                </div>
+                <div className="flex gap-2 mt-auto">
+                  <div className="h-10 bg-foreground/20 flex-1"></div>
+                  <div className="h-10 bg-foreground/20 flex-1"></div>
+                </div>
+              </div>
+            ))
+          ) : (
+            sortedProjects.map((project) => (
+              <ProjectCard
+                key={project.twitter}
+                project={project}
+                isLoadingVotes={isLoadingVotes}
+                onVoteUpdate={updateProjectVote}
+              />
+            ))
+          )}
         </div>
       </div>
     </div>

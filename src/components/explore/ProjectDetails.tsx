@@ -1,4 +1,4 @@
-import { Project, ProjectFeature } from "@/components/guides/types";
+import { Project, ProjectFeature } from "./types";
 
 interface ProjectDetailsProps {
   project: Project;

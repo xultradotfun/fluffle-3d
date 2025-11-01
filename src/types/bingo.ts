@@ -6,8 +6,8 @@ export interface Project {
   category: string;
   megaMafia: boolean;
   native: boolean;
-  testnet: boolean;
-  guide?: boolean;
+  live: boolean;
+  img?: string;
 }
 
 export interface BingoTask {

@@ -10,8 +10,6 @@ interface FilterControlsProps {
   setShowNativeOnly: (show: boolean) => void;
   showLiveOnly: boolean;
   setShowLiveOnly: (show: boolean) => void;
-  showGuideOnly: boolean;
-  setShowGuideOnly: (show: boolean) => void;
   voteFilter: VoteFilter;
   setVoteFilter: (filter: VoteFilter) => void;
   categories: string[];
@@ -19,7 +17,6 @@ interface FilterControlsProps {
   getMegaMafiaCount: () => number;
   getNativeCount: () => number;
   getLiveCount: () => number;
-  getGuideCount: () => number;
   getUserVotedCount: () => number;
   getUserNotVotedCount: () => number;
   totalProjects: number;
@@ -34,8 +31,6 @@ export function FilterControls({
   setShowNativeOnly,
   showLiveOnly,
   setShowLiveOnly,
-  showGuideOnly,
-  setShowGuideOnly,
   voteFilter,
   setVoteFilter,
   categories,
@@ -43,7 +38,6 @@ export function FilterControls({
   getMegaMafiaCount,
   getNativeCount,
   getLiveCount,
-  getGuideCount,
   getUserVotedCount,
   getUserNotVotedCount,
   totalProjects,
@@ -57,7 +51,6 @@ export function FilterControls({
             setShowMegaMafiaOnly(!showMegaMafiaOnly);
             setShowNativeOnly(false);
             setShowLiveOnly(false);
-            setShowGuideOnly(false);
           }}
           className={`px-4 py-2 border-3 border-foreground font-bold uppercase text-xs ${
             showMegaMafiaOnly
@@ -81,7 +74,6 @@ export function FilterControls({
             setShowNativeOnly(!showNativeOnly);
             setShowMegaMafiaOnly(false);
             setShowLiveOnly(false);
-            setShowGuideOnly(false);
           }}
           className={`px-4 py-2 border-3 border-foreground font-bold uppercase text-xs ${
             showNativeOnly
@@ -100,7 +92,6 @@ export function FilterControls({
             setShowLiveOnly(!showLiveOnly);
             setShowMegaMafiaOnly(false);
             setShowNativeOnly(false);
-            setShowGuideOnly(false);
           }}
           className={`px-4 py-2 border-3 border-foreground font-bold uppercase text-xs ${
             showLiveOnly

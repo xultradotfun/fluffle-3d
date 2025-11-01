@@ -8,6 +8,7 @@ export interface Project {
   website?: string;
   discord?: string;
   telegram?: string;
+  img?: string;
 }
 
 export interface ProjectFeature {

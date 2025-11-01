@@ -14,15 +14,15 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: [
-      "fluffle-traits.b-cdn.net",
-      "mega-eco.b-cdn.net",
-      "mega-bingo.b-cdn.net",
-      "firebasestorage.googleapis.com",
-      "testnet-bff.rarible.fun",
-      "testnet.rarible.fun",
-      "ipfs.raribleuserdata.com",
-      "wlbl-s3.wlbl.xyz",
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: '**',
+      },
     ],
   },
 };

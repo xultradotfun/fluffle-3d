@@ -4,7 +4,6 @@ import { apiClient, API_ENDPOINTS } from "@/lib/api";
 import { useBingoConfig } from "@/hooks/useBingoConfig";
 import { BingoCard } from "./BingoCard";
 import { Trophy, Smartphone, LogOut } from "lucide-react";
-import ecosystemData from "@/data/ecosystem.json";
 import Image from "next/image";
 import type { BingoTask, Project } from "@/types/bingo";
 
@@ -18,6 +17,25 @@ export function BingoView() {
   const [guestName, setGuestName] = useState<string>("");
   const [showGuestInput, setShowGuestInput] = useState(false);
   const [tempGuestName, setTempGuestName] = useState("");
+  const [ecosystemProjects, setEcosystemProjects] = useState<Project[]>([]);
+
+  // Fetch projects from API
+  useEffect(() => {
+    async function fetchProjects() {
+      try {
+        const response = await fetch("https://api.fluffle.tools/api/projects/full");
+        if (!response.ok) {
+          throw new Error(`Failed to fetch projects: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setEcosystemProjects(data.projects);
+      } catch (err) {
+        console.error("Error fetching projects:", err);
+      }
+    }
+
+    fetchProjects();
+  }, []);
 
   const handleLogin = () => {
     login("/#bingo");
@@ -123,7 +141,7 @@ export function BingoView() {
 
   // Create a map of Twitter handles to project data for quick lookup
   const projectMap = new Map<string, Project>(
-    ecosystemData.projects.map((project) => [project.twitter, project])
+    ecosystemProjects.map((project) => [project.twitter, project])
   );
 
   const handleTaskToggle = async (taskId: string) => {

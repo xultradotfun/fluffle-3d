@@ -17,8 +17,6 @@ export function filterProjects(
 
     const liveMatch = filters.showLiveOnly ? project.live : true;
 
-    const guideMatch = filters.showGuideOnly ? project.guide : true;
-
     const userVoteMatch =
       filters.voteFilter === "all" ||
       (filters.voteFilter === "voted"
@@ -30,7 +28,6 @@ export function filterProjects(
       megaMafiaMatch &&
       nativeMatch &&
       liveMatch &&
-      guideMatch &&
       userVoteMatch
     );
   });
@@ -48,7 +45,6 @@ export function getCategoryCount(
       : true;
     const nativeMatch = filters.showNativeOnly ? project.native : true;
     const liveMatch = filters.showLiveOnly ? project.live : true;
-    const guideMatch = filters.showGuideOnly ? project.guide : true;
     const voteMatch =
       !filters.voteFilter ||
       filters.voteFilter === "all" ||
@@ -61,7 +57,6 @@ export function getCategoryCount(
       megaMafiaMatch &&
       nativeMatch &&
       liveMatch &&
-      guideMatch &&
       voteMatch
     );
   }).length;

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
 import { apiClient, API_ENDPOINTS } from "@/lib/api";
 import type { Project } from "@/types/ecosystem";
-import ecosystemData from "@/data/ecosystem.json";
 
 // Local storage key for user votes cache
 const USER_VOTES_CACHE_KEY = "fluffle_user_votes";
@@ -30,23 +29,55 @@ const saveCachedUserVotes = (userId: string | undefined, votes: Record<string, "
 
 export function useProjectVotes() {
   const { user, isLoading } = useDiscordAuth();
-  const [projects, setProjects] = useState<Project[]>(
-    ecosystemData.projects.map((project, index) => ({
-      ...project,
-      originalIndex: index,
-      votes: {
-        upvotes: 0,
-        downvotes: 0,
-        userVote: null,
-        breakdown: {},
-      },
-    }))
-  );
+  const [projects, setProjects] = useState<Project[]>([]);
   const [isLoadingVotes, setIsLoadingVotes] = useState(true);
+  const [isLoadingProjects, setIsLoadingProjects] = useState(true);
+
+  // Fetch projects on mount
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchProjects = async () => {
+      try {
+        setIsLoadingProjects(true);
+        const response = await fetch("https://api.fluffle.tools/api/projects/full");
+        if (!response.ok) {
+          throw new Error(`Failed to fetch projects: ${response.statusText}`);
+        }
+        const data = await response.json();
+        
+        if (!isMounted) return;
+        
+        const projectsWithIndex: Project[] = data.projects.map((p: Project, index: number) => ({
+          ...p,
+          originalIndex: index,
+          votes: {
+            upvotes: 0,
+            downvotes: 0,
+            userVote: null,
+            breakdown: {},
+          },
+        }));
+        setProjects(projectsWithIndex);
+      } catch (err) {
+        console.error("Error fetching projects:", err);
+      } finally {
+        if (isMounted) {
+          setIsLoadingProjects(false);
+        }
+      }
+    };
+
+    fetchProjects();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   useEffect(() => {
-    // Wait for authentication to be fully loaded before fetching votes
-    if (isLoading) {
+    // Wait for authentication to be fully loaded and projects to be fetched before fetching votes
+    if (isLoading || projects.length === 0) {
       return;
     }
 
@@ -79,8 +110,8 @@ export function useProjectVotes() {
           saveCachedUserVotes(user.id, mergedUserVotes);
         }
 
-        setProjects(
-          ecosystemData.projects.map((project, index) => {
+        setProjects(prev =>
+          prev.map(project => {
             const projectVotes = votesData.projects.find(
               (v: any) => v.twitter === project.twitter
             )?.votes;
@@ -90,7 +121,6 @@ export function useProjectVotes() {
             
             return {
               ...project,
-              originalIndex: index,
               votes: {
                 upvotes: projectVotes?.upvotes || 0,
                 downvotes: projectVotes?.downvotes || 0,
@@ -131,7 +161,7 @@ export function useProjectVotes() {
     return () => {
       isMounted = false;
     };
-  }, [user, isLoading]);
+  }, [user, isLoading, projects.length]);
 
   const updateProjectVote = (twitter: string, voteData: any) => {
     setProjects((prevProjects) =>
@@ -160,7 +190,7 @@ export function useProjectVotes() {
 
   return {
     projects,
-    isLoadingVotes,
+    isLoadingVotes: isLoadingVotes || isLoadingProjects,
     updateProjectVote,
   };
 }

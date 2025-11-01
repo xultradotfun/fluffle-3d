@@ -5,7 +5,6 @@ import { TestnetMintCard } from "./TestnetMintCard";
 import { apiClient, API_ENDPOINTS } from "@/lib/api";
 import Image from "next/image";
 import Link from "next/link";
-import ecosystemData from "@/data/ecosystem.json";
 import { findMatchingAlias } from "@/data/nft-aliases";
 
 // Simplified interfaces (backend handles the complex ones)

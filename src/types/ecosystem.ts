@@ -23,7 +23,6 @@ export interface Project {
   megaMafia: boolean;
   native: boolean;
   live: boolean;
-  guide?: boolean;
   img?: string;
   votes?: ProjectVotes;
   originalIndex?: number; // For sorting by latest added
@@ -44,6 +43,5 @@ export interface ProjectFilters {
   showMegaMafiaOnly: boolean;
   showNativeOnly: boolean;
   showLiveOnly: boolean;
-  showGuideOnly: boolean;
   voteFilter: VoteFilter;
 }

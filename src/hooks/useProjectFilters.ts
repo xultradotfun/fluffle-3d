@@ -8,7 +8,6 @@ export function useProjectFilters(projects: Project[]) {
     showMegaMafiaOnly: false,
     showNativeOnly: false,
     showLiveOnly: false,
-    showGuideOnly: false,
     voteFilter: "all",
   });
 
@@ -26,8 +25,7 @@ export function useProjectFilters(projects: Project[]) {
     () => ({
       megaMafia: getFilteredCount(projects, (p) => p.megaMafia),
       native: getFilteredCount(projects, (p) => p.native),
-      testnet: getFilteredCount(projects, (p) => p.testnet),
-      guide: getFilteredCount(projects, (p) => !!p.guide),
+      live: getFilteredCount(projects, (p) => p.live),
       voted: getFilteredCount(projects, (p) => p.votes?.userVote !== null),
       notVoted: getFilteredCount(projects, (p) => !p.votes || p.votes.userVote === null),
     }),
@@ -53,10 +51,8 @@ export function useProjectFilters(projects: Project[]) {
       setFilters((prev) => ({ ...prev, showMegaMafiaOnly: show })),
     setShowNativeOnly: (show: boolean) =>
       setFilters((prev) => ({ ...prev, showNativeOnly: show })),
-    setShowTestnetOnly: (show: boolean) =>
+    setShowLiveOnly: (show: boolean) =>
       setFilters((prev) => ({ ...prev, showLiveOnly: show })),
-    setShowGuideOnly: (show: boolean) =>
-      setFilters((prev) => ({ ...prev, showGuideOnly: show })),
     setVoteFilter: (voteFilter: VoteFilter) =>
       setFilters((prev) => ({ ...prev, voteFilter })),
   };
