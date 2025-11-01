@@ -95,11 +95,13 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     color: activeView === "bingo" ? "#19191a" : "#dfd9d9",
                   }}
                 >
-                  <Grid className="w-4 h-4" strokeWidth={3} />
+                  <div className="relative">
+                    <Grid className="w-4 h-4" strokeWidth={3} />
+                    <span className="absolute -top-1 -right-1 px-1 text-[7px] font-black border border-foreground bg-pink text-foreground leading-none">
+                      NEW
+                    </span>
+                  </div>
                   <span>BINGO</span>
-                  <span className="px-2 py-0.5 text-[10px] font-black border-2 border-foreground bg-foreground text-background">
-                    NEW
-                  </span>
                 </button>
 
                 {/* Divider */}
@@ -245,7 +247,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
           >
             <div className="relative">
               <Grid className="w-6 h-6" strokeWidth={3} />
-              <span className="absolute -top-1 -right-1 px-1 text-[8px] font-black border-2 border-foreground bg-pink text-foreground">
+              <span className="absolute -top-1 -right-1 px-1 text-[7px] font-black border border-foreground bg-pink text-foreground leading-none">
                 NEW
               </span>
             </div>
