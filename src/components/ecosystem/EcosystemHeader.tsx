@@ -63,7 +63,19 @@ export function EcosystemHeader() {
         {/* Content */}
         <div className="relative p-8" style={{ color: "#fff" }}>
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-3 h-8" style={{ backgroundColor: "#fff" }} />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="68"
+              height="68"
+              viewBox="0 0 68 68"
+              fill="none"
+              class="w-[50px] h-[50px] hidden md:block"
+            >
+              <path
+                d="M34 0C34.6638 18.4957 49.5043 33.3362 68 34C49.5043 34.6638 34.6638 49.5043 34 68C33.3362 49.5043 18.4957 34.6638 0 34C18.4957 33.3362 33.3362 18.4957 34 0Z"
+                fill="white"
+              ></path>
+            </svg>
             <h2 className="text-4xl sm:text-5xl font-black uppercase leading-none pt-2">
               ECOSYSTEM
             </h2>
