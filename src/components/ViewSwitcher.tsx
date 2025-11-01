@@ -218,7 +218,10 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
       )}
 
       {/* Mobile Bottom Navigation */}
-      <div className="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-background border-t-4 border-foreground pb-safe">
+      <div
+        className="sm:hidden fixed bottom-0 left-0 right-0 z-50 border-t-4 border-foreground pb-safe"
+        style={{ backgroundColor: "#19191a" }}
+      >
         <div className="flex items-center justify-around px-2 py-3">
           {/* Ecosystem */}
           <button
@@ -226,6 +229,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
             className={`flex flex-col items-center gap-1 p-2 ${
               activeView === "ecosystem" ? "opacity-100" : "opacity-60"
             }`}
+            style={{ color: "#dfd9d9" }}
           >
             <Flower2 className="w-6 h-6" strokeWidth={3} />
             <span className="text-[10px] font-black uppercase">ECO</span>
@@ -237,10 +241,11 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
             className={`flex flex-col items-center gap-1 p-2 ${
               activeView === "bingo" ? "opacity-100" : "opacity-60"
             }`}
+            style={{ color: "#dfd9d9" }}
           >
             <div className="relative">
               <Grid className="w-6 h-6" strokeWidth={3} />
-              <span className="absolute -top-1 -right-1 px-1 text-[8px] font-black border border-foreground bg-accent">
+              <span className="absolute -top-1 -right-1 px-1 text-[8px] font-black border-2 border-foreground bg-pink text-foreground">
                 NEW
               </span>
             </div>
@@ -255,12 +260,14 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                 ? "opacity-100"
                 : "opacity-60"
             }`}
+            style={{ color: "#dfd9d9" }}
           >
             <div className="relative">
               <Rabbit className="w-6 h-6" strokeWidth={3} />
               <ChevronDown
-                className="w-3 h-3 absolute -bottom-1 -right-1 bg-background"
+                className="w-3 h-3 absolute -bottom-1 -right-1"
                 strokeWidth={3}
+                style={{ backgroundColor: "#19191a" }}
               />
             </div>
             <span className="text-[10px] font-black uppercase">TOOLS</span>
@@ -270,9 +277,18 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="sm:hidden fixed inset-0 z-50 bg-background/95">
-          <div className="absolute inset-x-0 bottom-0 bg-background border-t-4 border-foreground">
-            <div className="flex items-center justify-between px-4 py-4 border-b-3 border-foreground">
+        <div
+          className="sm:hidden fixed inset-0 z-50"
+          style={{ backgroundColor: "rgba(25, 25, 26, 0.95)" }}
+        >
+          <div
+            className="absolute inset-x-0 bottom-0 border-t-4 border-foreground"
+            style={{ backgroundColor: "#19191a" }}
+          >
+            <div
+              className="flex items-center justify-between px-4 py-4 border-b-3 border-foreground"
+              style={{ color: "#dfd9d9" }}
+            >
               <div className="flex items-center gap-2">
                 <Rabbit className="w-5 h-5" strokeWidth={3} />
                 <span className="text-sm font-black uppercase">
@@ -282,6 +298,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="p-2 border-3 border-foreground hover:bg-muted"
+                style={{ color: "#dfd9d9" }}
               >
                 <X className="w-5 h-5" strokeWidth={3} />
               </button>
@@ -294,9 +311,12 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                 }}
                 className={`flex items-center w-full gap-3 px-4 py-4 border-3 border-foreground font-bold uppercase text-sm ${
                   activeView === "builder"
-                    ? "bg-accent text-accent-foreground"
-                    : "bg-background hover:bg-muted"
+                    ? "bg-pink"
+                    : "bg-transparent hover:bg-muted"
                 }`}
+                style={{
+                  color: activeView === "builder" ? "#19191a" : "#dfd9d9",
+                }}
               >
                 <Rabbit className="w-5 h-5" strokeWidth={3} />
                 <span className="flex-1 text-left">FLUFFLE BUILDER</span>
@@ -311,9 +331,10 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                 }}
                 className={`flex items-center w-full gap-3 px-4 py-4 border-3 border-foreground font-bold uppercase text-sm ${
                   activeView === "pfp"
-                    ? "bg-accent text-accent-foreground"
-                    : "bg-background hover:bg-muted"
+                    ? "bg-pink"
+                    : "bg-transparent hover:bg-muted"
                 }`}
+                style={{ color: activeView === "pfp" ? "#19191a" : "#dfd9d9" }}
               >
                 <Image className="w-5 h-5" strokeWidth={3} />
                 <span className="flex-1 text-left">PFP GENERATOR</span>
