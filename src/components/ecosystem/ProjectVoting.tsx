@@ -108,97 +108,170 @@ function ProjectVotingComponent({
   };
 
   return (
-    <div className="flex items-center gap-2">
-      {/* Upvote Button */}
-      <Tooltip.Root delayDuration={0}>
-        <Tooltip.Trigger asChild>
-          <button
-            onClick={() => !isVoting && !cooldown && onVote("up")}
-            disabled={isVoting || cooldown || !canVote}
-            className={cn(
-              "flex items-center gap-2 px-3 py-2 border-3 border-foreground font-black font-data text-sm uppercase",
-              userVote === "up"
-                ? "bg-green text-background"
-                : "bg-[#e0e0e0] hover:bg-green hover:text-background",
-              (isVoting || cooldown || !canVote) && "opacity-50 cursor-not-allowed"
-            )}
+    <div>
+      {/* Outer wrapper with clip-path only */}
+      <div
+        style={{
+          clipPath:
+            "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+        }}
+      >
+        {/* Middle border layer - light with padding */}
+        <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+          {/* Inner content layer - dark with same clip-path */}
+          <div
+            className="p-2"
+            style={{
+              backgroundColor: "#19191a",
+              clipPath:
+                "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+            }}
           >
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 4l-8 8h5v8h6v-8h5z" />
-            </svg>
-            <span>{filteredVotes.upvotes}</span>
-          </button>
-        </Tooltip.Trigger>
-        <Tooltip.Portal>
-          <Tooltip.Content
-            side="top"
-            align="center"
-            sideOffset={8}
-            className="z-50 max-w-[280px] bg-[#e0e0e0] border-3 border-foreground p-4"
-          >
-            {getVoteBreakdownText("up")}
-          </Tooltip.Content>
-        </Tooltip.Portal>
-      </Tooltip.Root>
+            <div className="flex items-center gap-2">
+              {/* Upvote Button */}
+              <Tooltip.Root delayDuration={0}>
+                <Tooltip.Trigger asChild>
+                  <button
+                    onClick={() => !isVoting && !cooldown && onVote("up")}
+                    disabled={isVoting || cooldown || !canVote}
+                    className={cn(
+                      "flex items-center gap-2 px-3 py-2 border-3 border-background font-black font-data text-sm uppercase",
+                      userVote === "up"
+                        ? "bg-green"
+                        : "bg-transparent hover:bg-green",
+                      (isVoting || cooldown || !canVote) &&
+                        "opacity-50 cursor-not-allowed"
+                    )}
+                    style={{
+                      color: "#dfd9d9",
+                      clipPath:
+                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                    }}
+                  >
+                    <svg
+                      className="w-4 h-4"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 4l-8 8h5v8h6v-8h5z" />
+                    </svg>
+                    <span>{filteredVotes.upvotes}</span>
+                  </button>
+                </Tooltip.Trigger>
+                <Tooltip.Portal>
+                  <Tooltip.Content
+                    side="top"
+                    align="center"
+                    sideOffset={8}
+                    className="z-50 max-w-[280px] border-3 border-background p-4"
+                    style={{
+                      backgroundColor: "#19191a",
+                      color: "#dfd9d9",
+                      clipPath:
+                        "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                    }}
+                  >
+                    {getVoteBreakdownText("up")}
+                  </Tooltip.Content>
+                </Tooltip.Portal>
+              </Tooltip.Root>
 
-      {/* Downvote Button */}
-      <Tooltip.Root delayDuration={0}>
-        <Tooltip.Trigger asChild>
-          <button
-            onClick={() => !isVoting && !cooldown && onVote("down")}
-            disabled={isVoting || cooldown || !canVote}
-            className={cn(
-              "flex items-center gap-2 px-3 py-2 border-3 border-foreground font-black font-data text-sm uppercase",
-              userVote === "down"
-                ? "bg-red text-background"
-                : "bg-[#e0e0e0] hover:bg-red hover:text-background",
-              (isVoting || cooldown || !canVote) && "opacity-50 cursor-not-allowed"
-            )}
-          >
-            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 20l8-8h-5V4H9v8H4z" />
-            </svg>
-            <span>{filteredVotes.downvotes}</span>
-          </button>
-        </Tooltip.Trigger>
-        <Tooltip.Portal>
-          <Tooltip.Content
-            side="top"
-            align="center"
-            sideOffset={8}
-            className="z-50 max-w-[280px] bg-[#e0e0e0] border-3 border-foreground p-4"
-          >
-            {getVoteBreakdownText("down")}
-          </Tooltip.Content>
-        </Tooltip.Portal>
-      </Tooltip.Root>
+              {/* Downvote Button */}
+              <Tooltip.Root delayDuration={0}>
+                <Tooltip.Trigger asChild>
+                  <button
+                    onClick={() => !isVoting && !cooldown && onVote("down")}
+                    disabled={isVoting || cooldown || !canVote}
+                    className={cn(
+                      "flex items-center gap-2 px-3 py-2 border-3 border-background font-black font-data text-sm uppercase",
+                      userVote === "down"
+                        ? "bg-red"
+                        : "bg-transparent hover:bg-red",
+                      (isVoting || cooldown || !canVote) &&
+                        "opacity-50 cursor-not-allowed"
+                    )}
+                    style={{
+                      color: "#dfd9d9",
+                      clipPath:
+                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                    }}
+                  >
+                    <svg
+                      className="w-4 h-4"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 20l8-8h-5V4H9v8H4z" />
+                    </svg>
+                    <span>{filteredVotes.downvotes}</span>
+                  </button>
+                </Tooltip.Trigger>
+                <Tooltip.Portal>
+                  <Tooltip.Content
+                    side="top"
+                    align="center"
+                    sideOffset={8}
+                    className="z-50 max-w-[280px] border-3 border-background p-4"
+                    style={{
+                      backgroundColor: "#19191a",
+                      color: "#dfd9d9",
+                      clipPath:
+                        "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                    }}
+                  >
+                    {getVoteBreakdownText("down")}
+                  </Tooltip.Content>
+                </Tooltip.Portal>
+              </Tooltip.Root>
 
-      {/* Mobile Info Button */}
-      <Tooltip.Root open={isMobileTooltipOpen} onOpenChange={setIsMobileTooltipOpen}>
-        <Tooltip.Trigger asChild>
-          <button
-            type="button"
-            className="sm:hidden p-2 border-3 border-foreground bg-[#e0e0e0] hover:bg-pink"
-            onClick={() => setIsMobileTooltipOpen(true)}
-          >
-            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-            </svg>
-          </button>
-        </Tooltip.Trigger>
-        <Tooltip.Portal>
-          <Tooltip.Content
-            side="top"
-            align="center"
-            sideOffset={8}
-            className="z-50 max-w-[280px] bg-[#e0e0e0] border-3 border-foreground p-4"
-            onPointerDownOutside={() => setIsMobileTooltipOpen(false)}
-            onEscapeKeyDown={() => setIsMobileTooltipOpen(false)}
-          >
-            {getCombinedBreakdownText()}
-          </Tooltip.Content>
-        </Tooltip.Portal>
-      </Tooltip.Root>
+              {/* Mobile Info Button */}
+              <Tooltip.Root
+                open={isMobileTooltipOpen}
+                onOpenChange={setIsMobileTooltipOpen}
+              >
+                <Tooltip.Trigger asChild>
+                  <button
+                    type="button"
+                    className="sm:hidden p-2 border-3 border-background bg-transparent hover:bg-pink"
+                    onClick={() => setIsMobileTooltipOpen(true)}
+                    style={{
+                      color: "#dfd9d9",
+                      clipPath:
+                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                    }}
+                  >
+                    <svg
+                      className="w-4 h-4"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                    </svg>
+                  </button>
+                </Tooltip.Trigger>
+                <Tooltip.Portal>
+                  <Tooltip.Content
+                    side="top"
+                    align="center"
+                    sideOffset={8}
+                    className="z-50 max-w-[280px] border-3 border-background p-4"
+                    style={{
+                      backgroundColor: "#19191a",
+                      color: "#dfd9d9",
+                      clipPath:
+                        "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                    }}
+                    onPointerDownOutside={() => setIsMobileTooltipOpen(false)}
+                    onEscapeKeyDown={() => setIsMobileTooltipOpen(false)}
+                  >
+                    {getCombinedBreakdownText()}
+                  </Tooltip.Content>
+                </Tooltip.Portal>
+              </Tooltip.Root>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
