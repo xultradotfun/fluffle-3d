@@ -1612,6 +1612,24 @@
       "megaMafia": true,
       "native": true,
       "testnet": false
+    },
+    {
+      "name": "Void.Eth",
+      "twitter": "voidoteth",
+      "description": "ARG game",
+      "category": "Gaming",
+      "megaMafia": false,
+      "native": true,
+      "testnet": false
+    },
+    {
+      "name": "Glitchy Bunnies",
+      "twitter": "404bunnies",
+      "description": "NFT collection",
+      "category": "NFT",
+      "megaMafia": false,
+      "native": true,
+      "testnet": false
     }
   ]
 }
