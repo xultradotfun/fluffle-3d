@@ -4,218 +4,214 @@
 
 @layer base {
   :root {
-    /* Light mode colors - clean modern look */
-    --background: 0 0% 0% / 0; /* transparent background */
-    --foreground: 225 25% 20%; /* Dark gray for text */
-    --card: 0 0% 100%; /* Pure white for cards */
-    --card-foreground: 225 25% 20%; /* Dark gray for card text */
-    --border: 225 25% 90%; /* Light gray for borders */
-    --input: 225 25% 90%; /* Light gray for inputs */
-    --primary: 235 85% 65%; /* Bright blue for primary actions */
-    --primary-foreground: 0 0% 100%; /* White */
-    --muted: 225 25% 90%; /* Light gray for muted elements */
-    --muted-foreground: 225 25% 40%; /* Medium gray for muted text */
-  }
-
-  .dark {
-    /* Dark mode colors */
-    --background: 0 0% 0% / 0; /* transparent background */
-    --foreground: 0 0% 98%; /* off-white */
-    --card: 240 10% 4%; /* very dark gray */
-    --card-foreground: 0 0% 98%; /* off-white */
-    --border: 240 4% 16%; /* dark gray */
-    --input: 240 4% 16%; /* dark gray */
-    --primary: 217 91% 60%; /* blue */
-    --primary-foreground: 0 0% 100%; /* white */
-    --muted: 240 4% 16%; /* dark gray */
-    --muted-foreground: 240 5% 65%; /* light gray */
+    /* MegaETH Brutalist Color Palette */
+    --background: #dfd9d9; /* MegaETH white */
+    --foreground: #19191a; /* MegaETH black */
+    --card: #e0e0e0; /* Light gray for cards */
+    --card-foreground: #19191a;
+    --border: #19191a;
+    --input: #e1dede;
+    --primary: #19191a;
+    --primary-foreground: #dfd9d9;
+    --accent: #f380cd; /* MegaETH pink */
+    --accent-foreground: #19191a;
+    --muted: #e1dede;
+    --muted-foreground: #666;
+    --secondary: #058d5e; /* MegaETH green */
+    --secondary-foreground: #dfd9d9;
+    --destructive: #b21840; /* MegaETH red */
+    --destructive-foreground: #dfd9d9;
   }
 }
 
 @layer base {
-  *:not(body) {
+  * {
     @apply border-border;
   }
 
   body {
-    @apply text-foreground transition-colors duration-300;
+    @apply bg-background text-foreground font-mono;
+    font-feature-settings: "kern" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
-@layer utilities {
-  .bg-background {
-    background: transparent !important;
-  }
-
-  /* Add fadeIn animation for tooltips */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: scale(0.95) translateY(5px);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1) translateY(0);
-    }
-  }
-
-  .animate-fadeIn {
-    animation: fadeIn 0.15s ease-out forwards;
-  }
+/* Brutalist background - Solid color */
+body {
+  background: #dfd9d9;
 }
 
-/* Light mode background effects */
-:root body {
-  background: linear-gradient(
-    to bottom right,
-    rgb(254, 254, 255),
-    rgb(250, 251, 254)
-  );
+/* Remove all soft effects */
+body::before,
+body::after {
+  display: none;
 }
 
-/* Dark mode background effects */
-.dark body {
-  background-color: rgb(5, 5, 8);
-  background-image: radial-gradient(
-      circle at top left,
-      rgb(12, 12, 17),
-      rgba(12, 12, 17, 0) 70%
-    ),
-    radial-gradient(
-      circle at top right,
-      rgb(17, 12, 22),
-      rgba(17, 12, 22, 0) 70%
-    ),
-    radial-gradient(
-      circle at bottom left,
-      rgb(12, 15, 22),
-      rgba(12, 15, 22, 0) 70%
-    ),
-    linear-gradient(to bottom right, rgb(10, 10, 15), rgb(5, 5, 8));
+/* Brutalist scrollbar - Chunky and visible */
+::-webkit-scrollbar {
+  width: 16px;
+  height: 16px;
 }
 
-/* Add a subtle noise texture overlay */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.02'/%3E%3C/svg%3E");
-  pointer-events: none;
-  opacity: 0.02;
-  z-index: -2;
-  mix-blend-mode: overlay;
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-left: 2px solid #19191a;
 }
 
-/* Add ambient glow effects - Light Mode */
-:root body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(
-      120% 120% at 50% -20%,
-      rgba(79, 70, 229, 0.15),
-      transparent 50%
-    ),
-    radial-gradient(
-      70% 70% at 90% 20%,
-      rgba(236, 72, 153, 0.12),
-      transparent 50%
-    ),
-    radial-gradient(
-      80% 80% at -20% 50%,
-      rgba(52, 211, 153, 0.15),
-      transparent 50%
-    ),
-    radial-gradient(
-      60% 60% at 95% 90%,
-      rgba(139, 92, 246, 0.15),
-      transparent 50%
-    );
-  pointer-events: none;
-  z-index: -1;
-  mix-blend-mode: multiply;
+::-webkit-scrollbar-thumb {
+  background: #19191a;
+  border: 2px solid #dfd9d9;
 }
 
-/* Add ambient glow effects - Dark Mode */
-.dark body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(
-      80% 80% at 50% -20%,
-      rgba(30, 64, 175, 0.15),
-      transparent 100%
-    ),
-    radial-gradient(
-      50% 50% at 80% 10%,
-      rgba(112, 26, 117, 0.15),
-      transparent 100%
-    ),
-    radial-gradient(
-      60% 60% at -10% 50%,
-      rgba(13, 148, 136, 0.15),
-      transparent 100%
-    ),
-    radial-gradient(
-      40% 40% at 90% 90%,
-      rgba(67, 56, 202, 0.15),
-      transparent 100%
-    );
-  pointer-events: none;
-  z-index: -1;
-  mix-blend-mode: screen;
+::-webkit-scrollbar-thumb:hover {
+  background: #f380cd;
 }
 
-/* Custom scrollbar - Light Mode */
-:root ::-webkit-scrollbar {
-  width: 10px;
-}
-
-:root ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.05);
-  border-radius: 5px;
-}
-
-:root ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-}
-
-:root ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.15);
-}
-
-/* Custom scrollbar - Dark Mode */
-.dark ::-webkit-scrollbar {
-  width: 10px;
-}
-
-.dark ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 5px;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 5px;
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.15);
-}
-
-/* Animations */
-@keyframes fade-in {
+/* Brutalist animations - Sharp and instant */
+@keyframes slide-in {
   from {
-    opacity: 0;
-    transform: translateY(10px);
+    transform: translateX(-100%);
   }
   to {
-    opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
   }
 }
 
-.animate-fade-in {
-  animation: fade-in 0.5s ease-out forwards;
+@keyframes pop-in {
+  from {
+    transform: scale(0.95);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.animate-slide-in {
+  animation: slide-in 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.animate-pop-in {
+  animation: pop-in 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Brutalist hard shadows */
+.shadow-brutal {
+  box-shadow: 4px 4px 0px 0px #19191a;
+}
+
+.shadow-brutal-sm {
+  box-shadow: 2px 2px 0px 0px #19191a;
+}
+
+.shadow-brutal-lg {
+  box-shadow: 6px 6px 0px 0px #19191a;
+}
+
+.shadow-brutal-xl {
+  box-shadow: 8px 8px 0px 0px #19191a;
+}
+
+/* Hover effect - shift shadow */
+.hover\:shadow-brutal-shift:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px 0px #19191a;
+}
+
+/* Brutalist borders */
+.border-brutal {
+  border: 3px solid #19191a;
+}
+
+.border-brutal-thick {
+  border: 4px solid #19191a;
+}
+
+/* Selection styling */
+::selection {
+  background: #f380cd;
+  color: #19191a;
+}
+
+/* Focus styles - Bold and visible */
+*:focus-visible {
+  outline: 3px solid #f380cd;
+  outline-offset: 2px;
+}
+
+/* Button reset for brutalist style */
+button {
+  font-family: inherit;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Brutalist link style */
+a {
+  text-decoration: none;
+  font-weight: 700;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* Disable smooth transitions - make them instant or very fast */
+* {
+  transition-duration: 0.1s !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* Typography - Bold and chunky */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+/* Monospace for data */
+.font-data {
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
+}
+
+/* Color utilities */
+.text-pink {
+  color: #f380cd;
+}
+
+.bg-pink {
+  background-color: #f380cd;
+}
+
+.text-green {
+  color: #058d5e;
+}
+
+.bg-green {
+  background-color: #058d5e;
+}
+
+.text-red {
+  color: #b21840;
+}
+
+.bg-red {
+  background-color: #b21840;
+}
+
+.border-pink {
+  border-color: #f380cd;
+}
+
+.border-green {
+  border-color: #058d5e;
+}
+
+.border-red {
+  border-color: #b21840;
 }

@@ -83,7 +83,6 @@ function ProjectCardComponent({
         userId: user.id,
       });
 
-      // Update local state
       setVotes({
         upvotes: data.upvotes,
         downvotes: data.downvotes,
@@ -91,7 +90,6 @@ function ProjectCardComponent({
       });
       setUserVote(data.userVote);
 
-      // Notify parent component to update the project data
       if (onVoteUpdate) {
         onVoteUpdate(project.twitter, data);
       }
@@ -116,44 +114,56 @@ function ProjectCardComponent({
   return (
     <Tooltip.Provider delayDuration={0} skipDelayDuration={0}>
       <div
-        className={`group relative overflow-hidden rounded-2xl bg-gradient-to-br from-white to-gray-50/80 dark:from-white/[0.03] dark:to-white/[0.02] border border-gray-200 dark:border-white/5 hover:border-blue-500/30 dark:hover:border-blue-500/20 transition-all duration-300 shadow-sm hover:shadow-md dark:shadow-none dark:hover:shadow-blue-500/5 ${
-          isLoadingVotes ? "opacity-75" : ""
-        }`}
+        className={`group h-full ${isLoadingVotes ? "opacity-50" : ""}`}
+        style={{
+          clipPath: 'polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)'
+        }}
       >
-        {/* Enhanced Background Effects */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.08),transparent)] dark:bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.06),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.05),transparent)] dark:bg-[radial-gradient(circle_at_center,rgba(37,99,235,0.04),transparent)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-        <div className="relative p-6 sm:p-8 flex flex-col h-full">
-          <ProjectHeader
-            name={project.name}
-            twitter={project.twitter}
-            category={project.category}
-            megaMafia={project.megaMafia}
-            testnet={project.testnet}
-          />
-
-          <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 flex-grow leading-relaxed">
-            {project.description}
-          </p>
-
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-auto pt-4 border-t border-gray-200/80 dark:border-white/[0.06]">
-            <div className="flex items-center gap-3">
-              <ProjectLinks
-                website={project.website}
-                discord={project.discord}
-                telegram={project.telegram}
+        <div 
+          className="h-full"
+          style={{
+            backgroundColor: "#19191a",
+            padding: "2px"
+          }}
+        >
+          <div 
+            className="bg-[#e0e0e0] h-full"
+            style={{
+              clipPath: 'polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)'
+            }}
+          >
+            <div className="p-6 flex flex-col h-full">
+              <ProjectHeader
+                name={project.name}
+                twitter={project.twitter}
+                category={project.category}
+                megaMafia={project.megaMafia}
+                testnet={project.testnet}
               />
-            </div>
-            <div className="flex-shrink-0 self-end sm:self-auto">
-              <ProjectVoting
-                votes={votes}
-                userVote={userVote}
-                isVoting={isVoting || isLoadingVotes}
-                canVote={!!user?.canVote}
-                cooldown={cooldown}
-                onVote={handleVote}
-              />
+
+              <p className="text-sm font-bold uppercase mb-6 flex-grow leading-snug">
+                {project.description}
+              </p>
+
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4 border-t-3 border-foreground">
+                <div className="flex items-center gap-3">
+                  <ProjectLinks
+                    website={project.website}
+                    discord={project.discord}
+                    telegram={project.telegram}
+                  />
+                </div>
+                <div className="flex-shrink-0 self-end sm:self-auto">
+                  <ProjectVoting
+                    votes={votes}
+                    userVote={userVote}
+                    isVoting={isVoting || isLoadingVotes}
+                    canVote={!!user?.canVote}
+                    cooldown={cooldown}
+                    onVote={handleVote}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
