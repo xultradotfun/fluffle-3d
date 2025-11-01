@@ -2,12 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { apiClient, API_ENDPOINTS } from "@/lib/api";
+import CountUp from "@/components/ui/CountUp";
 
 export function EcosystemHeader() {
   const [stats, setStats] = useState({
     uniqueVoters: 0,
     totalVotes: 0,
   });
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -15,9 +17,11 @@ export function EcosystemHeader() {
         const data = await apiClient.get(API_ENDPOINTS.VOTES.LIST);
         if (data.stats) {
           setStats(data.stats);
+          setIsLoaded(true);
         }
       } catch (error) {
         console.error("Failed to fetch vote stats:", error);
+        setIsLoaded(true); // Still show animation even if fetch fails
       }
     };
 
@@ -78,7 +82,17 @@ export function EcosystemHeader() {
           <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
             <div className="bg-[#e0e0e0] p-4" style={{ clipPath: clipStat }}>
               <div className="text-3xl sm:text-4xl font-black font-data mb-1">
-                {stats.uniqueVoters}
+                {isLoaded ? (
+                  <CountUp
+                    from={0}
+                    to={stats.uniqueVoters}
+                    separator=","
+                    direction="up"
+                    duration={1.5}
+                  />
+                ) : (
+                  "..."
+                )}
               </div>
               <div className="text-xs font-bold uppercase text-gray-600">
                 [VOTERS]
@@ -92,7 +106,17 @@ export function EcosystemHeader() {
           <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
             <div className="bg-[#e0e0e0] p-4" style={{ clipPath: clipStat }}>
               <div className="text-3xl sm:text-4xl font-black font-data mb-1">
-                {stats.totalVotes}
+                {isLoaded ? (
+                  <CountUp
+                    from={0}
+                    to={stats.totalVotes}
+                    separator=","
+                    direction="up"
+                    duration={1.5}
+                  />
+                ) : (
+                  "..."
+                )}
               </div>
               <div className="text-xs font-bold uppercase text-gray-600">
                 [TOTAL VOTES]
@@ -106,7 +130,14 @@ export function EcosystemHeader() {
           <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
             <div className="bg-[#e0e0e0] p-4" style={{ clipPath: clipStat }}>
               <div className="text-3xl sm:text-4xl font-black font-data mb-1">
-                100+
+                <CountUp
+                  from={0}
+                  to={100}
+                  separator=","
+                  direction="up"
+                  duration={1.5}
+                />
+                +
               </div>
               <div className="text-xs font-bold uppercase text-gray-600">
                 [PROJECTS]
@@ -120,7 +151,13 @@ export function EcosystemHeader() {
           <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
             <div className="bg-[#e0e0e0] p-4" style={{ clipPath: clipStat }}>
               <div className="text-3xl sm:text-4xl font-black font-data mb-1">
-                12
+                <CountUp
+                  from={0}
+                  to={12}
+                  separator=","
+                  direction="up"
+                  duration={1.5}
+                />
               </div>
               <div className="text-xs font-bold uppercase text-gray-600">
                 [CATEGORIES]
