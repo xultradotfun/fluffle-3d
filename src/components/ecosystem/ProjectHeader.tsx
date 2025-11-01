@@ -53,11 +53,6 @@ function ProjectHeaderComponent({
               />
             </div>
           )}
-          {live && (
-            <div className="w-6 h-6 border-2 border-white bg-green flex items-center justify-center">
-              <FlaskConical className="w-4 h-4 text-background" strokeWidth={3} />
-            </div>
-          )}
         </div>
         <div className="flex items-center gap-2 flex-wrap">
           <span className="inline-flex items-center px-2 py-1 border-2 border-white bg-foreground text-white text-xs font-black uppercase">

@@ -162,6 +162,16 @@ function ProjectCardComponent({
                 mixBlendMode: "overlay",
               }}
             />
+            {/* Live Indicator - Simple Pulsing Dot */}
+            {project.live && (
+              <div className="absolute top-4 right-4 z-20">
+                <div className="relative flex items-center justify-center w-4 h-4">
+                  <div className="absolute w-4 h-4 bg-green rounded-full animate-ping opacity-75"></div>
+                  <div className="relative w-4 h-4 bg-green rounded-full border-2 border-white shadow-[0_0_8px_rgba(5,141,94,0.8)]"></div>
+                </div>
+              </div>
+            )}
+
             {/* Content wrapper */}
             <div className="p-6 flex flex-col h-full relative z-10 text-white">
               <ProjectHeader
