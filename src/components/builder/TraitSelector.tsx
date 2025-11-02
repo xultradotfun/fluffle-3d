@@ -23,28 +23,32 @@ function NoneButton({
   return (
     <button
       onClick={onSelect}
-      className={`aspect-square rounded-2xl p-3 flex flex-col items-center justify-center gap-2 transition-all ${
+      className={`aspect-square p-3 flex flex-col items-center justify-center gap-2 transition-all border-3 border-foreground ${
         isSelected
-          ? "bg-blue-600 text-white"
-          : "bg-gray-900/60 text-blue-400 hover:bg-gray-900/80"
+          ? "bg-pink text-foreground"
+          : "bg-card text-foreground hover:bg-pink"
       }`}
+      style={{
+        clipPath:
+          "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+      }}
     >
-      <div className="w-full aspect-square rounded-xl bg-gray-950/50 flex items-center justify-center">
+      <div className="w-full aspect-square bg-foreground/10 flex items-center justify-center border-2 border-foreground">
         <svg
-          className="w-8 h-8 opacity-60"
+          className="w-8 h-8"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          strokeWidth={3}
         >
           <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={1.5}
+            strokeLinecap="square"
+            strokeLinejoin="miter"
             d="M6 18L18 6M6 6l12 12"
           />
         </svg>
       </div>
-      <span className="text-sm font-medium">None</span>
+      <span className="text-xs font-black uppercase">None</span>
     </button>
   );
 }
@@ -66,14 +70,18 @@ function TraitButton({
   return (
     <button
       onClick={onSelect}
-      className={`aspect-square rounded-2xl p-3 flex flex-col items-center justify-center gap-2 transition-all ${
+      className={`aspect-square p-3 flex flex-col items-center justify-center gap-2 transition-all border-3 border-foreground ${
         isSelected
-          ? "bg-blue-600 text-white"
-          : "bg-gray-900/60 text-gray-100 hover:bg-gray-900/80"
+          ? "bg-pink text-foreground"
+          : "bg-card text-foreground hover:bg-pink"
       }`}
+      style={{
+        clipPath:
+          "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+      }}
     >
-      <div className="w-full aspect-square rounded-xl overflow-hidden relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-800/50 to-gray-900/50" />
+      <div className="w-full aspect-square overflow-hidden relative border-2 border-foreground">
+        <div className="absolute inset-0 bg-foreground/10" />
         {croppedImageUrl ? (
           <img
             src={croppedImageUrl}
@@ -95,11 +103,16 @@ function TraitButton({
           />
         )}
       </div>
-      <span className="text-sm font-medium truncate" title={option.displayName}>
+      <span
+        className="text-xs font-black uppercase truncate w-full text-center"
+        title={option.displayName}
+      >
         {option.displayName}
       </span>
       {option.tribe && (
-        <span className="text-xs text-gray-400 truncate">{option.tribe}</span>
+        <span className="text-[10px] font-bold uppercase truncate">
+          {option.tribe}
+        </span>
       )}
     </button>
   );

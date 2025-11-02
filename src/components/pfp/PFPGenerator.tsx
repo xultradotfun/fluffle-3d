@@ -4,12 +4,16 @@ import { useState, useRef, useEffect } from "react";
 import { NFTBadge } from "./NFTBadge";
 import { PreviewCard } from "./PreviewCard";
 import { InputCard } from "./InputCard";
+import PageHeader from "@/components/PageHeader";
 import type { NFTTrait } from "@/utils/nftLoader";
 import { getTraitImageUrl } from "@/utils/traitImageMap";
 
 type ZoomLevel = "full" | "bust";
 
 export function PFPGenerator() {
+  // Generate a random NFT ID on mount
+  const [defaultNFTId] = useState(() => Math.floor(Math.random() * 5000).toString());
+  
   const [selectedNFT, setSelectedNFT] = useState<{
     id: string;
     traits: NFTTrait;
@@ -26,7 +30,7 @@ export function PFPGenerator() {
   );
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // Load initial background image
+  // Load initial background image and default NFT
   useEffect(() => {
     const loadInitialBg = async () => {
       try {
@@ -34,6 +38,30 @@ export function PFPGenerator() {
           getTraitImageUrl("background", selectedBackground)
         );
         setCurrentBgImage(img);
+        
+        // Load default NFT after background is ready
+        const emptyTraits: NFTTrait = {
+          tribe: -1,
+          skin: -1,
+          hair: -1,
+          eyeball: -1,
+          eyeliner: -1,
+          eyebrow: -1,
+          head: -1,
+          ear: -1,
+          face: -1,
+          tribe_display_name: "",
+          skin_display_name: "",
+          hair_display_name: "",
+          eyeball_display_name: "",
+          eyeliner_display_name: "",
+          eyebrow_display_name: "",
+          head_display_name: "",
+          ear_display_name: "",
+          face_display_name: "",
+        };
+        setSelectedNFT({ id: defaultNFTId, traits: emptyTraits });
+        await generatePFP(defaultNFTId, "bust", true, img);
       } catch (err) {
         console.error("Error loading initial background:", err);
       }
@@ -269,35 +297,22 @@ export function PFPGenerator() {
 
   return (
     <div className="space-y-6 sm:space-y-8 animate-fade-in">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6">
-        <div className="space-y-3 sm:space-y-4">
-          <div className="space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400 bg-clip-text text-transparent">
-              PFP Generator
-            </h2>
-            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 max-w-lg">
-              Transform your Fluffle NFT into a beautiful profile picture with
-              our custom generator.
-            </p>
-          </div>
-          <div className="inline-flex items-center gap-2 text-xs sm:text-sm px-2 py-1 rounded-lg bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-500/10 dark:to-pink-500/10 border border-purple-100 dark:border-purple-500/10">
-            <span className="text-gray-500 dark:text-gray-400">
+      <PageHeader
+        title="PFP Generator"
+        description="Transform your Fluffle NFT into a beautiful profile picture"
+      />
+      <div className="inline-flex items-center gap-2 text-xs px-2 py-1 bg-pink border-2 border-foreground">
+        <span className="text-foreground font-bold uppercase">
               Design by{" "}
               <a
                 href="https://x.com/juliencoppola"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-purple-600 dark:text-purple-400 hover:text-pink-600 dark:hover:text-pink-400 transition-colors font-medium"
+            className="text-foreground hover:text-background transition-colors font-black"
               >
                 @juliencoppola
               </a>
             </span>
-          </div>
-        </div>
-        <div className="flex-shrink-0 hidden sm:block">
-          <NFTBadge selectedId={selectedNFT?.id} />
-        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto">

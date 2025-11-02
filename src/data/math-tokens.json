@@ -1,0 +1,24 @@
+{
+  "tokens": [
+    "ethereum",
+    "binancecoin",
+    "ripple",
+    "solana",
+    "tron",
+    "cardano",
+    "dogecoin",
+    "hyperliquid",
+    "sui",
+    "avalanche-2",
+    "mantle",
+    "the-open-network",
+    "polkadot",
+    "bittensor",
+    "stellar",
+    "zcash",
+    "near",
+    "aptos",
+    "story-2"
+  ],
+  "description": "List of cryptocurrency tokens to compare MegaETH valuations against"
+}

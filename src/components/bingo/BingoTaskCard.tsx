@@ -64,7 +64,7 @@ export function BingoTaskCard({
                     title={project.name}
                   >
                     <Image
-                      src={`/avatars/${twitter}.jpg`}
+                      src={project.img || `/avatars/${twitter}.jpg`}
                       alt={project.name}
                       fill
                       className="object-cover"

@@ -4,8 +4,8 @@ import { apiClient, API_ENDPOINTS } from "@/lib/api";
 import { useBingoConfig } from "@/hooks/useBingoConfig";
 import { BingoCard } from "./BingoCard";
 import { Trophy, Smartphone, LogOut } from "lucide-react";
-import ecosystemData from "@/data/ecosystem.json";
 import Image from "next/image";
+import PageHeader from "@/components/PageHeader";
 import type { BingoTask, Project } from "@/types/bingo";
 
 export function BingoView() {
@@ -18,6 +18,25 @@ export function BingoView() {
   const [guestName, setGuestName] = useState<string>("");
   const [showGuestInput, setShowGuestInput] = useState(false);
   const [tempGuestName, setTempGuestName] = useState("");
+  const [ecosystemProjects, setEcosystemProjects] = useState<Project[]>([]);
+
+  // Fetch projects from API
+  useEffect(() => {
+    async function fetchProjects() {
+      try {
+        const response = await fetch("https://api.fluffle.tools/api/projects/full");
+        if (!response.ok) {
+          throw new Error(`Failed to fetch projects: ${response.statusText}`);
+        }
+        const data = await response.json();
+        setEcosystemProjects(data.projects);
+      } catch (err) {
+        console.error("Error fetching projects:", err);
+      }
+    }
+
+    fetchProjects();
+  }, []);
 
   const handleLogin = () => {
     login("/#bingo");
@@ -123,7 +142,7 @@ export function BingoView() {
 
   // Create a map of Twitter handles to project data for quick lookup
   const projectMap = new Map<string, Project>(
-    ecosystemData.projects.map((project) => [project.twitter, project])
+    ecosystemProjects.map((project) => [project.twitter, project])
   );
 
   const handleTaskToggle = async (taskId: string) => {
@@ -252,36 +271,17 @@ export function BingoView() {
   }
 
   return (
-    <div className="min-h-screen py-12">
+    <div className="min-h-screen py-12 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header Section */}
-        <div className="text-center max-w-4xl mx-auto mb-12 relative">
-          <div className="absolute inset-x-0 top-6 -bottom-6 bg-gradient-to-b from-teal-500/10 via-emerald-500/5 to-transparent dark:from-teal-500/[0.07] dark:via-emerald-500/[0.03] dark:to-transparent blur-2xl -z-10 rounded-[100%]" />
+        <div className="mb-12">
+          <PageHeader
+            title="MegaETH Testnet Bingo"
+            description="Explore the MegaETH testnet through interactive challenges and complete your very own bingo card!"
+          />
+        </div>
 
-          <h1 className="flex items-center justify-center gap-3 text-4xl sm:text-5xl font-bold mb-6">
-            <div
-              className="relative h-10 sm:h-12"
-              style={{ width: "calc(8.13 * 2.5rem)" }}
-            >
-              <Image
-                src="/megalogo.png"
-                alt="MegaETH"
-                fill
-                className="object-contain brightness-0 opacity-80 dark:opacity-100 dark:invert"
-                unoptimized
-                priority
-              />
-            </div>
-            <span className="bg-gradient-to-r from-teal-500 via-emerald-500 to-green-500 dark:from-teal-400 dark:via-emerald-400 dark:to-green-400 bg-clip-text text-transparent tracking-tight">
-              Testnet Bingo
-            </span>
-          </h1>
-
-          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
-            Explore the MegaETH testnet through interactive challenges and
-            complete your very own bingo card!
-          </p>
-
+        {/* User/Guest Info */}
+        <div className="mb-8">
           {user ? (
             <div className="flex items-center justify-center gap-3">
               <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/[0.08] backdrop-blur-sm">

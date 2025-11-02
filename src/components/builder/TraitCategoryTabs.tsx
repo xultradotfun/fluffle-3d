@@ -19,15 +19,19 @@ export default function TraitCategoryTabs({
         <button
           key={type}
           onClick={() => onCategorySelect(type)}
-          className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-3 py-2 border-3 text-xs font-black uppercase transition-colors ${
             activeCategory === type
-              ? "bg-primary text-primary-foreground"
-              : "bg-muted text-muted-foreground hover:bg-muted/80"
+                    ? "bg-pink text-foreground border-foreground"
+                    : "bg-transparent border-background hover:bg-pink hover:text-foreground hover:border-foreground"
           }`}
+                style={{
+                  clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                  color: activeCategory === type ? "#19191a" : "#dfd9d9",
+                }}
         >
           {type.charAt(0).toUpperCase() + type.slice(1).replace(/_/g, " ")}
           {selectedTraits[type] && (
-            <span className="ml-2 w-2 h-2 rounded-full bg-green-500 inline-block" />
+            <span className="ml-2 w-2 h-2 bg-green border-2 border-background inline-block" />
           )}
         </button>
       ))}

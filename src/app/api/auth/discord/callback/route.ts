@@ -142,8 +142,10 @@ export async function GET(request: Request) {
       console.error("Failed to parse state:", error);
     }
 
-    // Create the response first
-    const response = NextResponse.redirect(new URL(returnTo, request.url));
+    // Create the response first with auth_success parameter
+    const redirectUrl = new URL(returnTo, request.url);
+    redirectUrl.searchParams.set('auth_success', '1');
+    const response = NextResponse.redirect(redirectUrl);
 
     // Store only relevant guild IDs - secure and space-efficient
     const relevantGuildIds = isInServer

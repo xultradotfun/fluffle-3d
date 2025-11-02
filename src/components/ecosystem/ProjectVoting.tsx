@@ -1,20 +1,14 @@
 import { cn } from "@/lib/utils";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { ROLE_TIERS } from "@/lib/constants";
-import { useState } from "react";
-
-interface VoteBreakdown {
-  [roleName: string]: {
-    up: number;
-    down: number;
-  };
-}
+import { useState, memo, useMemo, useEffect } from "react";
+import type { VoteBreakdown } from "@/types/ecosystem";
 
 interface ProjectVotingProps {
   votes: {
     upvotes: number;
     downvotes: number;
-    breakdown?: Record<string, { up: number; down: number }>;
+    breakdown?: VoteBreakdown;
   };
   userVote: "up" | "down" | null;
   isVoting: boolean;
@@ -23,7 +17,18 @@ interface ProjectVotingProps {
   onVote: (vote: "up" | "down") => void;
 }
 
-export function ProjectVoting({
+// Utility function to abbreviate large numbers
+function abbreviateNumber(num: number): string {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
+  }
+  if (num >= 1000) {
+    return (num / 1000).toFixed(1).replace(/\.0$/, "") + "K";
+  }
+  return num.toString();
+}
+
+function ProjectVotingComponent({
   votes,
   userVote,
   isVoting,
@@ -32,29 +37,39 @@ export function ProjectVoting({
   onVote,
 }: ProjectVotingProps) {
   const [isMobileTooltipOpen, setIsMobileTooltipOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const getFilteredVoteCounts = () => {
-    if (!votes.breakdown) {
-      return {
-        upvotes: votes.upvotes || 0,
-        downvotes: votes.downvotes || 0,
-      };
-    }
-
-    // Show all votes in the display
-    return {
-      upvotes: votes.upvotes,
-      downvotes: votes.downvotes,
+  // Detect mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640); // sm breakpoint
     };
-  };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
-  const filteredVotes = getFilteredVoteCounts();
+  const filteredVotes = useMemo(() => {
+    return {
+      upvotes: votes.upvotes || 0,
+      downvotes: votes.downvotes || 0,
+    };
+  }, [votes]);
+
+  const displayVotes = useMemo(() => {
+    return {
+      upvotes: isMobile
+        ? abbreviateNumber(filteredVotes.upvotes)
+        : filteredVotes.upvotes.toString(),
+      downvotes: isMobile
+        ? abbreviateNumber(filteredVotes.downvotes)
+        : filteredVotes.downvotes.toString(),
+    };
+  }, [filteredVotes, isMobile]);
 
   const getVoteBreakdownText = (voteType: "up" | "down") => {
     if (!votes.breakdown)
-      return (
-        <div className="text-gray-500 dark:text-gray-400">No votes yet</div>
-      );
+      return <div className="font-bold uppercase">NO VOTES YET</div>;
 
     const breakdownLines = [...ROLE_TIERS]
       .reverse()
@@ -65,29 +80,10 @@ export function ProjectVoting({
         return (
           <div
             key={role.name}
-            className="flex justify-between items-center gap-3 py-1"
+            className="flex justify-between items-center gap-4 py-1 border-b-2 border-foreground"
           >
-            <div className="flex items-center gap-2">
-              <div
-                className={cn(
-                  "w-2 h-2 rounded-full",
-                  voteType === "up"
-                    ? "bg-emerald-500 dark:bg-emerald-400"
-                    : "bg-red-500 dark:bg-red-400"
-                )}
-              />
-              <span className="text-gray-700 dark:text-gray-300 font-medium">
-                {role.name}
-              </span>
-            </div>
-            <span
-              className={cn(
-                "font-semibold tabular-nums",
-                voteType === "up"
-                  ? "text-emerald-600 dark:text-emerald-400"
-                  : "text-red-600 dark:text-red-400"
-              )}
-            >
+            <span className="font-bold uppercase text-xs">{role.name}</span>
+            <span className="font-black font-data">
               {voteType === "up" ? "+" : "-"}
               {count}
             </span>
@@ -97,22 +93,20 @@ export function ProjectVoting({
       .filter(Boolean);
 
     return breakdownLines.length > 0 ? (
-      <div className="space-y-0.5">
+      <div className="space-y-1">
         {breakdownLines}
-        <div className="mt-3 pt-3 border-t border-gray-200/50 dark:border-white/[0.08] text-xs text-gray-500 dark:text-gray-400">
-          Note: Project sorting excludes MiniETH votes
+        <div className="mt-3 pt-3 border-t-3 border-foreground text-xs font-bold uppercase">
+          SORTING EXCLUDES MINIETH
         </div>
       </div>
     ) : (
-      <div className="text-gray-500 dark:text-gray-400">No votes yet</div>
+      <div className="font-bold uppercase">NO VOTES YET</div>
     );
   };
 
   const getCombinedBreakdownText = () => {
     if (!votes.breakdown)
-      return (
-        <div className="text-gray-500 dark:text-gray-400">No votes yet</div>
-      );
+      return <div className="font-bold uppercase">NO VOTES YET</div>;
 
     const breakdownLines = [...ROLE_TIERS]
       .reverse()
@@ -122,22 +116,12 @@ export function ProjectVoting({
         return (
           <div
             key={role.name}
-            className="flex justify-between items-center gap-3 py-1"
+            className="flex justify-between items-center gap-4 py-2 border-b-2 border-foreground"
           >
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 rounded-full bg-gradient-to-br from-emerald-500 to-blue-500 dark:from-emerald-400 dark:to-blue-400" />
-              <span className="text-gray-700 dark:text-gray-300 font-medium">
-                {role.name}
-              </span>
-            </div>
-            <div className="flex items-center gap-2 font-semibold tabular-nums">
-              <span className="text-emerald-600 dark:text-emerald-400">
-                +{roleVotes.up}
-              </span>
-              <span className="text-gray-400 dark:text-gray-500">/</span>
-              <span className="text-red-600 dark:text-red-400">
-                -{roleVotes.down}
-              </span>
+            <span className="font-bold uppercase text-xs">{role.name}</span>
+            <div className="flex items-center gap-3 font-black font-data">
+              <span className="text-foreground">+{roleVotes.up}</span>
+              <span className="text-muted-foreground">-{roleVotes.down}</span>
             </div>
           </div>
         );
@@ -145,217 +129,236 @@ export function ProjectVoting({
       .filter(Boolean);
 
     return breakdownLines.length > 0 ? (
-      <div className="space-y-0.5">
+      <div className="space-y-0">
         {breakdownLines}
-        <div className="mt-3 pt-3 border-t border-gray-200/50 dark:border-white/[0.08] text-xs text-gray-500 dark:text-gray-400">
-          Note: Project sorting excludes MiniETH votes
+        <div className="mt-3 pt-3 border-t-3 border-foreground text-xs font-bold uppercase">
+          SORTING EXCLUDES MINIETH
         </div>
       </div>
     ) : (
-      <div className="text-gray-500 dark:text-gray-400">No votes yet</div>
+      <div className="font-bold uppercase">NO VOTES YET</div>
     );
   };
 
   return (
-    <div className="flex items-center gap-2">
-      <div className="flex items-center gap-2">
-        <Tooltip.Root>
-          <Tooltip.Trigger asChild>
-            <button
-              onClick={() => onVote("up")}
-              disabled={isVoting || cooldown}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium transition-all duration-200
-                ${
-                  userVote === "up"
-                    ? "bg-emerald-100 dark:bg-emerald-500/30 text-emerald-700 dark:text-emerald-300 ring-1 ring-emerald-500/30 dark:ring-emerald-500/50"
-                    : "bg-white dark:bg-white/[0.05] text-emerald-600/60 dark:text-emerald-400/60 shadow-[0_2px_4px_rgba(0,0,0,0.02)] dark:shadow-none hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-500/10"
-                }
-                ${
-                  (isVoting || cooldown) &&
-                  "cursor-not-allowed opacity-50 hover:bg-white dark:hover:bg-white/[0.05]"
-                }
-              `}
-            >
-              <svg
-                className={`h-4 w-4 transition-transform duration-200 ${
-                  userVote === "up"
-                    ? "text-emerald-600 dark:text-emerald-300"
-                    : "text-emerald-500/60 dark:text-emerald-400/60"
-                }`}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={1.75}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M5 15l7-7 7 7"
-                />
-              </svg>
-              <span className="min-w-[1.5rem] text-center tabular-nums">
-                {filteredVotes.upvotes}
-              </span>
-            </button>
-          </Tooltip.Trigger>
-          <Tooltip.Portal>
-            <Tooltip.Content
-              side="top"
-              align="center"
-              sideOffset={5}
-              className="z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl px-4 py-3 rounded-xl text-sm text-gray-900 dark:text-gray-100 shadow-xl border border-gray-200/50 dark:border-white/[0.08] select-none touch-none"
-              avoidCollisions={true}
-              collisionPadding={16}
-              sticky="partial"
-            >
-              <div className="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200/50 dark:border-white/[0.08]">
-                <svg
-                  className="w-4 h-4 text-emerald-500 dark:text-emerald-400"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={1.75}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5 15l7-7 7 7"
-                  />
-                </svg>
-                <span className="font-semibold">Upvotes Breakdown</span>
-              </div>
-              <div className="min-w-[180px] space-y-1">
-                {getVoteBreakdownText("up")}
-              </div>
-              <Tooltip.Arrow className="fill-white/95 dark:fill-gray-900/95" />
-            </Tooltip.Content>
-          </Tooltip.Portal>
-        </Tooltip.Root>
-
-        <Tooltip.Root>
-          <Tooltip.Trigger asChild>
-            <button
-              onClick={() => onVote("down")}
-              disabled={isVoting || cooldown}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium transition-all duration-200
-                ${
-                  userVote === "down"
-                    ? "bg-red-100 dark:bg-red-500/30 text-red-700 dark:text-red-300 ring-1 ring-red-500/30 dark:ring-red-500/50"
-                    : "bg-white dark:bg-white/[0.05] text-red-600/60 dark:text-red-400/60 shadow-[0_2px_4px_rgba(0,0,0,0.02)] dark:shadow-none hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50/50 dark:hover:bg-red-500/10"
-                }
-                ${
-                  (isVoting || cooldown) &&
-                  "cursor-not-allowed opacity-50 hover:bg-white dark:hover:bg-white/[0.05]"
-                }
-              `}
-            >
-              <svg
-                className={`h-4 w-4 transition-transform duration-200 ${
-                  userVote === "down"
-                    ? "text-red-600 dark:text-red-300"
-                    : "text-red-500/60 dark:text-red-400/60"
-                }`}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={1.75}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-              <span className="min-w-[1.5rem] text-center tabular-nums">
-                {filteredVotes.downvotes}
-              </span>
-            </button>
-          </Tooltip.Trigger>
-          <Tooltip.Portal>
-            <Tooltip.Content
-              side="top"
-              align="center"
-              sideOffset={5}
-              className="z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl px-4 py-3 rounded-xl text-sm text-gray-900 dark:text-gray-100 shadow-xl border border-gray-200/50 dark:border-white/[0.08] select-none touch-none"
-              avoidCollisions={true}
-              collisionPadding={16}
-              sticky="partial"
-            >
-              <div className="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200/50 dark:border-white/[0.08]">
-                <svg
-                  className="w-4 h-4 text-red-500 dark:text-red-400"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={1.75}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-                <span className="font-semibold">Downvotes Breakdown</span>
-              </div>
-              <div className="min-w-[180px] space-y-1">
-                {getVoteBreakdownText("down")}
-              </div>
-              <Tooltip.Arrow className="fill-white/95 dark:fill-gray-900/95" />
-            </Tooltip.Content>
-          </Tooltip.Portal>
-        </Tooltip.Root>
-      </div>
-
-      {/* Mobile Info Button */}
-      <Tooltip.Root
-        open={isMobileTooltipOpen}
-        onOpenChange={setIsMobileTooltipOpen}
-        delayDuration={0}
+    <div>
+      {/* Outer wrapper with clip-path only */}
+      <div
+        style={{
+          clipPath:
+            "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+        }}
       >
-        <Tooltip.Trigger asChild>
-          <button
-            className="sm:hidden flex items-center justify-center w-9 h-9 rounded-xl bg-white dark:bg-white/[0.05] shadow-[0_2px_4px_rgba(0,0,0,0.02)] dark:shadow-none text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/[0.08] transition-all duration-200"
-            aria-label="Vote breakdown"
-            onClick={() => setIsMobileTooltipOpen(true)}
+        {/* Middle border layer - light with padding */}
+        <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+          {/* Inner content layer - dark with same clip-path */}
+          <div
+            className="p-2"
+            style={{
+              backgroundColor: "#19191a",
+              clipPath:
+                "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+            }}
           >
-            ⓘ
-          </button>
-        </Tooltip.Trigger>
-        <Tooltip.Portal>
-          <Tooltip.Content
-            className="z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl px-4 py-3 rounded-xl text-sm text-gray-900 dark:text-gray-100 shadow-xl border border-gray-200/50 dark:border-white/[0.08] select-none touch-none"
-            side="top"
-            sideOffset={5}
-            align="center"
-            avoidCollisions={true}
-            collisionPadding={16}
-            sticky="partial"
-            onPointerDownOutside={() => setIsMobileTooltipOpen(false)}
-            onEscapeKeyDown={() => setIsMobileTooltipOpen(false)}
-          >
-            <div className="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200/50 dark:border-white/[0.08]">
-              <svg
-                className="w-4 h-4 text-blue-500 dark:text-blue-400"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={1.75}
+            <div className="flex items-center gap-2">
+              {/* Upvote Button */}
+              <Tooltip.Root delayDuration={0}>
+                <Tooltip.Trigger asChild>
+                  <button
+                    onClick={() => !isVoting && !cooldown && onVote("up")}
+                    disabled={isVoting || cooldown}
+                    className={cn(
+                      "flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-2 border-3 border-background font-black font-data text-xs sm:text-sm uppercase",
+                      userVote === "up"
+                        ? "bg-green"
+                        : "bg-transparent hover:bg-green",
+                      (isVoting || cooldown) && "opacity-50 cursor-not-allowed"
+                    )}
+                    style={{
+                      color: "#dfd9d9",
+                      clipPath:
+                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                    }}
+                  >
+                    <svg
+                      className="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 4l-8 8h5v8h6v-8h5z" />
+                    </svg>
+                    <span>{displayVotes.upvotes}</span>
+                  </button>
+                </Tooltip.Trigger>
+                <Tooltip.Portal>
+                  <Tooltip.Content
+                    side="top"
+                    align="center"
+                    sideOffset={8}
+                    className="z-50"
+                  >
+                    {/* Outer wrapper with clip-path */}
+                    <div
+                      style={{
+                        clipPath:
+                          "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                      }}
+                    >
+                      {/* Middle border layer */}
+                      <div
+                        style={{ backgroundColor: "#dfd9d9", padding: "2px" }}
+                      >
+                        {/* Inner content layer */}
+                        <div
+                          className="max-w-[280px] p-4"
+                          style={{
+                            backgroundColor: "#19191a",
+                            color: "#dfd9d9",
+                            clipPath:
+                              "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                          }}
+                        >
+                          {getVoteBreakdownText("up")}
+                        </div>
+                      </div>
+                    </div>
+                  </Tooltip.Content>
+                </Tooltip.Portal>
+              </Tooltip.Root>
+
+              {/* Downvote Button */}
+              <Tooltip.Root delayDuration={0}>
+                <Tooltip.Trigger asChild>
+                  <button
+                    onClick={() => !isVoting && !cooldown && onVote("down")}
+                    disabled={isVoting || cooldown}
+                    className={cn(
+                      "flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-2 border-3 border-background font-black font-data text-xs sm:text-sm uppercase",
+                      userVote === "down"
+                        ? "bg-red"
+                        : "bg-transparent hover:bg-red",
+                      (isVoting || cooldown) && "opacity-50 cursor-not-allowed"
+                    )}
+                    style={{
+                      color: "#dfd9d9",
+                      clipPath:
+                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                    }}
+                  >
+                    <svg
+                      className="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M12 20l8-8h-5V4H9v8H4z" />
+                    </svg>
+                    <span>{displayVotes.downvotes}</span>
+                  </button>
+                </Tooltip.Trigger>
+                <Tooltip.Portal>
+                  <Tooltip.Content
+                    side="top"
+                    align="center"
+                    sideOffset={8}
+                    className="z-50"
+                  >
+                    {/* Outer wrapper with clip-path */}
+                    <div
+                      style={{
+                        clipPath:
+                          "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                      }}
+                    >
+                      {/* Middle border layer */}
+                      <div
+                        style={{ backgroundColor: "#dfd9d9", padding: "2px" }}
+                      >
+                        {/* Inner content layer */}
+                        <div
+                          className="max-w-[280px] p-4"
+                          style={{
+                            backgroundColor: "#19191a",
+                            color: "#dfd9d9",
+                            clipPath:
+                              "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                          }}
+                        >
+                          {getVoteBreakdownText("down")}
+                        </div>
+                      </div>
+                    </div>
+                  </Tooltip.Content>
+                </Tooltip.Portal>
+              </Tooltip.Root>
+
+              {/* Mobile Info Button */}
+              <Tooltip.Root
+                open={isMobileTooltipOpen}
+                onOpenChange={setIsMobileTooltipOpen}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-              <span className="font-semibold">Vote Breakdown</span>
+                <Tooltip.Trigger asChild>
+                  <button
+                    type="button"
+                    className="sm:hidden p-2 border-3 border-background bg-transparent hover:bg-pink"
+                    onClick={() => setIsMobileTooltipOpen(true)}
+                    style={{
+                      color: "#dfd9d9",
+                      clipPath:
+                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                    }}
+                  >
+                    <svg
+                      className="w-4 h-4"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                    >
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                    </svg>
+                  </button>
+                </Tooltip.Trigger>
+                <Tooltip.Portal>
+                  <Tooltip.Content
+                    side="top"
+                    align="center"
+                    sideOffset={8}
+                    className="z-50"
+                    onPointerDownOutside={() => setIsMobileTooltipOpen(false)}
+                    onEscapeKeyDown={() => setIsMobileTooltipOpen(false)}
+                  >
+                    {/* Outer wrapper with clip-path */}
+                    <div
+                      style={{
+                        clipPath:
+                          "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                      }}
+                    >
+                      {/* Middle border layer */}
+                      <div
+                        style={{ backgroundColor: "#dfd9d9", padding: "2px" }}
+                      >
+                        {/* Inner content layer */}
+                        <div
+                          className="max-w-[280px] p-4"
+                          style={{
+                            backgroundColor: "#19191a",
+                            color: "#dfd9d9",
+                            clipPath:
+                              "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                          }}
+                        >
+                          {getCombinedBreakdownText()}
+                        </div>
+                      </div>
+                    </div>
+                  </Tooltip.Content>
+                </Tooltip.Portal>
+              </Tooltip.Root>
             </div>
-            <div className="min-w-[180px] space-y-1">
-              {getCombinedBreakdownText()}
-            </div>
-            <Tooltip.Arrow className="fill-white/95 dark:fill-gray-900/95" />
-          </Tooltip.Content>
-        </Tooltip.Portal>
-      </Tooltip.Root>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
+
+export const ProjectVoting = memo(ProjectVotingComponent);

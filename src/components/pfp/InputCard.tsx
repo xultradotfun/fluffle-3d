@@ -68,33 +68,64 @@ export function InputCard({
 
   return (
     <div className="w-full">
-      <div className="relative overflow-hidden rounded-xl bg-white dark:bg-white/[0.02] border border-gray-200 dark:border-white/5 hover:border-blue-500/30 dark:hover:border-white/10 transition-colors">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(34,197,94,0.08),transparent)] dark:bg-[radial-gradient(circle_at_center,rgba(34,197,94,0.05),transparent)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.05),transparent)] dark:bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.03),transparent)]" />
+      <div
+        style={{
+          clipPath: "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
+        }}
+      >
+        <div
+          style={{
+            backgroundColor: "#19191a",
+            padding: "2px",
+          }}
+        >
+          <div
+            className="relative overflow-hidden transition-colors p-4 lg:p-6"
+            style={{
+              backgroundColor: "#19191a",
+              clipPath: "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
+            }}
+          >
 
-        <div className="relative p-4 lg:p-6 flex flex-col">
+        <div className="flex flex-col">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-500/20 dark:to-emerald-500/20 border border-green-100 dark:border-green-500/20 flex items-center justify-center shadow-sm">
+              {/* Input icon with 3-layer border */}
+              <div
+                style={{
+                  clipPath: "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
+                }}
+              >
+                <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+                  <div
+                    className="w-8 h-8 flex items-center justify-center"
+                    style={{
+                      backgroundColor: "#058d5e",
+                      clipPath: "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
+                    }}
+                  >
                 <svg
-                  className="w-4 h-4 text-green-600 dark:text-green-400"
+                      className="w-4 h-4"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
+                      strokeWidth={3}
+                      style={{ color: "#dfd9d9" }}
                 >
                   <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
+                        strokeLinecap="square"
+                        strokeLinejoin="miter"
                     d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                   />
                 </svg>
+                  </div>
+                </div>
               </div>
               <div>
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                <h3 className="text-sm font-black uppercase" style={{ color: "#dfd9d9" }}>
                   Enter NFT ID
                 </h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-xs font-bold uppercase" style={{ color: "#dfd9d9" }}>
                   Type your Fluffle NFT ID below
                 </p>
               </div>
@@ -144,24 +175,33 @@ export function InputCard({
                     };
                     onNFTLoad(value, [], emptyTraits);
                   }}
-                  className="w-full bg-gray-50 dark:bg-black/20 hover:bg-gray-100 dark:hover:bg-black/30 border border-gray-200 dark:border-white/5 hover:border-blue-500/30 focus:border-blue-500/30 focus:ring-2 focus:ring-blue-500/30 rounded-xl px-4 py-3 text-gray-900 dark:text-white placeholder:text-gray-400 dark:placeholder:text-gray-500 transition-all"
+                  className="w-full border-3 border-background hover:border-pink focus:border-pink focus:ring-0 focus:outline-none px-4 py-3 placeholder:text-background/50 transition-all font-bold uppercase text-sm"
+                  style={{
+                    backgroundColor: "#fff",
+                    color: "#19191a",
+                    clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                  }}
                 />
                 {selectedNFT && (
                   <button
                     onClick={onClear}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg hover:bg-gray-200 dark:hover:bg-white/10 transition-colors group"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 bg-destructive border-3 border-background hover:bg-pink transition-colors group"
                     title="Clear NFT ID"
+                    style={{
+                      clipPath: "polygon(3px 0, 100% 0, 100% calc(100% - 3px), calc(100% - 3px) 100%, 0 100%, 0 3px)",
+                    }}
                   >
                     <svg
-                      className="w-4 h-4 text-gray-400 group-hover:text-gray-600 dark:group-hover:text-white"
+                      className="w-4 h-4"
+                      strokeWidth={3}
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
+                      style={{ color: "#dfd9d9" }}
                     >
                       <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
+                        strokeLinecap="square"
+                        strokeLinejoin="miter"
                         d="M6 18L18 6M6 6l12 12"
                       />
                     </svg>
@@ -170,21 +210,26 @@ export function InputCard({
               </div>
 
               {/* Info Note */}
-              <div className="flex items-start gap-2 px-2.5 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-500/5 border border-blue-200 dark:border-blue-500/10">
+              <div className="flex items-start gap-2 px-2.5 py-1.5 bg-pink border-3 border-background"
+                style={{
+                  clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                }}
+              >
                 <svg
-                  className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0"
+                  className="w-3.5 h-3.5 mt-0.5 flex-shrink-0"
+                  strokeWidth={3}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
+                  style={{ color: "#19191a" }}
                 >
                   <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
+                    strokeLinecap="square"
+                    strokeLinejoin="miter"
                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   />
                 </svg>
-                <div className="text-[11px] leading-tight text-blue-600 dark:text-blue-300">
+                <div className="text-[11px] leading-tight font-bold uppercase" style={{ color: "#19191a" }}>
                   Use Token ID from OpenSea/wallet, not the "#1234" in NFT name
                 </div>
               </div>
@@ -197,126 +242,186 @@ export function InputCard({
 
               {/* Add background selector after zoom controls */}
               {selectedNFT && (
-                <div className="space-y-4 px-4 py-3 border-t border-gray-100 dark:border-gray-800">
+                <div
+                  style={{
+                    clipPath: "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                  }}
+                >
+                  <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+                    <div
+                      className="space-y-4 px-4 py-3"
+                      style={{
+                        backgroundColor: "#e0e0e0",
+                        clipPath: "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                      }}
+                    >
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600 dark:text-gray-300">
+                        <span className="text-xs font-black uppercase text-foreground">
                       Background
                     </span>
-                    <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-2">
                       <button
                         onClick={() => onBackgroundToggle(true)}
-                        className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                            className={`px-3 py-2 text-xs font-black uppercase border-3 transition-colors ${
                           includeBackground
-                            ? "bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300"
-                            : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                                ? "bg-pink text-foreground border-foreground"
+                                : "bg-transparent text-foreground border-foreground hover:bg-pink hover:text-foreground"
                         }`}
+                            style={{
+                              clipPath: "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
+                            }}
                       >
                         With
                       </button>
                       <button
                         onClick={() => onBackgroundToggle(false)}
-                        className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
+                            className={`px-3 py-2 text-xs font-black uppercase border-3 transition-colors ${
                           !includeBackground
-                            ? "bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300"
-                            : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                                ? "bg-pink text-foreground border-foreground"
+                                : "bg-transparent text-foreground border-foreground hover:bg-pink hover:text-foreground"
                         }`}
+                            style={{
+                              clipPath: "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
+                            }}
                       >
                         Without
                       </button>
                     </div>
                   </div>
                   {includeBackground && (
-                    <div className="grid grid-cols-8 sm:grid-cols-10 gap-[1px] w-full max-w-[300px] mx-auto">
+                        <div className="grid grid-cols-8 sm:grid-cols-10 gap-1 w-full max-w-[300px] mx-auto">
                       {getAvailableTraitIds("background").map((bg) => (
                         <button
                           key={bg}
                           onClick={() => onBackgroundChange(bg)}
                           disabled={selectedBackground === bg}
-                          className={`p-[1px] rounded-sm border transition-colors ${
+                              className={`p-[2px] border-3 transition-colors ${
                             selectedBackground === bg
-                              ? "border-purple-500 bg-purple-50 dark:bg-purple-500/20"
-                              : "border-gray-200 dark:border-gray-700 hover:border-purple-500/50 dark:hover:border-purple-500/50"
+                                  ? "border-pink bg-pink"
+                                  : "border-foreground bg-transparent hover:border-pink"
                           }`}
+                              style={{
+                                clipPath: "polygon(2px 0, 100% 0, 100% calc(100% - 2px), calc(100% - 2px) 100%, 0 100%, 0 2px)",
+                              }}
                         >
                           <img
                             src={getTraitImageUrl("background", bg)}
                             alt={bg}
-                            className="w-full aspect-square object-cover rounded-[2px]"
+                                className="w-full aspect-square object-cover"
                           />
                         </button>
                       ))}
                     </div>
                   )}
+                    </div>
+                  </div>
                 </div>
               )}
 
-              {/* Quick Actions */}
-              <div className="flex justify-center">
-                <button
-                  onClick={handleRandomNFT}
-                  className="px-4 py-2 rounded-lg bg-gradient-to-br from-gray-50 to-white dark:from-white/[0.03] dark:to-white/[0.02] hover:from-gray-100 hover:to-gray-50 dark:hover:from-white/[0.04] dark:hover:to-white/[0.03] border border-gray-200 dark:border-white/5 hover:border-blue-500/30 dark:hover:border-white/10 transition-all group text-center shadow-sm"
-                >
-                  <span className="text-sm font-medium text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
-                    Try Random NFT
-                  </span>
-                </button>
-              </div>
-
               {error && (
-                <div className="rounded-lg bg-red-50 dark:bg-red-500/10 border border-red-200 dark:border-red-500/30 px-4 py-3 text-sm text-red-600 dark:text-red-400 animate-shake">
+                <div className="bg-destructive/10 border-2 border-destructive px-4 py-3 text-xs font-bold uppercase text-destructive animate-shake">
                   {error}
                 </div>
               )}
             </div>
 
-            <div className="mt-auto pt-4 space-y-4 border-t border-gray-200 dark:border-white/5">
-              <Button
+            <div className="mt-auto pt-4 border-t-2 border-background">
+              <div className="flex gap-3">
+                <button
+                  onClick={handleRandomNFT}
+                  className="flex-1 px-4 py-3 bg-pink text-foreground border-3 border-foreground hover:bg-foreground hover:text-background transition-colors font-black uppercase text-sm"
+                  style={{
+                    clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                  }}
+                >
+                  Try Random NFT
+                </button>
+                {/* Icon buttons container with 3-layer border */}
+                <div
+                  style={{
+                    clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                  }}
+                >
+                  <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+                    <div
+                      className="p-1.5"
+                      style={{
+                        backgroundColor: "#19191a",
+                        clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                      }}
+                    >
+                      <div className="flex items-center gap-2">
+                        <button
                 onClick={onCopyToClipboard}
-                className="w-full justify-center glow"
                 disabled={isLoading || !selectedNFT || !compositeImage}
-              >
-                <div className="flex items-center justify-center w-[160px]">
+                          className="flex items-center justify-center w-10 h-10 border-2 border-background bg-transparent hover:bg-pink transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                          title={isCopied ? "Copied!" : "Copy to clipboard"}
+                          style={{
+                            color: "#dfd9d9",
+                            clipPath: "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
+                          }}
+                        >
+                          {isCopied ? (
                   <svg
-                    className="w-4 h-4 mr-2 flex-shrink-0"
+                              className="w-5 h-5"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                              strokeWidth={2.5}
+                            >
+                              <path
+                                strokeLinecap="square"
+                                strokeLinejoin="miter"
+                                d="M5 13l4 4L19 7"
+                              />
+                            </svg>
+                          ) : (
+                            <svg
+                              className="w-5 h-5"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                              strokeWidth={2.5}
                   >
                     <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
+                                strokeLinecap="square"
+                                strokeLinejoin="miter"
                       d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
                     />
                   </svg>
-                  <span className="flex-shrink-0">
-                    {isCopied ? "Copied!" : "Copy to Clipboard"}
-                  </span>
-                </div>
-              </Button>
-              <Button
-                variant="secondary"
+                          )}
+                        </button>
+                        <button
                 onClick={onDownload}
-                className="w-full justify-center glow"
                 disabled={isLoading || !selectedNFT || !compositeImage}
-              >
-                <div className="flex items-center justify-center w-[160px]">
+                          className="flex items-center justify-center w-10 h-10 border-2 border-background bg-transparent hover:bg-green transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                          title="Download"
+                          style={{
+                            color: "#dfd9d9",
+                            clipPath: "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
+                          }}
+                        >
                   <svg
-                    className="w-4 h-4 mr-2 flex-shrink-0"
+                            className="w-5 h-5"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
+                            strokeWidth={2.5}
                   >
                     <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
+                              strokeLinecap="square"
+                              strokeLinejoin="miter"
                       d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
                     />
                   </svg>
-                  <span className="flex-shrink-0">Download PNG</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </Button>
+              </div>
+            </div>
+          </div>
             </div>
           </div>
         </div>
