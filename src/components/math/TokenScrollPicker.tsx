@@ -75,13 +75,14 @@ export default function TokenScrollPicker({
                   onClick={() => onTokenSelect(index)}
                   className={`flex flex-col items-center p-3 transition-all border-3 ${
                     index === selectedIndex
-                      ? "border-foreground bg-pink hover:bg-pink"
-                      : "border-background bg-transparent hover:bg-pink hover:border-foreground"
+                      ? "border-foreground hover:bg-pink"
+                      : "border-background hover:bg-pink hover:border-foreground"
                   }`}
                   style={{
+                    backgroundColor: index === selectedIndex ? "#f380cd" : "#e0e0e0",
                     clipPath:
                       "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-                    color: index === selectedIndex ? "#19191a" : "#dfd9d9",
+                    color: "#19191a",
                   }}
                 >
                   <div className="relative w-12 h-12 mb-2">
