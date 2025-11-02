@@ -319,9 +319,9 @@ export function BingoView() {
               </h1>
             </div>
             <p className="text-sm sm:text-base font-bold uppercase max-w-2xl mx-auto">
-              Explore the MegaETH testnet through interactive challenges and
-              complete your very own bingo card!
-            </p>
+            Explore the MegaETH testnet through interactive challenges and
+            complete your very own bingo card!
+          </p>
           </div>
         </div>
 

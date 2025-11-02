@@ -159,12 +159,12 @@ export function EcosystemDashboard() {
             ))
           ) : (
             sortedProjects.map((project) => (
-              <ProjectCard
-                key={project.twitter}
-                project={project}
-                isLoadingVotes={isLoadingVotes}
+            <ProjectCard
+              key={project.twitter}
+              project={project}
+              isLoadingVotes={isLoadingVotes}
                 onVoteUpdate={updateProjectVote}
-              />
+            />
             ))
           )}
         </div>

@@ -206,7 +206,9 @@ function ProjectVotingComponent({
                       }}
                     >
                       {/* Middle border layer */}
-                      <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+                      <div
+                        style={{ backgroundColor: "#dfd9d9", padding: "2px" }}
+                      >
                         {/* Inner content layer */}
                         <div
                           className="max-w-[280px] p-4"
@@ -270,7 +272,9 @@ function ProjectVotingComponent({
                       }}
                     >
                       {/* Middle border layer */}
-                      <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+                      <div
+                        style={{ backgroundColor: "#dfd9d9", padding: "2px" }}
+                      >
                         {/* Inner content layer */}
                         <div
                           className="max-w-[280px] p-4"
@@ -331,7 +335,9 @@ function ProjectVotingComponent({
                       }}
                     >
                       {/* Middle border layer */}
-                      <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+                      <div
+                        style={{ backgroundColor: "#dfd9d9", padding: "2px" }}
+                      >
                         {/* Inner content layer */}
                         <div
                           className="max-w-[280px] p-4"

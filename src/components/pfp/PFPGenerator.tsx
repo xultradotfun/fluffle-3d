@@ -10,6 +10,9 @@ import { getTraitImageUrl } from "@/utils/traitImageMap";
 type ZoomLevel = "full" | "bust";
 
 export function PFPGenerator() {
+  // Generate a random NFT ID on mount
+  const [defaultNFTId] = useState(() => Math.floor(Math.random() * 5000).toString());
+  
   const [selectedNFT, setSelectedNFT] = useState<{
     id: string;
     traits: NFTTrait;
@@ -26,7 +29,7 @@ export function PFPGenerator() {
   );
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  // Load initial background image
+  // Load initial background image and default NFT
   useEffect(() => {
     const loadInitialBg = async () => {
       try {
@@ -34,6 +37,30 @@ export function PFPGenerator() {
           getTraitImageUrl("background", selectedBackground)
         );
         setCurrentBgImage(img);
+        
+        // Load default NFT after background is ready
+        const emptyTraits: NFTTrait = {
+          tribe: -1,
+          skin: -1,
+          hair: -1,
+          eyeball: -1,
+          eyeliner: -1,
+          eyebrow: -1,
+          head: -1,
+          ear: -1,
+          face: -1,
+          tribe_display_name: "",
+          skin_display_name: "",
+          hair_display_name: "",
+          eyeball_display_name: "",
+          eyeliner_display_name: "",
+          eyebrow_display_name: "",
+          head_display_name: "",
+          ear_display_name: "",
+          face_display_name: "",
+        };
+        setSelectedNFT({ id: defaultNFTId, traits: emptyTraits });
+        await generatePFP(defaultNFTId, "bust", true, img);
       } catch (err) {
         console.error("Error loading initial background:", err);
       }

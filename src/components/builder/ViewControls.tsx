@@ -18,7 +18,7 @@ export default function ViewControls({
       {/* Preset Views */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h3 className="font-black text-sm uppercase text-foreground">
+          <h3 className="font-black text-sm uppercase" style={{ color: "#dfd9d9" }}>
             Preset Views
           </h3>
           <div className="flex gap-2">
@@ -27,11 +27,15 @@ export default function ViewControls({
                 onZoomChange(ZOOM_PRESETS.FULL.zoom);
                 onOffsetYChange(ZOOM_PRESETS.FULL.offsetY);
               }}
-              className={`px-3 py-2 text-xs border-3 border-foreground transition-all font-black uppercase flex items-center gap-2 ${
+              className={`px-3 py-2 text-xs border-3 transition-all font-black uppercase flex items-center gap-2 ${
                 zoom === ZOOM_PRESETS.FULL.zoom
-                  ? "bg-pink text-foreground"
-                  : "bg-card-foreground text-background hover:bg-pink hover:text-foreground"
+                  ? "bg-pink text-foreground border-foreground"
+                  : "bg-transparent border-background hover:bg-pink hover:text-foreground"
               }`}
+              style={{
+                clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                color: zoom === ZOOM_PRESETS.FULL.zoom ? "#19191a" : "#dfd9d9",
+              }}
             >
               <svg
                 className="w-4 h-4"
@@ -53,11 +57,15 @@ export default function ViewControls({
                 onZoomChange(ZOOM_PRESETS.BUST.zoom);
                 onOffsetYChange(ZOOM_PRESETS.BUST.offsetY);
               }}
-              className={`px-3 py-2 text-xs border-3 border-foreground transition-all font-black uppercase flex items-center gap-2 ${
+              className={`px-3 py-2 text-xs border-3 transition-all font-black uppercase flex items-center gap-2 ${
                 zoom === ZOOM_PRESETS.BUST.zoom
-                  ? "bg-pink text-foreground"
-                  : "bg-card-foreground text-background hover:bg-pink hover:text-foreground"
+                  ? "bg-pink text-foreground border-foreground"
+                  : "bg-transparent border-background hover:bg-pink hover:text-foreground"
               }`}
+              style={{
+                clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                color: zoom === ZOOM_PRESETS.BUST.zoom ? "#19191a" : "#dfd9d9",
+              }}
             >
               <svg
                 className="w-4 h-4"
@@ -82,7 +90,7 @@ export default function ViewControls({
       <div className="space-y-4">
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-black uppercase text-foreground flex items-center gap-2">
+            <label className="text-xs font-black uppercase flex items-center gap-2" style={{ color: "#dfd9d9" }}>
               <svg
                 className="w-4 h-4"
                 fill="none"
@@ -98,7 +106,14 @@ export default function ViewControls({
               </svg>
               Zoom
             </label>
-            <span className="text-xs font-black bg-foreground text-background px-2 py-1 border-2 border-foreground">
+            <span
+              className="text-xs font-black px-2 py-1 border-2"
+              style={{
+                backgroundColor: "#dfd9d9",
+                color: "#19191a",
+                borderColor: "#dfd9d9",
+              }}
+            >
               {(zoom * 100).toFixed(0)}%
             </span>
           </div>
@@ -109,9 +124,9 @@ export default function ViewControls({
               max="300"
               value={zoom * 100}
               onChange={(e) => onZoomChange(Number(e.target.value) / 100)}
-              className="w-full accent-pink h-3 bg-[#e0e0e0] border-2 border-foreground appearance-none cursor-pointer"
+              className="w-full h-3 border-3 border-background appearance-none cursor-pointer slider-brutalist"
               style={{
-                background: `linear-gradient(to right, #f380cd 0%, #f380cd ${((zoom * 100 - 50) / 250) * 100}%, #e0e0e0 ${((zoom * 100 - 50) / 250) * 100}%, #e0e0e0 100%)`
+                background: `linear-gradient(to right, #f380cd 0%, #f380cd ${((zoom * 100 - 50) / 250) * 100}%, #dfd9d9 ${((zoom * 100 - 50) / 250) * 100}%, #dfd9d9 100%)`
               }}
             />
           </div>
@@ -119,7 +134,7 @@ export default function ViewControls({
 
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-black uppercase text-foreground flex items-center gap-2">
+            <label className="text-xs font-black uppercase flex items-center gap-2" style={{ color: "#dfd9d9" }}>
               <svg
                 className="w-4 h-4"
                 fill="none"
@@ -135,7 +150,14 @@ export default function ViewControls({
               </svg>
               Position
             </label>
-            <span className="text-xs font-black bg-foreground text-background px-2 py-1 border-2 border-foreground">
+            <span
+              className="text-xs font-black px-2 py-1 border-2"
+              style={{
+                backgroundColor: "#dfd9d9",
+                color: "#19191a",
+                borderColor: "#dfd9d9",
+              }}
+            >
               {offsetY.toFixed(0)}%
             </span>
           </div>
@@ -146,9 +168,9 @@ export default function ViewControls({
               max="50"
               value={offsetY}
               onChange={(e) => onOffsetYChange(Number(e.target.value))}
-              className="w-full accent-pink h-3 bg-[#e0e0e0] border-2 border-foreground appearance-none cursor-pointer"
+              className="w-full h-3 border-3 border-background appearance-none cursor-pointer slider-brutalist"
               style={{
-                background: `linear-gradient(to right, #f380cd 0%, #f380cd ${((offsetY + 50) / 100) * 100}%, #e0e0e0 ${((offsetY + 50) / 100) * 100}%, #e0e0e0 100%)`
+                background: `linear-gradient(to right, #f380cd 0%, #f380cd ${((offsetY + 50) / 100) * 100}%, #dfd9d9 ${((offsetY + 50) / 100) * 100}%, #dfd9d9 100%)`
               }}
             />
           </div>

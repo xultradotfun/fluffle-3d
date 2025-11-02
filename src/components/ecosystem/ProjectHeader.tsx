@@ -41,18 +41,18 @@ function ProjectHeaderComponent({
               {name}
             </h3>
             {megaMafia && (
-              <Image
+                  <Image
                 src="/ui/pixelmafia.png"
-                alt="MegaMafia"
-                title="MegaMafia Project"
+                    alt="MegaMafia"
+                    title="MegaMafia Project"
                 width={16}
                 height={16}
                 className="w-4 h-4 object-contain"
                 style={{
                   filter: 'brightness(0) invert(1)',
                 }}
-                priority={false}
-              />
+                    priority={false}
+                  />
             )}
         </div>
         <div className="flex items-center gap-2 flex-wrap">

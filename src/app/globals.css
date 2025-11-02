@@ -167,7 +167,12 @@ a:hover {
 }
 
 /* Typography - Bold and chunky */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 900;
   letter-spacing: -0.02em;
   line-height: 1;
@@ -175,7 +180,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Monospace for data */
 .font-data {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
   font-weight: 700;
 }
 
@@ -214,4 +219,46 @@ h1, h2, h3, h4, h5, h6 {
 
 .border-red {
   border-color: #b21840;
+}
+/* Brutalist Range Slider Styling */
+.slider-brutalist::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #19191a;
+  border: 3px solid #dfd9d9;
+  cursor: pointer;
+  clip-path: polygon(
+    4px 0,
+    100% 0,
+    100% calc(100% - 4px),
+    calc(100% - 4px) 100%,
+    0 100%,
+    0 4px
+  );
+}
+
+.slider-brutalist::-webkit-slider-thumb:hover {
+  background: #f380cd;
+}
+
+.slider-brutalist::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #19191a;
+  border: 3px solid #dfd9d9;
+  cursor: pointer;
+  clip-path: polygon(
+    4px 0,
+    100% 0,
+    100% calc(100% - 4px),
+    calc(100% - 4px) 100%,
+    0 100%,
+    0 4px
+  );
+}
+
+.slider-brutalist::-moz-range-thumb:hover {
+  background: #f380cd;
 }

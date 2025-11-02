@@ -26,10 +26,14 @@ function NoneButton({
       className={`aspect-square p-3 flex flex-col items-center justify-center gap-2 transition-all border-3 border-foreground ${
         isSelected
           ? "bg-pink text-foreground"
-          : "bg-card-foreground text-background hover:bg-pink hover:text-foreground"
+          : "bg-card text-foreground hover:bg-pink"
       }`}
+      style={{
+        clipPath:
+          "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+      }}
     >
-      <div className="w-full aspect-square bg-background/50 flex items-center justify-center border-2 border-background">
+      <div className="w-full aspect-square bg-foreground/10 flex items-center justify-center border-2 border-foreground">
         <svg
           className="w-8 h-8"
           fill="none"
@@ -69,11 +73,15 @@ function TraitButton({
       className={`aspect-square p-3 flex flex-col items-center justify-center gap-2 transition-all border-3 border-foreground ${
         isSelected
           ? "bg-pink text-foreground"
-          : "bg-card-foreground text-background hover:bg-pink hover:text-foreground"
+          : "bg-card text-foreground hover:bg-pink"
       }`}
+      style={{
+        clipPath:
+          "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+      }}
     >
-      <div className="w-full aspect-square overflow-hidden relative border-2 border-background">
-        <div className="absolute inset-0 bg-background/30" />
+      <div className="w-full aspect-square overflow-hidden relative border-2 border-foreground">
+        <div className="absolute inset-0 bg-foreground/10" />
         {croppedImageUrl ? (
           <img
             src={croppedImageUrl}
@@ -95,11 +103,16 @@ function TraitButton({
           />
         )}
       </div>
-      <span className="text-xs font-black uppercase truncate w-full text-center" title={option.displayName}>
+      <span
+        className="text-xs font-black uppercase truncate w-full text-center"
+        title={option.displayName}
+      >
         {option.displayName}
       </span>
       {option.tribe && (
-        <span className="text-[10px] font-bold uppercase truncate">{option.tribe}</span>
+        <span className="text-[10px] font-bold uppercase truncate">
+          {option.tribe}
+        </span>
       )}
     </button>
   );

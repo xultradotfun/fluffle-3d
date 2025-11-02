@@ -15,25 +15,25 @@ interface PreviewProps {
 function EmptyState() {
   return (
     <div className="text-center py-16 animate-fade-in">
-      <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-card mb-6 ring-1 ring-border">
+      <div className="inline-flex items-center justify-center w-20 h-20 bg-card-foreground mb-6 border-3 border-foreground">
         <svg
-          className="w-10 h-10 text-muted-foreground"
+          className="w-10 h-10 text-background"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          strokeWidth={2}
         >
           <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={1.5}
+            strokeLinecap="square"
+            strokeLinejoin="miter"
             d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
           />
         </svg>
       </div>
-      <h3 className="text-xl font-semibold text-foreground mb-2">
+      <h3 className="text-xl font-black uppercase text-foreground mb-2">
         No Traits Selected
       </h3>
-      <p className="text-muted-foreground max-w-sm mx-auto">
+      <p className="text-sm font-bold uppercase text-foreground max-w-sm mx-auto">
         Select traits from the options below to preview your NFT.
       </p>
     </div>
@@ -77,7 +77,7 @@ const Preview = ({
   };
 
   return (
-    <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-white dark:from-black/40 dark:to-black/60 ring-1 ring-border dark:ring-white/10">
+    <div className="relative w-full aspect-square overflow-hidden">
       {/* Background layer - always full size */}
       {selectedTraits.background && (
         <div className="absolute inset-0">
