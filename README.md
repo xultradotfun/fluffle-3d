@@ -15,22 +15,18 @@
   <a href="https://tailwindcss.com">
     <img src="https://img.shields.io/badge/Tailwind-3-38bdf8" alt="Tailwind CSS" />
   </a>
-  <a href="https://threejs.org">
-    <img src="https://img.shields.io/badge/Three.js-Latest-black" alt="Three.js" />
-  </a>
   <img src="https://img.shields.io/badge/License-Custom-red" alt="License" />
 </div>
 
 ## ✨ Features
 
-- **3D Model Viewer**: View your Fluffle in 3D with VRM support
-- **NFT Analytics**: Comprehensive dashboard for NFT trait analysis and rarity tracking
-- **PFP Generator**: Create custom profile pictures with background options
-- **Ecosystem Directory**: Curated list of MegaETH ecosystem projects
-- **Builder Tools**: Custom tools for NFT and metaverse development
-- **Testnet Integration**: Access and interact with MegaETH testnet
-- **Modern UI/UX**: Clean, responsive interface with dark mode support
-- **Discord Integration**: Secure authentication and role-based access
+- **MegaETH Ecosystem**: Discover and vote on projects building on MegaETH with community-driven rankings
+- **MegaETH Moonmath**: Calculate potential returns for Echo, Fluffle & Sonar investment rounds
+- **Fluffle Builder**: Create your perfect Fluffle NFT by mixing and matching traits
+- **PFP Generator**: Generate custom profile pictures from your Fluffle NFTs
+- **Testnet Bingo**: Track your progress completing MegaETH testnet tasks
+- **Discord Integration**: Secure authentication with role-based voting power
+- **Brutalist Design**: Bold, high-contrast UI inspired by MegaETH's aesthetic
 - **Responsive Design**: Optimized for both desktop and mobile experiences
 
 ## 🚀 Quick Start
@@ -75,24 +71,26 @@ npm run dev
 
 5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-## 📝 Ecosystem Directory
+## 📝 MegaETH Ecosystem
 
-The project includes a comprehensive directory of MegaETH ecosystem projects in `src/data/ecosystem.json`. Each project entry follows this structure:
+The ecosystem directory fetches projects from the Fluffle Tools API (`https://api.fluffle.tools/api/projects/full`). Each project includes:
 
-```json
-{
-  "name": "Project Name",
-  "twitter": "twitter_handle", // without @
-  "website": "https://project-website.com", // optional
-  "discord": "https://discord.gg/invite-code", // optional
-  "telegram": "https://t.me/group-name", // optional
-  "description": "A brief description of the project",
-  "category": "Category",
-  "megaMafia": false, // true if it's a MegaMafia project
-  "native": true, // true if it's native to MegaETH ecosystem
-  "testnet": false // true if the project is on testnet
-}
-```
+- **Project Information**: Name, description, category, and social links
+- **Voting System**: Community-driven rankings with role-based voting power
+- **Status Indicators**: Live status, MegaMafia membership, and Omega designation
+- **Custom Images**: Project logos and branding
+
+### Voting System
+
+- **Role-Based Power**: Different Discord roles have different voting weights
+  - MiniETH: 1 vote
+  - MegaETH: 5 votes
+  - GigaETH: 10 votes
+  - TeraETH: 50 votes
+  - PetaETH: 100 votes
+  - ExaETH: 500 votes
+- **Vote Caching**: User votes are cached locally for instant feedback
+- **Real-time Updates**: Vote counts update immediately after submission
 
 ### Project Categories
 
@@ -104,19 +102,9 @@ The project includes a comprehensive directory of MegaETH ecosystem projects in 
 - `AI`: Artificial Intelligence and agent projects
 - `Meme`: Meme coins and related projects
 
-### Project Status Fields
-
-- `megaMafia`: Set to `true` for official MegaMafia projects
-- `native`: Set to `true` for projects built specifically for MegaETH
-- `testnet`: Set to `true` for projects currently on testnet
-
 ### Adding Projects
 
-1. Fork the repository
-2. Add your project to `src/data/ecosystem.json`
-3. Add your project logo to `/public/avatars/[twitter_handle].jpg`
-4. Maintain alphabetical order within the projects array
-5. Create a pull request with your changes
+Projects are managed through the Fluffle Tools API. To add your project, please contact the team via Discord or Twitter.
 
 ## 📦 Project Structure
 
@@ -124,38 +112,43 @@ The project includes a comprehensive directory of MegaETH ecosystem projects in 
 fluffle-3d/
 ├── src/
 │   ├── app/             # Next.js app router pages
-│   │   ├── api/         # API routes including Discord auth
-│   │   ├── tools/       # Main application tools
-│   │   └── ecosystem/   # Ecosystem directory pages
+│   │   ├── api/         # API routes (Discord auth, math markets)
+│   │   ├── bingo/       # Testnet Bingo page
+│   │   ├── builder/     # Fluffle Builder page
+│   │   ├── math/        # MegaETH Moonmath calculator
+│   │   └── pfp/         # PFP Generator page
 │   ├── components/      # React components
-│   │   ├── analytics/   # Analytics components
-│   │   ├── builder/     # Builder tool components
+│   │   ├── bingo/       # Bingo game components
+│   │   ├── builder/     # NFT builder components
 │   │   ├── ecosystem/   # Ecosystem directory components
-│   │   ├── metaverse/   # 3D viewer components
-│   │   ├── nft/         # NFT-related components
+│   │   ├── math/        # Moonmath calculator components
 │   │   ├── pfp/         # PFP generator components
-│   │   ├── testnet/     # Testnet integration components
 │   │   └── ui/          # Shared UI components
-│   ├── data/           # Static data and configurations
-│   ├── lib/            # Shared libraries and utilities
-│   ├── utils/          # Utility functions
-│   └── types/          # TypeScript type definitions
-├── prisma/             # Database schema and migrations
-├── public/             # Static assets
-└── types/              # TypeScript type definitions
+│   ├── contexts/        # React contexts (Discord auth)
+│   ├── data/            # Static data (bingo tasks)
+│   ├── hooks/           # Custom React hooks
+│   ├── lib/             # Shared libraries and utilities
+│   ├── types/           # TypeScript type definitions
+│   └── utils/           # Utility functions
+├── prisma/              # Database schema and migrations
+├── public/              # Static assets
+│   ├── avatars/         # Project logos
+│   ├── ui/              # UI assets (videos, icons)
+│   └── math-tokens/     # Token images for Moonmath
+└── scripts/             # Utility scripts
 ```
 
 ## 🛠 Technology Stack
 
 - **Framework**: [Next.js 14](https://nextjs.org/) with App Router
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **3D Graphics**:
-  - [Three.js](https://threejs.org/)
-  - [@pixiv/three-vrm](https://github.com/pixiv/three-vrm)
-- **Authentication**: Discord OAuth2
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) with custom brutalist design system
+- **UI Components**: [Radix UI](https://www.radix-ui.com/) for accessible primitives
+- **Authentication**: Discord OAuth2 with role-based permissions
 - **Database**: Prisma with PostgreSQL
-- **State Management**: React Hooks
+- **State Management**: React Hooks and Context API
+- **Image Optimization**: Next.js Image component
+- **API Integration**: CoinGecko, Hyperliquid, Fluffle Tools API
 - **Deployment**: [Vercel](https://vercel.com)
 
 ## 🚢 Deployment
@@ -165,9 +158,12 @@ This project is optimized for deployment on Vercel:
 1. Push your code to a Git repository
 2. Import your repository on [Vercel](https://vercel.com/new)
 3. Set up the required environment variables:
-   - `DISCORD_CLIENT_ID`
-   - `DISCORD_CLIENT_SECRET`
-   - `DATABASE_URL`
+   - `DISCORD_CLIENT_ID` - Discord OAuth client ID
+   - `DISCORD_CLIENT_SECRET` - Discord OAuth client secret
+   - `DISCORD_BOT_TOKEN` - Discord bot token for role verification
+   - `DISCORD_REQUIRED_SERVER_ID` - Discord server ID for role checks
+   - `DATABASE_URL` - PostgreSQL database connection string
+   - `TOKEN_PRICE_API` - API endpoint for token price data
 4. Vercel will automatically detect Next.js and deploy
 
 ## 🤝 Contributing
