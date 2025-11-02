@@ -104,20 +104,20 @@ export function InputCard({
                       clipPath: "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                     }}
                   >
-                    <svg
+                <svg
                       className="w-4 h-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
                       strokeWidth={3}
                       style={{ color: "#dfd9d9" }}
-                    >
-                      <path
+                >
+                  <path
                         strokeLinecap="square"
                         strokeLinejoin="miter"
-                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                      />
-                    </svg>
+                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  />
+                </svg>
                   </div>
                 </div>
               </div>
@@ -255,64 +255,64 @@ export function InputCard({
                         clipPath: "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
                       }}
                     >
-                      <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between">
                         <span className="text-xs font-black uppercase text-foreground">
-                          Background
-                        </span>
+                      Background
+                    </span>
                         <div className="flex items-center gap-2">
-                          <button
-                            onClick={() => onBackgroundToggle(true)}
+                      <button
+                        onClick={() => onBackgroundToggle(true)}
                             className={`px-3 py-2 text-xs font-black uppercase border-3 transition-colors ${
-                              includeBackground
+                          includeBackground
                                 ? "bg-pink text-foreground border-foreground"
                                 : "bg-transparent text-foreground border-foreground hover:bg-pink hover:text-foreground"
-                            }`}
+                        }`}
                             style={{
                               clipPath: "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                             }}
-                          >
-                            With
-                          </button>
-                          <button
-                            onClick={() => onBackgroundToggle(false)}
+                      >
+                        With
+                      </button>
+                      <button
+                        onClick={() => onBackgroundToggle(false)}
                             className={`px-3 py-2 text-xs font-black uppercase border-3 transition-colors ${
-                              !includeBackground
+                          !includeBackground
                                 ? "bg-pink text-foreground border-foreground"
                                 : "bg-transparent text-foreground border-foreground hover:bg-pink hover:text-foreground"
-                            }`}
+                        }`}
                             style={{
                               clipPath: "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                             }}
-                          >
-                            Without
-                          </button>
-                        </div>
-                      </div>
-                      {includeBackground && (
+                      >
+                        Without
+                      </button>
+                    </div>
+                  </div>
+                  {includeBackground && (
                         <div className="grid grid-cols-8 sm:grid-cols-10 gap-1 w-full max-w-[300px] mx-auto">
-                          {getAvailableTraitIds("background").map((bg) => (
-                            <button
-                              key={bg}
-                              onClick={() => onBackgroundChange(bg)}
-                              disabled={selectedBackground === bg}
+                      {getAvailableTraitIds("background").map((bg) => (
+                        <button
+                          key={bg}
+                          onClick={() => onBackgroundChange(bg)}
+                          disabled={selectedBackground === bg}
                               className={`p-[2px] border-3 transition-colors ${
-                                selectedBackground === bg
+                            selectedBackground === bg
                                   ? "border-pink bg-pink"
                                   : "border-foreground bg-transparent hover:border-pink"
-                              }`}
+                          }`}
                               style={{
                                 clipPath: "polygon(2px 0, 100% 0, 100% calc(100% - 2px), calc(100% - 2px) 100%, 0 100%, 0 2px)",
                               }}
-                            >
-                              <img
-                                src={getTraitImageUrl("background", bg)}
-                                alt={bg}
+                        >
+                          <img
+                            src={getTraitImageUrl("background", bg)}
+                            alt={bg}
                                 className="w-full aspect-square object-cover"
-                              />
-                            </button>
-                          ))}
-                        </div>
-                      )}
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  )}
                     </div>
                   </div>
                 </div>
@@ -352,8 +352,8 @@ export function InputCard({
                     >
                       <div className="flex items-center gap-2">
                         <button
-                          onClick={onCopyToClipboard}
-                          disabled={isLoading || !selectedNFT || !compositeImage}
+                onClick={onCopyToClipboard}
+                disabled={isLoading || !selectedNFT || !compositeImage}
                           className="flex items-center justify-center w-10 h-10 border-2 border-background bg-transparent hover:bg-pink transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                           title={isCopied ? "Copied!" : "Copy to clipboard"}
                           style={{
@@ -362,7 +362,7 @@ export function InputCard({
                           }}
                         >
                           {isCopied ? (
-                            <svg
+                  <svg
                               className="w-5 h-5"
                               fill="none"
                               stroke="currentColor"
@@ -378,22 +378,22 @@ export function InputCard({
                           ) : (
                             <svg
                               className="w-5 h-5"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                               strokeWidth={2.5}
-                            >
-                              <path
+                  >
+                    <path
                                 strokeLinecap="square"
                                 strokeLinejoin="miter"
-                                d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
-                              />
-                            </svg>
+                      d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
+                    />
+                  </svg>
                           )}
                         </button>
                         <button
-                          onClick={onDownload}
-                          disabled={isLoading || !selectedNFT || !compositeImage}
+                onClick={onDownload}
+                disabled={isLoading || !selectedNFT || !compositeImage}
                           className="flex items-center justify-center w-10 h-10 border-2 border-background bg-transparent hover:bg-green transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                           title="Download"
                           style={{
@@ -401,19 +401,19 @@ export function InputCard({
                             clipPath: "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                           }}
                         >
-                          <svg
+                  <svg
                             className="w-5 h-5"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                             strokeWidth={2.5}
-                          >
-                            <path
+                  >
+                    <path
                               strokeLinecap="square"
                               strokeLinejoin="miter"
-                              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                            />
-                          </svg>
+                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                    />
+                  </svg>
                         </button>
                       </div>
                     </div>

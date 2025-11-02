@@ -1,11 +1,21 @@
 import { cn } from "@/lib/utils";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Flower2, Rabbit, ChevronDown, Image, X, Grid } from "lucide-react";
+import {
+  Flower2,
+  Rabbit,
+  ChevronDown,
+  Image,
+  X,
+  Grid,
+  Calculator,
+} from "lucide-react";
 
 interface ViewSwitcherProps {
-  activeView: "pfp" | "ecosystem" | "builder" | "bingo";
-  onViewChange: (view: "pfp" | "ecosystem" | "builder" | "bingo") => void;
+  activeView: "pfp" | "ecosystem" | "builder" | "bingo" | "math";
+  onViewChange: (
+    view: "pfp" | "ecosystem" | "builder" | "bingo" | "math"
+  ) => void;
 }
 
 export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
@@ -81,27 +91,33 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   <span>ECOSYSTEM</span>
                 </button>
 
-                {/* Bingo */}
+                {/* Math */}
                 <button
-                  onClick={() => onViewChange("bingo")}
+                  onClick={() => onViewChange("math")}
                   className={`flex items-center gap-2 px-4 py-2 border-3 font-bold uppercase text-xs ${
-                    activeView === "bingo"
+                    activeView === "math"
                       ? "bg-pink border-foreground"
                       : "bg-transparent border-background hover:bg-muted"
                   }`}
                   style={{
                     clipPath:
                       "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                    color: activeView === "bingo" ? "#19191a" : "#dfd9d9",
+                    color: activeView === "math" ? "#19191a" : "#dfd9d9",
                   }}
                 >
                   <div className="relative">
-                    <Grid className="w-4 h-4" strokeWidth={3} />
-                    <span className="absolute -top-1 -right-1 px-1 text-[7px] font-black border border-foreground bg-pink text-foreground leading-none">
+                    <Calculator className="w-4 h-4" strokeWidth={3} />
+                    <span
+                      className="absolute -top-1 -right-1 px-0.5 text-[7px] font-black border-2 leading-none text-foreground border-foreground"
+                      style={{
+                        backgroundColor:
+                          activeView === "math" ? "#fff" : "#f380cd",
+                      }}
+                    >
                       NEW
                     </span>
                   </div>
-                  <span>BINGO</span>
+                  <span>MOONMATH</span>
                 </button>
 
                 {/* Divider */}
@@ -114,14 +130,14 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                     className={`flex items-center gap-2 px-4 py-2 border-3 font-bold uppercase text-xs ${
-                      ["pfp", "builder"].includes(activeView)
+                      ["pfp", "builder", "bingo"].includes(activeView)
                         ? "bg-pink border-foreground"
                         : "bg-transparent border-background hover:bg-muted"
                     }`}
                     style={{
                       clipPath:
                         "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                      color: ["pfp", "builder"].includes(activeView)
+                      color: ["pfp", "builder", "bingo"].includes(activeView)
                         ? "#19191a"
                         : "#dfd9d9",
                     }}
@@ -212,6 +228,36 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                       <div className="w-2 h-2 bg-foreground" />
                     )}
                   </button>
+                  <button
+                    onClick={() => onViewChange("bingo")}
+                    className={`flex items-center w-full gap-2 px-4 py-3 border-3 font-bold uppercase text-xs ${
+                      activeView === "bingo"
+                        ? "bg-pink border-foreground"
+                        : "bg-transparent border-background hover:bg-muted"
+                    }`}
+                    style={{
+                      clipPath:
+                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                      color: activeView === "bingo" ? "#19191a" : "#dfd9d9",
+                    }}
+                  >
+                    <div className="relative">
+                      <Grid className="w-4 h-4" strokeWidth={3} />
+                      <span
+                        className="absolute -top-1 -right-1 px-0.5 text-[7px] font-black border-2 leading-none text-foreground border-foreground"
+                        style={{
+                          backgroundColor:
+                            activeView === "bingo" ? "#fff" : "#f380cd",
+                        }}
+                      >
+                        NEW
+                      </span>
+                    </div>
+                    <span className="flex-1 text-left">BINGO</span>
+                    {activeView === "bingo" && (
+                      <div className="w-2 h-2 bg-foreground" />
+                    )}
+                  </button>
                 </div>
               </div>
             </div>
@@ -237,28 +283,33 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
             <span className="text-[10px] font-black uppercase">ECO</span>
           </button>
 
-          {/* Bingo */}
+          {/* Math */}
           <button
-            onClick={() => onViewChange("bingo")}
+            onClick={() => onViewChange("math")}
             className={`flex flex-col items-center gap-1 p-2 ${
-              activeView === "bingo" ? "opacity-100" : "opacity-60"
+              activeView === "math" ? "opacity-100" : "opacity-60"
             }`}
             style={{ color: "#dfd9d9" }}
           >
             <div className="relative">
-              <Grid className="w-6 h-6" strokeWidth={3} />
-              <span className="absolute -top-1 -right-1 px-1 text-[7px] font-black border border-foreground bg-pink text-foreground leading-none">
+              <Calculator className="w-6 h-6" strokeWidth={3} />
+              <span
+                className="absolute -top-1 -right-1 px-0.5 text-[7px] font-black border leading-none text-foreground border-foreground"
+                style={{
+                  backgroundColor: activeView === "math" ? "#fff" : "#f380cd",
+                }}
+              >
                 NEW
               </span>
             </div>
-            <span className="text-[10px] font-black uppercase">BINGO</span>
+            <span className="text-[10px] font-black uppercase">MATH</span>
           </button>
 
           {/* Fluffles Button */}
           <button
             onClick={() => setIsMobileMenuOpen(true)}
             className={`flex flex-col items-center gap-1 p-2 ${
-              ["pfp", "builder"].includes(activeView)
+              ["pfp", "builder", "bingo"].includes(activeView)
                 ? "opacity-100"
                 : "opacity-60"
             }`}
@@ -341,6 +392,37 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                 <Image className="w-5 h-5" strokeWidth={3} />
                 <span className="flex-1 text-left">PFP GENERATOR</span>
                 {activeView === "pfp" && (
+                  <div className="w-2 h-2 bg-foreground" />
+                )}
+              </button>
+              <button
+                onClick={() => {
+                  onViewChange("bingo");
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`flex items-center w-full gap-3 px-4 py-4 border-3 border-foreground font-bold uppercase text-sm ${
+                  activeView === "bingo"
+                    ? "bg-pink"
+                    : "bg-transparent hover:bg-muted"
+                }`}
+                style={{
+                  color: activeView === "bingo" ? "#19191a" : "#dfd9d9",
+                }}
+              >
+                <div className="relative">
+                  <Grid className="w-5 h-5" strokeWidth={3} />
+                  <span
+                    className="absolute -top-1 -right-1 px-0.5 text-[7px] font-black border leading-none text-foreground border-foreground"
+                    style={{
+                      backgroundColor:
+                        activeView === "bingo" ? "#fff" : "#f380cd",
+                    }}
+                  >
+                    NEW
+                  </span>
+                </div>
+                <span className="flex-1 text-left">BINGO</span>
+                {activeView === "bingo" && (
                   <div className="w-2 h-2 bg-foreground" />
                 )}
               </button>

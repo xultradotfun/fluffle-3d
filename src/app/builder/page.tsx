@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 export default function BuilderPage() {
   const router = useRouter();
 
-  const handleViewChange = (view: "pfp" | "ecosystem" | "builder" | "bingo") => {
+  const handleViewChange = (view: "pfp" | "ecosystem" | "builder" | "bingo" | "math") => {
     if (view === "pfp") {
       router.push("/pfp");
     } else if (view === "builder") {
@@ -17,6 +17,8 @@ export default function BuilderPage() {
       router.push("/");
     } else if (view === "bingo") {
       router.push("/bingo");
+    } else if (view === "math") {
+      router.push("/math");
     }
   };
 

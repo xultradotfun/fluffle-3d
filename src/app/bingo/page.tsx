@@ -9,7 +9,7 @@ export default function BingoPage() {
   const router = useRouter();
 
   const handleViewChange = (
-    view: "pfp" | "ecosystem" | "builder" | "bingo"
+    view: "pfp" | "ecosystem" | "builder" | "bingo" | "math"
   ) => {
     if (view === "pfp") {
       router.push("/pfp");
@@ -19,6 +19,8 @@ export default function BingoPage() {
       router.push("/");
     } else if (view === "bingo") {
       router.push("/bingo");
+    } else if (view === "math") {
+      router.push("/math");
     }
   };
 

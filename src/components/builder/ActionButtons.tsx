@@ -37,44 +37,44 @@ export default function ActionButtons({
             }}
           >
             <div className="flex items-center gap-2">
-              <button
-                onClick={onCopy}
+        <button
+          onClick={onCopy}
                 className="flex items-center justify-center w-10 h-10 border-2 border-background bg-transparent hover:bg-pink transition-colors relative group"
-                title="Copy to clipboard"
+          title="Copy to clipboard"
                 style={{
                   color: "#dfd9d9",
                   clipPath: "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                 }}
-              >
-                {isCopied ? (
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+        >
+          {isCopied ? (
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
                     strokeWidth={2.5}
-                  >
-                    <path
+            >
+              <path
                       strokeLinecap="square"
                       strokeLinejoin="miter"
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
+                d="M5 13l4 4L19 7"
+              />
+            </svg>
+          ) : (
+            <svg
+              className="w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
                     strokeWidth={2.5}
-                  >
-                    <path
+            >
+              <path
                       strokeLinecap="square"
                       strokeLinejoin="miter"
-                      d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
-                    />
-                  </svg>
-                )}
+                d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"
+              />
+            </svg>
+          )}
                 <div
                   className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap"
                   style={{
@@ -94,29 +94,29 @@ export default function ActionButtons({
                     </div>
                   </div>
                 </div>
-              </button>
-              <button
-                onClick={onDownload}
+        </button>
+        <button
+          onClick={onDownload}
                 className="flex items-center justify-center w-10 h-10 border-2 border-background bg-transparent hover:bg-green transition-colors relative group"
-                title="Download"
+          title="Download"
                 style={{
                   color: "#dfd9d9",
                   clipPath: "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                 }}
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+        >
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
                   strokeWidth={2.5}
-                >
-                  <path
+          >
+            <path
                     strokeLinecap="square"
                     strokeLinejoin="miter"
-                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                  />
-                </svg>
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+            />
+          </svg>
                 <div
                   className="absolute -top-10 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity"
                   style={{
@@ -132,11 +132,11 @@ export default function ActionButtons({
                         clipPath: "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                       }}
                     >
-                      Download
+            Download
                     </div>
                   </div>
                 </div>
-              </button>
+        </button>
             </div>
           </div>
         </div>
