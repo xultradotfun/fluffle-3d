@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { NFTBadge } from "./NFTBadge";
 import { PreviewCard } from "./PreviewCard";
 import { InputCard } from "./InputCard";
+import PageHeader from "@/components/PageHeader";
 import type { NFTTrait } from "@/utils/nftLoader";
 import { getTraitImageUrl } from "@/utils/traitImageMap";
 
@@ -296,69 +297,22 @@ export function PFPGenerator() {
 
   return (
     <div className="space-y-6 sm:space-y-8 animate-fade-in">
-      {/* Header with video background like ecosystem */}
-      <div
-        className="relative overflow-hidden"
-        style={{
-          clipPath:
-            "polygon(24px 0, calc(100% - 48px) 0, 100% 48px, 100% 100%, 0 100%, 0 24px)",
-        }}
-      >
-        {/* Video Background */}
-        <video
-          loop
-          muted
-          autoPlay
-          playsInline
-          className="absolute top-0 right-0 w-full h-full object-cover"
-          poster="/ui/oversubscription.webp"
-        >
-          <source src="/ui/oversubscription.mp4" type="video/mp4" />
-        </video>
-
-        {/* Dark Overlay */}
-        <div
-          className="absolute top-0 right-0 w-full h-full"
-          style={{ backgroundColor: "rgba(25, 25, 26, 0.5)" }}
-        />
-
-        {/* Content */}
-        <div className="relative z-10 px-8 py-12" style={{ color: "#fff" }}>
-          <div className="flex items-center gap-3 mb-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="68"
-              height="68"
-              viewBox="0 0 68 68"
-              fill="none"
-              className="w-[50px] h-[50px] hidden md:block"
-            >
-              <path
-                d="M34 0C34.6638 18.4957 49.5043 33.3362 68 34C49.5043 34.6638 34.6638 49.5043 34 68C33.3362 49.5043 18.4957 34.6638 0 34C18.4957 33.3362 33.3362 18.4957 34 0Z"
-                fill="white"
-              />
-            </svg>
-            <h1 className="text-4xl sm:text-5xl font-black uppercase leading-none pt-2">
-              PFP Generator
-            </h1>
-          </div>
-          <p className="text-sm sm:text-base font-bold uppercase max-w-2xl">
-            Transform your Fluffle NFT into a beautiful profile picture
-          </p>
-          <div className="inline-flex items-center gap-2 text-xs px-2 py-1 bg-pink border-2 border-foreground mt-4">
-            <span className="text-foreground font-bold uppercase">
-              Design by{" "}
-              <a
-                href="https://x.com/juliencoppola"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-foreground hover:text-background transition-colors font-black"
-              >
-                @juliencoppola
-              </a>
-            </span>
-          </div>
-        </div>
+      <PageHeader
+        title="PFP Generator"
+        description="Transform your Fluffle NFT into a beautiful profile picture"
+      />
+      <div className="inline-flex items-center gap-2 text-xs px-2 py-1 bg-pink border-2 border-foreground">
+        <span className="text-foreground font-bold uppercase">
+          Design by{" "}
+          <a
+            href="https://x.com/juliencoppola"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-foreground hover:text-background transition-colors font-black"
+          >
+            @juliencoppola
+          </a>
+        </span>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto">

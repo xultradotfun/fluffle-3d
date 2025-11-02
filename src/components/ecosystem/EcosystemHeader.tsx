@@ -69,7 +69,7 @@ export function EcosystemHeader() {
               height="68"
               viewBox="0 0 68 68"
               fill="none"
-              className="w-[50px] h-[50px] hidden md:block"
+              className="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px]"
             >
               <path
                 d="M34 0C34.6638 18.4957 49.5043 33.3362 68 34C49.5043 34.6638 34.6638 49.5043 34 68C33.3362 49.5043 18.4957 34.6638 0 34C18.4957 33.3362 33.3362 18.4957 34 0Z"

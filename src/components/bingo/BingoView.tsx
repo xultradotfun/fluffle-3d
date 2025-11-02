@@ -5,6 +5,7 @@ import { useBingoConfig } from "@/hooks/useBingoConfig";
 import { BingoCard } from "./BingoCard";
 import { Trophy, Smartphone, LogOut } from "lucide-react";
 import Image from "next/image";
+import PageHeader from "@/components/PageHeader";
 import type { BingoTask, Project } from "@/types/bingo";
 
 export function BingoView() {
@@ -272,57 +273,11 @@ export function BingoView() {
   return (
     <div className="min-h-screen py-12 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header with video background */}
-        <div
-          className="relative overflow-hidden mb-12"
-          style={{
-            clipPath:
-              "polygon(24px 0, calc(100% - 48px) 0, 100% 48px, 100% 100%, 0 100%, 0 24px)",
-          }}
-        >
-          {/* Video Background */}
-          <video
-            loop
-            muted
-            autoPlay
-            playsInline
-            className="absolute top-0 right-0 w-full h-full object-cover"
-            poster="/ui/oversubscription.webp"
-          >
-            <source src="/ui/oversubscription.mp4" type="video/mp4" />
-          </video>
-
-          {/* Dark Overlay */}
-          <div
-            className="absolute top-0 right-0 w-full h-full"
-            style={{ backgroundColor: "rgba(25, 25, 26, 0.5)" }}
+        <div className="mb-12">
+          <PageHeader
+            title="MegaETH Testnet Bingo"
+            description="Explore the MegaETH testnet through interactive challenges and complete your very own bingo card!"
           />
-
-          {/* Content */}
-          <div className="relative z-10 px-8 py-12 text-center max-w-4xl mx-auto" style={{ color: "#fff" }}>
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="68"
-                height="68"
-                viewBox="0 0 68 68"
-                fill="none"
-                className="w-[50px] h-[50px] hidden md:block"
-              >
-                <path
-                  d="M34 0C34.6638 18.4957 49.5043 33.3362 68 34C49.5043 34.6638 34.6638 49.5043 34 68C33.3362 49.5043 18.4957 34.6638 0 34C18.4957 33.3362 33.3362 18.4957 34 0Z"
-                  fill="white"
-                />
-              </svg>
-              <h1 className="text-4xl sm:text-5xl font-black uppercase leading-none pt-2">
-                MegaETH Testnet Bingo
-              </h1>
-            </div>
-            <p className="text-sm sm:text-base font-bold uppercase max-w-2xl mx-auto">
-            Explore the MegaETH testnet through interactive challenges and
-            complete your very own bingo card!
-          </p>
-          </div>
         </div>
 
         {/* User/Guest Info */}

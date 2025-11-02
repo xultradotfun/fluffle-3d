@@ -241,18 +241,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                       color: activeView === "bingo" ? "#19191a" : "#dfd9d9",
                     }}
                   >
-                    <div className="relative">
-                      <Grid className="w-4 h-4" strokeWidth={3} />
-                      <span
-                        className="absolute -top-1 -right-1 px-0.5 text-[7px] font-black border-2 leading-none text-foreground border-foreground"
-                        style={{
-                          backgroundColor:
-                            activeView === "bingo" ? "#fff" : "#f380cd",
-                        }}
-                      >
-                        NEW
-                      </span>
-                    </div>
+                    <Grid className="w-4 h-4" strokeWidth={3} />
                     <span className="flex-1 text-left">BINGO</span>
                     {activeView === "bingo" && (
                       <div className="w-2 h-2 bg-foreground" />
@@ -409,18 +398,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   color: activeView === "bingo" ? "#19191a" : "#dfd9d9",
                 }}
               >
-                <div className="relative">
-                  <Grid className="w-5 h-5" strokeWidth={3} />
-                  <span
-                    className="absolute -top-1 -right-1 px-0.5 text-[7px] font-black border leading-none text-foreground border-foreground"
-                    style={{
-                      backgroundColor:
-                        activeView === "bingo" ? "#fff" : "#f380cd",
-                    }}
-                  >
-                    NEW
-                  </span>
-                </div>
+                <Grid className="w-5 h-5" strokeWidth={3} />
                 <span className="flex-1 text-left">BINGO</span>
                 {activeView === "bingo" && (
                   <div className="w-2 h-2 bg-foreground" />
