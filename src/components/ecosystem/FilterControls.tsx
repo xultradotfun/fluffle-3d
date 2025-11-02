@@ -269,18 +269,18 @@ export function FilterControls({
                     A-Z{sortMethod.type === "alphabetical" && (sortMethod.direction === "asc" ? "↓" : "↑")}
                   </button>
                   <button
-                    onClick={() => onSortChange({ type: "date", direction: sortMethod.type === "date" && sortMethod.direction === "desc" ? "asc" : "desc" })}
+                    onClick={() => onSortChange({ type: "latest", direction: sortMethod.type === "latest" && sortMethod.direction === "desc" ? "asc" : "desc" })}
                     className={`px-3 py-1.5 border-3 font-bold uppercase text-xs transition-colors ${
-                      sortMethod.type === "date"
+                      sortMethod.type === "latest"
                         ? "bg-pink border-foreground"
                         : "bg-transparent border-background hover:bg-muted"
                     }`}
                     style={{
-                      color: sortMethod.type === "date" ? "#19191a" : "#dfd9d9",
+                      color: sortMethod.type === "latest" ? "#19191a" : "#dfd9d9",
                       clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
                     }}
                   >
-                    LATEST{sortMethod.type === "date" && (sortMethod.direction === "desc" ? "↓" : "↑")}
+                    LATEST{sortMethod.type === "latest" && (sortMethod.direction === "desc" ? "↓" : "↑")}
                   </button>
                   
                   {/* Info tooltip */}
