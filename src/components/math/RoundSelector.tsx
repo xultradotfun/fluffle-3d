@@ -135,13 +135,20 @@ export default function RoundSelector({
             {/* Sonar Round */}
             {isSonarExpanded ? (
               <div
-                className="space-y-3 p-4 border-3 bg-pink/10"
                 style={{
-                  borderColor: "#f380cd",
                   clipPath:
                     "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
                 }}
               >
+                <div style={{ backgroundColor: "#f380cd", padding: "2px" }}>
+                  <div
+                    className="space-y-3 p-4"
+                    style={{
+                      backgroundColor: "#19191a",
+                      clipPath:
+                        "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                    }}
+                  >
                 <div className="flex items-center gap-4">
                   <div className="relative w-16 h-16 flex-shrink-0">
                     <Image
@@ -195,8 +202,10 @@ export default function RoundSelector({
                     }}
                     max={186282}
                     placeholder="186282"
-                    className="w-full border-3 border-foreground bg-background px-4 py-3 font-data font-bold text-foreground focus:border-pink focus:ring-0 focus:outline-none"
+                    className="w-full border-3 border-background px-4 py-3 font-data font-bold focus:border-pink focus:ring-0 focus:outline-none"
                     style={{
+                      backgroundColor: "#e0e0e0",
+                      color: "#19191a",
                       clipPath:
                         "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
                     }}
@@ -207,6 +216,8 @@ export default function RoundSelector({
                   >
                     Max: $186,282
                   </p>
+                </div>
+                  </div>
                 </div>
               </div>
             ) : (
@@ -242,13 +253,20 @@ export default function RoundSelector({
             {/* Custom Round */}
             {isCustomExpanded ? (
               <div
-                className="space-y-3 p-4 border-3 bg-pink/10"
                 style={{
-                  borderColor: "#f380cd",
                   clipPath:
                     "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
                 }}
               >
+                <div style={{ backgroundColor: "#f380cd", padding: "2px" }}>
+                  <div
+                    className="space-y-3 p-4"
+                    style={{
+                      backgroundColor: "#19191a",
+                      clipPath:
+                        "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                    }}
+                  >
                 <div className="flex items-center justify-between">
                   <div
                     className="text-xl font-black uppercase tracking-tight"
@@ -285,8 +303,10 @@ export default function RoundSelector({
                         onCustomInvestmentChange(Number(e.target.value))
                       }
                       placeholder="5000"
-                      className="w-full border-3 border-foreground bg-background px-4 py-3 font-data font-bold text-foreground focus:border-pink focus:ring-0 focus:outline-none"
+                      className="w-full border-3 border-background px-4 py-3 font-data font-bold focus:border-pink focus:ring-0 focus:outline-none"
                       style={{
+                        backgroundColor: "#e0e0e0",
+                        color: "#19191a",
                         clipPath:
                           "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
                       }}
@@ -308,8 +328,10 @@ export default function RoundSelector({
                         onCustomFdvChange(Number(e.target.value))
                       }
                       placeholder="300000000"
-                      className="w-full border-3 border-foreground bg-background px-4 py-3 font-data font-bold text-foreground focus:border-pink focus:ring-0 focus:outline-none"
+                      className="w-full border-3 border-background px-4 py-3 font-data font-bold focus:border-pink focus:ring-0 focus:outline-none"
                       style={{
+                        backgroundColor: "#e0e0e0",
+                        color: "#19191a",
                         clipPath:
                           "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
                       }}
@@ -320,6 +342,8 @@ export default function RoundSelector({
                     >
                       {formatCurrency(customFdv)}
                     </p>
+                  </div>
+                </div>
                   </div>
                 </div>
               </div>

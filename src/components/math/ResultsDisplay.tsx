@@ -87,76 +87,103 @@ export default function ResultsDisplay({
           <div className="grid md:grid-cols-3 gap-6">
             {/* Your Investment */}
             <div
-              className="text-center p-6 border-3 border-background"
               style={{
-                backgroundColor: "#e0e0e0",
                 clipPath:
                   "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
               }}
             >
-              <div className="text-xs font-data font-bold mb-2 uppercase tracking-wider text-foreground">
-                Your Investment
-              </div>
-              <div className="text-3xl font-black font-data text-foreground">
-                ${investment.toLocaleString()}
+              <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+                <div
+                  className="text-center p-6"
+                  style={{
+                    backgroundColor: "#e0e0e0",
+                    clipPath:
+                      "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                  }}
+                >
+                  <div className="text-xs font-data font-bold mb-2 uppercase tracking-wider text-foreground">
+                    Your Investment
+                  </div>
+                  <div className="text-3xl font-black font-data text-foreground">
+                    ${investment.toLocaleString()}
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Position Value */}
             <div
-              className="text-center p-6 border-3 border-foreground relative"
               style={{
-                backgroundColor: "#f380cd",
                 clipPath:
                   "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
               }}
             >
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <div className="text-xs font-data font-bold uppercase tracking-wider text-foreground">
-                  Position Value
-                </div>
-                <button
-                  onClick={onLamboModeToggle}
-                  className={`h-6 px-2 text-xs font-data font-bold border-3 transition-colors ${
-                    lamboMode
-                      ? "bg-foreground text-background border-foreground"
-                      : "bg-transparent text-foreground border-foreground hover:bg-foreground hover:text-background"
-                  }`}
+              <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
+                <div
+                  className="text-center p-6 relative"
                   style={{
+                    backgroundColor: "#f380cd",
                     clipPath:
-                      "polygon(3px 0, 100% 0, 100% calc(100% - 3px), calc(100% - 3px) 100%, 0 100%, 0 3px)",
+                      "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
                   }}
                 >
-                  🏎️
-                </button>
-              </div>
-              <div className="text-3xl font-black font-data text-foreground">
-                {formatValue(positionValue)}
-              </div>
-              {lamboMode && (
-                <div className="text-xs font-data mt-1 text-foreground">
-                  @ ${LAMBO_PRICE.toLocaleString()} each
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <div className="text-xs font-data font-bold uppercase tracking-wider text-foreground">
+                      Position Value
+                    </div>
+                    <button
+                      onClick={onLamboModeToggle}
+                      className={`h-6 px-2 text-xs font-data font-bold border-3 transition-colors ${
+                        lamboMode
+                          ? "bg-foreground text-background border-foreground"
+                          : "bg-transparent text-foreground border-foreground hover:bg-foreground hover:text-background"
+                      }`}
+                      style={{
+                        clipPath:
+                          "polygon(3px 0, 100% 0, 100% calc(100% - 3px), calc(100% - 3px) 100%, 0 100%, 0 3px)",
+                      }}
+                    >
+                      🏎️
+                    </button>
+                  </div>
+                  <div className="text-3xl font-black font-data text-foreground">
+                    {formatValue(positionValue)}
+                  </div>
+                  {lamboMode && (
+                    <div className="text-xs font-data mt-1 text-foreground">
+                      @ ${LAMBO_PRICE.toLocaleString()} each
+                    </div>
+                  )}
                 </div>
-              )}
+              </div>
             </div>
 
             {/* Return Multiple */}
             <div
-              className="text-center p-6 border-3 border-background"
               style={{
-                backgroundColor: "#e0e0e0",
                 clipPath:
                   "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
               }}
             >
-              <div className="text-xs font-data font-bold mb-2 uppercase tracking-wider text-foreground">
-                Return Multiple
-              </div>
-              <div
-                className="text-3xl font-black font-data"
-                style={{ color: getMultiplierColor(multiplier) }}
-              >
-                {multiplier.toFixed(1)}x
+              <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+                <div
+                  className="text-center p-6"
+                  style={{
+                    backgroundColor: "#e0e0e0",
+                    clipPath:
+                      "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                  }}
+                >
+                  <div className="text-xs font-data font-bold mb-2 uppercase tracking-wider text-foreground">
+                    Return Multiple
+                  </div>
+                  <div
+                    className="text-3xl font-black font-data"
+                    style={{ color: getMultiplierColor(multiplier) }}
+                  >
+                    {multiplier.toFixed(1)}x
+                  </div>
+                </div>
               </div>
             </div>
           </div>

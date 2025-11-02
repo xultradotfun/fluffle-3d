@@ -303,16 +303,16 @@ export function PFPGenerator() {
       />
       <div className="inline-flex items-center gap-2 text-xs px-2 py-1 bg-pink border-2 border-foreground">
         <span className="text-foreground font-bold uppercase">
-          Design by{" "}
-          <a
-            href="https://x.com/juliencoppola"
-            target="_blank"
-            rel="noopener noreferrer"
+              Design by{" "}
+              <a
+                href="https://x.com/juliencoppola"
+                target="_blank"
+                rel="noopener noreferrer"
             className="text-foreground hover:text-background transition-colors font-black"
-          >
-            @juliencoppola
-          </a>
-        </span>
+              >
+                @juliencoppola
+              </a>
+            </span>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-7xl mx-auto">

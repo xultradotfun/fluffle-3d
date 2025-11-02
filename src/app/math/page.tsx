@@ -191,8 +191,102 @@ export default function MathPage() {
           description="Calculate potential returns for Echo, Fluffle & Sonar rounds"
         />
         {loading ? (
-          <div className="flex items-center justify-center h-64">
-            <div className="w-16 h-16 border-4 border-foreground border-t-pink animate-spin" />
+          <div className="w-full">
+            {/* Skeleton loaders */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6 items-start w-full">
+              {/* RoundSelector skeleton */}
+              <div
+                className="w-full"
+                style={{
+                  clipPath:
+                    "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
+                }}
+              >
+                <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
+                  <div
+                    className="p-6 animate-pulse"
+                    style={{
+                      backgroundColor: "#19191a",
+                      clipPath:
+                        "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
+                      minHeight: "400px",
+                      minWidth: "300px",
+                    }}
+                  >
+                    <div className="h-4 bg-background/20 rounded w-full max-w-[200px] mb-2" />
+                    <div className="h-3 bg-background/20 rounded w-full max-w-[300px] mb-6" />
+                    <div className="space-y-3">
+                      <div className="h-24 bg-background/10 rounded w-full" />
+                      <div className="h-24 bg-background/10 rounded w-full" />
+                      <div className="h-24 bg-background/10 rounded w-full" />
+                      <div className="h-16 bg-background/10 rounded w-full" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* TokenScrollPicker skeleton */}
+              <div
+                className="w-full"
+                style={{
+                  clipPath:
+                    "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
+                }}
+              >
+                <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
+                  <div
+                    className="p-6 animate-pulse"
+                    style={{
+                      backgroundColor: "#19191a",
+                      clipPath:
+                        "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
+                      minHeight: "400px",
+                      minWidth: "300px",
+                    }}
+                  >
+                    <div className="h-4 bg-background/20 rounded w-full max-w-[200px] mb-2" />
+                    <div className="h-3 bg-background/20 rounded w-full max-w-[250px] mb-6" />
+                    <div className="grid grid-cols-4 gap-3">
+                      {[...Array(16)].map((_, i) => (
+                        <div key={i} className="h-20 bg-background/10 rounded" />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* ResultsDisplay skeleton */}
+            <div
+              style={{
+                clipPath:
+                  "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
+              }}
+            >
+              <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
+                <div
+                  className="p-6 animate-pulse"
+                  style={{
+                    backgroundColor: "#19191a",
+                    clipPath:
+                      "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
+                  }}
+                >
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-16 h-16 bg-background/20 rounded-full" />
+                    <div className="flex-1">
+                      <div className="h-6 bg-background/20 rounded w-64 mb-2" />
+                      <div className="h-4 bg-background/20 rounded w-32" />
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-3 gap-6">
+                    <div className="h-32 bg-background/10 rounded" />
+                    <div className="h-32 bg-background/10 rounded" />
+                    <div className="h-32 bg-background/10 rounded" />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         ) : marketData?.success ? (
           <>

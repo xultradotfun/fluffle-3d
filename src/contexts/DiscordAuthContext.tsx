@@ -40,6 +40,20 @@ export function DiscordAuthProvider({
   useEffect(() => {
     // Check if user is already logged in
     checkAuth();
+
+    // Check for auth success/error params in URL (from OAuth callback)
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('auth_success') || urlParams.has('auth_error')) {
+      // Re-check auth after a brief delay to ensure cookies are set
+      setTimeout(() => {
+        checkAuth();
+        // Clean up URL params after auth check
+        const newUrl = new URL(window.location.href);
+        newUrl.searchParams.delete('auth_success');
+        newUrl.searchParams.delete('auth_error');
+        window.history.replaceState({}, '', newUrl.toString());
+      }, 100);
+    }
   }, []);
 
   const checkAuth = async () => {

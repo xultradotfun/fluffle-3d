@@ -166,14 +166,13 @@ function ProjectVotingComponent({
                 <Tooltip.Trigger asChild>
                   <button
                     onClick={() => !isVoting && !cooldown && onVote("up")}
-                    disabled={isVoting || cooldown || !canVote}
+                    disabled={isVoting || cooldown}
                     className={cn(
                       "flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-2 border-3 border-background font-black font-data text-xs sm:text-sm uppercase",
                       userVote === "up"
                         ? "bg-green"
                         : "bg-transparent hover:bg-green",
-                      (isVoting || cooldown || !canVote) &&
-                        "opacity-50 cursor-not-allowed"
+                      (isVoting || cooldown) && "opacity-50 cursor-not-allowed"
                     )}
                     style={{
                       color: "#dfd9d9",
@@ -232,14 +231,13 @@ function ProjectVotingComponent({
                 <Tooltip.Trigger asChild>
                   <button
                     onClick={() => !isVoting && !cooldown && onVote("down")}
-                    disabled={isVoting || cooldown || !canVote}
+                    disabled={isVoting || cooldown}
                     className={cn(
                       "flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-2 border-3 border-background font-black font-data text-xs sm:text-sm uppercase",
                       userVote === "down"
                         ? "bg-red"
                         : "bg-transparent hover:bg-red",
-                      (isVoting || cooldown || !canVote) &&
-                        "opacity-50 cursor-not-allowed"
+                      (isVoting || cooldown) && "opacity-50 cursor-not-allowed"
                     )}
                     style={{
                       color: "#dfd9d9",

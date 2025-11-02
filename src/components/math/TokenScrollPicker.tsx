@@ -67,10 +67,6 @@ export default function TokenScrollPicker({
           <div
             ref={scrollContainerRef}
             className="max-h-[480px] overflow-y-auto pr-2"
-            style={{
-              scrollbarWidth: "thin",
-              scrollbarColor: "#dfd9d9 transparent",
-            }}
           >
             <div className="grid grid-cols-4 gap-3">
               {tokens.map((token, index) => (
@@ -79,8 +75,8 @@ export default function TokenScrollPicker({
                   onClick={() => onTokenSelect(index)}
                   className={`flex flex-col items-center p-3 transition-all border-3 ${
                     index === selectedIndex
-                      ? "border-foreground bg-pink"
-                      : "border-background hover:border-foreground"
+                      ? "border-foreground bg-pink hover:bg-pink"
+                      : "border-background bg-transparent hover:bg-pink hover:border-foreground"
                   }`}
                   style={{
                     clipPath:
