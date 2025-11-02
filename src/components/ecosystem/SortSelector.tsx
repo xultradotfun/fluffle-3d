@@ -53,12 +53,15 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
             <div className="flex gap-2">
           <button
             onClick={() => handleSortClick("score")}
-                className={`px-3 py-1.5 border-2 font-black uppercase text-xs transition-colors ${
+                className={`px-3 py-1.5 border-3 font-black uppercase text-xs transition-colors ${
               sortMethod.type === "score"
                     ? "bg-pink text-foreground border-foreground"
                     : "bg-transparent border-background hover:bg-muted"
             }`}
-                style={sortMethod.type === "score" ? {} : { color: "#dfd9d9" }}
+                style={{
+                  color: sortMethod.type === "score" ? "#19191a" : "#dfd9d9",
+                  clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                }}
               >
                 SCORE
                 {sortMethod.type === "score" && (
@@ -68,12 +71,15 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
 
           <button
             onClick={() => handleSortClick("alphabetical")}
-                className={`px-3 py-1.5 border-2 font-black uppercase text-xs transition-colors ${
+                className={`px-3 py-1.5 border-3 font-black uppercase text-xs transition-colors ${
               sortMethod.type === "alphabetical"
                     ? "bg-pink text-foreground border-foreground"
                     : "bg-transparent border-background hover:bg-muted"
             }`}
-                style={sortMethod.type === "alphabetical" ? {} : { color: "#dfd9d9" }}
+                style={{
+                  color: sortMethod.type === "alphabetical" ? "#19191a" : "#dfd9d9",
+                  clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                }}
               >
                 A-Z
                 {sortMethod.type === "alphabetical" && (
@@ -83,12 +89,15 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
 
           <button
             onClick={() => handleSortClick("latest")}
-                className={`px-3 py-1.5 border-2 font-black uppercase text-xs transition-colors ${
+                className={`px-3 py-1.5 border-3 font-black uppercase text-xs transition-colors ${
               sortMethod.type === "latest"
                     ? "bg-pink text-foreground border-foreground"
                     : "bg-transparent border-background hover:bg-muted"
             }`}
-                style={sortMethod.type === "latest" ? {} : { color: "#dfd9d9" }}
+                style={{
+                  color: sortMethod.type === "latest" ? "#19191a" : "#dfd9d9",
+                  clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                }}
               >
                 LATEST
                 {sortMethod.type === "latest" && (
@@ -101,8 +110,11 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
           <Tooltip.Trigger asChild>
             <button
               type="button"
-                  className="p-1.5 border-2 border-background bg-transparent hover:bg-muted transition-colors"
-                  style={{ color: "#dfd9d9" }}
+                  className="p-1.5 border-3 border-background bg-transparent hover:bg-muted transition-colors"
+                  style={{ 
+                    color: "#dfd9d9",
+                    clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                  }}
               onClick={() => setTooltipOpen(true)}
             >
                   <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor">
