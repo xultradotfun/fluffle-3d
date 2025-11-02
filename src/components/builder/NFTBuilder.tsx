@@ -12,6 +12,7 @@ import TraitSelector from "./TraitSelector";
 import ViewControls from "./ViewControls";
 import ActionButtons from "./ActionButtons";
 import TraitCategoryTabs from "./TraitCategoryTabs";
+import PageHeader from "@/components/PageHeader";
 import { getTraitImageUrl, getTraitBackImageUrl } from "@/utils/traitImageMap";
 import { LAYER_ORDER, HAIR_WITH_BACK, LayerGroup } from "@/utils/layerOrder";
 import { ZOOM_PRESETS } from "@/constants/zoom";
