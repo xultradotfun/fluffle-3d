@@ -4,7 +4,15 @@ import { useState, useEffect } from "react";
 import { apiClient, API_ENDPOINTS } from "@/lib/api";
 import CountUp from "@/components/ui/CountUp";
 
-export function EcosystemHeader() {
+interface EcosystemHeaderProps {
+  projectCount: number;
+  categoryCount: number;
+}
+
+export function EcosystemHeader({
+  projectCount,
+  categoryCount,
+}: EcosystemHeaderProps) {
   const [stats, setStats] = useState({
     uniqueVoters: 0,
     totalVotes: 0,
@@ -142,14 +150,17 @@ export function EcosystemHeader() {
           <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
             <div className="bg-[#e0e0e0] p-4" style={{ clipPath: clipStat }}>
               <div className="text-3xl sm:text-4xl font-black font-data mb-1">
-                <CountUp
-                  from={0}
-                  to={100}
-                  separator=","
-                  direction="up"
-                  duration={1.5}
-                />
-                +
+                {projectCount > 0 ? (
+                  <CountUp
+                    from={0}
+                    to={projectCount}
+                    separator=","
+                    direction="up"
+                    duration={1.5}
+                  />
+                ) : (
+                  "..."
+                )}
               </div>
               <div className="text-xs font-bold uppercase text-gray-600">
                 [PROJECTS]
@@ -163,13 +174,17 @@ export function EcosystemHeader() {
           <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
             <div className="bg-[#e0e0e0] p-4" style={{ clipPath: clipStat }}>
               <div className="text-3xl sm:text-4xl font-black font-data mb-1">
-                <CountUp
-                  from={0}
-                  to={12}
-                  separator=","
-                  direction="up"
-                  duration={1.5}
-                />
+                {categoryCount > 0 ? (
+                  <CountUp
+                    from={0}
+                    to={categoryCount}
+                    separator=","
+                    direction="up"
+                    duration={1.5}
+                  />
+                ) : (
+                  "..."
+                )}
               </div>
               <div className="text-xs font-bold uppercase text-gray-600">
                 [CATEGORIES]

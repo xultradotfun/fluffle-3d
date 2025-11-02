@@ -44,7 +44,10 @@ export function EcosystemDashboard() {
 
   return (
     <div className="space-y-12 animate-fade-in">
-      <EcosystemHeader />
+      <EcosystemHeader 
+        projectCount={projects.length}
+        categoryCount={categories.length}
+      />
 
       <div className="space-y-8">
         {/* Controls Header */}
