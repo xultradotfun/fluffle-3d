@@ -185,7 +185,7 @@ export function BingoCard({
               {guestName ? (
                 <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-white/20 dark:ring-white/10 bg-gray-200 dark:bg-gray-700">
                   <Image
-                    src="/avatars/megaeth_labs.jpg"
+                    src="/avatars/megaeth.jpg"
                     alt="MegaETH Guest Avatar"
                     fill
                     className="object-cover"
@@ -434,7 +434,7 @@ export function BingoCard({
                   {guestName ? (
                     <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-gray-200 dark:ring-gray-700 shadow-sm bg-gray-200 dark:bg-gray-700">
                       <Image
-                        src="/avatars/megaeth_labs.jpg"
+                        src="/avatars/megaeth.jpg"
                         alt="MegaETH Guest Avatar"
                         fill
                         className="object-cover"
@@ -539,7 +539,9 @@ export function BingoCard({
                                 title={project?.name || twitter}
                               >
                                 <Image
-                                      src={project?.img || `/avatars/${twitter}.jpg`}
+                                  src={
+                                    project?.img || `/avatars/${twitter}.jpg`
+                                  }
                                   alt={project?.name || twitter}
                                   fill
                                   className="object-cover"
