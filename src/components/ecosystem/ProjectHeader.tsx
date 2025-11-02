@@ -21,17 +21,33 @@ function ProjectHeaderComponent({
 }: ProjectHeaderProps) {
   return (
     <div className="flex items-start gap-4 mb-6">
-      {/* Logo */}
-      <div className="w-16 h-16 flex-shrink-0 border-3 border-white bg-[#e0e0e0]">
-        <Image
-          src={img || `/avatars/${twitter}.jpg`}
-          alt={`${name} Logo`}
-          width={64}
-          height={64}
-          className="w-full h-full object-cover"
-          priority={false}
-          loading="lazy"
-        />
+      {/* Logo with 3-layer border */}
+      <div
+        className="w-16 h-16 flex-shrink-0"
+        style={{
+          clipPath:
+            "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+        }}
+      >
+        <div style={{ backgroundColor: "#fff", padding: "2px", height: "100%" }}>
+          <div
+            style={{
+              clipPath:
+                "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+              height: "100%",
+            }}
+          >
+            <Image
+              src={img || `/avatars/${twitter}.jpg`}
+              alt={`${name} Logo`}
+              width={64}
+              height={64}
+              className="w-full h-full object-cover"
+              priority={false}
+              loading="lazy"
+            />
+          </div>
+        </div>
       </div>
 
       {/* Name and Badges */}
