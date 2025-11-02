@@ -105,10 +105,15 @@ const config = {
           from: { transform: "scale(0.95)" },
           to: { transform: "scale(1)" },
         },
+        shimmer: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
       },
       animation: {
         "slide-in": "slide-in 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
         "pop-in": "pop-in 0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+        shimmer: "shimmer 2s infinite",
       },
     },
   },
