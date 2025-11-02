@@ -149,11 +149,6 @@ export default function ResultsDisplay({
                   <div className="text-3xl font-black font-data text-foreground">
                     {formatValue(positionValue)}
                   </div>
-                  {lamboMode && (
-                    <div className="text-xs font-data mt-1 text-foreground">
-                      @ ${LAMBO_PRICE.toLocaleString()} each
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
