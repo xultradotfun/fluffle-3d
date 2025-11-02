@@ -72,10 +72,12 @@ export function EcosystemDashboard() {
             getUserVotedCount={() => counts.voted}
             getUserNotVotedCount={() => counts.notVoted}
             totalProjects={projects.length}
+            sortMethod={sortMethod}
+            onSortChange={setSortMethod}
           />
 
-          {/* Sort Controls */}
-          <div className="flex justify-end">
+          {/* Sort Controls - mobile only */}
+          <div className="flex justify-end md:hidden">
             <SortSelector
               sortMethod={sortMethod}
               onSortChange={setSortMethod}

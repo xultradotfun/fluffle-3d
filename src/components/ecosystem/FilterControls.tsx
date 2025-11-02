@@ -1,6 +1,7 @@
 import { FlaskConical, ChevronDown } from "lucide-react";
 import { useState } from "react";
-import type { VoteFilter } from "@/types/ecosystem";
+import * as Tooltip from "@radix-ui/react-tooltip";
+import type { VoteFilter, SortMethod } from "@/types/ecosystem";
 
 interface FilterControlsProps {
   selectedCategory: string | null;
@@ -21,6 +22,8 @@ interface FilterControlsProps {
   getUserVotedCount: () => number;
   getUserNotVotedCount: () => number;
   totalProjects: number;
+  sortMethod: SortMethod;
+  onSortChange: (method: SortMethod) => void;
 }
 
 export function FilterControls({
@@ -42,6 +45,8 @@ export function FilterControls({
   getUserVotedCount,
   getUserNotVotedCount,
   totalProjects,
+  sortMethod,
+  onSortChange,
 }: FilterControlsProps) {
   const [showCategories, setShowCategories] = useState(false);
 
@@ -229,6 +234,101 @@ export function FilterControls({
                     />
           </div>
         </button>
+
+                {/* Sort controls - desktop only */}
+                <div className="hidden md:flex items-center gap-2 ml-auto">
+                  <span className="font-black uppercase text-xs" style={{ color: "#dfd9d9" }}>
+                    SORT:
+                  </span>
+                  <button
+                    onClick={() => onSortChange({ type: "score", direction: sortMethod.type === "score" && sortMethod.direction === "desc" ? "asc" : "desc" })}
+                    className={`px-3 py-1.5 border-3 font-bold uppercase text-xs transition-colors ${
+                      sortMethod.type === "score"
+                        ? "bg-pink border-foreground"
+                        : "bg-transparent border-background hover:bg-muted"
+                    }`}
+                    style={{
+                      color: sortMethod.type === "score" ? "#19191a" : "#dfd9d9",
+                      clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                    }}
+                  >
+                    SCORE{sortMethod.type === "score" && (sortMethod.direction === "desc" ? "↓" : "↑")}
+                  </button>
+                  <button
+                    onClick={() => onSortChange({ type: "alphabetical", direction: sortMethod.type === "alphabetical" && sortMethod.direction === "asc" ? "desc" : "asc" })}
+                    className={`px-3 py-1.5 border-3 font-bold uppercase text-xs transition-colors ${
+                      sortMethod.type === "alphabetical"
+                        ? "bg-pink border-foreground"
+                        : "bg-transparent border-background hover:bg-muted"
+                    }`}
+                    style={{
+                      color: sortMethod.type === "alphabetical" ? "#19191a" : "#dfd9d9",
+                      clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                    }}
+                  >
+                    A-Z{sortMethod.type === "alphabetical" && (sortMethod.direction === "asc" ? "↓" : "↑")}
+                  </button>
+                  <button
+                    onClick={() => onSortChange({ type: "date", direction: sortMethod.type === "date" && sortMethod.direction === "desc" ? "asc" : "desc" })}
+                    className={`px-3 py-1.5 border-3 font-bold uppercase text-xs transition-colors ${
+                      sortMethod.type === "date"
+                        ? "bg-pink border-foreground"
+                        : "bg-transparent border-background hover:bg-muted"
+                    }`}
+                    style={{
+                      color: sortMethod.type === "date" ? "#19191a" : "#dfd9d9",
+                      clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                    }}
+                  >
+                    LATEST{sortMethod.type === "date" && (sortMethod.direction === "desc" ? "↓" : "↑")}
+                  </button>
+                  
+                  {/* Info tooltip */}
+                  <Tooltip.Provider delayDuration={100}>
+                    <Tooltip.Root>
+                      <Tooltip.Trigger asChild>
+                        <button
+                          className="w-6 h-6 flex items-center justify-center border-3 border-background bg-transparent hover:bg-pink transition-colors"
+                          style={{
+                            color: "#dfd9d9",
+                            clipPath: "polygon(3px 0, 100% 0, 100% calc(100% - 3px), calc(100% - 3px) 100%, 0 100%, 0 3px)",
+                          }}
+                        >
+                          <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                          </svg>
+                        </button>
+                      </Tooltip.Trigger>
+                      <Tooltip.Portal>
+                        <Tooltip.Content side="top" align="center" sideOffset={8} className="z-50">
+                          {/* Outer wrapper with clip-path */}
+                          <div
+                            style={{
+                              clipPath:
+                                "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                            }}
+                          >
+                            {/* Middle border layer */}
+                            <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+                              {/* Inner content layer */}
+                              <div
+                                className="max-w-[280px] p-4 font-bold uppercase text-xs"
+                                style={{
+                                  backgroundColor: "#19191a",
+                                  color: "#dfd9d9",
+                                  clipPath:
+                                    "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                                }}
+                              >
+                                Projects are sorted by weighted score based on role-based voting power. Click arrows to reverse order.
+                              </div>
+                            </div>
+                          </div>
+                        </Tooltip.Content>
+                      </Tooltip.Portal>
+                    </Tooltip.Root>
+                  </Tooltip.Provider>
+                </div>
 
                 {/* Clear all filters */}
                 {activeFiltersCount > 0 && (
