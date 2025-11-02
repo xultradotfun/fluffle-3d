@@ -196,15 +196,31 @@ function ProjectVotingComponent({
                     side="top"
                     align="center"
                     sideOffset={8}
-                    className="z-50 max-w-[280px] border-3 border-background p-4"
-                    style={{
-                      backgroundColor: "#19191a",
-                      color: "#dfd9d9",
-                      clipPath:
-                        "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-                    }}
+                    className="z-50"
                   >
-                    {getVoteBreakdownText("up")}
+                    {/* Outer wrapper with clip-path */}
+                    <div
+                      style={{
+                        clipPath:
+                          "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                      }}
+                    >
+                      {/* Middle border layer */}
+                      <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+                        {/* Inner content layer */}
+                        <div
+                          className="max-w-[280px] p-4"
+                          style={{
+                            backgroundColor: "#19191a",
+                            color: "#dfd9d9",
+                            clipPath:
+                              "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                          }}
+                        >
+                          {getVoteBreakdownText("up")}
+                        </div>
+                      </div>
+                    </div>
                   </Tooltip.Content>
                 </Tooltip.Portal>
               </Tooltip.Root>
@@ -244,15 +260,31 @@ function ProjectVotingComponent({
                     side="top"
                     align="center"
                     sideOffset={8}
-                    className="z-50 max-w-[280px] border-3 border-background p-4"
-                    style={{
-                      backgroundColor: "#19191a",
-                      color: "#dfd9d9",
-                      clipPath:
-                        "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-                    }}
+                    className="z-50"
                   >
-                    {getVoteBreakdownText("down")}
+                    {/* Outer wrapper with clip-path */}
+                    <div
+                      style={{
+                        clipPath:
+                          "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                      }}
+                    >
+                      {/* Middle border layer */}
+                      <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+                        {/* Inner content layer */}
+                        <div
+                          className="max-w-[280px] p-4"
+                          style={{
+                            backgroundColor: "#19191a",
+                            color: "#dfd9d9",
+                            clipPath:
+                              "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                          }}
+                        >
+                          {getVoteBreakdownText("down")}
+                        </div>
+                      </div>
+                    </div>
                   </Tooltip.Content>
                 </Tooltip.Portal>
               </Tooltip.Root>
@@ -287,17 +319,33 @@ function ProjectVotingComponent({
                     side="top"
                     align="center"
                     sideOffset={8}
-                    className="z-50 max-w-[280px] border-3 border-background p-4"
-                    style={{
-                      backgroundColor: "#19191a",
-                      color: "#dfd9d9",
-                      clipPath:
-                        "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-                    }}
+                    className="z-50"
                     onPointerDownOutside={() => setIsMobileTooltipOpen(false)}
                     onEscapeKeyDown={() => setIsMobileTooltipOpen(false)}
                   >
-                    {getCombinedBreakdownText()}
+                    {/* Outer wrapper with clip-path */}
+                    <div
+                      style={{
+                        clipPath:
+                          "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                      }}
+                    >
+                      {/* Middle border layer */}
+                      <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+                        {/* Inner content layer */}
+                        <div
+                          className="max-w-[280px] p-4"
+                          style={{
+                            backgroundColor: "#19191a",
+                            color: "#dfd9d9",
+                            clipPath:
+                              "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                          }}
+                        >
+                          {getCombinedBreakdownText()}
+                        </div>
+                      </div>
+                    </div>
                   </Tooltip.Content>
                 </Tooltip.Portal>
               </Tooltip.Root>
