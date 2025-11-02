@@ -251,11 +251,9 @@ export function FilterControls({
                 )}
               </div>
 
-              {/* Categories dropdown - always render to maintain width */}
-              <div 
-                className={`flex flex-wrap gap-2 pt-3 border-t-2 border-background/30 transition-all overflow-hidden ${
-                  showCategories ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0 pt-0 border-t-0"
-              }`}
+              {/* Categories dropdown */}
+              {showCategories && (
+              <div className="flex flex-wrap gap-2 pt-3 border-t-2 border-background/30 transition-all"
               >
                 <button
                   onClick={() => {
@@ -296,6 +294,7 @@ export function FilterControls({
                     </button>
                   ))}
               </div>
+              )}
             </div>
           </div>
         </div>
