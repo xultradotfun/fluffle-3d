@@ -117,20 +117,20 @@ export default function ResultsDisplay({
                   "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
               }}
             >
-              <div style={{ backgroundColor: "#fff", padding: "2px", height: "100%" }}>
+              <div style={{ backgroundColor: "#19191a", padding: "2px", height: "100%" }}>
                 <div
-                  className="text-center p-6 flex flex-col justify-center"
+                  className="text-center p-4 flex flex-col justify-center"
                   style={{
-                    backgroundColor: "#19191a",
+                    backgroundColor: "#fff",
                     clipPath:
                       "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                    minHeight: "140px",
+                    minHeight: "110px",
                   }}
                 >
-                  <div className="text-xs font-data font-bold mb-2 uppercase tracking-wider" style={{ color: "#dfd9d9" }}>
+                  <div className="text-sm font-black mb-1 uppercase tracking-wider" style={{ color: "#19191a" }}>
                     Your Investment
                   </div>
-                  <div className="text-3xl font-black font-data" style={{ color: "#dfd9d9" }}>
+                  <div className="text-4xl font-black" style={{ color: "#19191a" }}>
                     ${investment.toLocaleString()}
                   </div>
                 </div>
@@ -144,26 +144,26 @@ export default function ResultsDisplay({
                   "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
               }}
             >
-              <div style={{ backgroundColor: "#058d5e", padding: "2px", height: "100%" }}>
+              <div style={{ backgroundColor: "#19191a", padding: "2px", height: "100%" }}>
                 <div
-                  className="text-center p-6 relative flex flex-col justify-center"
+                  className="text-center p-4 relative flex flex-col justify-center"
                   style={{
-                    backgroundColor: "#19191a",
+                    backgroundColor: "#fff",
                     clipPath:
                       "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                    minHeight: "140px",
+                    minHeight: "110px",
                   }}
                 >
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    <div className="text-xs font-data font-bold uppercase tracking-wider" style={{ color: "#dfd9d9" }}>
+                  <div className="flex items-center justify-center gap-2 mb-1">
+                    <div className="text-sm font-black uppercase tracking-wider" style={{ color: "#19191a" }}>
                       Position Value
                     </div>
                     <button
                       onClick={onLamboModeToggle}
-                      className={`h-6 px-2 text-xs font-data font-bold border-3 transition-colors ${
+                      className={`h-6 px-2 text-xs font-black border-3 transition-colors ${
                         lamboMode
-                          ? "bg-background text-foreground border-background"
-                          : "bg-transparent text-background border-background hover:bg-background hover:text-foreground"
+                          ? "bg-foreground text-background border-foreground"
+                          : "bg-transparent text-foreground border-foreground hover:bg-foreground hover:text-background"
                       }`}
                       style={{
                         clipPath:
@@ -173,7 +173,7 @@ export default function ResultsDisplay({
                       🏎️
                     </button>
                   </div>
-                  <div className="text-3xl font-black font-data" style={{ color: "#058d5e" }}>
+                  <div className="text-4xl font-black" style={{ color: "#058d5e" }}>
                     {formatValue(positionValue)}
                   </div>
                 </div>
@@ -187,21 +187,21 @@ export default function ResultsDisplay({
                   "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
               }}
             >
-              <div style={{ backgroundColor: "#fff", padding: "2px", height: "100%" }}>
+              <div style={{ backgroundColor: "#19191a", padding: "2px", height: "100%" }}>
                 <div
-                  className="text-center p-6 flex flex-col justify-center"
+                  className="text-center p-4 flex flex-col justify-center"
                   style={{
-                    backgroundColor: "#19191a",
+                    backgroundColor: "#fff",
                     clipPath:
                       "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                    minHeight: "140px",
+                    minHeight: "110px",
                   }}
                 >
-                  <div className="text-xs font-data font-bold mb-2 uppercase tracking-wider" style={{ color: "#dfd9d9" }}>
+                  <div className="text-sm font-black mb-1 uppercase tracking-wider" style={{ color: "#19191a" }}>
                     Return Multiple
                   </div>
                   <div
-                    className="text-3xl font-black font-data"
+                    className="text-4xl font-black"
                     style={{ color: getMultiplierColor(multiplier) }}
                   >
                     {multiplier.toFixed(1)}x
