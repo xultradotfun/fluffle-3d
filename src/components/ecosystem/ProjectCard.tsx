@@ -187,15 +187,15 @@ function ProjectCardComponent({
                 {project.description}
               </p>
 
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4 border-t-3 border-white">
-                <div className="flex items-center gap-3">
+              <div className="flex flex-row items-center justify-between gap-3 pt-4 border-t-3 border-white">
+                <div className="flex items-center gap-3 flex-shrink-0">
                   <ProjectLinks
                     website={project.website}
                     discord={project.discord}
                     telegram={project.telegram}
                   />
                 </div>
-                <div className="flex-shrink-0 self-end sm:self-auto">
+                <div className="flex-shrink-0">
                   <ProjectVoting
                     votes={votes}
                     userVote={userVote}

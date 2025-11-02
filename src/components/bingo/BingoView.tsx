@@ -270,36 +270,63 @@ export function BingoView() {
   }
 
   return (
-    <div className="min-h-screen py-12">
+    <div className="min-h-screen py-12 bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header Section */}
-        <div className="text-center max-w-4xl mx-auto mb-12 relative">
-          <div className="absolute inset-x-0 top-6 -bottom-6 bg-gradient-to-b from-teal-500/10 via-emerald-500/5 to-transparent dark:from-teal-500/[0.07] dark:via-emerald-500/[0.03] dark:to-transparent blur-2xl -z-10 rounded-[100%]" />
+        {/* Header with video background */}
+        <div
+          className="relative overflow-hidden mb-12"
+          style={{
+            clipPath:
+              "polygon(24px 0, calc(100% - 48px) 0, 100% 48px, 100% 100%, 0 100%, 0 24px)",
+          }}
+        >
+          {/* Video Background */}
+          <video
+            loop
+            muted
+            autoPlay
+            playsInline
+            className="absolute top-0 right-0 w-full h-full object-cover"
+            poster="/ui/oversubscription.webp"
+          >
+            <source src="/ui/oversubscription.mp4" type="video/mp4" />
+          </video>
 
-          <h1 className="flex items-center justify-center gap-3 text-4xl sm:text-5xl font-bold mb-6">
-            <div
-              className="relative h-10 sm:h-12"
-              style={{ width: "calc(8.13 * 2.5rem)" }}
-            >
-              <Image
-                src="/megalogo.png"
-                alt="MegaETH"
-                fill
-                className="object-contain brightness-0 opacity-80 dark:opacity-100 dark:invert"
-                unoptimized
-                priority
-              />
+          {/* Dark Overlay */}
+          <div
+            className="absolute top-0 right-0 w-full h-full"
+            style={{ backgroundColor: "rgba(25, 25, 26, 0.5)" }}
+          />
+
+          {/* Content */}
+          <div className="relative z-10 px-8 py-12 text-center max-w-4xl mx-auto" style={{ color: "#fff" }}>
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="68"
+                height="68"
+                viewBox="0 0 68 68"
+                fill="none"
+                className="w-[50px] h-[50px] hidden md:block"
+              >
+                <path
+                  d="M34 0C34.6638 18.4957 49.5043 33.3362 68 34C49.5043 34.6638 34.6638 49.5043 34 68C33.3362 49.5043 18.4957 34.6638 0 34C18.4957 33.3362 33.3362 18.4957 34 0Z"
+                  fill="white"
+                />
+              </svg>
+              <h1 className="text-4xl sm:text-5xl font-black uppercase leading-none pt-2">
+                MegaETH Testnet Bingo
+              </h1>
             </div>
-            <span className="bg-gradient-to-r from-teal-500 via-emerald-500 to-green-500 dark:from-teal-400 dark:via-emerald-400 dark:to-green-400 bg-clip-text text-transparent tracking-tight">
-              Testnet Bingo
-            </span>
-          </h1>
+            <p className="text-sm sm:text-base font-bold uppercase max-w-2xl mx-auto">
+              Explore the MegaETH testnet through interactive challenges and
+              complete your very own bingo card!
+            </p>
+          </div>
+        </div>
 
-          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
-            Explore the MegaETH testnet through interactive challenges and
-            complete your very own bingo card!
-          </p>
-
+        {/* User/Guest Info */}
+        <div className="mb-8">
           {user ? (
             <div className="flex items-center justify-center gap-3">
               <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/[0.08] backdrop-blur-sm">

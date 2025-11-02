@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { ROLE_TIERS } from "@/lib/constants";
-import { useState, memo, useMemo } from "react";
+import { useState, memo, useMemo, useEffect } from "react";
 import type { VoteBreakdown } from "@/types/ecosystem";
 
 interface ProjectVotingProps {
@@ -17,6 +17,17 @@ interface ProjectVotingProps {
   onVote: (vote: "up" | "down") => void;
 }
 
+// Utility function to abbreviate large numbers
+function abbreviateNumber(num: number): string {
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(1).replace(/\.0$/, "") + "M";
+  }
+  if (num >= 1000) {
+    return (num / 1000).toFixed(1).replace(/\.0$/, "") + "K";
+  }
+  return num.toString();
+}
+
 function ProjectVotingComponent({
   votes,
   userVote,
@@ -26,6 +37,17 @@ function ProjectVotingComponent({
   onVote,
 }: ProjectVotingProps) {
   const [isMobileTooltipOpen, setIsMobileTooltipOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640); // sm breakpoint
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const filteredVotes = useMemo(() => {
     return {
@@ -33,6 +55,17 @@ function ProjectVotingComponent({
       downvotes: votes.downvotes || 0,
     };
   }, [votes]);
+
+  const displayVotes = useMemo(() => {
+    return {
+      upvotes: isMobile
+        ? abbreviateNumber(filteredVotes.upvotes)
+        : filteredVotes.upvotes.toString(),
+      downvotes: isMobile
+        ? abbreviateNumber(filteredVotes.downvotes)
+        : filteredVotes.downvotes.toString(),
+    };
+  }, [filteredVotes, isMobile]);
 
   const getVoteBreakdownText = (voteType: "up" | "down") => {
     if (!votes.breakdown)
@@ -135,7 +168,7 @@ function ProjectVotingComponent({
                     onClick={() => !isVoting && !cooldown && onVote("up")}
                     disabled={isVoting || cooldown || !canVote}
                     className={cn(
-                      "flex items-center gap-2 px-3 py-2 border-3 border-background font-black font-data text-sm uppercase",
+                      "flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-2 border-3 border-background font-black font-data text-xs sm:text-sm uppercase",
                       userVote === "up"
                         ? "bg-green"
                         : "bg-transparent hover:bg-green",
@@ -149,13 +182,13 @@ function ProjectVotingComponent({
                     }}
                   >
                     <svg
-                      className="w-4 h-4"
+                      className="w-3.5 h-3.5 sm:w-4 sm:h-4"
                       fill="currentColor"
                       viewBox="0 0 24 24"
                     >
                       <path d="M12 4l-8 8h5v8h6v-8h5z" />
                     </svg>
-                    <span>{filteredVotes.upvotes}</span>
+                    <span>{displayVotes.upvotes}</span>
                   </button>
                 </Tooltip.Trigger>
                 <Tooltip.Portal>
@@ -183,7 +216,7 @@ function ProjectVotingComponent({
                     onClick={() => !isVoting && !cooldown && onVote("down")}
                     disabled={isVoting || cooldown || !canVote}
                     className={cn(
-                      "flex items-center gap-2 px-3 py-2 border-3 border-background font-black font-data text-sm uppercase",
+                      "flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-2 border-3 border-background font-black font-data text-xs sm:text-sm uppercase",
                       userVote === "down"
                         ? "bg-red"
                         : "bg-transparent hover:bg-red",
@@ -197,13 +230,13 @@ function ProjectVotingComponent({
                     }}
                   >
                     <svg
-                      className="w-4 h-4"
+                      className="w-3.5 h-3.5 sm:w-4 sm:h-4"
                       fill="currentColor"
                       viewBox="0 0 24 24"
                     >
                       <path d="M12 20l8-8h-5V4H9v8H4z" />
                     </svg>
-                    <span>{filteredVotes.downvotes}</span>
+                    <span>{displayVotes.downvotes}</span>
                   </button>
                 </Tooltip.Trigger>
                 <Tooltip.Portal>
