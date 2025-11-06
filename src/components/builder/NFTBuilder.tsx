@@ -369,7 +369,7 @@ export default function NFTBuilder() {
                     "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
                 }}
               >
-                <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center gap-3 mb-6">
                   {/* Preview icon with 3-layer border */}
                   <div
                     style={{
@@ -386,38 +386,38 @@ export default function NFTBuilder() {
                             "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                         }}
                       >
-                        <svg
+                  <svg
                           className="w-4 h-4"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                           strokeWidth={3}
                           style={{ color: "#dfd9d9" }}
-                        >
-                          <path
+                  >
+                    <path
                             strokeLinecap="square"
                             strokeLinejoin="miter"
-                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                          />
-                        </svg>
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
                       </div>
                     </div>
-                  </div>
-                  <div>
+                </div>
+                <div>
                     <h3
                       className="text-sm font-black uppercase"
                       style={{ color: "#dfd9d9" }}
                     >
-                      Preview
-                    </h3>
+                    Preview
+                  </h3>
                     <p
                       className="text-xs font-bold uppercase"
                       style={{ color: "#dfd9d9" }}
                     >
-                      Your Fluffle will appear here
-                    </p>
-                  </div>
+                    Your Fluffle will appear here
+                  </p>
                 </div>
+              </div>
 
                 {/* Preview with 3-layer border */}
                 <div
@@ -436,12 +436,12 @@ export default function NFTBuilder() {
                           "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
                       }}
                     >
-                      <div ref={previewRef}>
-                        <Preview
-                          selectedTraits={selectedTraits}
-                          zoom={zoom}
-                          offsetY={offsetY}
-                        />
+                <div ref={previewRef}>
+                  <Preview
+                    selectedTraits={selectedTraits}
+                    zoom={zoom}
+                    offsetY={offsetY}
+                  />
                       </div>
                     </div>
                   </div>
@@ -471,7 +471,7 @@ export default function NFTBuilder() {
                     "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
                 }}
               >
-                <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3">
                   {/* Controls icon with 3-layer border */}
                   <div
                     style={{
@@ -488,51 +488,51 @@ export default function NFTBuilder() {
                             "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                         }}
                       >
-                        <svg
+                  <svg
                           className="w-4 h-4"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                           strokeWidth={3}
                           style={{ color: "#dfd9d9" }}
-                        >
-                          <path
+                  >
+                    <path
                             strokeLinecap="square"
                             strokeLinejoin="miter"
-                            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-                          />
-                          <path
+                      d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+                    />
+                    <path
                             strokeLinecap="square"
                             strokeLinejoin="miter"
                             strokeWidth={3}
-                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                          />
-                        </svg>
+                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
                       </div>
                     </div>
-                  </div>
-                  <div>
+                </div>
+                <div>
                     <h3
                       className="text-sm font-black uppercase"
                       style={{ color: "#dfd9d9" }}
                     >
-                      Controls
-                    </h3>
+                    Controls
+                  </h3>
                     <p
                       className="text-xs font-bold uppercase"
                       style={{ color: "#dfd9d9" }}
                     >
-                      Adjust view and export options
-                    </p>
-                  </div>
+                    Adjust view and export options
+                  </p>
                 </div>
+              </div>
 
-                <ViewControls
-                  zoom={zoom}
-                  offsetY={offsetY}
-                  onZoomChange={setZoom}
-                  onOffsetYChange={setOffsetY}
-                />
+              <ViewControls
+                zoom={zoom}
+                offsetY={offsetY}
+                onZoomChange={setZoom}
+                onOffsetYChange={setOffsetY}
+              />
 
                 <ActionButtons
                   onRandomize={handleRandomize}
@@ -567,7 +567,7 @@ export default function NFTBuilder() {
                     "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
                 }}
               >
-                <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center gap-3 mb-6">
                   {/* Traits icon with 3-layer border */}
                   <div
                     style={{
@@ -584,45 +584,45 @@ export default function NFTBuilder() {
                             "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                         }}
                       >
-                        <svg
+                  <svg
                           className="w-4 h-4"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                           strokeWidth={3}
                           style={{ color: "#dfd9d9" }}
-                        >
-                          <path
+                  >
+                    <path
                             strokeLinecap="square"
                             strokeLinejoin="miter"
-                            d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
-                          />
-                        </svg>
+                      d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+                    />
+                  </svg>
                       </div>
                     </div>
-                  </div>
-                  <div>
+                </div>
+                <div>
                     <h3
                       className="text-sm font-black uppercase"
                       style={{ color: "#dfd9d9" }}
                     >
-                      Traits
-                    </h3>
+                    Traits
+                  </h3>
                     <p
                       className="text-xs font-bold uppercase"
                       style={{ color: "#dfd9d9" }}
                     >
-                      Customize your character's appearance
-                    </p>
-                  </div>
+                    Customize your character's appearance
+                  </p>
                 </div>
+              </div>
 
-                <div className="flex flex-col gap-6">
-                  <TraitCategoryTabs
-                    activeCategory={activeCategory}
-                    selectedTraits={selectedTraits}
-                    onCategorySelect={setActiveCategory}
-                  />
+              <div className="flex flex-col gap-6">
+                <TraitCategoryTabs
+                  activeCategory={activeCategory}
+                  selectedTraits={selectedTraits}
+                  onCategorySelect={setActiveCategory}
+                />
 
                   {/* Trait selector area with 3-layer border */}
                   <div
@@ -640,15 +640,15 @@ export default function NFTBuilder() {
                             "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
                         }}
                       >
-                        <TraitSelector
-                          type={activeCategory}
-                          selectedId={selectedTraits[activeCategory]}
-                          onSelect={handleTraitSelect}
-                          allTraits={selectedTraits}
+                  <TraitSelector
+                    type={activeCategory}
+                    selectedId={selectedTraits[activeCategory]}
+                    onSelect={handleTraitSelect}
+                    allTraits={selectedTraits}
                           onClearMutuallyExclusive={
                             handleClearMutuallyExclusive
                           }
-                        />
+                  />
                       </div>
                     </div>
                   </div>

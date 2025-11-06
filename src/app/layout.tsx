@@ -9,6 +9,7 @@ import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://fluffle.tools"),
   title: "Fluffle Tools",
   description: "Utilities for MegaETH explorers and Fluffle holders",
   icons: {

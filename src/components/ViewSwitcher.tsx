@@ -9,14 +9,24 @@ import {
   X,
   Grid,
   Calculator,
+  Wallet,
 } from "lucide-react";
 
 interface ViewSwitcherProps {
-  activeView: "pfp" | "ecosystem" | "builder" | "bingo" | "math";
-  onViewChange: (
-    view: "pfp" | "ecosystem" | "builder" | "bingo" | "math"
+  activeView: "pfp" | "ecosystem" | "builder" | "bingo" | "math" | "allocation";
+  onViewChange?: (
+    view: "pfp" | "ecosystem" | "builder" | "bingo" | "math" | "allocation"
   ) => void;
 }
+
+const VIEW_ROUTES = {
+  pfp: "/pfp",
+  ecosystem: "/",
+  builder: "/builder",
+  bingo: "/bingo",
+  math: "/math",
+  allocation: "/allocation",
+} as const;
 
 export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -25,6 +35,16 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const router = useRouter();
+
+  const handleViewChange = (
+    view: "pfp" | "ecosystem" | "builder" | "bingo" | "math" | "allocation"
+  ) => {
+    if (onViewChange) {
+      onViewChange(view);
+    } else {
+      router.push(VIEW_ROUTES[view]);
+    }
+  };
 
   useEffect(() => {
     if (isDropdownOpen && buttonRef.current) {
@@ -75,7 +95,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
               <div className="flex items-center gap-2 p-2">
                 {/* Ecosystem */}
                 <button
-                  onClick={() => onViewChange("ecosystem")}
+                  onClick={() => handleViewChange("ecosystem")}
                   className={`flex items-center gap-2 px-4 py-2 border-3 font-bold uppercase text-xs ${
                     activeView === "ecosystem"
                       ? "bg-pink border-foreground"
@@ -93,7 +113,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
 
                 {/* Math */}
                 <button
-                  onClick={() => onViewChange("math")}
+                  onClick={() => handleViewChange("math")}
                   className={`flex items-center gap-2 px-4 py-2 border-3 font-bold uppercase text-xs ${
                     activeView === "math"
                       ? "bg-pink border-foreground"
@@ -105,19 +125,37 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     color: activeView === "math" ? "#19191a" : "#dfd9d9",
                   }}
                 >
+                  <Calculator className="w-4 h-4" strokeWidth={3} />
+                  <span>MOONMATH</span>
+                </button>
+
+                {/* Allocation */}
+                <button
+                  onClick={() => handleViewChange("allocation")}
+                  className={`flex items-center gap-2 px-4 py-2 border-3 font-bold uppercase text-xs ${
+                    activeView === "allocation"
+                      ? "bg-pink border-foreground"
+                      : "bg-transparent border-background hover:bg-muted"
+                  }`}
+                  style={{
+                    clipPath:
+                      "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                    color: activeView === "allocation" ? "#19191a" : "#dfd9d9",
+                  }}
+                >
                   <div className="relative">
-                    <Calculator className="w-4 h-4" strokeWidth={3} />
+                    <Wallet className="w-4 h-4" strokeWidth={3} />
                     <span
                       className="absolute -top-1 -right-1 px-0.5 text-[7px] font-black border-2 leading-none text-foreground border-foreground"
                       style={{
                         backgroundColor:
-                          activeView === "math" ? "#fff" : "#f380cd",
+                          activeView === "allocation" ? "#fff" : "#f380cd",
                       }}
                     >
                       NEW
                     </span>
                   </div>
-                  <span>MOONMATH</span>
+                  <span>ALLOCATION</span>
                 </button>
 
                 {/* Divider */}
@@ -191,7 +229,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
               >
                 <div className="space-y-2">
                   <button
-                    onClick={() => onViewChange("builder")}
+                    onClick={() => handleViewChange("builder")}
                     className={`flex items-center w-full gap-2 px-4 py-3 border-3 font-bold uppercase text-xs ${
                       activeView === "builder"
                         ? "bg-pink border-foreground"
@@ -210,7 +248,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     )}
                   </button>
                   <button
-                    onClick={() => onViewChange("pfp")}
+                    onClick={() => handleViewChange("pfp")}
                     className={`flex items-center w-full gap-2 px-4 py-3 border-3 font-bold uppercase text-xs ${
                       activeView === "pfp"
                         ? "bg-pink border-foreground"
@@ -229,7 +267,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     )}
                   </button>
                   <button
-                    onClick={() => onViewChange("bingo")}
+                    onClick={() => handleViewChange("bingo")}
                     className={`flex items-center w-full gap-2 px-4 py-3 border-3 font-bold uppercase text-xs ${
                       activeView === "bingo"
                         ? "bg-pink border-foreground"
@@ -262,7 +300,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
         <div className="flex items-center justify-around px-2 py-3">
           {/* Ecosystem */}
           <button
-            onClick={() => onViewChange("ecosystem")}
+            onClick={() => handleViewChange("ecosystem")}
             className={`flex flex-col items-center gap-1 p-2 ${
               activeView === "ecosystem" ? "opacity-100" : "opacity-60"
             }`}
@@ -274,24 +312,37 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
 
           {/* Math */}
           <button
-            onClick={() => onViewChange("math")}
+            onClick={() => handleViewChange("math")}
             className={`flex flex-col items-center gap-1 p-2 ${
               activeView === "math" ? "opacity-100" : "opacity-60"
             }`}
             style={{ color: "#dfd9d9" }}
           >
+            <Calculator className="w-6 h-6" strokeWidth={3} />
+            <span className="text-[10px] font-black uppercase">MATH</span>
+          </button>
+
+          {/* Allocation */}
+          <button
+            onClick={() => handleViewChange("allocation")}
+            className={`flex flex-col items-center gap-1 p-2 ${
+              activeView === "allocation" ? "opacity-100" : "opacity-60"
+            }`}
+            style={{ color: "#dfd9d9" }}
+          >
             <div className="relative">
-              <Calculator className="w-6 h-6" strokeWidth={3} />
+              <Wallet className="w-6 h-6" strokeWidth={3} />
               <span
                 className="absolute -top-1 -right-1 px-0.5 text-[7px] font-black border leading-none text-foreground border-foreground"
                 style={{
-                  backgroundColor: activeView === "math" ? "#fff" : "#f380cd",
+                  backgroundColor:
+                    activeView === "allocation" ? "#fff" : "#f380cd",
                 }}
               >
                 NEW
               </span>
             </div>
-            <span className="text-[10px] font-black uppercase">MATH</span>
+            <span className="text-[10px] font-black uppercase">ALLOC</span>
           </button>
 
           {/* Fluffles Button */}
@@ -348,7 +399,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
             <div className="p-3 space-y-2">
               <button
                 onClick={() => {
-                  onViewChange("builder");
+                  handleViewChange("builder");
                   setIsMobileMenuOpen(false);
                 }}
                 className={`flex items-center w-full gap-3 px-4 py-4 border-3 border-foreground font-bold uppercase text-sm ${
@@ -368,7 +419,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
               </button>
               <button
                 onClick={() => {
-                  onViewChange("pfp");
+                  handleViewChange("pfp");
                   setIsMobileMenuOpen(false);
                 }}
                 className={`flex items-center w-full gap-3 px-4 py-4 border-3 border-foreground font-bold uppercase text-sm ${
@@ -386,7 +437,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
               </button>
               <button
                 onClick={() => {
-                  onViewChange("bingo");
+                  handleViewChange("bingo");
                   setIsMobileMenuOpen(false);
                 }}
                 className={`flex items-center w-full gap-3 px-4 py-4 border-3 border-foreground font-bold uppercase text-sm ${

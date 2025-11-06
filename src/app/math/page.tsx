@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { ViewSwitcher } from "@/components/ViewSwitcher";
 import Hero from "@/components/Hero";
 import PageHeader from "@/components/PageHeader";
@@ -50,7 +49,6 @@ const ROUNDS = {
 };
 
 export default function MathPage() {
-  const router = useRouter();
   const [marketData, setMarketData] = useState<ApiResponse | null>(null);
   const [selectedRounds, setSelectedRounds] = useState<
     Array<"echo" | "fluffle" | "sonar" | "custom">
@@ -61,22 +59,6 @@ export default function MathPage() {
   const [customInvestment, setCustomInvestment] = useState(5000);
   const [customFdv, setCustomFdv] = useState(300_000_000);
   const [lamboMode, setLamboMode] = useState(false);
-
-  const handleViewChange = (
-    view: "pfp" | "ecosystem" | "builder" | "bingo" | "math"
-  ) => {
-    if (view === "pfp") {
-      router.push("/pfp");
-    } else if (view === "builder") {
-      router.push("/builder");
-    } else if (view === "ecosystem") {
-      router.push("/");
-    } else if (view === "bingo") {
-      router.push("/bingo");
-    } else if (view === "math") {
-      router.push("/math");
-    }
-  };
 
   useEffect(() => {
     fetch("/api/math/markets")
@@ -179,7 +161,7 @@ export default function MathPage() {
       <div className="relative z-20 mb-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center">
-            <ViewSwitcher activeView="math" onViewChange={handleViewChange} />
+            <ViewSwitcher activeView="math" />
           </div>
         </div>
       </div>

@@ -1,0 +1,1113 @@
+[
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "bytes16", "name": "saleUUID", "type": "bytes16" },
+          { "internalType": "address", "name": "admin", "type": "address" },
+          {
+            "internalType": "contract IERC20Metadata",
+            "name": "usdt",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "purchasePermitSigner",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "proceedsReceiver",
+            "type": "address"
+          },
+          { "internalType": "address", "name": "pauser", "type": "address" }
+        ],
+        "internalType": "struct MegaSale.Init",
+        "name": "init",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  { "inputs": [], "name": "AccessControlBadConfirmation", "type": "error" },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "account", "type": "address" },
+      { "internalType": "bytes32", "name": "neededRole", "type": "bytes32" }
+    ],
+    "name": "AccessControlUnauthorizedAccount",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes16", "name": "got", "type": "bytes16" },
+      { "internalType": "bytes16", "name": "existing", "type": "bytes16" },
+      { "internalType": "address", "name": "addr", "type": "address" }
+    ],
+    "name": "AddressTiedToAnotherEntity",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes16", "name": "entityID", "type": "bytes16" },
+      { "internalType": "uint256", "name": "acceptedAmount", "type": "uint256" }
+    ],
+    "name": "AllocationAlreadySet",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes16", "name": "entityID", "type": "bytes16" },
+      { "internalType": "uint256", "name": "allocation", "type": "uint256" },
+      { "internalType": "uint256", "name": "commitment", "type": "uint256" }
+    ],
+    "name": "AllocationExceedsCommitment",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes16", "name": "entityID", "type": "bytes16" }
+    ],
+    "name": "AlreadyRefunded",
+    "type": "error"
+  },
+  { "inputs": [], "name": "AlreadyWithdrawn", "type": "error" },
+  {
+    "inputs": [
+      { "internalType": "bytes16", "name": "entityID", "type": "bytes16" }
+    ],
+    "name": "BidAlreadyCancelled",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "newAmount", "type": "uint256" },
+      { "internalType": "uint256", "name": "previousAmount", "type": "uint256" }
+    ],
+    "name": "BidAmountCannotBeLowered",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "newBidAmount", "type": "uint256" },
+      { "internalType": "uint256", "name": "minAmount", "type": "uint256" }
+    ],
+    "name": "BidBelowMinAmount",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "newBidAmount", "type": "uint256" },
+      { "internalType": "uint256", "name": "maxAmount", "type": "uint256" }
+    ],
+    "name": "BidExceedsMaxAmount",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes16", "name": "entityID", "type": "bytes16" },
+      { "internalType": "uint256", "name": "acceptedAmount", "type": "uint256" }
+    ],
+    "name": "BidHasAcceptedAmount",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes16", "name": "entityID", "type": "bytes16" },
+      { "internalType": "uint256", "name": "bidPrice", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "nonWinnerPriceThreshold",
+        "type": "uint256"
+      }
+    ],
+    "name": "BidIsNonWinner",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes16", "name": "entityID", "type": "bytes16" },
+      { "internalType": "uint256", "name": "bidPrice", "type": "uint256" },
+      {
+        "internalType": "uint256",
+        "name": "nonWinnerPriceThreshold",
+        "type": "uint256"
+      }
+    ],
+    "name": "BidIsPotentialWinner",
+    "type": "error"
+  },
+  { "inputs": [], "name": "BidLockupCannotBeUndone", "type": "error" },
+  { "inputs": [], "name": "BidMustHaveLockup", "type": "error" },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "newPrice", "type": "uint256" },
+      { "internalType": "uint256", "name": "previousPrice", "type": "uint256" }
+    ],
+    "name": "BidPriceCannotBeLowered",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "bidPrice", "type": "uint256" },
+      { "internalType": "uint256", "name": "maxPrice", "type": "uint256" }
+    ],
+    "name": "BidPriceExceedsMaxPrice",
+    "type": "error"
+  },
+  { "inputs": [], "name": "ECDSAInvalidSignature", "type": "error" },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "length", "type": "uint256" }
+    ],
+    "name": "ECDSAInvalidSignatureLength",
+    "type": "error"
+  },
+  {
+    "inputs": [{ "internalType": "bytes32", "name": "s", "type": "bytes32" }],
+    "name": "ECDSAInvalidSignatureS",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "got", "type": "address" },
+      { "internalType": "address", "name": "existing", "type": "address" },
+      { "internalType": "bytes16", "name": "entityID", "type": "bytes16" }
+    ],
+    "name": "EntityTiedToAnotherAddress",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes16", "name": "entityID", "type": "bytes16" }
+    ],
+    "name": "EntityWithoutBid",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes16", "name": "got", "type": "bytes16" },
+      { "internalType": "bytes16", "name": "want", "type": "bytes16" }
+    ],
+    "name": "InvalidSaleUUID",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "got", "type": "address" },
+      { "internalType": "address", "name": "want", "type": "address" }
+    ],
+    "name": "InvalidSender",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "enum MegaSale.Stage", "name": "", "type": "uint8" }
+    ],
+    "name": "InvalidStage",
+    "type": "error"
+  },
+  { "inputs": [], "name": "PurchasePermitExpired", "type": "error" },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "token", "type": "address" }
+    ],
+    "name": "SafeERC20FailedOperation",
+    "type": "error"
+  },
+  { "inputs": [], "name": "SalePaused", "type": "error" },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "sender", "type": "address" },
+      { "internalType": "bytes16", "name": "entityID", "type": "bytes16" }
+    ],
+    "name": "SenderDoesNotOwnEntity",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "addr", "type": "address" }
+    ],
+    "name": "SenderWithoutRegisteredEntity",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "signer", "type": "address" }
+    ],
+    "name": "UnauthorizedSigner",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "expected", "type": "uint256" },
+      { "internalType": "uint256", "name": "actual", "type": "uint256" }
+    ],
+    "name": "UnexpectedTotalAllocatedUSDT",
+    "type": "error"
+  },
+  { "inputs": [], "name": "ZeroAddress", "type": "error" },
+  { "inputs": [], "name": "ZeroAmount", "type": "error" },
+  { "inputs": [], "name": "ZeroEntityID", "type": "error" },
+  { "inputs": [], "name": "ZeroPrice", "type": "error" },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes16",
+        "name": "entityID",
+        "type": "bytes16"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "acceptedAmountUSDT",
+        "type": "uint256"
+      }
+    ],
+    "name": "AllocationSet",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes16",
+        "name": "entityID",
+        "type": "bytes16"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "BidCancelled",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes16",
+        "name": "entityID",
+        "type": "bytes16"
+      },
+      {
+        "components": [
+          { "internalType": "uint64", "name": "price", "type": "uint64" },
+          { "internalType": "uint64", "name": "amount", "type": "uint64" },
+          { "internalType": "bool", "name": "lockup", "type": "bool" }
+        ],
+        "indexed": false,
+        "internalType": "struct MegaSale.Bid",
+        "name": "bid",
+        "type": "tuple"
+      }
+    ],
+    "name": "BidPlaced",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes16",
+        "name": "entityID",
+        "type": "bytes16"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      }
+    ],
+    "name": "EntityInitialized",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "receiver",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "ProceedsWithdrawn",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes16",
+        "name": "entityID",
+        "type": "bytes16"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "addr",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "Refunded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "previousAdminRole",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "newAdminRole",
+        "type": "bytes32"
+      }
+    ],
+    "name": "RoleAdminChanged",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      }
+    ],
+    "name": "RoleGranted",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes32",
+        "name": "role",
+        "type": "bytes32"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      }
+    ],
+    "name": "RoleRevoked",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "bytes16",
+        "name": "entityID",
+        "type": "bytes16"
+      }
+    ],
+    "name": "SkippedRefundedEntity",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "DEFAULT_ADMIN_ROLE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "PAUSER_ROLE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "PURCHASE_PERMIT_SIGNER_ROLE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "REFUNDER_ROLE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "SALE_MANAGER_ROLE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "SETTLER_ROLE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "TOKEN_RECOVERER_ROLE",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "auctionInactivityDuration",
+    "outputs": [{ "internalType": "uint64", "name": "", "type": "uint64" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "cancelBid",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "closeAuctionAtTimestamp",
+    "outputs": [{ "internalType": "uint64", "name": "", "type": "uint64" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address[]", "name": "addrs", "type": "address[]" }
+    ],
+    "name": "entitiesByAddress",
+    "outputs": [
+      { "internalType": "bytes16[]", "name": "", "type": "bytes16[]" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "from", "type": "uint256" },
+      { "internalType": "uint256", "name": "to", "type": "uint256" }
+    ],
+    "name": "entitiesIn",
+    "outputs": [
+      { "internalType": "bytes16[]", "name": "", "type": "bytes16[]" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "index", "type": "uint256" }
+    ],
+    "name": "entityAt",
+    "outputs": [{ "internalType": "bytes16", "name": "", "type": "bytes16" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "addr", "type": "address" }
+    ],
+    "name": "entityByAddress",
+    "outputs": [{ "internalType": "bytes16", "name": "", "type": "bytes16" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes16", "name": "entityID", "type": "bytes16" }
+    ],
+    "name": "entityStateByID",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "addr", "type": "address" },
+          { "internalType": "bytes16", "name": "entityID", "type": "bytes16" },
+          {
+            "internalType": "uint64",
+            "name": "acceptedAmount",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint32",
+            "name": "bidTimestamp",
+            "type": "uint32"
+          },
+          { "internalType": "bool", "name": "refunded", "type": "bool" },
+          { "internalType": "bool", "name": "cancelled", "type": "bool" },
+          {
+            "components": [
+              { "internalType": "uint64", "name": "price", "type": "uint64" },
+              { "internalType": "uint64", "name": "amount", "type": "uint64" },
+              { "internalType": "bool", "name": "lockup", "type": "bool" }
+            ],
+            "internalType": "struct MegaSale.Bid",
+            "name": "activeBid",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct MegaSale.EntityState",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes16[]", "name": "entityIDs", "type": "bytes16[]" }
+    ],
+    "name": "entityStatesByID",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "addr", "type": "address" },
+          { "internalType": "bytes16", "name": "entityID", "type": "bytes16" },
+          {
+            "internalType": "uint64",
+            "name": "acceptedAmount",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint32",
+            "name": "bidTimestamp",
+            "type": "uint32"
+          },
+          { "internalType": "bool", "name": "refunded", "type": "bool" },
+          { "internalType": "bool", "name": "cancelled", "type": "bool" },
+          {
+            "components": [
+              { "internalType": "uint64", "name": "price", "type": "uint64" },
+              { "internalType": "uint64", "name": "amount", "type": "uint64" },
+              { "internalType": "bool", "name": "lockup", "type": "bool" }
+            ],
+            "internalType": "struct MegaSale.Bid",
+            "name": "activeBid",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct MegaSale.EntityState[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "from", "type": "uint256" },
+      { "internalType": "uint256", "name": "to", "type": "uint256" }
+    ],
+    "name": "entityStatesIn",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "address", "name": "addr", "type": "address" },
+          { "internalType": "bytes16", "name": "entityID", "type": "bytes16" },
+          {
+            "internalType": "uint64",
+            "name": "acceptedAmount",
+            "type": "uint64"
+          },
+          {
+            "internalType": "uint32",
+            "name": "bidTimestamp",
+            "type": "uint32"
+          },
+          { "internalType": "bool", "name": "refunded", "type": "bool" },
+          { "internalType": "bool", "name": "cancelled", "type": "bool" },
+          {
+            "components": [
+              { "internalType": "uint64", "name": "price", "type": "uint64" },
+              { "internalType": "uint64", "name": "amount", "type": "uint64" },
+              { "internalType": "bool", "name": "lockup", "type": "bool" }
+            ],
+            "internalType": "struct MegaSale.Bid",
+            "name": "activeBid",
+            "type": "tuple"
+          }
+        ],
+        "internalType": "struct MegaSale.EntityState[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "expectedTotalAllocatedUSDT",
+        "type": "uint256"
+      }
+    ],
+    "name": "finalizeSettlement",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "role", "type": "bytes32" }
+    ],
+    "name": "getRoleAdmin",
+    "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
+      { "internalType": "uint256", "name": "index", "type": "uint256" }
+    ],
+    "name": "getRoleMember",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "role", "type": "bytes32" }
+    ],
+    "name": "getRoleMemberCount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "role", "type": "bytes32" }
+    ],
+    "name": "getRoleMembers",
+    "outputs": [
+      { "internalType": "address[]", "name": "", "type": "address[]" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
+      { "internalType": "address", "name": "account", "type": "address" }
+    ],
+    "name": "grantRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
+      { "internalType": "address", "name": "account", "type": "address" }
+    ],
+    "name": "hasRole",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "lastBidTimestamp",
+    "outputs": [{ "internalType": "uint64", "name": "", "type": "uint64" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "manualStage",
+    "outputs": [
+      { "internalType": "enum MegaSale.Stage", "name": "", "type": "uint8" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "nonWinnerPriceThreshold",
+    "outputs": [{ "internalType": "uint64", "name": "", "type": "uint64" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "numEntities",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "openAuction",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "nonWinnerPriceThresholdInTicks",
+        "type": "uint64"
+      }
+    ],
+    "name": "openCancellation",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "openSettlement",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "pause",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "paused",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "proceedsReceiver",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes16[]", "name": "entityIDs", "type": "bytes16[]" },
+      { "internalType": "bool", "name": "skipAlreadyRefunded", "type": "bool" }
+    ],
+    "name": "processRefunds",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "contract IERC20", "name": "token", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" },
+      { "internalType": "address", "name": "to", "type": "address" }
+    ],
+    "name": "recoverTokens",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
+      {
+        "internalType": "address",
+        "name": "callerConfirmation",
+        "type": "address"
+      }
+    ],
+    "name": "renounceRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "uint64", "name": "price", "type": "uint64" },
+          { "internalType": "uint64", "name": "amount", "type": "uint64" },
+          { "internalType": "bool", "name": "lockup", "type": "bool" }
+        ],
+        "internalType": "struct MegaSale.Bid",
+        "name": "bid",
+        "type": "tuple"
+      },
+      {
+        "components": [
+          {
+            "components": [
+              {
+                "internalType": "bytes16",
+                "name": "entityID",
+                "type": "bytes16"
+              },
+              {
+                "internalType": "bytes16",
+                "name": "saleUUID",
+                "type": "bytes16"
+              },
+              {
+                "internalType": "address",
+                "name": "wallet",
+                "type": "address"
+              },
+              {
+                "internalType": "uint64",
+                "name": "expiresAt",
+                "type": "uint64"
+              },
+              { "internalType": "bytes", "name": "payload", "type": "bytes" }
+            ],
+            "internalType": "struct PurchasePermit",
+            "name": "permit",
+            "type": "tuple"
+          },
+          {
+            "internalType": "uint256",
+            "name": "reservedAmount",
+            "type": "uint256"
+          },
+          { "internalType": "uint256", "name": "minAmount", "type": "uint256" },
+          { "internalType": "uint256", "name": "maxAmount", "type": "uint256" }
+        ],
+        "internalType": "struct PurchasePermitWithAllocation",
+        "name": "purchasePermit",
+        "type": "tuple"
+      },
+      {
+        "internalType": "bytes",
+        "name": "purchasePermitSignature",
+        "type": "bytes"
+      }
+    ],
+    "name": "replaceBidWithApproval",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "resetLastBidTimestamp",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes32", "name": "role", "type": "bytes32" },
+      { "internalType": "address", "name": "account", "type": "address" }
+    ],
+    "name": "revokeRole",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "saleUUID",
+    "outputs": [{ "internalType": "bytes16", "name": "", "type": "bytes16" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "bytes16", "name": "entityID", "type": "bytes16" },
+          { "internalType": "uint64", "name": "amountUSDT", "type": "uint64" }
+        ],
+        "internalType": "struct MegaSale.Allocation[]",
+        "name": "allocations",
+        "type": "tuple[]"
+      },
+      { "internalType": "bool", "name": "allowOverwrite", "type": "bool" }
+    ],
+    "name": "setAllocations",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint64", "name": "window", "type": "uint64" }
+    ],
+    "name": "setAuctionInactivityWindow",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint64", "name": "timestamp", "type": "uint64" }
+    ],
+    "name": "setCloseAuctionAtTimestamp",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "enum MegaSale.Stage", "name": "s", "type": "uint8" }
+    ],
+    "name": "setManualStage",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "bool", "name": "isPaused", "type": "bool" }],
+    "name": "setPaused",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newproceedsReceiver",
+        "type": "address"
+      }
+    ],
+    "name": "setProceedsReceiver",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "stage",
+    "outputs": [
+      { "internalType": "enum MegaSale.Stage", "name": "", "type": "uint8" }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "bytes4", "name": "interfaceId", "type": "bytes4" }
+    ],
+    "name": "supportsInterface",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalActiveBidAmount",
+    "outputs": [{ "internalType": "uint64", "name": "", "type": "uint64" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalAllocatedUSDT",
+    "outputs": [{ "internalType": "uint64", "name": "", "type": "uint64" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "totalRefundedAmount",
+    "outputs": [{ "internalType": "uint64", "name": "", "type": "uint64" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "usdt",
+    "outputs": [
+      {
+        "internalType": "contract IERC20Metadata",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "withdrawn",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
