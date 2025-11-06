@@ -37,6 +37,7 @@ interface AllocationResult {
   bidAmount?: number;
   acceptedAmount?: number;
   fillPercentage?: number;
+  lockup?: boolean;
 }
 
 const FDV_PRESETS = [
@@ -188,6 +189,7 @@ export function AllocationChecker() {
           if (onChainInfo) {
             result.bidAmount = onChainInfo.bidAmount / 1_000_000; // Convert from USDT (6 decimals) to USD
             result.acceptedAmount = allocationData.usdAmount; // Use API's usdAmount as the accepted amount
+            result.lockup = onChainInfo.bidLockup;
 
             // Calculate fill percentage
             if (result.bidAmount > 0) {
@@ -198,7 +200,22 @@ export function AllocationChecker() {
 
           return result;
         } else {
-          return { wallet, error: "No allocation found" };
+          // No allocation found - show 0 MEGA with 0% filled
+          const result: AllocationResult = {
+            wallet,
+            allocation: 0,
+            usdAmount: 0,
+          };
+
+          // Add on-chain bid data if available
+          if (onChainInfo) {
+            result.bidAmount = onChainInfo.bidAmount / 1_000_000;
+            result.acceptedAmount = 0;
+            result.fillPercentage = 0;
+            result.lockup = onChainInfo.bidLockup;
+          }
+
+          return result;
         }
       });
 
@@ -489,7 +506,10 @@ export function AllocationChecker() {
                     key={index}
                     className="p-4 border-3"
                     style={{
-                      backgroundColor: result.allocation ? "#fff" : "#e0e0e0",
+                      backgroundColor:
+                        result.allocation && result.allocation > 0
+                          ? "#fff"
+                          : "#e0e0e0",
                       borderColor: "#19191a",
                       clipPath:
                         "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
@@ -497,16 +517,23 @@ export function AllocationChecker() {
                   >
                     <div className="flex items-center justify-between gap-4">
                       <div className="flex items-center gap-3 min-w-0 flex-1">
-                        {result.allocation ? (
+                        {result.allocation !== undefined &&
+                        result.allocation > 0 ? (
                           <CheckCircle2
                             className="w-5 h-5 flex-shrink-0"
                             style={{ color: "#058d5e" }}
                             strokeWidth={3}
                           />
-                        ) : (
+                        ) : result.error ? (
                           <XCircle
                             className="w-5 h-5 flex-shrink-0"
                             style={{ color: "#dc2626" }}
+                            strokeWidth={3}
+                          />
+                        ) : (
+                          <XCircle
+                            className="w-5 h-5 flex-shrink-0"
+                            style={{ color: "#999" }}
                             strokeWidth={3}
                           />
                         )}
@@ -531,42 +558,61 @@ export function AllocationChecker() {
                           <div className="flex flex-col items-end gap-0.5">
                             <span
                               className="text-lg font-black"
-                              style={{ color: "#058d5e" }}
+                              style={{
+                                color:
+                                  result.allocation > 0 ? "#058d5e" : "#999",
+                              }}
                             >
                               {result.allocation.toLocaleString(undefined, {
                                 maximumFractionDigits: 2,
                               })}{" "}
                               MEGA
                             </span>
-                            <span
-                              className="text-xs font-bold"
-                              style={{ color: "#666" }}
-                            >
-                              $
-                              {calculateValueAtFdv(
-                                result.allocation
-                              ).toLocaleString(undefined, {
-                                maximumFractionDigits: 2,
-                              })}
-                              {result.bidAmount !== undefined &&
-                                result.fillPercentage !== undefined && (
-                                  <span
-                                    style={{
-                                      color:
-                                        result.fillPercentage > 0
-                                          ? "#f380cd"
-                                          : "#999",
-                                      marginLeft: "8px",
-                                    }}
-                                  >
-                                    {result.fillPercentage > 0
-                                      ? `(${result.fillPercentage.toFixed(
-                                          2
-                                        )}% filled)`
-                                      : `(Bid: ${result.bidAmount.toLocaleString()} USDT, 0% filled)`}
-                                  </span>
-                                )}
-                            </span>
+                            <div className="flex items-center gap-2">
+                              <span
+                                className="text-xs font-bold"
+                                style={{ color: "#666" }}
+                              >
+                                $
+                                {calculateValueAtFdv(
+                                  result.allocation
+                                ).toLocaleString(undefined, {
+                                  maximumFractionDigits: 2,
+                                })}
+                                {result.bidAmount !== undefined &&
+                                  result.fillPercentage !== undefined && (
+                                    <span
+                                      style={{
+                                        color:
+                                          result.fillPercentage > 0
+                                            ? "#f380cd"
+                                            : "#999",
+                                        marginLeft: "8px",
+                                      }}
+                                    >
+                                      {result.fillPercentage > 0
+                                        ? `(${result.fillPercentage.toFixed(
+                                            2
+                                          )}% filled)`
+                                        : `(0% filled)`}
+                                    </span>
+                                  )}
+                              </span>
+                              {result.lockup !== undefined && (
+                                <span
+                                  className="text-[10px] font-black uppercase px-1.5 py-0.5 border-2"
+                                  style={{
+                                    backgroundColor: result.lockup
+                                      ? "#f380cd"
+                                      : "#e0e0e0",
+                                    borderColor: "#19191a",
+                                    color: "#19191a",
+                                  }}
+                                >
+                                  {result.lockup ? "🔒 LOCKED" : "UNLOCKED"}
+                                </span>
+                              )}
+                            </div>
                           </div>
                         ) : (
                           <span
