@@ -27,35 +27,35 @@ export default function Hero() {
                 UTILITIES FOR{" "}
                 <span className="bg-pink px-1" style={{ color: "#fff" }}>
                   MEGAETH
-                </span>{" "}
+                  </span>{" "}
                 EXPLORERS AND{" "}
                 <span className="bg-pink px-1" style={{ color: "#fff" }}>
                   FLUFFLE
-                </span>{" "}
+                  </span>{" "}
                 HOLDERS
               </p>
-            </div>
+                </div>
 
             {/* Right side actions */}
             <div className="flex items-center gap-2 sm:gap-3">
-              <a
-                href="https://x.com/intent/follow?screen_name=0x_ultra"
-                target="_blank"
-                rel="noopener noreferrer"
+                  <a
+                    href="https://x.com/intent/follow?screen_name=0x_ultra"
+                    target="_blank"
+                    rel="noopener noreferrer"
                 className="flex items-center gap-2 px-3 sm:px-4 py-2 text-sm border-3 border-background bg-pink hover:bg-pink/80 font-bold uppercase"
                 style={{
                   clipPath:
                     "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
                   color: "#19191a",
                 }}
-              >
-                <svg
+                  >
+                    <svg
                   className="w-4 h-4"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-                </svg>
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
                 <span className="hidden sm:inline">FOLLOW</span>
               </a>
             </div>

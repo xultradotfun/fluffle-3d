@@ -86,7 +86,7 @@ export function EcosystemHeader({
             </svg>
             <h2 className="text-4xl sm:text-5xl font-black uppercase leading-none pt-2">
               ECOSYSTEM
-            </h2>
+          </h2>
           </div>
           <p className="text-base font-bold uppercase max-w-3xl ml-[calc(0.75rem+12px)]">
             DISCOVER AND VOTE ON PROJECTS BUILDING ON{" "}
@@ -161,13 +161,13 @@ export function EcosystemHeader({
                 ) : (
                   "..."
                 )}
-              </div>
+                </div>
               <div className="text-xs font-bold uppercase text-gray-600">
                 [PROJECTS]
-              </div>
-            </div>
-          </div>
-        </div>
+                                </div>
+                              </div>
+                                </div>
+                              </div>
 
         {/* Stat 4 */}
         <div style={{ clipPath: clipStat }}>
@@ -185,12 +185,12 @@ export function EcosystemHeader({
                 ) : (
                   "..."
                 )}
-              </div>
+                                </div>
               <div className="text-xs font-bold uppercase text-gray-600">
                 [CATEGORIES]
-              </div>
-            </div>
-          </div>
+                                </div>
+                              </div>
+                            </div>
         </div>
       </div>
     </div>

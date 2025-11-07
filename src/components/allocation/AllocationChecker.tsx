@@ -11,16 +11,24 @@ import {
   ChevronDown,
   ChevronUp,
   Code,
+  Lock,
+  LockOpen,
 } from "lucide-react";
 import { toast } from "sonner";
-import { ethers } from "ethers";
-import saleAbi from "../../../public/abis/sale.json";
 
 interface AllocationData {
   walletAddress: string;
   usdAmount: number;
   megaAmount: number;
   hasAllocation: boolean;
+  status?: string;
+  bidAmount?: number;
+  locked?: boolean;
+  rank?: {
+    overall: number;
+    category: number;
+    categoryType: string;
+  };
 }
 
 interface ApiResponse {
@@ -38,6 +46,12 @@ interface AllocationResult {
   acceptedAmount?: number;
   fillPercentage?: number;
   lockup?: boolean;
+  status?: string;
+  rank?: {
+    overall: number;
+    category: number;
+    categoryType: string;
+  };
 }
 
 const FDV_PRESETS = [
@@ -49,9 +63,6 @@ const FDV_PRESETS = [
   { label: "15B", value: 15_000_000_000 },
   { label: "20B", value: 20_000_000_000 },
 ];
-
-const SALE_CONTRACT = "0xab02bf85a7a851b6a379ea3d5bd3b9b4f5dd8461";
-const RPC_URL = "https://eth.llamarpc.com";
 
 export function AllocationChecker() {
   const [walletInput, setWalletInput] = useState("");
@@ -76,54 +87,6 @@ export function AllocationChecker() {
     return uniqueWallets;
   };
 
-  const fetchOnChainData = async (wallets: string[]) => {
-    try {
-      const provider = new ethers.JsonRpcProvider(RPC_URL);
-      const contract = new ethers.Contract(SALE_CONTRACT, saleAbi, provider);
-
-      // Fetch entity IDs for all wallets in a single call
-      const entityIds = await contract.entitiesByAddress(wallets);
-
-      // Filter out zero entity IDs (wallets without entities)
-      const validEntityIds = entityIds.filter(
-        (id: string) => id !== "0x00000000000000000000000000000000"
-      );
-
-      if (validEntityIds.length === 0) {
-        return null;
-      }
-
-      // Convert to plain array to avoid read-only issues with ethers.js
-      const entityIdsArray = validEntityIds.map((id: any) => id);
-
-      // Fetch all entity states in a single call
-      const entityStates = await contract.entityStatesByID(entityIdsArray);
-
-      // Map entity states back to wallets
-      const onChainData = new Map<string, any>();
-      for (let i = 0; i < entityStates.length; i++) {
-        const state = entityStates[i];
-        const walletAddr = state[0].toLowerCase(); // addr field
-
-        onChainData.set(walletAddr, {
-          entityID: state[1], // entityID
-          acceptedAmount: Number(state[2]), // acceptedAmount (uint64)
-          bidTimestamp: Number(state[3]), // bidTimestamp
-          refunded: state[4], // refunded
-          cancelled: state[5], // cancelled
-          bidPrice: Number(state[6][0]), // activeBid.price
-          bidAmount: Number(state[6][1]), // activeBid.amount
-          bidLockup: state[6][2], // activeBid.lockup
-        });
-      }
-
-      return onChainData;
-    } catch (error) {
-      console.error("Error fetching on-chain data:", error);
-      return null;
-    }
-  };
-
   const handleCheck = async () => {
     const wallets = parseWallets(walletInput);
 
@@ -145,15 +108,15 @@ export function AllocationChecker() {
     setResults([]);
 
     try {
-      // Fetch both API data and on-chain data in parallel
-      const [apiResponse, onChainData] = await Promise.all([
-        fetch("https://megasale-check.xultra.fun/api/allocations/check", {
+      // Fetch allocation data from API
+      const apiResponse = await fetch(
+        "https://megasale-check.xultra.fun/api/allocations/check",
+        {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ wallets }),
-        }),
-        fetchOnChainData(wallets),
-      ]);
+        }
+      );
 
       if (!apiResponse.ok) {
         throw new Error(`API error: ${apiResponse.status}`);
@@ -165,31 +128,26 @@ export function AllocationChecker() {
         throw new Error("API returned unsuccessful response");
       }
 
-      // Transform the response into results, enriching with on-chain data
+      // Transform the response into results
       const newResults: AllocationResult[] = wallets.map((wallet) => {
         const allocationData = data.data.find(
           (item) => item.walletAddress.toLowerCase() === wallet.toLowerCase()
         );
-
-        const onChainInfo = onChainData?.get(wallet.toLowerCase());
-
-        // Check if the bid was cancelled on-chain
-        if (onChainInfo?.cancelled) {
-          return { wallet, error: "Bid cancelled" };
-        }
 
         if (allocationData && allocationData.hasAllocation) {
           const result: AllocationResult = {
             wallet: allocationData.walletAddress,
             allocation: allocationData.megaAmount,
             usdAmount: allocationData.usdAmount,
+            status: allocationData.status,
+            rank: allocationData.rank,
+            lockup: allocationData.locked,
           };
 
-          // Add on-chain data if available
-          if (onChainInfo) {
-            result.bidAmount = onChainInfo.bidAmount / 1_000_000; // Convert from USDT (6 decimals) to USD
-            result.acceptedAmount = allocationData.usdAmount; // Use API's usdAmount as the accepted amount
-            result.lockup = onChainInfo.bidLockup;
+          // Add bid amount and fill percentage if available
+          if (allocationData.bidAmount) {
+            result.bidAmount = allocationData.bidAmount;
+            result.acceptedAmount = allocationData.usdAmount;
 
             // Calculate fill percentage
             if (result.bidAmount > 0) {
@@ -201,21 +159,11 @@ export function AllocationChecker() {
           return result;
         } else {
           // No allocation found - show 0 MEGA with 0% filled
-          const result: AllocationResult = {
+          return {
             wallet,
             allocation: 0,
             usdAmount: 0,
           };
-
-          // Add on-chain bid data if available
-          if (onChainInfo) {
-            result.bidAmount = onChainInfo.bidAmount / 1_000_000;
-            result.acceptedAmount = 0;
-            result.fillPercentage = 0;
-            result.lockup = onChainInfo.bidLockup;
-          }
-
-          return result;
         }
       });
 
@@ -537,21 +485,63 @@ export function AllocationChecker() {
                             strokeWidth={3}
                           />
                         )}
-                        <span
-                          className="font-mono text-sm font-bold truncate"
-                          style={{
-                            color: "#19191a",
-                            filter: hideAddresses ? "blur(6px)" : "none",
-                            userSelect: hideAddresses ? "none" : "auto",
-                          }}
-                          title={
-                            hideAddresses
-                              ? "Address blurred for privacy"
-                              : result.wallet
-                          }
-                        >
-                          {result.wallet}
-                        </span>
+                        <div className="flex items-center gap-2 min-w-0 flex-1">
+                          <span
+                            className="font-mono text-sm font-bold truncate"
+                            style={{
+                              color: "#19191a",
+                              filter: hideAddresses ? "blur(6px)" : "none",
+                              userSelect: hideAddresses ? "none" : "auto",
+                            }}
+                            title={
+                              hideAddresses
+                                ? "Address blurred for privacy"
+                                : result.wallet
+                            }
+                          >
+                            {result.wallet}
+                          </span>
+                          {result.rank && (
+                            <div className="flex items-center gap-1 flex-shrink-0">
+                              <span
+                                className="text-[10px] font-black uppercase px-1.5 py-0.5 border-2"
+                                style={{
+                                  backgroundColor: "#fff",
+                                  borderColor: "#19191a",
+                                  color: "#19191a",
+                                }}
+                                title="Overall rank"
+                              >
+                                #{result.rank.overall}
+                              </span>
+                              <span
+                                className="text-[10px] font-black uppercase px-1.5 py-0.5 border-2 flex items-center gap-1"
+                                style={{
+                                  backgroundColor:
+                                    result.rank.categoryType === "locked"
+                                      ? "#f380cd"
+                                      : "#e0e0e0",
+                                  borderColor: "#19191a",
+                                  color: "#19191a",
+                                }}
+                                title={`Rank among ${result.rank.categoryType} bids`}
+                              >
+                                {result.rank.categoryType === "locked" ? (
+                                  <Lock
+                                    className="w-2.5 h-2.5"
+                                    strokeWidth={3}
+                                  />
+                                ) : (
+                                  <LockOpen
+                                    className="w-2.5 h-2.5"
+                                    strokeWidth={3}
+                                  />
+                                )}
+                                #{result.rank.category}
+                              </span>
+                            </div>
+                          )}
+                        </div>
                       </div>
                       <div className="flex-shrink-0 text-right">
                         {result.allocation !== undefined ? (
@@ -750,13 +740,29 @@ export function AllocationChecker() {
       "walletAddress": "0x1234567890123456789012345678901234567890",
       "usdAmount": 5000.00,
       "megaAmount": 50050.05,
-      "hasAllocation": true
+      "hasAllocation": true,
+      "status": "ACTIVE",
+      "bidAmount": 186282,
+      "locked": false,
+      "rank": {
+        "overall": 123,
+        "category": 45,
+        "categoryType": "unlocked"
+      }
     },
     {
       "walletAddress": "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd",
       "usdAmount": 10000.00,
       "megaAmount": 100100.10,
-      "hasAllocation": true
+      "hasAllocation": true,
+      "status": "ACTIVE",
+      "bidAmount": 186282,
+      "locked": true,
+      "rank": {
+        "overall": 67,
+        "category": 12,
+        "categoryType": "locked"
+      }
     }
   ]
 }`}
