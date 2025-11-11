@@ -30,7 +30,23 @@ export function sortProjects(
     if (aIsHighlighted && !bIsHighlighted) return -1;
     if (!aIsHighlighted && bIsHighlighted) return 1;
 
-    // If neither or both are highlighted, use the selected sort method
+    // Prioritize featured projects when sorting by score, maintaining config order
+    if (sortMethod.type === "score") {
+      const aIsFeatured = a.featured || false;
+      const bIsFeatured = b.featured || false;
+      
+      if (aIsFeatured && !bIsFeatured) return -1;
+      if (!aIsFeatured && bIsFeatured) return 1;
+      
+      // If both are featured, sort by their featured index (config order)
+      if (aIsFeatured && bIsFeatured) {
+        const aIndex = a.featuredIndex ?? 999;
+        const bIndex = b.featuredIndex ?? 999;
+        return aIndex - bIndex;
+      }
+    }
+
+    // If neither or both are highlighted/featured, use the selected sort method
     if (sortMethod.type === "score") {
       const scoreA = getProjectScore(a);
       const scoreB = getProjectScore(b);

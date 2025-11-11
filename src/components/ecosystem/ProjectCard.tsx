@@ -123,22 +123,68 @@ function ProjectCardComponent({
             "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
         }}
       >
+        {project.featured && (
+          <style>
+            {`
+              @keyframes spin-border {
+                0% {
+                  transform: translate(-50%, -50%) rotate(0deg);
+                }
+                100% {
+                  transform: translate(-50%, -50%) rotate(360deg);
+                }
+              }
+            `}
+          </style>
+        )}
         <div
-          className="h-full"
+          className="h-full relative"
           style={{
-            backgroundColor: "#19191a",
             padding: "2px",
+            backgroundColor: "#19191a",
           }}
         >
+          {/* Spinning pink wave background for featured cards */}
+          {project.featured && (
+            <div
+              className="absolute inset-0 overflow-hidden"
+              style={{
+                zIndex: 0,
+              }}
+            >
+              <div
+                className="absolute"
+                style={{
+                  top: "50%",
+                  left: "50%",
+                  width: "200%",
+                  height: "200%",
+                  background:
+                    "conic-gradient(from 0deg, #f380cd 0%, #f380cd 50%, transparent 50%, transparent 100%)",
+                  animation: "spin-border 3s linear infinite",
+                  transform: "translate(-50%, -50%)",
+                }}
+              />
+            </div>
+          )}
           <div
             className="h-full relative overflow-hidden"
             style={{
-              background:
-                "linear-gradient(135deg, rgba(224, 224, 224, 0.5) 0%, rgba(224, 224, 224, 0.45) 100%)",
               clipPath:
                 "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
+              zIndex: 1,
+              backgroundColor: "#19191a",
             }}
           >
+            {/* Semi-transparent gradient overlay */}
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(135deg, rgba(224, 224, 224, 0.5) 0%, rgba(224, 224, 224, 0.45) 100%)",
+                zIndex: 0,
+              }}
+            />
             {/* Background icon layer - behind content */}
             <div
               className="absolute inset-0 pointer-events-none"
@@ -162,6 +208,38 @@ function ProjectCardComponent({
                 mixBlendMode: "overlay",
               }}
             />
+            {/* Featured Indicator - Corner Ribbon */}
+            {project.featured && (
+              <div className="absolute top-0 right-0 z-20 overflow-hidden w-32 h-32 pointer-events-none">
+                <div
+                  className="absolute top-6 right-[-35px] w-40 text-center py-1.5 rotate-45 shadow-lg"
+                  style={{
+                    backgroundColor: "#f380cd",
+                    borderTop: "2px solid #19191a",
+                    borderBottom: "2px solid #19191a",
+                  }}
+                >
+                  <div className="flex items-center justify-center gap-1">
+                    <svg
+                      className="w-3 h-3"
+                      viewBox="0 0 24 24"
+                      fill="#19191a"
+                      stroke="#19191a"
+                      strokeWidth="0.5"
+                    >
+                      <path d="M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z" />
+                    </svg>
+                    <span
+                      className="text-[10px] font-black uppercase"
+                      style={{ color: "#19191a" }}
+                    >
+                      FEATURED
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Live Indicator - Simple Pulsing Dot */}
             {project.live && (
               <div className="absolute top-4 right-4 z-20">
@@ -180,6 +258,7 @@ function ProjectCardComponent({
                 category={project.category}
                 megaMafia={project.megaMafia}
                 live={project.live}
+                featured={project.featured}
                 img={project.img}
               />
 

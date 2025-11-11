@@ -8,6 +8,7 @@ interface ProjectHeaderProps {
   category: string;
   megaMafia: boolean;
   live: boolean;
+  featured?: boolean;
   img?: string;
 }
 
@@ -17,6 +18,7 @@ function ProjectHeaderComponent({
   category,
   megaMafia,
   live,
+  featured,
   img,
 }: ProjectHeaderProps) {
   return (

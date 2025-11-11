@@ -26,6 +26,8 @@ export interface Project {
   img?: string;
   votes?: ProjectVotes;
   originalIndex?: number; // For sorting by latest added
+  featured?: boolean; // Pinned to top when sorting by score
+  featuredIndex?: number; // Order in featured list
 }
 
 export type VoteFilter = "all" | "voted" | "not_voted";

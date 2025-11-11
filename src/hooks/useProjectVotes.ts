@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
 import { apiClient, API_ENDPOINTS } from "@/lib/api";
 import type { Project } from "@/types/ecosystem";
+import featuredProjectsData from "@/data/featured-projects.json";
 
 // Local storage key for user votes cache
 const USER_VOTES_CACHE_KEY = "fluffle_user_votes";
@@ -48,16 +49,26 @@ export function useProjectVotes() {
         
         if (!isMounted) return;
         
-        const projectsWithIndex: Project[] = data.projects.map((p: Project, index: number) => ({
-          ...p,
-          originalIndex: index,
-          votes: {
-            upvotes: 0,
-            downvotes: 0,
-            userVote: null,
-            breakdown: {},
-          },
-        }));
+        // Create a map of twitter handle to featured index
+        const featuredMap = new Map(
+          featuredProjectsData.featured.map((twitter: string, idx: number) => [twitter.toLowerCase(), idx])
+        );
+        
+        const projectsWithIndex: Project[] = data.projects.map((p: Project, index: number) => {
+          const featuredIndex = featuredMap.get(p.twitter.toLowerCase());
+          return {
+            ...p,
+            originalIndex: index,
+            featured: featuredIndex !== undefined,
+            featuredIndex: featuredIndex,
+            votes: {
+              upvotes: 0,
+              downvotes: 0,
+              userVote: null,
+              breakdown: {},
+            },
+          };
+        });
         setProjects(projectsWithIndex);
       } catch (err) {
         console.error("Error fetching projects:", err);
