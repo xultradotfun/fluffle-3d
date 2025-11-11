@@ -44,12 +44,12 @@ export function sortProjects(
         ? b.name.localeCompare(a.name)
         : a.name.localeCompare(b.name);
     } else if (sortMethod.type === "latest") {
-      // Latest added sort (higher index = more recent)
+      // Latest added sort (lower index = more recent, as API returns newest first)
       const indexA = a.originalIndex || 0;
       const indexB = b.originalIndex || 0;
       return sortMethod.direction === "desc"
-        ? indexB - indexA // Most recent first
-        : indexA - indexB; // Oldest first
+        ? indexA - indexB // Most recent first (lower index)
+        : indexB - indexA; // Oldest first (higher index)
     } else {
       // Alphabetical sort
       return sortMethod.direction === "desc"
