@@ -1,0 +1,10 @@
+{
+  "_comment": "List of twitter handles that should use local avatars from /public/avatars/[handle].jpg",
+  "overrides": [
+    "0xSolynor",
+    "0x_ultra",
+    "badbunnz_",
+    "hyeon__dev",
+    "megaeth"
+  ]
+}

@@ -9,6 +9,7 @@ import { ProjectLinks } from "./ProjectLinks";
 import { ProjectVoting } from "./ProjectVoting";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import type { Project } from "@/types/ecosystem";
+import { getProjectImage } from "@/utils/projectUtils";
 
 interface ProjectCardProps {
   project: Project;
@@ -189,9 +190,7 @@ function ProjectCardComponent({
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
-                backgroundImage: `url(${
-                  project.img || `/avatars/${project.twitter}.jpg`
-                })`,
+                backgroundImage: `url(${getProjectImage(project)})`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
