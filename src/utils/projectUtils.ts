@@ -7,6 +7,7 @@ interface OverridesConfig {
 
 export function getProjectImage(project: Project): string {
   const config = overridesConfig as OverridesConfig;
+  console.log('getProjectImage', project.twitter, config.overrides.includes(project.twitter));
   
   // 1. Check for manual override in config (list of handles)
   // The override implies we should use the local avatar file
