@@ -190,7 +190,7 @@ function ProjectCardComponent({
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
-                backgroundImage: `url(${getProjectImage(project)})`,
+                backgroundImage: `url("${getProjectImage(project)}")`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
