@@ -1,9 +1,15 @@
 "use client";
 
 import { DollarSign, TrendingUp, Calendar } from "lucide-react";
-import { ChainRevenueData } from "@/data/revenue-chains";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
+
+interface ChainRevenueData {
+  name: string;
+  logo: string;
+  total24h: number;
+  total30d: number;
+}
 
 // USDM Bridge contract address on Ethereum mainnet
 const USDM_BRIDGE_ADDRESS = "0x46D6Eba3AECD215a3e703cdA963820d4520b45D6";
@@ -67,7 +73,7 @@ export function RevenueLeaderboard() {
 
     async function fetchChainRevenue() {
       try {
-        const res = await fetch("/api/revenue");
+        const res = await fetch("https://api.fluffle.tools/api/revenue");
         if (res.ok) {
           const data = await res.json();
           setChains(data);
