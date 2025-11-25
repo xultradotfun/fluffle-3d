@@ -51,66 +51,66 @@ function ProjectCardComponent({
 
   const handleVote = useCallback(
     async (vote: "up" | "down") => {
-      if (!user) {
-        login();
-        return;
-      }
+    if (!user) {
+      login();
+      return;
+    }
 
-      if (!user.canVote) {
-        toast.error("You need the MiniETH role to vote");
-        return;
-      }
+    if (!user.canVote) {
+      toast.error("You need the MiniETH role to vote");
+      return;
+    }
 
-      if (cooldown) {
-        toast.error("Please wait a moment before voting again");
-        return;
-      }
+    if (cooldown) {
+      toast.error("Please wait a moment before voting again");
+      return;
+    }
 
-      if (isLoadingVotes) {
-        toast.error("Please wait while votes are being loaded");
-        return;
-      }
+    if (isLoadingVotes) {
+      toast.error("Please wait while votes are being loaded");
+      return;
+    }
 
-      try {
-        setIsVoting(true);
-        setCooldown(true);
+    try {
+      setIsVoting(true);
+      setCooldown(true);
 
-        setTimeout(() => {
-          setCooldown(false);
-        }, 1000);
+      setTimeout(() => {
+        setCooldown(false);
+      }, 1000);
 
-        const data = await apiClient.post(API_ENDPOINTS.VOTES.SUBMIT, {
-          twitter: project.twitter,
-          vote,
-          userId: user.id,
-        });
+      const data = await apiClient.post(API_ENDPOINTS.VOTES.SUBMIT, {
+        twitter: project.twitter,
+        vote,
+        userId: user.id,
+      });
 
-        setVotes({
-          upvotes: data.upvotes,
-          downvotes: data.downvotes,
-          breakdown: data.breakdown,
-        });
-        setUserVote(data.userVote);
+      setVotes({
+        upvotes: data.upvotes,
+        downvotes: data.downvotes,
+        breakdown: data.breakdown,
+      });
+      setUserVote(data.userVote);
 
         if (onVoteUpdate) {
           onVoteUpdate(project.twitter, data);
-        }
-      } catch (error) {
-        console.error("Failed to vote:", error);
-        if (error instanceof Error) {
-          if (error.message.includes("Rate limit")) {
-            toast.error(error.message, {
-              duration: 5000,
-            });
-          } else {
-            toast.error(error.message);
-          }
-        } else {
-          toast.error("Failed to vote");
-        }
-      } finally {
-        setIsVoting(false);
       }
+    } catch (error) {
+      console.error("Failed to vote:", error);
+      if (error instanceof Error) {
+        if (error.message.includes("Rate limit")) {
+          toast.error(error.message, {
+            duration: 5000,
+          });
+        } else {
+          toast.error(error.message);
+        }
+      } else {
+        toast.error("Failed to vote");
+      }
+    } finally {
+      setIsVoting(false);
+    }
     },
     [user, login, cooldown, isLoadingVotes, project.twitter, onVoteUpdate]
   );
@@ -251,38 +251,38 @@ function ProjectCardComponent({
 
             {/* Content wrapper */}
             <div className="p-6 flex flex-col h-full relative z-10 text-white">
-              <ProjectHeader
-                name={project.name}
-                twitter={project.twitter}
-                category={project.category}
-                megaMafia={project.megaMafia}
+          <ProjectHeader
+            name={project.name}
+            twitter={project.twitter}
+            category={project.category}
+            megaMafia={project.megaMafia}
                 live={project.live}
                 featured={project.featured}
                 img={project.img}
-              />
+          />
 
               <p className="text-sm font-bold uppercase mb-6 flex-grow leading-snug text-white">
-                {project.description}
-              </p>
+            {project.description}
+          </p>
 
               <div className="flex flex-row items-center justify-between gap-3 pt-4 border-t-3 border-white">
                 <div className="flex items-center gap-3 flex-shrink-0">
-                  <ProjectLinks
-                    website={project.website}
-                    discord={project.discord}
-                    telegram={project.telegram}
-                  />
-                </div>
+              <ProjectLinks
+                website={project.website}
+                discord={project.discord}
+                telegram={project.telegram}
+              />
+            </div>
                 <div className="flex-shrink-0">
-                  <ProjectVoting
-                    votes={votes}
-                    userVote={userVote}
-                    isVoting={isVoting || isLoadingVotes}
-                    canVote={!!user?.canVote}
-                    cooldown={cooldown}
-                    onVote={handleVote}
-                  />
-                </div>
+              <ProjectVoting
+                votes={votes}
+                userVote={userVote}
+                isVoting={isVoting || isLoadingVotes}
+                canVote={!!user?.canVote}
+                cooldown={cooldown}
+                onVote={handleVote}
+              />
+            </div>
               </div>
             </div>
             {/* End content wrapper */}

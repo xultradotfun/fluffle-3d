@@ -10,12 +10,13 @@ import {
   Grid,
   Calculator,
   Wallet,
+  DollarSign,
 } from "lucide-react";
 
 interface ViewSwitcherProps {
-  activeView: "pfp" | "ecosystem" | "builder" | "bingo" | "math" | "allocation";
+  activeView: "pfp" | "ecosystem" | "builder" | "bingo" | "math" | "allocation" | "usdm";
   onViewChange?: (
-    view: "pfp" | "ecosystem" | "builder" | "bingo" | "math" | "allocation"
+    view: "pfp" | "ecosystem" | "builder" | "bingo" | "math" | "allocation" | "usdm"
   ) => void;
 }
 
@@ -26,6 +27,7 @@ const VIEW_ROUTES = {
   bingo: "/bingo",
   math: "/math",
   allocation: "/allocation",
+  usdm: "/usdm",
 } as const;
 
 export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
@@ -37,7 +39,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
   const router = useRouter();
 
   const handleViewChange = (
-    view: "pfp" | "ecosystem" | "builder" | "bingo" | "math" | "allocation"
+    view: "pfp" | "ecosystem" | "builder" | "bingo" | "math" | "allocation" | "usdm"
   ) => {
     if (onViewChange) {
       onViewChange(view);
@@ -156,6 +158,24 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     </span>
                   </div>
                   <span>ALLOCATION</span>
+                </button>
+
+                {/* USDM */}
+                <button
+                  onClick={() => handleViewChange("usdm")}
+                  className={`flex items-center gap-2 px-4 py-2 border-3 font-bold uppercase text-xs ${
+                    activeView === "usdm"
+                      ? "bg-pink border-foreground"
+                      : "bg-transparent border-background hover:bg-muted"
+                  }`}
+                  style={{
+                    clipPath:
+                      "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                    color: activeView === "usdm" ? "#19191a" : "#dfd9d9",
+                  }}
+                >
+                  <DollarSign className="w-4 h-4" strokeWidth={3} />
+                  <span>USDM</span>
                 </button>
 
                 {/* Divider */}
@@ -343,6 +363,18 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
               </span>
             </div>
             <span className="text-[10px] font-black uppercase">ALLOC</span>
+          </button>
+
+          {/* USDM */}
+          <button
+            onClick={() => handleViewChange("usdm")}
+            className={`flex flex-col items-center gap-1 p-2 ${
+              activeView === "usdm" ? "opacity-100" : "opacity-60"
+            }`}
+            style={{ color: "#dfd9d9" }}
+          >
+            <DollarSign className="w-6 h-6" strokeWidth={3} />
+            <span className="text-[10px] font-black uppercase">USDM</span>
           </button>
 
           {/* Fluffles Button */}
