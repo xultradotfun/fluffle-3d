@@ -51,6 +51,13 @@ export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
   // Ensure health data is available before initializing bridge
   const operatorAddress = health?.chains?.arbitrum?.operatorAddress as `0x${string}` | undefined;
   
+  // Debug logging
+  useEffect(() => {
+    console.log("Health data:", health);
+    console.log("Operator address:", operatorAddress);
+    console.log("Is bridge ready:", !!operatorAddress && operatorAddress !== "0x0000000000000000000000000000000000000000");
+  }, [health, operatorAddress]);
+  
   const { bridge, isSending, isConfirming, txHash, error, reset} = useBridgeDeposit({
     operatorAddress: operatorAddress || "0x0000000000000000000000000000000000000000" as `0x${string}`,
     senderAddress: address,
