@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const BRIDGE_API_URL = process.env.NEXT_PUBLIC_API_URL;
+const BRIDGE_API_URL = process.env.NEXT_PUBLIC_BRIDGE_API_URL;
 
 // Community Gas Bridge limits - designed to fund gas, not for large transfers
 const MIN_DEPOSIT_WEI = BigInt(150000000000000); // 0.00015 ETH

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const BRIDGE_API_URL = process.env.NEXT_PUBLIC_API_URL;
+const BRIDGE_API_URL = process.env.NEXT_PUBLIC_BRIDGE_API_URL;
 
 export const dynamic = "force-dynamic";
 
