@@ -34,7 +34,7 @@ export function NetworkInfo() {
             Block Explorer
           </h3>
           <div className="font-mono text-sm text-gray-900 dark:text-white break-all">
-            https://megaexplorer.xyz
+            https://megaeth.blockscout.com
           </div>
         </div>
       </div>

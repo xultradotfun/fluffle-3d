@@ -5,7 +5,7 @@ export const NETWORK_INFO = {
   wsUrl: "wss://carrot.megaeth.com/ws",
   explorers: {
     performance: "https://uptime.megaeth.com/",
-    community: "https://megaexplorer.xyz/",
+    community: "https://megaeth.blockscout.com/",
   },
 };
 

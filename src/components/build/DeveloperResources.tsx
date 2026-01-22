@@ -102,7 +102,7 @@ export function DeveloperResources() {
           </div>
         </a>
         <a
-          href="https://megaexplorer.xyz"
+          href="https://megaeth.blockscout.com"
           target="_blank"
           rel="noopener noreferrer"
           className="p-3 rounded-lg bg-gradient-to-br from-blue-500/5 to-blue-600/5 dark:from-blue-500/10 dark:to-blue-600/10 border border-blue-500/10 dark:border-blue-500/20 hover:from-blue-500/10 hover:to-blue-600/10 dark:hover:from-blue-500/20 dark:hover:to-blue-600/20 transition-all group"

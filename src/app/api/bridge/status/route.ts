@@ -36,6 +36,15 @@ export async function GET(request: NextRequest) {
     }
 
     const data = await response.json();
+    
+    // Replace old explorer URLs with Blockscout
+    if (data.megaExplorerUrl) {
+      data.megaExplorerUrl = data.megaExplorerUrl.replace(
+        'megaexplorer.xyz',
+        'megaeth.blockscout.com'
+      );
+    }
+    
     return NextResponse.json(data);
   } catch (error) {
     console.error("Bridge status error:", error);

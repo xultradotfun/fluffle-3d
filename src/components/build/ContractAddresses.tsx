@@ -275,7 +275,7 @@ function ContractCard({
               </button>
             )}
             <a
-              href={`https://megaexplorer.xyz/address/${contract.address}`}
+              href={`https://megaeth.blockscout.com/address/${contract.address}`}
               target="_blank"
               rel="noopener noreferrer"
               className="p-1.5 rounded-md hover:bg-blue-500/10 dark:hover:bg-blue-500/20 transition-colors"
