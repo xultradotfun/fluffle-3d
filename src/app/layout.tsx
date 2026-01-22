@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Footer } from "@/components/Footer";
 import { DiscordAuthProvider } from "@/contexts/DiscordAuthContext";
+import { Web3Providers } from "./providers";
 import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -62,28 +63,30 @@ export default function RootLayout({
         ></script>
       </head>
       <body className={inter.className}>
-        <ThemeProvider>
-          <DiscordAuthProvider>
-            <div className="relative min-h-screen antialiased bg-background text-foreground">
-              {children}
-              <Footer />
-            </div>
-          </DiscordAuthProvider>
-        </ThemeProvider>
-        <Toaster
-          richColors
-          position="top-center"
-          expand={true}
-          toastOptions={{
-            style: {
-              background: "var(--card)",
-              color: "var(--card-foreground)",
-              border: "1px solid var(--border)",
-              backdropFilter: "blur(8px)",
-            },
-            className: "text-sm font-medium rounded-xl",
-          }}
-        />
+        <Web3Providers>
+          <ThemeProvider>
+            <DiscordAuthProvider>
+              <div className="relative min-h-screen antialiased bg-background text-foreground">
+                {children}
+                <Footer />
+              </div>
+            </DiscordAuthProvider>
+          </ThemeProvider>
+          <Toaster
+            richColors
+            position="top-center"
+            expand={true}
+            toastOptions={{
+              style: {
+                background: "var(--card)",
+                color: "var(--card-foreground)",
+                border: "1px solid var(--border)",
+                backdropFilter: "blur(8px)",
+              },
+              className: "text-sm font-medium rounded-xl",
+            }}
+          />
+        </Web3Providers>
       </body>
     </html>
   );

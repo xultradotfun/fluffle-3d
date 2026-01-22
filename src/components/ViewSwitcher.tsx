@@ -11,12 +11,13 @@ import {
   Calculator,
   Wallet,
   DollarSign,
+  ArrowLeftRight,
 } from "lucide-react";
 
 interface ViewSwitcherProps {
-  activeView: "pfp" | "ecosystem" | "builder" | "bingo" | "math" | "allocation" | "usdm";
+  activeView: "pfp" | "ecosystem" | "builder" | "bingo" | "math" | "allocation" | "usdm" | "bridge";
   onViewChange?: (
-    view: "pfp" | "ecosystem" | "builder" | "bingo" | "math" | "allocation" | "usdm"
+    view: "pfp" | "ecosystem" | "builder" | "bingo" | "math" | "allocation" | "usdm" | "bridge"
   ) => void;
 }
 
@@ -28,18 +29,24 @@ const VIEW_ROUTES = {
   math: "/math",
   allocation: "/allocation",
   usdm: "/usdm",
+  bridge: "/bridge",
 } as const;
 
 export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpenMath, setIsMobileMenuOpenMath] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMathDropdownOpen, setIsMathDropdownOpen] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0 });
+  const [mathDropdownPosition, setMathDropdownPosition] = useState({ top: 0, left: 0 });
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const mathButtonRef = useRef<HTMLButtonElement>(null);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const mathCloseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const router = useRouter();
 
   const handleViewChange = (
-    view: "pfp" | "ecosystem" | "builder" | "bingo" | "math" | "allocation" | "usdm"
+    view: "pfp" | "ecosystem" | "builder" | "bingo" | "math" | "allocation" | "usdm" | "bridge"
   ) => {
     if (onViewChange) {
       onViewChange(view);
@@ -58,6 +65,16 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
     }
   }, [isDropdownOpen]);
 
+  useEffect(() => {
+    if (isMathDropdownOpen && mathButtonRef.current) {
+      const rect = mathButtonRef.current.getBoundingClientRect();
+      setMathDropdownPosition({
+        top: rect.top - 8,
+        left: rect.left + rect.width / 2,
+      });
+    }
+  }, [isMathDropdownOpen]);
+
   const handleMouseEnter = () => {
     if (closeTimeoutRef.current) {
       clearTimeout(closeTimeoutRef.current);
@@ -69,6 +86,20 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
   const handleMouseLeave = () => {
     closeTimeoutRef.current = setTimeout(() => {
       setIsDropdownOpen(false);
+    }, 100);
+  };
+
+  const handleMathMouseEnter = () => {
+    if (mathCloseTimeoutRef.current) {
+      clearTimeout(mathCloseTimeoutRef.current);
+      mathCloseTimeoutRef.current = null;
+    }
+    setIsMathDropdownOpen(true);
+  };
+
+  const handleMathMouseLeave = () => {
+    mathCloseTimeoutRef.current = setTimeout(() => {
+      setIsMathDropdownOpen(false);
     }, 100);
   };
 
@@ -113,75 +144,58 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   <span>ECOSYSTEM</span>
                 </button>
 
-                {/* Math */}
-                <button
-                  onClick={() => handleViewChange("math")}
-                  className={`flex items-center gap-2 px-4 py-2 border-3 font-bold uppercase text-xs ${
-                    activeView === "math"
-                      ? "bg-pink border-foreground"
-                      : "bg-transparent border-background hover:bg-muted"
-                  }`}
-                  style={{
-                    clipPath:
-                      "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                    color: activeView === "math" ? "#19191a" : "#dfd9d9",
-                  }}
-                >
-                  <Calculator className="w-4 h-4" strokeWidth={3} />
-                  <span>MOONMATH</span>
-                </button>
+                {/* Math Dropdown */}
+                <div className="relative z-[100]">
+                  <button
+                    ref={mathButtonRef}
+                    onMouseEnter={handleMathMouseEnter}
+                    onMouseLeave={handleMathMouseLeave}
+                    className={`flex items-center gap-2 px-4 py-2 border-3 font-bold uppercase text-xs ${
+                      ["math", "allocation", "usdm"].includes(activeView)
+                        ? "bg-pink border-foreground"
+                        : "bg-transparent border-background hover:bg-muted"
+                    }`}
+                    style={{
+                      clipPath:
+                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                      color: ["math", "allocation", "usdm"].includes(activeView)
+                        ? "#19191a"
+                        : "#dfd9d9",
+                    }}
+                  >
+                    <Calculator className="w-4 h-4" strokeWidth={3} />
+                    <span>MATH</span>
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform ${
+                        isMathDropdownOpen ? "rotate-180" : ""
+                      }`}
+                      strokeWidth={3}
+                    />
+                  </button>
+                </div>
 
-                {/* Allocation */}
+                {/* Bridge */}
                 <button
-                  onClick={() => handleViewChange("allocation")}
+                  onClick={() => handleViewChange("bridge")}
                   className={`flex items-center gap-2 px-4 py-2 border-3 font-bold uppercase text-xs ${
-                    activeView === "allocation"
+                    activeView === "bridge"
                       ? "bg-pink border-foreground"
                       : "bg-transparent border-background hover:bg-muted"
                   }`}
                   style={{
                     clipPath:
                       "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                    color: activeView === "allocation" ? "#19191a" : "#dfd9d9",
+                    color: activeView === "bridge" ? "#19191a" : "#dfd9d9",
                   }}
                 >
-                  <div className="relative">
-                    <Wallet className="w-4 h-4" strokeWidth={3} />
-                    <span
-                      className="absolute -top-1 -right-1 px-0.5 text-[7px] font-black border-2 leading-none text-foreground border-foreground"
-                      style={{
-                        backgroundColor:
-                          activeView === "allocation" ? "#fff" : "#f380cd",
-                      }}
-                    >
-                      NEW
-                    </span>
-                  </div>
-                  <span>ALLOCATION</span>
-                </button>
-
-                {/* USDM */}
-                <button
-                  onClick={() => handleViewChange("usdm")}
-                  className={`flex items-center gap-2 px-4 py-2 border-3 font-bold uppercase text-xs ${
-                    activeView === "usdm"
-                      ? "bg-pink border-foreground"
-                      : "bg-transparent border-background hover:bg-muted"
-                  }`}
-                  style={{
-                    clipPath:
-                      "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                    color: activeView === "usdm" ? "#19191a" : "#dfd9d9",
-                  }}
-                >
-                  <DollarSign className="w-4 h-4" strokeWidth={3} />
-                  <span>USDM</span>
+                  <ArrowLeftRight className="w-4 h-4" strokeWidth={3} />
+                  <span>GAS BRIDGE</span>
                 </button>
 
                 {/* Divider */}
                 <div className="w-px h-10 bg-foreground" />
 
-                {/* Fluffles Dropdown */}
+                {/* Tools Dropdown */}
                 <div className="relative z-[100]">
                   <button
                     ref={buttonRef}
@@ -201,7 +215,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     }}
                   >
                     <Rabbit className="w-4 h-4" strokeWidth={3} />
-                    <span>FLUFFLE TOOLS</span>
+                    <span>TOOLS</span>
                     <ChevronDown
                       className={`w-4 h-4 transition-transform ${
                         isDropdownOpen ? "rotate-180" : ""
@@ -216,7 +230,100 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
         </div>
       </div>
 
-      {/* Dropdown Menu - rendered outside clipped container */}
+      {/* Math Dropdown Menu */}
+      {isMathDropdownOpen && (
+        <div
+          onMouseEnter={handleMathMouseEnter}
+          onMouseLeave={handleMathMouseLeave}
+          className="fixed w-64"
+          style={{
+            top: mathDropdownPosition.top,
+            left: mathDropdownPosition.left,
+            transform: "translate(-50%, -100%)",
+            zIndex: 9999,
+          }}
+        >
+          <div
+            style={{
+              clipPath:
+                "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+            }}
+          >
+            <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+              <div
+                style={{
+                  backgroundColor: "#19191a",
+                  clipPath:
+                    "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                  padding: "8px",
+                }}
+              >
+                <div className="space-y-2">
+                  <button
+                    onClick={() => handleViewChange("math")}
+                    className={`flex items-center w-full gap-2 px-4 py-3 border-3 font-bold uppercase text-xs ${
+                      activeView === "math"
+                        ? "bg-pink border-foreground"
+                        : "bg-transparent border-background hover:bg-muted"
+                    }`}
+                    style={{
+                      clipPath:
+                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                      color: activeView === "math" ? "#19191a" : "#dfd9d9",
+                    }}
+                  >
+                    <Calculator className="w-4 h-4" strokeWidth={3} />
+                    <span className="flex-1 text-left">MOONMATH</span>
+                    {activeView === "math" && (
+                      <div className="w-2 h-2 bg-foreground" />
+                    )}
+                  </button>
+                  <button
+                    onClick={() => handleViewChange("allocation")}
+                    className={`flex items-center w-full gap-2 px-4 py-3 border-3 font-bold uppercase text-xs ${
+                      activeView === "allocation"
+                        ? "bg-pink border-foreground"
+                        : "bg-transparent border-background hover:bg-muted"
+                    }`}
+                    style={{
+                      clipPath:
+                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                      color: activeView === "allocation" ? "#19191a" : "#dfd9d9",
+                    }}
+                  >
+                    <Wallet className="w-4 h-4" strokeWidth={3} />
+                    <span className="flex-1 text-left">ALLOCATION</span>
+                    {activeView === "allocation" && (
+                      <div className="w-2 h-2 bg-foreground" />
+                    )}
+                  </button>
+                  <button
+                    onClick={() => handleViewChange("usdm")}
+                    className={`flex items-center w-full gap-2 px-4 py-3 border-3 font-bold uppercase text-xs ${
+                      activeView === "usdm"
+                        ? "bg-pink border-foreground"
+                        : "bg-transparent border-background hover:bg-muted"
+                    }`}
+                    style={{
+                      clipPath:
+                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                      color: activeView === "usdm" ? "#19191a" : "#dfd9d9",
+                    }}
+                  >
+                    <DollarSign className="w-4 h-4" strokeWidth={3} />
+                    <span className="flex-1 text-left">USDM REVENUE</span>
+                    {activeView === "usdm" && (
+                      <div className="w-2 h-2 bg-foreground" />
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Tools Dropdown Menu */}
       {isDropdownOpen && (
         <div
           onMouseEnter={handleMouseEnter}
@@ -330,54 +437,40 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
             <span className="text-[10px] font-black uppercase">ECO</span>
           </button>
 
-          {/* Math */}
+          {/* Math Dropdown Button */}
           <button
-            onClick={() => handleViewChange("math")}
+            onClick={() => setIsMobileMenuOpenMath(true)}
             className={`flex flex-col items-center gap-1 p-2 ${
-              activeView === "math" ? "opacity-100" : "opacity-60"
-            }`}
-            style={{ color: "#dfd9d9" }}
-          >
-            <Calculator className="w-6 h-6" strokeWidth={3} />
-            <span className="text-[10px] font-black uppercase">MATH</span>
-          </button>
-
-          {/* Allocation */}
-          <button
-            onClick={() => handleViewChange("allocation")}
-            className={`flex flex-col items-center gap-1 p-2 ${
-              activeView === "allocation" ? "opacity-100" : "opacity-60"
+              ["math", "allocation", "usdm"].includes(activeView)
+                ? "opacity-100"
+                : "opacity-60"
             }`}
             style={{ color: "#dfd9d9" }}
           >
             <div className="relative">
-              <Wallet className="w-6 h-6" strokeWidth={3} />
-              <span
-                className="absolute -top-1 -right-1 px-0.5 text-[7px] font-black border leading-none text-foreground border-foreground"
-                style={{
-                  backgroundColor:
-                    activeView === "allocation" ? "#fff" : "#f380cd",
-                }}
-              >
-                NEW
-              </span>
+              <Calculator className="w-6 h-6" strokeWidth={3} />
+              <ChevronDown
+                className="w-3 h-3 absolute -bottom-1 -right-1"
+                strokeWidth={3}
+                style={{ backgroundColor: "#19191a" }}
+              />
             </div>
-            <span className="text-[10px] font-black uppercase">ALLOC</span>
+            <span className="text-[10px] font-black uppercase">MATH</span>
           </button>
 
-          {/* USDM */}
+          {/* Bridge */}
           <button
-            onClick={() => handleViewChange("usdm")}
+            onClick={() => handleViewChange("bridge")}
             className={`flex flex-col items-center gap-1 p-2 ${
-              activeView === "usdm" ? "opacity-100" : "opacity-60"
+              activeView === "bridge" ? "opacity-100" : "opacity-60"
             }`}
             style={{ color: "#dfd9d9" }}
           >
-            <DollarSign className="w-6 h-6" strokeWidth={3} />
-            <span className="text-[10px] font-black uppercase">USDM</span>
+            <ArrowLeftRight className="w-6 h-6" strokeWidth={3} />
+            <span className="text-[10px] font-black uppercase">GAS</span>
           </button>
 
-          {/* Fluffles Button */}
+          {/* Tools Dropdown Button */}
           <button
             onClick={() => setIsMobileMenuOpen(true)}
             className={`flex flex-col items-center gap-1 p-2 ${
@@ -400,7 +493,99 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Math Mobile Menu */}
+      {isMobileMenuOpenMath && (
+        <div
+          className="sm:hidden fixed inset-0 z-50"
+          style={{ backgroundColor: "rgba(25, 25, 26, 0.95)" }}
+        >
+          <div
+            className="absolute inset-x-0 bottom-0 border-t-4 border-foreground"
+            style={{ backgroundColor: "#19191a" }}
+          >
+            <div
+              className="flex items-center justify-between px-4 py-4 border-b-3 border-foreground"
+              style={{ color: "#dfd9d9" }}
+            >
+              <div className="flex items-center gap-2">
+                <Calculator className="w-5 h-5" strokeWidth={3} />
+                <span className="text-sm font-black uppercase">MATH</span>
+              </div>
+              <button
+                onClick={() => setIsMobileMenuOpenMath(false)}
+                className="p-2 border-3 border-foreground hover:bg-muted"
+                style={{ color: "#dfd9d9" }}
+              >
+                <X className="w-5 h-5" strokeWidth={3} />
+              </button>
+            </div>
+            <div className="p-3 space-y-2">
+              <button
+                onClick={() => {
+                  handleViewChange("math");
+                  setIsMobileMenuOpenMath(false);
+                }}
+                className={`flex items-center w-full gap-3 px-4 py-4 border-3 border-foreground font-bold uppercase text-sm ${
+                  activeView === "math"
+                    ? "bg-pink"
+                    : "bg-transparent hover:bg-muted"
+                }`}
+                style={{
+                  color: activeView === "math" ? "#19191a" : "#dfd9d9",
+                }}
+              >
+                <Calculator className="w-5 h-5" strokeWidth={3} />
+                <span className="flex-1 text-left">MOONMATH</span>
+                {activeView === "math" && (
+                  <div className="w-2 h-2 bg-foreground" />
+                )}
+              </button>
+              <button
+                onClick={() => {
+                  handleViewChange("allocation");
+                  setIsMobileMenuOpenMath(false);
+                }}
+                className={`flex items-center w-full gap-3 px-4 py-4 border-3 border-foreground font-bold uppercase text-sm ${
+                  activeView === "allocation"
+                    ? "bg-pink"
+                    : "bg-transparent hover:bg-muted"
+                }`}
+                style={{
+                  color: activeView === "allocation" ? "#19191a" : "#dfd9d9",
+                }}
+              >
+                <Wallet className="w-5 h-5" strokeWidth={3} />
+                <span className="flex-1 text-left">ALLOCATION</span>
+                {activeView === "allocation" && (
+                  <div className="w-2 h-2 bg-foreground" />
+                )}
+              </button>
+              <button
+                onClick={() => {
+                  handleViewChange("usdm");
+                  setIsMobileMenuOpenMath(false);
+                }}
+                className={`flex items-center w-full gap-3 px-4 py-4 border-3 border-foreground font-bold uppercase text-sm ${
+                  activeView === "usdm"
+                    ? "bg-pink"
+                    : "bg-transparent hover:bg-muted"
+                }`}
+                style={{
+                  color: activeView === "usdm" ? "#19191a" : "#dfd9d9",
+                }}
+              >
+                <DollarSign className="w-5 h-5" strokeWidth={3} />
+                <span className="flex-1 text-left">USDM REVENUE</span>
+                {activeView === "usdm" && (
+                  <div className="w-2 h-2 bg-foreground" />
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Tools Mobile Menu */}
       {isMobileMenuOpen && (
         <div
           className="sm:hidden fixed inset-0 z-50"
@@ -417,7 +602,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
               <div className="flex items-center gap-2">
                 <Rabbit className="w-5 h-5" strokeWidth={3} />
                 <span className="text-sm font-black uppercase">
-                  FLUFFLE TOOLS
+                  TOOLS
                 </span>
               </div>
               <button
