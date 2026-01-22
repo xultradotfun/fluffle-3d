@@ -12,7 +12,7 @@ export async function GET() {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to fetch health status");
+      throw new Error(`Failed to fetch health status: ${response.status}`);
     }
 
     const data = await response.json();

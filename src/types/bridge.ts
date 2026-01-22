@@ -46,11 +46,6 @@ export interface HealthResponse {
   queue: {
     paused: boolean;
     reason: string | null;
-    pending: number;
-    processing: number;
-    total: number;
-    recentCompleted: number;
-    avgProcessingTimeMs: number | null;
   };
   chains: {
     arbitrum: {

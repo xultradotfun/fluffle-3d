@@ -48,14 +48,20 @@ export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
     disconnect,
   } = useWalletBridge();
 
+  // Ensure health data is available before initializing bridge
+  const operatorAddress = health?.chains?.arbitrum?.operatorAddress as `0x${string}` | undefined;
+  
   const { bridge, isSending, isConfirming, txHash, error, reset} = useBridgeDeposit({
-    operatorAddress: (health?.chains?.arbitrum?.operatorAddress || "0x0") as `0x${string}`,
+    operatorAddress: operatorAddress || "0x0000000000000000000000000000000000000000" as `0x${string}`,
     senderAddress: address,
     onSuccess: onBridgeSuccess,
   });
 
   const { feeBps } = health?.config || { feeBps: 0 };
   const queueInfo = health?.queue;
+  
+  // Check if bridge is ready
+  const isBridgeReady = !!operatorAddress && operatorAddress !== "0x0000000000000000000000000000000000000000";
 
   // Calculate fee preview
   const feePreview = useMemo(() => {
@@ -90,7 +96,7 @@ export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validation.valid || !amount) return;
+    if (!validation.valid || !amount || !isBridgeReady) return;
     await bridge(amount);
   };
 
@@ -425,9 +431,14 @@ export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
                     clipPath:
                       "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
                   }}
-                  disabled={!validation.valid || !amount || isSending || isConfirming}
+                  disabled={!validation.valid || !amount || !isBridgeReady || isSending || isConfirming}
                 >
-                  {isSending ? (
+                  {!isBridgeReady ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <Loader2 className="h-5 w-5 animate-spin" strokeWidth={3} />
+                      Initializing...
+                    </span>
+                  ) : isSending ? (
                     <span className="flex items-center justify-center gap-2">
                       <Loader2 className="h-5 w-5 animate-spin" strokeWidth={3} />
                       Confirm in Wallet

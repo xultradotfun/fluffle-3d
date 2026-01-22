@@ -21,7 +21,11 @@ export default function BridgePage() {
 
   useEffect(() => {
     fetchBridgeHealth()
-      .then(setHealth)
+      .then((data) => {
+        console.log("Bridge health response:", data);
+        console.log("Operator address:", data?.chains?.arbitrum?.operatorAddress);
+        setHealth(data);
+      })
       .catch((err) => {
         console.error("Failed to fetch health:", err);
         setHealthError("Unable to connect to bridge service");
