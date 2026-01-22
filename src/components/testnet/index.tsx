@@ -8,12 +8,6 @@ import { TimelineSection } from "./TimelineSection";
 import { TestnetOnboarding } from "./UsersContent";
 import { NETWORK_INFO, TIMELINE_EVENTS } from "./constants";
 
-declare global {
-  interface Window {
-    ethereum: any;
-  }
-}
-
 export function TestnetView() {
   const [showCopied, setShowCopied] = useState<string | null>(null);
 
