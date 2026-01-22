@@ -171,16 +171,32 @@ export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
               }}
             >
               <div style={{ backgroundColor: "#fff", padding: "16px" }}>
-                <div className="flex items-center justify-center gap-3">
-                  <Image src="/tokens/arbitrum.svg" alt="Arbitrum" width={32} height={32} />
-                  <span className="font-black text-lg uppercase" style={{ color: "#19191a" }}>
-                    Arbitrum
-                  </span>
-                  <ArrowRight className="w-5 h-5 mx-2" style={{ color: "#f380cd" }} strokeWidth={3} />
-                  <Image src="/tokens/mega.png" alt="MegaETH" width={32} height={32} className="rounded-full" />
-                  <span className="font-black text-lg uppercase" style={{ color: "#19191a" }}>
-                    MegaETH
-                  </span>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3 flex-1 justify-center">
+                    <Image src="/tokens/arbitrum.svg" alt="Arbitrum" width={32} height={32} />
+                    <span className="font-black text-lg uppercase" style={{ color: "#19191a" }}>
+                      Arbitrum
+                    </span>
+                    <ArrowRight className="w-5 h-5 mx-2" style={{ color: "#f380cd" }} strokeWidth={3} />
+                    <Image src="/tokens/mega.png" alt="MegaETH" width={32} height={32} className="rounded-full" />
+                    <span className="font-black text-lg uppercase" style={{ color: "#19191a" }}>
+                      MegaETH
+                    </span>
+                  </div>
+                  
+                  {/* Small Queue Status Badge */}
+                  {queueInfo && (
+                    <span
+                      className="text-[9px] font-black uppercase px-2 py-1 whitespace-nowrap"
+                      style={{
+                        backgroundColor: queueInfo.paused ? "#ff9800" : "#4caf50",
+                        color: "#fff",
+                        clipPath: "polygon(3px 0, 100% 0, 100% calc(100% - 3px), calc(100% - 3px) 100%, 0 100%, 0 3px)",
+                      }}
+                    >
+                      Queue: {queueInfo.paused ? "Paused" : "Live"}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
@@ -201,34 +217,15 @@ export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
                       "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
                   }}
                 >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="flex items-start gap-2">
-                      <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: "#ff9800" }} strokeWidth={3} />
-                      <div className="text-xs font-bold leading-tight" style={{ color: "#dfd9d9" }}>
-                        <span style={{ color: "#ff9800" }} className="font-black uppercase">Warning:</span> This is a{" "}
-                        <span className="font-black">one-way bridge</span>. Maximum bridgeable:{" "}
-                        <span className="font-black">{MAX_AMOUNT} ETH</span>. Risk of loss of funds. Use at your own risk.
-                      </div>
+                  <div className="flex items-start gap-2">
+                    <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: "#ff9800" }} strokeWidth={3} />
+                    <div className="text-xs font-bold leading-tight" style={{ color: "#dfd9d9" }}>
+                      <span style={{ color: "#ff9800" }} className="font-black uppercase">Warning:</span> This is a{" "}
+                      <span className="font-black">one-way bridge</span> with a{" "}
+                      <span className="font-black">queue system</span>. Transfers may take a while depending on queue size. 
+                      Maximum bridgeable: <span className="font-black">{MAX_AMOUNT} ETH</span>. Risk of loss of funds. Use at your own risk.
                     </div>
-                    {queueInfo && (
-                      <span
-                        className="text-[10px] font-black uppercase px-2 py-1 flex-shrink-0"
-                        style={{
-                          backgroundColor: queueInfo.paused ? "#ff9800" : "#4caf50",
-                          color: "#fff",
-                          clipPath:
-                            "polygon(3px 0, 100% 0, 100% calc(100% - 3px), calc(100% - 3px) 100%, 0 100%, 0 3px)",
-                        }}
-                      >
-                        {queueInfo.paused ? "Paused" : "Live"}
-                      </span>
-                    )}
                   </div>
-                  {queueInfo?.paused && queueInfo.reason && (
-                    <p className="text-xs font-bold mt-2 ml-6" style={{ color: "#ff9800" }}>
-                      {queueInfo.reason}
-                    </p>
-                  )}
                 </div>
               </div>
             </div>

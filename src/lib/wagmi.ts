@@ -21,8 +21,8 @@ export const megaeth = {
   },
   blockExplorers: {
     default: {
-      name: "MegaExplorer",
-      url: "https://explorer.megaeth.systems",
+      name: "Blockscout",
+      url: "https://megaeth.blockscout.com",
     },
   },
   testnet: false,
@@ -57,7 +57,7 @@ export const CHAINS = {
   MEGAETH: {
     chainId: megaeth.id,
     name: "MegaETH",
-    explorerUrl: "https://explorer.megaeth.systems",
+    explorerUrl: "https://megaeth.blockscout.com",
   },
 };
 

@@ -199,7 +199,11 @@ export default function BridgePage() {
                             </div>
                           ) : data ? (
                             <div className="space-y-6">
-                              <StatusStepper currentStep={data.step} status={data.deposit.status} />
+                              <StatusStepper 
+                                currentStep={data.step} 
+                                status={data.deposit.status}
+                                queuePosition={data.queuePosition}
+                              />
                               <DepositDetails data={data} />
                             </div>
                           ) : null}

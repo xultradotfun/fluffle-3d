@@ -35,6 +35,7 @@ export interface DepositStatusResponse {
   arbExplorerUrl: string | null;
   megaExplorerUrl: string | null;
   megaOperatorBalance: string;
+  queuePosition?: number; // Optional: position in queue if status is CONFIRMED/SENT
   formatted: {
     depositAmount: string;
     feeAmount: string;

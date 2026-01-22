@@ -16,8 +16,8 @@ const steps: Step[] = [
   },
   {
     id: 2,
-    title: "PROCESSING",
-    description: "Sending to MegaETH",
+    title: "IN QUEUE",
+    description: "Processing",
   },
   {
     id: 3,
@@ -36,9 +36,10 @@ function mapStep(oldStep: number): number {
 interface StatusStepperProps {
   currentStep: 1 | 2 | 3 | 4;
   status: string;
+  queuePosition?: number;
 }
 
-export function StatusStepper({ currentStep, status }: StatusStepperProps) {
+export function StatusStepper({ currentStep, status, queuePosition }: StatusStepperProps) {
   const isOrphaned = status === "ORPHANED";
   const isFailed = status === "FAILED";
   const mappedStep = mapStep(currentStep);
@@ -99,6 +100,14 @@ export function StatusStepper({ currentStep, status }: StatusStepperProps) {
                   >
                     {step.description}
                   </p>
+                  {step.id === 2 && isCurrent && queuePosition !== undefined && (
+                    <p
+                      className="text-[10px] font-black uppercase mt-1"
+                      style={{ color: "#f380cd" }}
+                    >
+                      #{queuePosition} in queue
+                    </p>
+                  )}
                 </div>
               </div>
 
