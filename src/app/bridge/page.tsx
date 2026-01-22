@@ -20,14 +20,12 @@ export default function BridgePage() {
   const { data, loading, error } = useBridgeStatus(txHash);
 
   useEffect(() => {
-    console.log("Fetching bridge health...");
     fetchBridgeHealth()
       .then((data) => {
-        console.log("✅ Health data received:", data);
         setHealth(data);
       })
       .catch((err) => {
-        console.error("❌ Failed to fetch health:", err);
+        console.error("Failed to fetch bridge health:", err);
         setHealthError("Unable to connect to bridge service");
       });
   }, []);

@@ -19,6 +19,35 @@ const MAX_AMOUNT = 0.0015;
 const STEP_SIZE = 0.00005;
 const FALLBACK_ETH_PRICE = 3500;
 
+// Clean up error messages for better UX
+function getErrorMessage(error: Error): string {
+  const message = error.message.toLowerCase();
+  
+  // User rejected transaction
+  if (message.includes("user rejected") || message.includes("user denied")) {
+    return "Transaction rejected";
+  }
+  
+  // Insufficient funds
+  if (message.includes("insufficient funds") || message.includes("insufficient balance")) {
+    return "Insufficient balance";
+  }
+  
+  // Network errors
+  if (message.includes("network") || message.includes("connection")) {
+    return "Network error. Please try again";
+  }
+  
+  // Gas errors
+  if (message.includes("gas")) {
+    return "Transaction failed. Gas estimation error";
+  }
+  
+  // Default: show first line only
+  const firstLine = error.message.split('\n')[0].split('.')[0];
+  return firstLine.length > 80 ? "Transaction failed" : firstLine;
+}
+
 export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
   const [amount, setAmount] = useState("0.0005"); // Default to 0.0005 ETH
   const [ethPrice, setEthPrice] = useState(FALLBACK_ETH_PRICE);
@@ -50,13 +79,6 @@ export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
 
   // Ensure health data is available before initializing bridge
   const operatorAddress = health?.chains?.arbitrum?.operatorAddress as `0x${string}` | undefined;
-  
-  // Debug logging
-  useEffect(() => {
-    console.log("Health data:", health);
-    console.log("Operator address:", operatorAddress);
-    console.log("Is bridge ready:", !!operatorAddress && operatorAddress !== "0x0000000000000000000000000000000000000000");
-  }, [health, operatorAddress]);
   
   const { bridge, isSending, isConfirming, txHash, error, reset} = useBridgeDeposit({
     operatorAddress: operatorAddress || "0x0000000000000000000000000000000000000000" as `0x${string}`,
@@ -379,7 +401,7 @@ export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
                     }}
                   >
                     <p className="text-sm font-bold" style={{ color: "#f44336" }}>
-                      {error.message}
+                      {getErrorMessage(error)}
                     </p>
                     <button
                       type="button"

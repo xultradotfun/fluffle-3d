@@ -35,6 +35,7 @@ export async function POST(request: NextRequest) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
+      cache: "no-store", // Never cache deposit submissions
     });
 
     const data = await response.json();

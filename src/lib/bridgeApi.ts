@@ -10,7 +10,9 @@ const API_BASE_URL = "/api/bridge";
 export async function fetchDepositStatus(
   arbTxHash: string
 ): Promise<DepositStatusResponse> {
-  const response = await fetch(`${API_BASE_URL}/status?arbTx=${arbTxHash}`);
+  const response = await fetch(`${API_BASE_URL}/status?arbTx=${arbTxHash}`, {
+    cache: "no-cache", // Never cache - always get fresh status
+  });
 
   if (!response.ok) {
     const error = await response.json();
@@ -21,7 +23,9 @@ export async function fetchDepositStatus(
 }
 
 export async function fetchBridgeHealth(): Promise<HealthResponse> {
-  const response = await fetch(`${API_BASE_URL}/health`);
+  const response = await fetch(`${API_BASE_URL}/health`, {
+    cache: "no-cache", // Always get fresh health status
+  });
 
   if (!response.ok) {
     throw new Error("Failed to fetch bridge health status");

@@ -23,6 +23,7 @@ export async function GET(request: NextRequest) {
         headers: {
           "Content-Type": "application/json",
         },
+        cache: "no-store", // Never cache status - always fetch fresh data
       }
     );
 
