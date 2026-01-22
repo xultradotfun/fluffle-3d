@@ -28,7 +28,7 @@ export const megaeth = {
   testnet: false,
 } as const;
 
-export const config = createConfig({
+export const wagmiConfig = createConfig({
   chains: [arbitrum, megaeth, mainnet],
   connectors: [
     injected(),
@@ -43,6 +43,9 @@ export const config = createConfig({
   },
   ssr: true,
 });
+
+// Export both for compatibility
+export const config = wagmiConfig;
 
 // Chain info helpers
 export const CHAINS = {

@@ -3,7 +3,7 @@
 import { WagmiProvider } from "wagmi";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
-import { config } from "@/lib/wagmi";
+import { wagmiConfig } from "@/lib/wagmi";
 import { useState, useEffect } from "react";
 import "@rainbow-me/rainbowkit/styles.css";
 
@@ -14,6 +14,11 @@ export function Web3Providers({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
+    
+    // Note: Browser wallet extensions (MetaMask, Rabby, etc.) may throw 
+    // "Cannot redefine property: ethereum" errors. This is harmless and 
+    // can be safely ignored - it's a known conflict between wallet 
+    // extensions and wagmi/RainbowKit, but doesn't affect functionality.
   }, []);
 
   if (!mounted) {
@@ -21,7 +26,7 @@ export function Web3Providers({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <WagmiProvider config={config}>
+    <WagmiProvider config={wagmiConfig}>
       <QueryClientProvider client={queryClient}>
         <RainbowKitProvider>
           {children}
