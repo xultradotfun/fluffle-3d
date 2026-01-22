@@ -48,14 +48,14 @@ export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
     disconnect,
   } = useWalletBridge();
 
-  const { bridge, isSending, isConfirming, txHash, error, reset } = useBridgeDeposit({
-    operatorAddress: health.chains.arbitrum.operatorAddress as `0x${string}`,
+  const { bridge, isSending, isConfirming, txHash, error, reset} = useBridgeDeposit({
+    operatorAddress: (health?.chains?.arbitrum?.operatorAddress || "0x0") as `0x${string}`,
     senderAddress: address,
     onSuccess: onBridgeSuccess,
   });
 
-  const { feeBps } = health.config;
-  const queueInfo = health.queue;
+  const { feeBps } = health?.config || { feeBps: 0 };
+  const queueInfo = health?.queue;
 
   // Calculate fee preview
   const feePreview = useMemo(() => {
