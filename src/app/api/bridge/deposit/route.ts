@@ -2,9 +2,32 @@ import { NextRequest, NextResponse } from "next/server";
 
 const BRIDGE_API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+// Community Gas Bridge limits - designed to fund gas, not for large transfers
+const MIN_DEPOSIT_WEI = BigInt(150000000000000); // 0.00015 ETH
+const MAX_DEPOSIT_WEI = BigInt(1500000000000000); // 0.0015 ETH
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+    
+    // Validate amount
+    if (body.amountWei) {
+      const amountWei = BigInt(body.amountWei);
+      
+      if (amountWei < MIN_DEPOSIT_WEI) {
+        return NextResponse.json(
+          { error: `Deposit amount too low. Minimum: 0.00015 ETH` },
+          { status: 400 }
+        );
+      }
+      
+      if (amountWei > MAX_DEPOSIT_WEI) {
+        return NextResponse.json(
+          { error: `Deposit amount too high. Maximum: 0.0015 ETH` },
+          { status: 400 }
+        );
+      }
+    }
 
     const response = await fetch(`${BRIDGE_API_URL}/deposit`, {
       method: "POST",
