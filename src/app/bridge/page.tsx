@@ -45,222 +45,186 @@ export default function BridgePage() {
           <ViewSwitcher activeView="bridge" />
         </div>
 
-        {/* View Toggle */}
-        <div className="flex items-center justify-center mt-8 mb-8">
+        {/* Content */}
+        <div className="max-w-2xl mx-auto mt-8">
+          {/* Outer container with pink border */}
           <div
-            className="flex items-center gap-1 p-1"
             style={{
-              backgroundColor: "#19191a",
               clipPath:
-                "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
             }}
           >
-            <button
-              onClick={() => setView("bridge")}
-              className={`flex items-center gap-2 px-6 py-3 font-black uppercase text-sm transition-all ${
-                view === "bridge" ? "" : "opacity-50"
-              }`}
-              style={{
-                backgroundColor: view === "bridge" ? "#f380cd" : "transparent",
-                color: view === "bridge" ? "#19191a" : "#dfd9d9",
-                clipPath:
-                  view === "bridge"
-                    ? "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)"
-                    : "none",
-              }}
-            >
-              <ArrowLeftRight className="w-4 h-4" strokeWidth={3} />
-              Bridge
-            </button>
-            <button
-              onClick={() => setView("track")}
-              className={`flex items-center gap-2 px-6 py-3 font-black uppercase text-sm transition-all ${
-                view === "track" ? "" : "opacity-50"
-              }`}
-              style={{
-                backgroundColor: view === "track" ? "#f380cd" : "transparent",
-                color: view === "track" ? "#19191a" : "#dfd9d9",
-                clipPath:
-                  view === "track"
-                    ? "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)"
-                    : "none",
-              }}
-            >
-              <Search className="w-4 h-4" strokeWidth={3} />
-              Track
-            </button>
-          </div>
-        </div>
-
-        {/* Content */}
-        <div className="max-w-2xl mx-auto">
-          {view === "bridge" ? (
-            healthError ? (
+            <div style={{ backgroundColor: "#f380cd", padding: "2px" }}>
               <div
                 style={{
+                  backgroundColor: "#19191a",
                   clipPath:
                     "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
                 }}
               >
-                <div style={{ backgroundColor: "#f44336", padding: "2px" }}>
-                  <div
-                    className="p-8 text-center"
+                {/* Toggle Buttons */}
+                <div className="flex items-center gap-1 p-2 border-b-2 border-pink">
+                  <button
+                    onClick={() => setView("bridge")}
+                    className={`flex items-center gap-2 px-6 py-3 font-black uppercase text-sm transition-all ${
+                      view === "bridge" ? "" : "opacity-50"
+                    }`}
                     style={{
-                      backgroundColor: "#19191a",
+                      backgroundColor: view === "bridge" ? "#f380cd" : "transparent",
+                      color: view === "bridge" ? "#19191a" : "#dfd9d9",
                       clipPath:
-                        "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
+                        view === "bridge"
+                          ? "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)"
+                          : "none",
                     }}
                   >
-                    <AlertCircle
-                      className="w-12 h-12 mx-auto mb-4"
-                      style={{ color: "#f44336" }}
-                      strokeWidth={3}
-                    />
-                    <p className="font-black text-lg uppercase" style={{ color: "#f44336" }}>
-                      {healthError}
-                    </p>
-                    <p className="font-bold text-sm mt-2" style={{ color: "#dfd9d9" }}>
-                      Please try again later
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ) : health ? (
-              <BridgeForm health={health} onBridgeSuccess={handleBridgeSuccess} />
-            ) : (
-              <div
-                style={{
-                  clipPath:
-                    "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
-                }}
-              >
-                <div style={{ backgroundColor: "#f380cd", padding: "2px" }}>
-                  <div
-                    className="p-12 text-center"
+                    <ArrowLeftRight className="w-4 h-4" strokeWidth={3} />
+                    Bridge
+                  </button>
+                  <button
+                    onClick={() => setView("track")}
+                    className={`flex items-center gap-2 px-6 py-3 font-black uppercase text-sm transition-all ${
+                      view === "track" ? "" : "opacity-50"
+                    }`}
                     style={{
-                      backgroundColor: "#19191a",
+                      backgroundColor: view === "track" ? "#f380cd" : "transparent",
+                      color: view === "track" ? "#19191a" : "#dfd9d9",
                       clipPath:
-                        "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
+                        view === "track"
+                          ? "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)"
+                          : "none",
                     }}
                   >
-                    <Loader2
-                      className="w-12 h-12 mx-auto animate-spin"
-                      style={{ color: "#f380cd" }}
-                      strokeWidth={3}
-                    />
-                    <p className="font-black text-lg uppercase mt-4" style={{ color: "#dfd9d9" }}>
-                      Loading...
-                    </p>
-                  </div>
+                    <Search className="w-4 h-4" strokeWidth={3} />
+                    Track
+                  </button>
                 </div>
-              </div>
-            )
-          ) : (
-            <div
-              style={{
-                clipPath:
-                  "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
-              }}
-            >
-              <div style={{ backgroundColor: "#f380cd", padding: "2px" }}>
-                <div
-                  className="p-5"
-                  style={{
-                    backgroundColor: "#19191a",
-                    clipPath:
-                      "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
-                  }}
-                >
-                  {txHash && (
-                    <button
-                      onClick={() => {
-                        setTxHash(null);
-                      }}
-                      className="flex items-center gap-1 text-sm font-bold uppercase mb-4 transition-opacity hover:opacity-70"
-                      style={{ color: "#dfd9d9" }}
-                    >
-                      <ArrowLeft className="w-4 h-4" strokeWidth={3} />
-                      New search
-                    </button>
-                  )}
 
-                  <TxInput
-                    onSubmit={setTxHash}
-                    disabled={loading}
-                    initialValue={txHash || ""}
-                  />
-
-                  {txHash && (
-                    <div className="mt-6">
-                      {loading && !data ? (
-                        <div className="py-12 text-center">
-                          <Loader2
-                            className="w-12 h-12 mx-auto animate-spin"
-                            style={{ color: "#f380cd" }}
-                            strokeWidth={3}
-                          />
-                          <p className="font-black text-lg uppercase mt-4" style={{ color: "#dfd9d9" }}>
-                            Loading...
-                          </p>
-                        </div>
-                      ) : error ? (
-                        <div
-                          style={{
-                            clipPath:
-                              "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                {/* Content */}
+                <div className="p-5">
+                  {view === "bridge" ? (
+                    healthError ? (
+                      <div className="p-8 text-center">
+                        <AlertCircle
+                          className="w-12 h-12 mx-auto mb-4"
+                          style={{ color: "#f44336" }}
+                          strokeWidth={3}
+                        />
+                        <p className="font-black text-lg uppercase" style={{ color: "#f44336" }}>
+                          {healthError}
+                        </p>
+                        <p className="font-bold text-sm mt-2" style={{ color: "#dfd9d9" }}>
+                          Please try again later
+                        </p>
+                      </div>
+                    ) : health ? (
+                      <BridgeForm health={health} onBridgeSuccess={handleBridgeSuccess} />
+                    ) : (
+                      <div className="p-12 text-center">
+                        <Loader2
+                          className="w-12 h-12 mx-auto animate-spin"
+                          style={{ color: "#f380cd" }}
+                          strokeWidth={3}
+                        />
+                        <p className="font-black text-lg uppercase mt-4" style={{ color: "#dfd9d9" }}>
+                          Loading...
+                        </p>
+                      </div>
+                    )
+                  ) : (
+                    <>
+                      {txHash && (
+                        <button
+                          onClick={() => {
+                            setTxHash(null);
                           }}
+                          className="flex items-center gap-1 text-sm font-bold uppercase mb-4 transition-opacity hover:opacity-70"
+                          style={{ color: "#dfd9d9" }}
                         >
-                          <div style={{ backgroundColor: "#f44336", padding: "2px" }}>
+                          <ArrowLeft className="w-4 h-4" strokeWidth={3} />
+                          New search
+                        </button>
+                      )}
+
+                      <TxInput
+                        onSubmit={setTxHash}
+                        disabled={loading}
+                        initialValue={txHash || ""}
+                      />
+
+                      {txHash && (
+                        <div className="mt-6">
+                          {loading && !data ? (
+                            <div className="py-12 text-center">
+                              <Loader2
+                                className="w-12 h-12 mx-auto animate-spin"
+                                style={{ color: "#f380cd" }}
+                                strokeWidth={3}
+                              />
+                              <p className="font-black text-lg uppercase mt-4" style={{ color: "#dfd9d9" }}>
+                                Loading...
+                              </p>
+                            </div>
+                          ) : error ? (
                             <div
-                              className="p-6 text-center"
                               style={{
-                                backgroundColor: "#19191a",
                                 clipPath:
                                   "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
                               }}
                             >
-                              <AlertCircle
-                                className="w-10 h-10 mx-auto mb-3"
-                                style={{ color: "#f44336" }}
-                                strokeWidth={3}
-                              />
-                              <p className="font-black uppercase" style={{ color: "#f44336" }}>
-                                {error}
-                              </p>
-                              <p className="text-sm font-bold mt-2" style={{ color: "#dfd9d9" }}>
-                                Make sure this is a valid bridge deposit
-                              </p>
+                              <div style={{ backgroundColor: "#f44336", padding: "2px" }}>
+                                <div
+                                  className="p-6 text-center"
+                                  style={{
+                                    backgroundColor: "#19191a",
+                                    clipPath:
+                                      "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                                  }}
+                                >
+                                  <AlertCircle
+                                    className="w-10 h-10 mx-auto mb-3"
+                                    style={{ color: "#f44336" }}
+                                    strokeWidth={3}
+                                  />
+                                  <p className="font-black uppercase" style={{ color: "#f44336" }}>
+                                    {error}
+                                  </p>
+                                  <p className="text-sm font-bold mt-2" style={{ color: "#dfd9d9" }}>
+                                    Make sure this is a valid bridge deposit
+                                  </p>
+                                </div>
+                              </div>
                             </div>
-                          </div>
+                          ) : data ? (
+                            <div className="space-y-6">
+                              <StatusStepper currentStep={data.step} status={data.deposit.status} />
+                              <DepositDetails data={data} />
+                            </div>
+                          ) : null}
                         </div>
-                      ) : data ? (
-                        <div className="space-y-6">
-                          <StatusStepper currentStep={data.step} status={data.deposit.status} />
-                          <DepositDetails data={data} />
-                        </div>
-                      ) : null}
-                    </div>
-                  )}
+                      )}
 
-                  {!txHash && (
-                    <div
-                      className="p-8 text-center mt-4"
-                      style={{
-                        backgroundColor: "#333",
-                        clipPath:
-                          "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                      }}
-                    >
-                      <Search className="w-8 h-8 mx-auto mb-3" style={{ color: "#666" }} strokeWidth={3} />
-                      <p className="text-sm font-bold" style={{ color: "#dfd9d9" }}>
-                        Enter your Arbitrum tx hash to track status
-                      </p>
-                    </div>
+                      {!txHash && (
+                        <div
+                          className="p-8 text-center mt-4"
+                          style={{
+                            backgroundColor: "#333",
+                            clipPath:
+                              "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                          }}
+                        >
+                          <Search className="w-8 h-8 mx-auto mb-3" style={{ color: "#666" }} strokeWidth={3} />
+                          <p className="text-sm font-bold" style={{ color: "#dfd9d9" }}>
+                            Enter your Arbitrum tx hash to track status
+                          </p>
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
               </div>
             </div>
-          )}
+          </div>
         </div>
 
         {/* Footer */}

@@ -3,10 +3,10 @@
 import { useState, useMemo, useEffect } from "react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Image from "next/image";
-import { calculateFee, formatWeiToEth, parseEthToWei, truncateAddress, formatEta, estimateQueueEtaMs } from "@/utils/bridge";
+import { calculateFee, formatWeiToEth, parseEthToWei, truncateAddress } from "@/utils/bridge";
 import { useWalletBridge } from "@/hooks/useWalletBridge";
 import { useBridgeDeposit } from "@/hooks/useBridgeDeposit";
-import { Loader2, ArrowDown, LogOut, Wallet } from "lucide-react";
+import { Loader2, ArrowRight, AlertTriangle, LogOut, Wallet } from "lucide-react";
 import { HealthResponse } from "@/types/bridge";
 
 interface BridgeFormProps {
@@ -16,7 +16,7 @@ interface BridgeFormProps {
 
 const MIN_AMOUNT = 0.00015;
 const MAX_AMOUNT = 0.0015;
-const STEP_SIZE = 0.0005;
+const STEP_SIZE = 0.00005;
 const FALLBACK_ETH_PRICE = 3500;
 
 export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
@@ -100,21 +100,7 @@ export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
     : "0.00";
 
   return (
-    <div
-      style={{
-        clipPath:
-          "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
-      }}
-    >
-      <div style={{ backgroundColor: "#f380cd", padding: "2px" }}>
-        <div
-          style={{
-            backgroundColor: "#19191a",
-            clipPath:
-              "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
-            padding: "20px",
-          }}
-        >
+    <>
           {/* Connected Wallet Header */}
           {isConnected && address && (
             <div className="flex items-center justify-between mb-5 pb-4" style={{ borderBottom: "2px solid #333" }}>
@@ -142,7 +128,7 @@ export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-3">
-            {/* From Chain */}
+            {/* Bridge Route - Single Line */}
             <div
               style={{
                 clipPath:
@@ -150,41 +136,12 @@ export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
               }}
             >
               <div style={{ backgroundColor: "#fff", padding: "16px" }}>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-black uppercase tracking-wider" style={{ color: "#666" }}>
-                    From
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center justify-center gap-3">
                   <Image src="/tokens/arbitrum.svg" alt="Arbitrum" width={32} height={32} />
                   <span className="font-black text-lg uppercase" style={{ color: "#19191a" }}>
                     Arbitrum
                   </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Arrow */}
-            <div className="flex justify-center -my-1">
-              <div className="p-2" style={{ backgroundColor: "#19191a", border: "2px solid #f380cd" }}>
-                <ArrowDown className="w-4 h-4" style={{ color: "#f380cd" }} strokeWidth={3} />
-              </div>
-            </div>
-
-            {/* To Chain */}
-            <div
-              style={{
-                clipPath:
-                  "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-              }}
-            >
-              <div style={{ backgroundColor: "#fff", padding: "16px" }}>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs font-black uppercase tracking-wider" style={{ color: "#666" }}>
-                    To
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
+                  <ArrowRight className="w-5 h-5 mx-2" style={{ color: "#f380cd" }} strokeWidth={3} />
                   <Image src="/tokens/mega.png" alt="MegaETH" width={32} height={32} className="rounded-full" />
                   <span className="font-black text-lg uppercase" style={{ color: "#19191a" }}>
                     MegaETH
@@ -193,57 +150,53 @@ export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
               </div>
             </div>
 
-            {/* Queue Status */}
-            {queueInfo && (
-              <div
-                style={{
-                  clipPath:
-                    "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                }}
-              >
-                <div style={{ backgroundColor: "#fff", padding: "16px" }}>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-black uppercase tracking-wider" style={{ color: "#666" }}>
-                      Queue
-                    </span>
-                    <span
-                      className="text-xs font-black uppercase px-2 py-1"
-                      style={{
-                        backgroundColor: queueInfo.paused ? "#ff9800" : "#4caf50",
-                        color: "#fff",
-                        clipPath:
-                          "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
-                      }}
-                    >
-                      {queueInfo.paused ? "Paused" : "Live"}
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <span className="text-sm font-bold uppercase" style={{ color: "#666" }}>
-                        Size
-                      </span>
-                      <div className="font-black text-lg" style={{ color: "#19191a" }}>
-                        {queueInfo.total}
+            {/* Warning */}
+            <div
+              style={{
+                clipPath:
+                  "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+              }}
+            >
+              <div style={{ backgroundColor: "#ff9800", padding: "2px" }}>
+                <div
+                  className="p-3"
+                  style={{
+                    backgroundColor: "#19191a",
+                    clipPath:
+                      "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                  }}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-start gap-2">
+                      <AlertTriangle className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: "#ff9800" }} strokeWidth={3} />
+                      <div className="text-xs font-bold leading-tight" style={{ color: "#dfd9d9" }}>
+                        <span style={{ color: "#ff9800" }} className="font-black uppercase">Warning:</span> This is a{" "}
+                        <span className="font-black">one-way bridge</span>. Maximum bridgeable:{" "}
+                        <span className="font-black">{MAX_AMOUNT} ETH</span>. Risk of loss of funds. Use at your own risk.
                       </div>
                     </div>
-                    <div>
-                      <span className="text-sm font-bold uppercase" style={{ color: "#666" }}>
-                        Est. Time
+                    {queueInfo && (
+                      <span
+                        className="text-[10px] font-black uppercase px-2 py-1 flex-shrink-0"
+                        style={{
+                          backgroundColor: queueInfo.paused ? "#ff9800" : "#4caf50",
+                          color: "#fff",
+                          clipPath:
+                            "polygon(3px 0, 100% 0, 100% calc(100% - 3px), calc(100% - 3px) 100%, 0 100%, 0 3px)",
+                        }}
+                      >
+                        {queueInfo.paused ? "Paused" : "Live"}
                       </span>
-                      <div className="font-black text-lg" style={{ color: "#19191a" }}>
-                        {formatEta(estimateQueueEtaMs(queueInfo.total))}
-                      </div>
-                    </div>
+                    )}
                   </div>
-                  {queueInfo.paused && queueInfo.reason && (
-                    <p className="text-xs font-bold mt-2" style={{ color: "#ff9800" }}>
+                  {queueInfo?.paused && queueInfo.reason && (
+                    <p className="text-xs font-bold mt-2 ml-6" style={{ color: "#ff9800" }}>
                       {queueInfo.reason}
                     </p>
                   )}
                 </div>
               </div>
-            )}
+            </div>
 
           {/* Amount Slider */}
           <div
@@ -491,8 +444,6 @@ export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
               )}
             </div>
           </form>
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
