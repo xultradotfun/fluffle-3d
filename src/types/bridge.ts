@@ -10,7 +10,7 @@ export enum DepositStatus {
 export interface DepositRow {
   id: string;
   arb_tx_hash: string;
-  arb_block_number: string;
+  arb_block_number: number;
   arb_block_hash: string;
   sender: string;
   deposit_amount_wei: string;
@@ -18,11 +18,14 @@ export interface DepositRow {
   payout_amount_wei: string;
   status: DepositStatus;
   mega_tx_hash: string | null;
-  mega_nonce: string | null;
+  mega_nonce: number | null;
+  mega_signed_tx: string | null;
   detected_at: string;
   confirmed_at: string | null;
   sent_at: string | null;
   completed_at: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface DepositStatusResponse {
@@ -31,6 +34,7 @@ export interface DepositStatusResponse {
   stepLabel: string;
   arbExplorerUrl: string | null;
   megaExplorerUrl: string | null;
+  megaOperatorBalance: string;
   formatted: {
     depositAmount: string;
     feeAmount: string;
