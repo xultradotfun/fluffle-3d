@@ -89,6 +89,11 @@ export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
   const { feeBps } = health?.config || { feeBps: 0 };
   const queueInfo = health?.queue;
   
+  // Check operator balance
+  const operatorBalance = health?.chains?.megaeth?.balance;
+  const operatorBalanceEth = operatorBalance ? parseFloat(operatorBalance) : 0;
+  const hasInsufficientGas = operatorBalanceEth < 0.0001;
+  
   // Check if bridge is ready
   const isBridgeReady = !!operatorAddress && operatorAddress !== "0x0000000000000000000000000000000000000000";
 
@@ -113,6 +118,10 @@ export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
   const validation = useMemo(() => {
     const amountNum = parseFloat(amount);
 
+    if (hasInsufficientGas) {
+      return { valid: false, error: "Bridge operator out of gas" };
+    }
+
     if (balance !== undefined) {
       const balanceEth = Number(balance) / 1e18;
       if (amountNum > balanceEth) {
@@ -121,7 +130,7 @@ export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
     }
 
     return { valid: true, error: null };
-  }, [amount, balance]);
+  }, [amount, balance, hasInsufficientGas]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -380,8 +389,44 @@ export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
               </div>
             )}
 
+            {/* Operator Out of Gas Warning */}
+            {hasInsufficientGas && (
+              <div
+                style={{
+                  clipPath:
+                    "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                }}
+              >
+                <div style={{ backgroundColor: "#f44336", padding: "2px" }}>
+                  <div
+                    className="p-4"
+                    style={{
+                      backgroundColor: "#19191a",
+                      clipPath:
+                        "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                    }}
+                  >
+                    <div className="flex items-start gap-2">
+                      <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5" style={{ color: "#f44336" }} strokeWidth={3} />
+                      <div>
+                        <p className="text-sm font-black uppercase" style={{ color: "#f44336" }}>
+                          BRIDGE TEMPORARILY UNAVAILABLE
+                        </p>
+                        <p className="text-xs font-bold mt-1" style={{ color: "#dfd9d9" }}>
+                          The bridge operator has run out of gas. Please check back later or contact support.
+                        </p>
+                        <p className="text-xs font-mono font-bold mt-1" style={{ color: "#666" }}>
+                          Operator balance: {operatorBalanceEth.toFixed(6)} ETH
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Error Display */}
-            {error && (
+            {error && !hasInsufficientGas && (
               <div
                 style={{
                   clipPath:
@@ -463,6 +508,11 @@ export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
                     <span className="flex items-center justify-center gap-2">
                       <Loader2 className="h-5 w-5 animate-spin" strokeWidth={3} />
                       Initializing...
+                    </span>
+                  ) : hasInsufficientGas ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <AlertTriangle className="h-5 w-5" strokeWidth={3} />
+                      Operator Out of Gas
                     </span>
                   ) : isSending ? (
                     <span className="flex items-center justify-center gap-2">
