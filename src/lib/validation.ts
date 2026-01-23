@@ -210,12 +210,3 @@ export function isMegaETHCollection(collection: any): boolean {
   return isMegaETH || isBadBunnz;
 }
 
-/**
- * Task ID validation for bingo
- */
-export function validateTaskId(
-  taskId: string,
-  validTaskIds: string[]
-): boolean {
-  return typeof taskId === "string" && validTaskIds.includes(taskId);
-}

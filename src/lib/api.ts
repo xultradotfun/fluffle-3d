@@ -155,12 +155,6 @@ export const API_ENDPOINTS = {
     HAS_VOTED: "api/votes/hasVoted",
   },
 
-  // Bingo
-  BINGO: {
-    CONFIG: "api/bingo/config", // Backend route
-    PROGRESS: "api/bingo/progress", // Backend route with JWT
-  },
-
   // Mints (combined endpoint with caching)
   MINTS: "api/mints",
 

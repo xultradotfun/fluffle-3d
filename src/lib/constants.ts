@@ -56,10 +56,6 @@ export const RATE_LIMITS = {
     MAX_PER_USER: 15,
     WINDOW_MS: 5 * 60 * 1000, // 5 minutes
   },
-  BINGO: {
-    MAX_PER_USER: 100,
-    WINDOW_MS: 5 * 60 * 1000, // 5 minutes
-  },
   GENERAL: {
     MAX_PER_IP: 100,
     WINDOW_MS: 5 * 60 * 1000, // 5 minutes
@@ -85,8 +81,6 @@ export const JWT_CONFIG = {
 // Cache Configuration
 export const CACHE_TTL = {
   VOTES: 5 * 60, // 5 minutes
-  BINGO_CONFIG: 60 * 60, // 1 hour
-  BINGO_PROGRESS: 2 * 60, // 2 minutes
   USER_DATA: 10 * 60, // 10 minutes
 } as const;
 

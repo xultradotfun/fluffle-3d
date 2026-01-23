@@ -31,7 +31,6 @@ export const ERROR_CODES = {
   INVALID_USER_ID: "INVALID_USER_ID",
   INVALID_PROJECT_ID: "INVALID_PROJECT_ID",
   INVALID_VOTE_TYPE: "INVALID_VOTE_TYPE",
-  INVALID_TASK_ID: "INVALID_TASK_ID",
 
   // Rate limiting errors
   RATE_LIMIT_EXCEEDED: "RATE_LIMIT_EXCEEDED",
@@ -39,9 +38,7 @@ export const ERROR_CODES = {
 
   // Business logic errors
   ALREADY_VOTED: "ALREADY_VOTED",
-  TASK_ALREADY_COMPLETED: "TASK_ALREADY_COMPLETED",
   PROJECT_NOT_FOUND: "PROJECT_NOT_FOUND",
-  TASK_NOT_FOUND: "TASK_NOT_FOUND",
 
   // External API errors
   EXTERNAL_API_ERROR: "EXTERNAL_API_ERROR",
@@ -207,14 +204,6 @@ export const ErrorResponses = {
       409,
       "User has already voted on this project",
       ERROR_CODES.ALREADY_VOTED
-    ),
-
-  taskAlreadyCompleted: () =>
-    createErrorResponse(
-      "Task already completed",
-      409,
-      "This bingo task has already been completed",
-      ERROR_CODES.TASK_ALREADY_COMPLETED
     ),
 
   // Server errors (500)

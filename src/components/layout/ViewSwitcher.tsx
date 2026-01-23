@@ -8,7 +8,6 @@ import {
   ChevronDown,
   Image,
   X,
-  Grid,
   Calculator,
   Wallet,
   DollarSign,
@@ -16,9 +15,9 @@ import {
 } from "lucide-react";
 
 interface ViewSwitcherProps {
-  activeView: "pfp" | "ecosystem" | "builder" | "bingo" | "math" | "allocation" | "usdm" | "bridge";
+  activeView: "pfp" | "ecosystem" | "builder" | "math" | "allocation" | "usdm" | "bridge";
   onViewChange?: (
-    view: "pfp" | "ecosystem" | "builder" | "bingo" | "math" | "allocation" | "usdm" | "bridge"
+    view: "pfp" | "ecosystem" | "builder" | "math" | "allocation" | "usdm" | "bridge"
   ) => void;
 }
 
@@ -26,7 +25,6 @@ const VIEW_ROUTES = {
   pfp: "/pfp",
   ecosystem: "/",
   builder: "/builder",
-  bingo: "/bingo",
   math: "/math",
   allocation: "/allocation",
   usdm: "/usdm",
@@ -47,7 +45,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
   const router = useRouter();
 
   const handleViewChange = useCallback(
-    (view: "pfp" | "ecosystem" | "builder" | "bingo" | "math" | "allocation" | "usdm" | "bridge") => {
+    (view: "pfp" | "ecosystem" | "builder" | "math" | "allocation" | "usdm" | "bridge") => {
       if (onViewChange) {
         onViewChange(view);
       } else {
@@ -204,14 +202,14 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
                     className={`flex items-center gap-2 px-4 py-2 border-3 font-bold uppercase text-xs ${
-                      ["pfp", "builder", "bingo"].includes(activeView)
+                      ["pfp", "builder"].includes(activeView)
                         ? "bg-pink border-foreground"
                         : "bg-transparent border-background hover:bg-muted"
                     }`}
                     style={{
                       clipPath:
                         "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                      color: ["pfp", "builder", "bingo"].includes(activeView)
+                      color: ["pfp", "builder"].includes(activeView)
                         ? colors.foreground
                         : colors.background,
                     }}
@@ -395,25 +393,6 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                       <div className="w-2 h-2 bg-foreground" />
                     )}
                   </button>
-                  <button
-                    onClick={() => handleViewChange("bingo")}
-                    className={`flex items-center w-full gap-2 px-4 py-3 border-3 font-bold uppercase text-xs ${
-                      activeView === "bingo"
-                        ? "bg-pink border-foreground"
-                        : "bg-transparent border-background hover:bg-muted"
-                    }`}
-                    style={{
-                      clipPath:
-                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                      color: activeView === "bingo" ? colors.foreground : colors.background,
-                    }}
-                  >
-                    <Grid className="w-4 h-4" strokeWidth={3} />
-                    <span className="flex-1 text-left">BINGO</span>
-                    {activeView === "bingo" && (
-                      <div className="w-2 h-2 bg-foreground" />
-                    )}
-                  </button>
                 </div>
               </div>
             </div>
@@ -476,7 +455,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
           <button
             onClick={() => setIsMobileMenuOpen(true)}
             className={`flex flex-col items-center gap-1 p-2 ${
-              ["pfp", "builder", "bingo"].includes(activeView)
+              ["pfp", "builder"].includes(activeView)
                 ? "opacity-100"
                 : "opacity-60"
             }`}
@@ -651,26 +630,6 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                 <Image className="w-5 h-5" strokeWidth={3} />
                 <span className="flex-1 text-left">PFP GENERATOR</span>
                 {activeView === "pfp" && (
-                  <div className="w-2 h-2 bg-foreground" />
-                )}
-              </button>
-              <button
-                onClick={() => {
-                  handleViewChange("bingo");
-                  setIsMobileMenuOpen(false);
-                }}
-                className={`flex items-center w-full gap-3 px-4 py-4 border-3 border-foreground font-bold uppercase text-sm ${
-                  activeView === "bingo"
-                    ? "bg-pink"
-                    : "bg-transparent hover:bg-muted"
-                }`}
-                style={{
-                  color: activeView === "bingo" ? colors.foreground : colors.background,
-                }}
-              >
-                <Grid className="w-5 h-5" strokeWidth={3} />
-                <span className="flex-1 text-left">BINGO</span>
-                {activeView === "bingo" && (
                   <div className="w-2 h-2 bg-foreground" />
                 )}
               </button>

@@ -186,13 +186,13 @@ export function BridgeForm({ health, onBridgeSuccess }: BridgeFormProps) {
         {/* Bridge Route */}
         <div style={{ clipPath: getClipPath(12) }}>
           <div style={{ backgroundColor: colors.white, padding: "16px" }}>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3 flex-1 justify-center">
-                <Image src="/tokens/arbitrum.svg" alt="Arbitrum" width={32} height={32} />
-                <span className="font-black text-lg uppercase" style={{ color: colors.foreground }}>Arbitrum</span>
-                <ArrowRight className="w-5 h-5 mx-2" style={{ color: colors.pink }} strokeWidth={3} />
-                <Image src="/tokens/mega.png" alt="MegaETH" width={32} height={32} className="rounded-full" />
-                <span className="font-black text-lg uppercase" style={{ color: colors.foreground }}>MegaETH</span>
+            <div className="flex flex-col sm:flex-row items-center gap-3 sm:justify-between">
+              <div className="flex items-center gap-2 sm:gap-3 justify-center">
+                <Image src="/tokens/arbitrum.svg" alt="Arbitrum" width={28} height={28} className="sm:w-8 sm:h-8" />
+                <span className="font-black text-sm sm:text-lg uppercase" style={{ color: colors.foreground }}>Arbitrum</span>
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" style={{ color: colors.pink }} strokeWidth={3} />
+                <Image src="/tokens/mega.png" alt="MegaETH" width={28} height={28} className="rounded-full sm:w-8 sm:h-8" />
+                <span className="font-black text-sm sm:text-lg uppercase" style={{ color: colors.foreground }}>MegaETH</span>
               </div>
 
               {queueInfo && (
