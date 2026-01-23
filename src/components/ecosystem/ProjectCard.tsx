@@ -10,6 +10,8 @@ import { ProjectVoting } from "./ProjectVoting";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import type { Project } from "@/types/ecosystem";
 import { getProjectImage } from "@/utils/projectUtils";
+import { getClipPath } from "@/components/ui/BorderedBox";
+import { colors } from "@/lib/colors";
 
 interface ProjectCardProps {
   project: Project;
@@ -51,108 +53,93 @@ function ProjectCardComponent({
 
   const handleVote = useCallback(
     async (vote: "up" | "down") => {
-    if (!user) {
-      login();
-      return;
-    }
+      if (!user) {
+        login();
+        return;
+      }
 
-    if (!user.canVote) {
-      toast.error("You need the MiniETH role to vote");
-      return;
-    }
+      if (!user.canVote) {
+        toast.error("You need the MiniETH role to vote");
+        return;
+      }
 
-    if (cooldown) {
-      toast.error("Please wait a moment before voting again");
-      return;
-    }
+      if (cooldown) {
+        toast.error("Please wait a moment before voting again");
+        return;
+      }
 
-    if (isLoadingVotes) {
-      toast.error("Please wait while votes are being loaded");
-      return;
-    }
+      if (isLoadingVotes) {
+        toast.error("Please wait while votes are being loaded");
+        return;
+      }
 
-    try {
-      setIsVoting(true);
-      setCooldown(true);
+      try {
+        setIsVoting(true);
+        setCooldown(true);
 
-      setTimeout(() => {
-        setCooldown(false);
-      }, 1000);
+        setTimeout(() => {
+          setCooldown(false);
+        }, 1000);
 
-      const data = await apiClient.post(API_ENDPOINTS.VOTES.SUBMIT, {
-        twitter: project.twitter,
-        vote,
-        userId: user.id,
-      });
+        const data = await apiClient.post(API_ENDPOINTS.VOTES.SUBMIT, {
+          twitter: project.twitter,
+          vote,
+          userId: user.id,
+        });
 
-      setVotes({
-        upvotes: data.upvotes,
-        downvotes: data.downvotes,
-        breakdown: data.breakdown,
-      });
-      setUserVote(data.userVote);
+        setVotes({
+          upvotes: data.upvotes,
+          downvotes: data.downvotes,
+          breakdown: data.breakdown,
+        });
+        setUserVote(data.userVote);
 
         if (onVoteUpdate) {
           onVoteUpdate(project.twitter, data);
-      }
-    } catch (error) {
-      console.error("Failed to vote:", error);
-      if (error instanceof Error) {
-        if (error.message.includes("Rate limit")) {
-          toast.error(error.message, {
-            duration: 5000,
-          });
-        } else {
-          toast.error(error.message);
         }
-      } else {
-        toast.error("Failed to vote");
+      } catch (error) {
+        console.error("Failed to vote:", error);
+        if (error instanceof Error) {
+          if (error.message.includes("Rate limit")) {
+            toast.error(error.message, { duration: 5000 });
+          } else {
+            toast.error(error.message);
+          }
+        } else {
+          toast.error("Failed to vote");
+        }
+      } finally {
+        setIsVoting(false);
       }
-    } finally {
-      setIsVoting(false);
-    }
     },
     [user, login, cooldown, isLoadingVotes, project.twitter, onVoteUpdate]
   );
+
+  const clipPath = getClipPath(20);
 
   return (
     <Tooltip.Provider delayDuration={0} skipDelayDuration={0}>
       <div
         className={`group h-full ${isLoadingVotes ? "opacity-50" : ""}`}
-        style={{
-          clipPath:
-            "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
-        }}
+        style={{ clipPath }}
       >
         {project.featured && (
           <style>
             {`
               @keyframes spin-border {
-                0% {
-                  transform: translate(-50%, -50%) rotate(0deg);
-                }
-                100% {
-                  transform: translate(-50%, -50%) rotate(360deg);
-                }
+                0% { transform: translate(-50%, -50%) rotate(0deg); }
+                100% { transform: translate(-50%, -50%) rotate(360deg); }
               }
             `}
           </style>
         )}
         <div
           className="h-full relative"
-          style={{
-            padding: "2px",
-            backgroundColor: "#19191a",
-          }}
+          style={{ padding: "2px", backgroundColor: colors.foreground }}
         >
           {/* Spinning pink wave background for featured cards */}
           {project.featured && (
-            <div
-              className="absolute inset-0 overflow-hidden"
-              style={{
-                zIndex: 0,
-              }}
-            >
+            <div className="absolute inset-0 overflow-hidden" style={{ zIndex: 0 }}>
               <div
                 className="absolute"
                 style={{
@@ -160,8 +147,7 @@ function ProjectCardComponent({
                   left: "50%",
                   width: "200%",
                   height: "200%",
-                  background:
-                    "conic-gradient(from 0deg, #f380cd 0%, #f380cd 50%, transparent 50%, transparent 100%)",
+                  background: `conic-gradient(from 0deg, ${colors.pink} 0%, ${colors.pink} 50%, transparent 50%, transparent 100%)`,
                   animation: "spin-border 3s linear infinite",
                   transform: "translate(-50%, -50%)",
                 }}
@@ -170,23 +156,17 @@ function ProjectCardComponent({
           )}
           <div
             className="h-full relative overflow-hidden"
-            style={{
-              clipPath:
-                "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
-              zIndex: 1,
-              backgroundColor: "#19191a",
-            }}
+            style={{ clipPath, zIndex: 1, backgroundColor: colors.foreground }}
           >
             {/* Semi-transparent gradient overlay */}
             <div
               className="absolute inset-0"
               style={{
-                background:
-                  "linear-gradient(135deg, rgba(224, 224, 224, 0.5) 0%, rgba(224, 224, 224, 0.45) 100%)",
+                background: "linear-gradient(135deg, rgba(224, 224, 224, 0.5) 0%, rgba(224, 224, 224, 0.45) 100%)",
                 zIndex: 0,
               }}
             />
-            {/* Background icon layer - behind content */}
+            {/* Background icon layer */}
             <div
               className="absolute inset-0 pointer-events-none"
               style={{
@@ -213,25 +193,16 @@ function ProjectCardComponent({
                 <div
                   className="absolute top-6 right-[-35px] w-40 text-center py-1.5 rotate-45 shadow-lg"
                   style={{
-                    backgroundColor: "#f380cd",
-                    borderTop: "2px solid #19191a",
-                    borderBottom: "2px solid #19191a",
+                    backgroundColor: colors.pink,
+                    borderTop: `2px solid ${colors.foreground}`,
+                    borderBottom: `2px solid ${colors.foreground}`,
                   }}
                 >
                   <div className="flex items-center justify-center gap-1">
-                    <svg
-                      className="w-3 h-3"
-                      viewBox="0 0 24 24"
-                      fill="#19191a"
-                      stroke="#19191a"
-                      strokeWidth="0.5"
-                    >
+                    <svg className="w-3 h-3" viewBox="0 0 24 24" fill={colors.foreground} stroke={colors.foreground} strokeWidth="0.5">
                       <path d="M16 9V4h1c.55 0 1-.45 1-1s-.45-1-1-1H7c-.55 0-1 .45-1 1s.45 1 1 1h1v5c0 1.66-1.34 3-3 3v2h5.97v7l1 1 1-1v-7H19v-2c-1.66 0-3-1.34-3-3z" />
                     </svg>
-                    <span
-                      className="text-[10px] font-black uppercase"
-                      style={{ color: "#19191a" }}
-                    >
+                    <span className="text-[10px] font-black uppercase" style={{ color: colors.foreground }}>
                       FEATURED
                     </span>
                   </div>
@@ -239,7 +210,7 @@ function ProjectCardComponent({
               </div>
             )}
 
-            {/* Live Indicator - Simple Pulsing Dot */}
+            {/* Live Indicator */}
             {project.live && (
               <div className="absolute top-4 right-4 z-20">
                 <div className="relative flex items-center justify-center w-4 h-4">
@@ -251,41 +222,40 @@ function ProjectCardComponent({
 
             {/* Content wrapper */}
             <div className="p-6 flex flex-col h-full relative z-10 text-white">
-          <ProjectHeader
-            name={project.name}
-            twitter={project.twitter}
-            category={project.category}
-            megaMafia={project.megaMafia}
+              <ProjectHeader
+                name={project.name}
+                twitter={project.twitter}
+                category={project.category}
+                megaMafia={project.megaMafia}
                 live={project.live}
                 featured={project.featured}
                 img={project.img}
-          />
+              />
 
               <p className="text-sm font-bold uppercase mb-6 flex-grow leading-snug text-white">
-            {project.description}
-          </p>
+                {project.description}
+              </p>
 
               <div className="flex flex-row items-center justify-between gap-3 pt-4 border-t-3 border-white">
                 <div className="flex items-center gap-3 flex-shrink-0">
-              <ProjectLinks
-                website={project.website}
-                discord={project.discord}
-                telegram={project.telegram}
-              />
-            </div>
+                  <ProjectLinks
+                    website={project.website}
+                    discord={project.discord}
+                    telegram={project.telegram}
+                  />
+                </div>
                 <div className="flex-shrink-0">
-              <ProjectVoting
-                votes={votes}
-                userVote={userVote}
-                isVoting={isVoting || isLoadingVotes}
-                canVote={!!user?.canVote}
-                cooldown={cooldown}
-                onVote={handleVote}
-              />
-            </div>
+                  <ProjectVoting
+                    votes={votes}
+                    userVote={userVote}
+                    isVoting={isVoting || isLoadingVotes}
+                    canVote={!!user?.canVote}
+                    cooldown={cooldown}
+                    onVote={handleVote}
+                  />
+                </div>
               </div>
             </div>
-            {/* End content wrapper */}
           </div>
         </div>
       </div>

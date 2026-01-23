@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { apiClient, API_ENDPOINTS } from "@/lib/api";
 import CountUp from "@/components/ui/CountUp";
+import { colors } from "@/lib/colors";
 
 interface EcosystemHeaderProps {
   projectCount: number;
@@ -69,7 +70,7 @@ export function EcosystemHeader({
         />
 
         {/* Content */}
-        <div className="relative p-8" style={{ color: "#fff" }}>
+        <div className="relative p-8" style={{ color: colors.white }}>
           <div className="flex items-center gap-3 mb-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -99,8 +100,8 @@ export function EcosystemHeader({
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {/* Stat 1 */}
         <div style={{ clipPath: clipStat }}>
-          <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
-            <div className="bg-[#e0e0e0] p-4" style={{ clipPath: clipStat }}>
+          <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
+            <div className="p-4" style={{ clipPath: clipStat, backgroundColor: colors.light }}>
               <div className="text-3xl sm:text-4xl font-black font-data mb-1">
                 {isLoaded ? (
                   <CountUp
@@ -123,8 +124,8 @@ export function EcosystemHeader({
 
         {/* Stat 2 */}
         <div style={{ clipPath: clipStat }}>
-          <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
-            <div className="bg-[#e0e0e0] p-4" style={{ clipPath: clipStat }}>
+          <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
+            <div className="p-4" style={{ clipPath: clipStat, backgroundColor: colors.light }}>
               <div className="text-3xl sm:text-4xl font-black font-data mb-1">
                 {isLoaded ? (
                   <CountUp
@@ -147,8 +148,8 @@ export function EcosystemHeader({
 
         {/* Stat 3 */}
         <div style={{ clipPath: clipStat }}>
-          <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
-            <div className="bg-[#e0e0e0] p-4" style={{ clipPath: clipStat }}>
+          <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
+            <div className="p-4" style={{ clipPath: clipStat, backgroundColor: colors.light }}>
               <div className="text-3xl sm:text-4xl font-black font-data mb-1">
                 {projectCount > 0 ? (
                   <CountUp
@@ -171,8 +172,8 @@ export function EcosystemHeader({
 
         {/* Stat 4 */}
         <div style={{ clipPath: clipStat }}>
-          <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
-            <div className="bg-[#e0e0e0] p-4" style={{ clipPath: clipStat }}>
+          <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
+            <div className="p-4" style={{ clipPath: clipStat, backgroundColor: colors.light }}>
               <div className="text-3xl sm:text-4xl font-black font-data mb-1">
                 {categoryCount > 0 ? (
                   <CountUp

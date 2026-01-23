@@ -5,7 +5,7 @@ import { useBingoConfig } from "@/hooks/useBingoConfig";
 import { BingoCard } from "./BingoCard";
 import { Trophy, Smartphone, LogOut } from "lucide-react";
 import Image from "next/image";
-import PageHeader from "@/components/PageHeader";
+import PageHeader from "@/components/layout/PageHeader";
 import type { BingoTask, Project } from "@/types/bingo";
 
 export function BingoView() {
@@ -223,14 +223,14 @@ export function BingoView() {
       <div className="min-h-[50vh] flex items-center justify-center px-6">
         <div className="max-w-md text-center space-y-4">
           <div className="flex justify-center">
-            <div className="p-4 rounded-full bg-yellow-50 dark:bg-yellow-500/10">
-              <Smartphone className="w-8 h-8 text-yellow-500 dark:text-yellow-400" />
+            <div className="p-4 rounded-full bg-yellow-50">
+              <Smartphone className="w-8 h-8 text-yellow-500" />
             </div>
           </div>
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+          <h2 className="text-xl font-semibold text-gray-900">
             Desktop View Required
           </h2>
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-gray-600">
             The MegaETH Testnet Bingo is optimized for desktop viewing. Please
             visit this page on a desktop device for the best experience.
           </p>
@@ -244,7 +244,7 @@ export function BingoView() {
       <div className="min-h-[50vh] flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-teal-500 mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-300">
+          <p className="text-gray-600">
             Loading bingo configuration...
           </p>
         </div>
@@ -263,7 +263,7 @@ export function BingoView() {
   if (error) {
     return (
       <div className="min-h-[50vh] flex items-center justify-center">
-        <div className="text-red-500 dark:text-red-400">
+        <div className="text-red-500">
           {error}. Please try again later.
         </div>
       </div>
@@ -284,9 +284,9 @@ export function BingoView() {
         <div className="mb-8">
           {user ? (
             <div className="flex items-center justify-center gap-3">
-              <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/[0.08] backdrop-blur-sm">
+              <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-white/50 border border-gray-200/50 backdrop-blur-sm">
                 {user.avatar && (
-                  <div className="relative w-8 h-8 rounded-full overflow-hidden ring-2 ring-gray-200 dark:ring-gray-700">
+                  <div className="relative w-8 h-8 rounded-full overflow-hidden ring-2 ring-gray-200">
                     <Image
                       src={`https://cdn.discordapp.com/avatars/${user.id}/${
                         user.avatar
@@ -300,13 +300,13 @@ export function BingoView() {
                     />
                   </div>
                 )}
-                <span className="text-sm font-medium text-gray-900 dark:text-white">
+                <span className="text-sm font-medium text-gray-900">
                   {user.username}
                 </span>
               </div>
               <button
                 onClick={logout}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-50 hover:bg-red-100 dark:bg-red-500/[0.08] dark:hover:bg-red-500/[0.16] border border-red-200/50 dark:border-red-500/20 text-red-600 dark:text-red-400 transition-all"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-50 hover:bg-red-100 border border-red-200/50 text-red-600 transition-all"
               >
                 <LogOut className="w-4 h-4" />
                 <span className="font-medium">Logout</span>
@@ -314,17 +314,17 @@ export function BingoView() {
             </div>
           ) : guestName ? (
             <div className="flex items-center justify-center gap-3">
-              <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-white/50 dark:bg-white/[0.02] border border-gray-200/50 dark:border-white/[0.08] backdrop-blur-sm">
-                <div className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-                  <Smartphone className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+              <div className="flex items-center gap-3 px-4 py-2 rounded-xl bg-white/50 border border-gray-200/50 backdrop-blur-sm">
+                <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+                  <Smartphone className="w-4 h-4 text-gray-500" />
                 </div>
-                <span className="text-sm font-medium text-gray-900 dark:text-white">
+                <span className="text-sm font-medium text-gray-900">
                   {guestName}
                 </span>
               </div>
               <button
                 onClick={handleGuestLogout}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-50 hover:bg-red-100 dark:bg-red-500/[0.08] dark:hover:bg-red-500/[0.16] border border-red-200/50 dark:border-red-500/20 text-red-600 dark:text-red-400 transition-all"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-red-50 hover:bg-red-100 border border-red-200/50 text-red-600 transition-all"
               >
                 <LogOut className="w-4 h-4" />
                 <span className="font-medium">Exit Guest Mode</span>
@@ -346,16 +346,16 @@ export function BingoView() {
           ) : (
             <div className="relative">
               {/* Preview overlay */}
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/80 to-white dark:via-gray-900/80 dark:to-gray-900 z-[5]" />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/80 to-white z-[5]" />
               <div className="absolute inset-0 flex items-center justify-center z-[5]">
                 <div className="text-center space-y-4">
-                  <div className="p-4 rounded-full bg-teal-50 dark:bg-teal-500/10 inline-block">
-                    <Trophy className="w-8 h-8 text-teal-500 dark:text-teal-400" />
+                  <div className="p-4 rounded-full bg-teal-50 inline-block">
+                    <Trophy className="w-8 h-8 text-teal-500" />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                  <h3 className="text-xl font-semibold text-gray-900">
                     Connect to Start Playing
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-300 max-w-sm">
+                  <p className="text-gray-600 max-w-sm">
                     Sign in with Discord to get your personal bingo card and
                     start tracking your progress!
                   </p>
@@ -363,7 +363,7 @@ export function BingoView() {
                     <div className="flex flex-col items-center">
                       <button
                         onClick={handleLogin}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-teal-50 hover:bg-teal-100 dark:bg-teal-500/[0.08] dark:hover:bg-teal-500/[0.16] border border-teal-200/50 dark:border-teal-500/20 text-teal-600 dark:text-teal-400 transition-all"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-teal-50 hover:bg-teal-100 border border-teal-200/50 text-teal-600 transition-all"
                       >
                         <Trophy className="w-5 h-5" />
                         <span className="font-medium">
@@ -372,7 +372,7 @@ export function BingoView() {
                       </button>
                       <button
                         onClick={handleGuestStart}
-                        className="mt-2 inline-flex items-center gap-2 px-2 py-1 rounded bg-transparent text-gray-500 hover:text-teal-600 dark:text-gray-400 dark:hover:text-teal-400 text-sm font-normal underline-offset-2 hover:underline focus:underline border-none shadow-none transition-all"
+                        className="mt-2 inline-flex items-center gap-2 px-2 py-1 rounded bg-transparent text-gray-500 hover:text-teal-600 text-sm font-normal underline-offset-2 hover:underline focus:underline border-none shadow-none transition-all"
                       >
                         <Smartphone className="w-4 h-4" />
                         <span className="font-normal">Play without login</span>
@@ -383,7 +383,7 @@ export function BingoView() {
                     <div className="mt-4 flex flex-col items-center gap-2">
                       <input
                         type="text"
-                        className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+                        className="px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-500"
                         placeholder="Enter your name"
                         value={tempGuestName}
                         onChange={(e) => setTempGuestName(e.target.value)}
@@ -399,7 +399,7 @@ export function BingoView() {
                         </button>
                         <button
                           onClick={() => setShowGuestInput(false)}
-                          className="px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+                          className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition"
                         >
                           Cancel
                         </button>

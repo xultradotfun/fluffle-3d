@@ -1,8 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import { Footer } from "@/components/Footer";
+import { Footer } from "@/components/layout/Footer";
 import { DiscordAuthProvider } from "@/contexts/DiscordAuthContext";
 import { Web3Providers } from "./providers";
 import { Toaster } from "sonner";
@@ -64,14 +63,12 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <Web3Providers>
-          <ThemeProvider>
-            <DiscordAuthProvider>
-              <div className="relative min-h-screen antialiased bg-background text-foreground">
-                {children}
-                <Footer />
-              </div>
-            </DiscordAuthProvider>
-          </ThemeProvider>
+          <DiscordAuthProvider>
+            <div className="relative min-h-screen antialiased bg-background text-foreground">
+              {children}
+              <Footer />
+            </div>
+          </DiscordAuthProvider>
           <Toaster
             richColors
             position="top-center"

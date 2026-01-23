@@ -1,6 +1,7 @@
 "use client";
 
 import { Check, Loader2, Zap } from "lucide-react";
+import { colors } from "@/lib/colors";
 
 interface Step {
   id: number;
@@ -60,14 +61,14 @@ export function StatusStepper({ currentStep, status, queuePosition }: StatusStep
                 <div
                   style={{
                     backgroundColor: isError
-                      ? "#f44336"
+                      ? "colors.error"
                       : isCompleted
-                      ? "#f380cd"
+                      ? "colors.pink"
                       : isCurrent
-                      ? "#f380cd"
-                      : "#19191a",
-                    color: isCompleted || isCurrent || isError ? "#19191a" : "#dfd9d9",
-                    border: "3px solid #19191a",
+                      ? "colors.pink"
+                      : "colors.foreground",
+                    color: isCompleted || isCurrent || isError ? "colors.foreground" : "colors.background",
+                    border: "3px solid colors.foreground",
                     width: "48px",
                     height: "48px",
                     clipPath:
@@ -89,21 +90,21 @@ export function StatusStepper({ currentStep, status, queuePosition }: StatusStep
                   <p
                     className="text-sm font-black uppercase tracking-wider"
                     style={{
-                      color: isCompleted || isCurrent ? "#f380cd" : "#dfd9d9",
+                      color: isCompleted || isCurrent ? "colors.pink" : "colors.background",
                     }}
                   >
                     {step.title}
                   </p>
                   <p
                     className="text-xs font-bold uppercase mt-1 max-w-[80px]"
-                    style={{ color: "#dfd9d9" }}
+                    style={{ color: "colors.background" }}
                   >
                     {step.description}
                   </p>
                   {step.id === 2 && isCurrent && queuePosition !== undefined && (
                     <p
                       className="text-[10px] font-black uppercase mt-1"
-                      style={{ color: "#f380cd" }}
+                      style={{ color: "colors.pink" }}
                     >
                       #{queuePosition} in queue
                     </p>
@@ -117,7 +118,7 @@ export function StatusStepper({ currentStep, status, queuePosition }: StatusStep
                   <div
                     className="absolute inset-0"
                     style={{
-                      backgroundColor: "#19191a",
+                      backgroundColor: "colors.foreground",
                       height: "4px",
                     }}
                   />
@@ -126,7 +127,7 @@ export function StatusStepper({ currentStep, status, queuePosition }: StatusStep
                     <div
                       className="absolute inset-y-0 left-0 right-0"
                       style={{
-                        backgroundColor: "#f380cd",
+                        backgroundColor: "colors.pink",
                         height: "4px",
                       }}
                     />

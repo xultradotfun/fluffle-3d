@@ -1,4 +1,5 @@
 import { memo } from "react";
+import { colors } from "@/lib/colors";
 
 interface ProjectLinksProps {
   website?: string;
@@ -23,12 +24,12 @@ function ProjectLinksComponent({
         }}
       >
         {/* Middle border layer - light with padding */}
-        <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+        <div style={{ backgroundColor: colors.background, padding: "2px" }}>
           {/* Inner content layer - dark with same clip-path */}
           <div
             className="p-1.5"
             style={{
-              backgroundColor: "#19191a",
+              backgroundColor: colors.foreground,
               clipPath:
                 "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
             }}
@@ -41,7 +42,7 @@ function ProjectLinksComponent({
           rel="noopener noreferrer"
                   className="flex items-center justify-center w-8 h-8 border-2 border-background bg-transparent hover:bg-green transition-colors"
                   style={{
-                    color: "#dfd9d9",
+                    color: colors.background,
                     clipPath:
                       "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                   }}
@@ -69,7 +70,7 @@ function ProjectLinksComponent({
           rel="noopener noreferrer"
                   className="flex items-center justify-center w-8 h-8 border-2 border-background bg-transparent hover:bg-[#5865F2] transition-colors"
                   style={{
-                    color: "#dfd9d9",
+                    color: colors.background,
                     clipPath:
                       "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                   }}
@@ -87,7 +88,7 @@ function ProjectLinksComponent({
           rel="noopener noreferrer"
                   className="flex items-center justify-center w-8 h-8 border-2 border-background bg-transparent hover:bg-[#229ED9] transition-colors"
                   style={{
-                    color: "#dfd9d9",
+                    color: colors.background,
                     clipPath:
                       "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                   }}
@@ -105,7 +106,7 @@ function ProjectLinksComponent({
                   rel="noopener noreferrer"
                   className="flex items-center justify-center w-8 h-8 border-2 border-background bg-transparent hover:bg-pink transition-colors"
                   style={{
-                    color: "#dfd9d9",
+                    color: colors.background,
                     clipPath:
                       "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                   }}

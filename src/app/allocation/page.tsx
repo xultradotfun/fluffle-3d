@@ -1,8 +1,8 @@
 "use client";
 
-import { ViewSwitcher } from "@/components/ViewSwitcher";
-import Hero from "@/components/Hero";
-import PageHeader from "@/components/PageHeader";
+import { ViewSwitcher } from "@/components/layout/ViewSwitcher";
+import Hero from "@/components/layout/Hero";
+import PageHeader from "@/components/layout/PageHeader";
 import { AllocationChecker } from "@/components/allocation/AllocationChecker";
 
 export default function AllocationPage() {

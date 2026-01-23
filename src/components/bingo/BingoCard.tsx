@@ -176,14 +176,14 @@ export function BingoCard({
     <>
       <div className="w-full max-w-7xl mx-auto space-y-6">
         {/* Header */}
-        <div className="relative px-6 py-4 bg-white/50 dark:bg-white/[0.03] rounded-2xl border border-gray-200/50 dark:border-white/[0.05] backdrop-blur-sm">
+        <div className="relative px-6 py-4 bg-white/50 rounded-2xl border border-gray-200/50 backdrop-blur-sm">
           <div className="absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-teal-500/20 to-transparent" />
           <div className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent" />
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               {guestName ? (
-                <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-white/20 dark:ring-white/10 bg-gray-200 dark:bg-gray-700">
+                <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-white/20 bg-gray-200">
                   <Image
                     src="/avatars/megaeth.jpg"
                     alt="MegaETH Guest Avatar"
@@ -195,8 +195,8 @@ export function BingoCard({
               ) : (
                 avatarUrl && (
                   <div className="relative">
-                    <div className="absolute -inset-0.5 bg-gradient-to-br from-teal-500/30 to-emerald-500/30 dark:from-teal-500/20 dark:to-emerald-500/20 rounded-full blur" />
-                    <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-white/20 dark:ring-white/10">
+                    <div className="absolute -inset-0.5 bg-gradient-to-br from-teal-500/30 to-emerald-500/30 rounded-full blur" />
+                    <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-white/20">
                       <Image
                         src={avatarUrl}
                         alt={user?.username || "User avatar"}
@@ -210,13 +210,13 @@ export function BingoCard({
               )}
               <div>
                 <div className="flex items-center gap-3 mb-0.5">
-                  <h2 className="text-xl font-bold bg-gradient-to-br from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
+                  <h2 className="text-xl font-bold bg-gradient-to-br from-gray-900 to-gray-600 bg-clip-text text-transparent">
                     MegaETH Testnet Bingo
                   </h2>
-                  <div className="h-4 w-px bg-gradient-to-b from-gray-200 to-transparent dark:from-white/10" />
-                  <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-teal-50/50 dark:bg-teal-500/[0.05] ring-1 ring-teal-500/10">
+                  <div className="h-4 w-px bg-gradient-to-b from-gray-200 to-transparent" />
+                  <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-teal-50/50 ring-1 ring-teal-500/10">
                     <div className="w-1.5 h-1.5 rounded-full bg-teal-500/50" />
-                    <span className="text-xs font-medium text-teal-700 dark:text-teal-300">
+                    <span className="text-xs font-medium text-teal-700">
                       {Math.round(
                         (completedTaskIds.length / tasks.length) * 100
                       )}
@@ -224,11 +224,11 @@ export function BingoCard({
                     </span>
                   </div>
                 </div>
-                <p className="text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-sm text-gray-500">
                   {completedTaskIds.length} of {tasks.length} tiles completed
                 </p>
                 {guestName && (
-                  <p className="text-xs text-gray-400 dark:text-gray-500 font-medium mt-1">
+                  <p className="text-xs text-gray-400 font-medium mt-1">
                     {guestName}
                   </p>
                 )}
@@ -237,7 +237,7 @@ export function BingoCard({
             {!isPreview && (
               <button
                 onClick={handleShareButtonClick}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-50 hover:bg-gray-100 dark:bg-white/[0.05] dark:hover:bg-white/[0.1] border border-gray-200/50 dark:border-white/[0.05] text-sm font-medium text-gray-700 dark:text-gray-200 transition-all hover:scale-105"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-50 hover:bg-gray-100 border border-gray-200/50 text-sm font-medium text-gray-700 transition-all hover:scale-105"
               >
                 <Share2 className="w-4 h-4" />
                 Share Progress
@@ -249,7 +249,7 @@ export function BingoCard({
         {/* Bingo Grid */}
         <div
           id="bingo-card"
-          className="bg-gray-100 dark:bg-gray-800/50 p-4 rounded-xl"
+          className="bg-gray-100 p-4 rounded-xl"
         >
           <div className="grid grid-cols-6 gap-3">
             {tasks.map((task, index) => {
@@ -259,11 +259,11 @@ export function BingoCard({
                   key={task.id}
                   className={`group relative w-full aspect-square rounded-xl overflow-hidden transition-all duration-150 ${
                     isCompleted
-                      ? "ring-2 ring-teal-500/50 dark:ring-teal-400/50"
-                      : "ring-1 ring-gray-200 dark:ring-gray-700"
+                      ? "ring-2 ring-teal-500/50"
+                      : "ring-1 ring-gray-200"
                   } ${
                     !isPreview
-                      ? "cursor-pointer hover:shadow-xl hover:shadow-teal-500/10 dark:hover:shadow-teal-500/20 hover:-translate-y-1"
+                      ? "cursor-pointer hover:shadow-xl hover:shadow-teal-500/10 hover:-translate-y-1"
                       : "cursor-default"
                   }`}
                   onClick={() => !isPreview && onTaskToggle(task.id)}
@@ -288,8 +288,8 @@ export function BingoCard({
                     <div
                       className={`absolute inset-0 bg-gradient-to-b ${
                         isCompleted
-                          ? "from-teal-500/30 to-emerald-500/30 dark:from-teal-500/40 dark:to-emerald-500/40"
-                          : "from-gray-900/70 to-gray-900/50 dark:from-gray-900/80 dark:to-gray-900/60"
+                          ? "from-teal-500/30 to-emerald-500/30"
+                          : "from-gray-900/70 to-gray-900/50"
                       }`}
                     />
                   </div>
@@ -297,8 +297,8 @@ export function BingoCard({
                   {/* Completion Checkmark */}
                   {isCompleted && (
                     <div className="absolute top-3 right-3 flex items-center justify-center pointer-events-none">
-                      <div className="bg-teal-500/20 dark:bg-teal-400/20 p-1.5 rounded-full">
-                        <CheckCircle2 className="w-5 h-5 text-teal-500 dark:text-teal-400" />
+                      <div className="bg-teal-500/20 p-1.5 rounded-full">
+                        <CheckCircle2 className="w-5 h-5 text-teal-500" />
                       </div>
                     </div>
                   )}
@@ -311,7 +311,7 @@ export function BingoCard({
                         return (
                           <div
                             key={twitter}
-                            className="relative w-6 h-6 rounded-full overflow-hidden ring-1 ring-white/30 bg-white dark:bg-gray-800 shadow-sm"
+                            className="relative w-6 h-6 rounded-full overflow-hidden ring-1 ring-white/30 bg-white shadow-sm"
                             title={project?.name || twitter}
                           >
                             <Image
@@ -374,7 +374,7 @@ export function BingoCard({
             {/* Coming Soon Message */}
             {tasks.length % 6 !== 0 && (
               <div
-                className="group relative w-full rounded-xl overflow-hidden ring-1 ring-gray-200 dark:ring-gray-700 bg-gradient-to-br from-teal-50 via-emerald-50 to-teal-50 dark:from-teal-900/20 dark:via-emerald-900/20 dark:to-teal-900/20"
+                className="group relative w-full rounded-xl overflow-hidden ring-1 ring-gray-200 bg-gradient-to-br from-teal-50 via-emerald-50 to-teal-50"
                 style={{
                   gridColumn: `${(tasks.length % 6) + 1} / span ${
                     6 - (tasks.length % 6)
@@ -382,17 +382,17 @@ export function BingoCard({
                   aspectRatio: 6 - (tasks.length % 6) + 0.15,
                 }}
               >
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(20,184,166,0.1)_0%,transparent_70%)] dark:bg-[radial-gradient(circle_at_center,rgba(20,184,166,0.2)_0%,transparent_70%)]" />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(20,184,166,0.1)_0%,transparent_70%)](circle_at_center,rgba(20,184,166,0.2)_0%,transparent_70%)]" />
                 <div className="absolute inset-0 flex items-center justify-center p-4 text-center">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-teal-500/20 to-emerald-500/20 dark:from-teal-500/30 dark:to-emerald-500/30 flex items-center justify-center shadow-lg shadow-teal-500/10 dark:shadow-teal-500/5">
-                      <Sparkles className="w-6 h-6 text-teal-600 dark:text-teal-400" />
+                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-teal-500/20 to-emerald-500/20 flex items-center justify-center shadow-lg shadow-teal-500/10">
+                      <Sparkles className="w-6 h-6 text-teal-600" />
                     </div>
                     <div>
-                      <h3 className="text-sm font-semibold text-teal-700 dark:text-teal-300">
+                      <h3 className="text-sm font-semibold text-teal-700">
                         More Tasks Coming Soon
                       </h3>
-                      <p className="text-xs text-teal-600/80 dark:text-teal-400/80">
+                      <p className="text-xs text-teal-600/80">
                         New projects are launching on testnet every week!
                       </p>
                     </div>
@@ -407,7 +407,7 @@ export function BingoCard({
         {!isPreview && (
           <div
             id="bingo-card-share"
-            className="hidden bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-6 rounded-xl shadow-lg"
+            className="hidden bg-gradient-to-br from-gray-50 via-gray-100 to-gray-50 p-6 rounded-xl shadow-lg"
           >
             {/* Share Header */}
             <div className="flex items-center justify-between mb-6">
@@ -429,10 +429,10 @@ export function BingoCard({
                     priority
                   />
                 </div>
-                <div className="w-px h-8 bg-gray-200 dark:bg-gray-700" />
+                <div className="w-px h-8 bg-gray-200" />
                 <div className="flex items-center gap-3">
                   {guestName ? (
-                    <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-gray-200 dark:ring-gray-700 shadow-sm bg-gray-200 dark:bg-gray-700">
+                    <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-gray-200 shadow-sm bg-gray-200">
                       <Image
                         src="/avatars/megaeth.jpg"
                         alt="MegaETH Guest Avatar"
@@ -443,7 +443,7 @@ export function BingoCard({
                     </div>
                   ) : (
                     avatarUrl && (
-                      <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-gray-200 dark:ring-gray-700 shadow-sm">
+                      <div className="relative w-12 h-12 rounded-full overflow-hidden ring-2 ring-gray-200 shadow-sm">
                         <Image
                           src={avatarUrl}
                           alt={user?.username || "User avatar"}
@@ -456,12 +456,12 @@ export function BingoCard({
                     )
                   )}
                   <div>
-                    <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+                    <h2 className="text-lg font-bold text-gray-900">
                       {guestName
                         ? `${guestName}'s Bingo Progress`
                         : `${user?.username || "Anon"}'s Bingo Progress`}
                     </h2>
-                    <div className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                    <div className="text-sm font-medium text-gray-500">
                       {completedTaskIds.length} of {tasks.length} tasks
                       completed
                     </div>
@@ -480,8 +480,8 @@ export function BingoCard({
                     key={task.id}
                     className={`group relative w-full aspect-square rounded-xl overflow-hidden ${
                       isTaskCompleted
-                        ? "ring-2 ring-teal-500/50 dark:ring-teal-400/50"
-                        : "ring-1 ring-gray-200 dark:ring-gray-700"
+                        ? "ring-2 ring-teal-500/50"
+                        : "ring-1 ring-gray-200"
                     }`}
                   >
                     {/* Background Image Container */}
@@ -502,8 +502,8 @@ export function BingoCard({
                         <div
                           className={`absolute inset-0 bg-gradient-to-b ${
                             isTaskCompleted
-                              ? "from-teal-500/30 to-emerald-500/30 dark:from-teal-500/40 dark:to-emerald-500/40"
-                              : "from-gray-900/70 to-gray-900/50 dark:from-gray-900/80 dark:to-gray-900/60"
+                              ? "from-teal-500/30 to-emerald-500/30"
+                              : "from-gray-900/70 to-gray-900/50"
                           }`}
                         />
                       </div>
@@ -512,8 +512,8 @@ export function BingoCard({
                     {/* Completion Checkmark */}
                     {isTaskCompleted && (
                       <div className="absolute top-3 right-3 flex items-center justify-center pointer-events-none">
-                        <div className="bg-teal-500/20 dark:bg-teal-400/20 p-1.5 rounded-full">
-                          <CheckCircle2 className="w-5 h-5 text-teal-500 dark:text-teal-400" />
+                        <div className="bg-teal-500/20 p-1.5 rounded-full">
+                          <CheckCircle2 className="w-5 h-5 text-teal-500" />
                         </div>
                       </div>
                     )}
@@ -535,7 +535,7 @@ export function BingoCard({
                             return (
                               <div
                                 key={twitter}
-                                className="relative w-6 h-6 rounded-full overflow-hidden ring-1 ring-white/30 bg-white dark:bg-gray-800 shadow-sm"
+                                className="relative w-6 h-6 rounded-full overflow-hidden ring-1 ring-white/30 bg-white shadow-sm"
                                 title={project?.name || twitter}
                               >
                                 <Image
@@ -595,9 +595,9 @@ export function BingoCard({
 
             {/* Share Footer */}
             <div className="mt-6 flex items-center justify-center">
-              <div className="text-sm text-gray-500 dark:text-gray-400 font-medium">
+              <div className="text-sm text-gray-500 font-medium">
                 Get your unique bingo card and start exploring real-time apps at{" "}
-                <span className="text-teal-600 dark:text-teal-400">
+                <span className="text-teal-600">
                   bingo.fluffle.tools
                 </span>
               </div>

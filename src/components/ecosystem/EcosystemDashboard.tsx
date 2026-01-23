@@ -8,6 +8,7 @@ import { SortSelector } from "./SortSelector";
 import { useProjectVotes } from "@/hooks/useProjectVotes";
 import { useProjectFilters } from "@/hooks/useProjectFilters";
 import { useProjectSorting } from "@/hooks/useProjectSorting";
+import { colors } from "@/lib/colors";
 
 export function EcosystemDashboard() {
   const [highlightedProject, setHighlightedProject] = useState<string | null>(null);
@@ -101,7 +102,7 @@ export function EcosystemDashboard() {
                 <div
                   className="h-full"
                   style={{
-                    backgroundColor: "#19191a",
+                    backgroundColor: colors.foreground,
                     padding: "2px",
                   }}
                 >

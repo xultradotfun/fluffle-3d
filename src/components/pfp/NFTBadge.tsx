@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/Badge";
+import { colors } from "@/lib/colors";
 
 interface NFTBadgeProps {
   selectedId?: string;
@@ -37,7 +38,8 @@ export function NFTBadge({ selectedId }: NFTBadgeProps) {
     <Badge
       variant="secondary"
       size="md"
-      className="hidden sm:flex bg-[#e0e0e0] text-foreground border-2 border-foreground"
+      className="hidden sm:flex text-foreground border-2 border-foreground"
+      style={{ backgroundColor: colors.light }}
     >
       <div className="flex items-center gap-1.5">
         <svg

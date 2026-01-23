@@ -3,6 +3,7 @@
 import { DollarSign, TrendingUp, Calendar } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
+import { colors } from "@/lib/colors";
 
 interface ChainRevenueData {
   name: string;
@@ -107,7 +108,7 @@ export function RevenueLeaderboard() {
   if (isLoading && allChains.length === 0) {
     return (
       <div className="flex items-center justify-center py-12">
-        <div className="text-lg font-bold" style={{ color: "#dfd9d9" }}>
+        <div className="text-lg font-bold" style={{ color: colors.background }}>
           Loading revenue data...
         </div>
       </div>
@@ -125,11 +126,11 @@ export function RevenueLeaderboard() {
               "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
           }}
         >
-          <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
+          <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
             <div
               className="px-6 py-5"
               style={{
-                backgroundColor: "#fff",
+                backgroundColor: colors.white,
                 clipPath:
                   "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
               }}
@@ -138,16 +139,16 @@ export function RevenueLeaderboard() {
                 <DollarSign
                   className="w-4 h-4"
                   strokeWidth={3}
-                  style={{ color: "#19191a" }}
+                  style={{ color: colors.foreground }}
                 />
                 <span
                   className="font-black uppercase text-xs tracking-wider"
-                  style={{ color: "#19191a" }}
+                  style={{ color: colors.foreground }}
                 >
                   Total USDM Supply
                 </span>
               </div>
-              <div className="text-3xl font-black" style={{ color: "#19191a" }}>
+              <div className="text-3xl font-black" style={{ color: colors.foreground }}>
                 {totalSupply !== null
                   ? `$${Math.round(totalSupply).toLocaleString()}`
                   : "Loading..."}
@@ -163,11 +164,11 @@ export function RevenueLeaderboard() {
               "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
           }}
         >
-          <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
+          <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
             <div
               className="px-6 py-5"
               style={{
-                backgroundColor: "#fff",
+                backgroundColor: colors.white,
                 clipPath:
                   "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
               }}
@@ -176,11 +177,11 @@ export function RevenueLeaderboard() {
                 <TrendingUp
                   className="w-4 h-4"
                   strokeWidth={3}
-                  style={{ color: "#19191a" }}
+                  style={{ color: colors.foreground }}
                 />
                 <span
                   className="font-black uppercase text-xs tracking-wider"
-                  style={{ color: "#19191a" }}
+                  style={{ color: colors.foreground }}
                 >
                   MegaETH Placement
                 </span>
@@ -199,11 +200,11 @@ export function RevenueLeaderboard() {
               "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
           }}
         >
-          <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
+          <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
             <div
               className="px-6 py-5"
               style={{
-                backgroundColor: "#fff",
+                backgroundColor: colors.white,
                 clipPath:
                   "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
               }}
@@ -212,16 +213,16 @@ export function RevenueLeaderboard() {
                 <Calendar
                   className="w-4 h-4"
                   strokeWidth={3}
-                  style={{ color: "#19191a" }}
+                  style={{ color: colors.foreground }}
                 />
                 <span
                   className="font-black uppercase text-xs tracking-wider"
-                  style={{ color: "#19191a" }}
+                  style={{ color: colors.foreground }}
                 >
                   30d Revenue Projected
                 </span>
               </div>
-              <div className="text-3xl font-black" style={{ color: "#19191a" }}>
+              <div className="text-3xl font-black" style={{ color: colors.foreground }}>
                 {megaEthData
                   ? `$${megaEthData.total30d?.toLocaleString() || "0"}`
                   : "Loading..."}
@@ -238,10 +239,10 @@ export function RevenueLeaderboard() {
             "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
         }}
       >
-        <div style={{ backgroundColor: "#f380cd", padding: "2px" }}>
+        <div style={{ backgroundColor: colors.pink, padding: "2px" }}>
           <div
             style={{
-              backgroundColor: "#19191a",
+              backgroundColor: colors.foreground,
               clipPath:
                 "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
               padding: "16px",
@@ -250,7 +251,7 @@ export function RevenueLeaderboard() {
           >
             <h2
               className="text-xl sm:text-2xl font-black uppercase mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3"
-              style={{ color: "#dfd9d9" }}
+              style={{ color: colors.background }}
             >
               <DollarSign
                 className="w-6 h-6 sm:w-8 sm:h-8 text-pink"
@@ -273,14 +274,14 @@ export function RevenueLeaderboard() {
                   >
                     <div
                       style={{
-                        backgroundColor: isMegaETH ? "#f380cd" : "#19191a",
+                        backgroundColor: isMegaETH ? colors.pink : colors.foreground,
                         padding: "2px",
                       }}
                     >
                       <div
                         className="p-3 sm:p-4"
                         style={{
-                          backgroundColor: "#fff",
+                          backgroundColor: colors.white,
                           clipPath:
                             "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
                         }}
@@ -289,7 +290,7 @@ export function RevenueLeaderboard() {
                           <div className="flex items-center gap-3 sm:gap-4">
                             <span
                               className="font-mono font-bold w-6 sm:w-8 text-center text-sm sm:text-base"
-                              style={{ color: "#19191a" }}
+                              style={{ color: colors.foreground }}
                             >
                               #{index + 1}
                             </span>
@@ -303,16 +304,16 @@ export function RevenueLeaderboard() {
                                 alt={chain.name}
                                 className="w-8 h-8 sm:w-10 sm:h-10 rounded-full"
                                 style={{
-                                  border: "2px solid #19191a",
+                                  border: `2px solid ${colors.foreground}`,
                                 }}
                               />
                             ) : (
                               <div
                                 className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold border-2 text-sm sm:text-base"
                                 style={{
-                                  backgroundColor: "#f380cd",
-                                  borderColor: "#19191a",
-                                  color: "#19191a",
+                                  backgroundColor: colors.pink,
+                                  borderColor: colors.foreground,
+                                  color: colors.foreground,
                                 }}
                               >
                                 {chain.name[0]}
@@ -320,7 +321,7 @@ export function RevenueLeaderboard() {
                             )}
                             <span
                               className="font-black text-base sm:text-lg uppercase"
-                              style={{ color: "#19191a" }}
+                              style={{ color: colors.foreground }}
                             >
                               {chain.name}
                             </span>
@@ -330,13 +331,13 @@ export function RevenueLeaderboard() {
                             <div className="hidden md:flex flex-col items-end">
                               <span
                                 className="text-xs font-bold uppercase mb-0.5 opacity-60"
-                                style={{ color: "#19191a" }}
+                                style={{ color: colors.foreground }}
                               >
                                 30d Revenue
                               </span>
                               <span
                                 className="font-mono font-bold"
-                                style={{ color: "#19191a" }}
+                                style={{ color: colors.foreground }}
                               >
                                 {chain.total30d !== null
                                   ? `$${chain.total30d.toLocaleString()}`
@@ -348,13 +349,13 @@ export function RevenueLeaderboard() {
                             <div className="flex flex-col items-end">
                               <span
                                 className="text-xs font-bold uppercase mb-0.5"
-                                style={{ color: "#19191a" }}
+                                style={{ color: colors.foreground }}
                               >
                                 24h Revenue
                               </span>
                               <span
                                 className="font-mono font-bold text-base sm:text-lg"
-                                style={{ color: "#19191a" }}
+                                style={{ color: colors.foreground }}
                               >
                                 ${chain.total24h.toLocaleString()}
                               </span>
@@ -365,7 +366,7 @@ export function RevenueLeaderboard() {
                         {/* Progress Bar */}
                         <div
                           className="h-2 sm:h-3 w-full rounded-sm overflow-hidden"
-                          style={{ backgroundColor: "#e0e0e0" }}
+                          style={{ backgroundColor: colors.light }}
                         >
                           <div
                             className="h-full transition-all duration-1000 ease-out"
@@ -375,8 +376,8 @@ export function RevenueLeaderboard() {
                                 1
                               )}%`,
                               backgroundColor: isMegaETH
-                                ? "#f380cd"
-                                : "#19191a",
+                                ? colors.pink
+                                : colors.foreground,
                             }}
                           />
                         </div>

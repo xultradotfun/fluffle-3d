@@ -26,9 +26,9 @@ export function BingoTaskCard({
       onClick={onToggle}
       className={`group relative w-full aspect-square p-2.5 transition-all ${
         isCompleted
-          ? "bg-gradient-to-br from-teal-500/20 to-emerald-500/20 dark:from-teal-500/30 dark:to-emerald-500/30"
-          : "bg-white dark:bg-gray-900 hover:bg-gray-50/80 dark:hover:bg-gray-800/80"
-      } ring-1 ring-gray-200 dark:ring-gray-700 hover:ring-2 hover:ring-gray-300 dark:hover:ring-gray-600`}
+          ? "bg-gradient-to-br from-teal-500/20 to-emerald-500/20"
+          : "bg-white hover:bg-gray-50/80"
+      } ring-1 ring-gray-200 hover:ring-2 hover:ring-gray-300`}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
     >
@@ -38,7 +38,7 @@ export function BingoTaskCard({
           src={bgImageUrl}
           alt=""
           fill
-          className="object-cover opacity-10 dark:opacity-5"
+          className="object-cover opacity-10"
           unoptimized
         />
       </div>
@@ -47,7 +47,7 @@ export function BingoTaskCard({
       <div className="relative h-full flex flex-col">
         {isCompleted && (
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <CheckCircle2 className="w-10 h-10 text-teal-500/20 dark:text-teal-400/20" />
+            <CheckCircle2 className="w-10 h-10 text-teal-500/20" />
           </div>
         )}
 
@@ -60,7 +60,7 @@ export function BingoTaskCard({
                 return (
                   <div
                     key={twitter}
-                    className="relative w-4 h-4 rounded-full overflow-hidden ring-1 ring-gray-200 dark:ring-gray-700 group-hover:scale-110 transition-transform bg-white dark:bg-gray-800"
+                    className="relative w-4 h-4 rounded-full overflow-hidden ring-1 ring-gray-200 group-hover:scale-110 transition-transform bg-white"
                     title={project.name}
                   >
                     <Image
@@ -76,14 +76,14 @@ export function BingoTaskCard({
           )}
 
           <h3
-            className="text-xs font-medium text-gray-900 dark:text-white mb-1.5 pr-6"
+            className="text-xs font-medium text-gray-900 mb-1.5 pr-6"
             title={task.title}
           >
             {task.title}
           </h3>
 
           <div className="flex-1 flex flex-col">
-            <p className="text-[10px] text-gray-600 dark:text-gray-300 leading-relaxed">
+            <p className="text-[10px] text-gray-600 leading-relaxed">
               {task.description}
             </p>
           </div>

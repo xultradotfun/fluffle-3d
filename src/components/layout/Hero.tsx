@@ -1,3 +1,5 @@
+import { colors } from "@/lib/colors";
+
 export default function Hero() {
   return (
     <>
@@ -6,7 +8,7 @@ export default function Hero() {
 
       <nav
         className="fixed top-0 left-0 right-0 z-10 border-b-4 border-foreground"
-        style={{ backgroundColor: "#19191a" }}
+        style={{ backgroundColor: colors.foreground }}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="flex items-center justify-between py-3">
@@ -22,7 +24,7 @@ export default function Hero() {
               </a>
               <p
                 className="hidden lg:block text-sm font-bold uppercase max-w-md"
-                style={{ color: "#dfd9d9" }}
+                style={{ color: colors.background }}
               >
                 UTILITIES FOR{" "}
                 <span className="bg-pink px-1" style={{ color: "#fff" }}>
@@ -46,7 +48,7 @@ export default function Hero() {
                 style={{
                   clipPath:
                     "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                  color: "#19191a",
+                  color: colors.foreground,
                 }}
                   >
                     <svg

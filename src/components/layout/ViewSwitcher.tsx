@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
-import { useState, useRef, useEffect } from "react";
+import { colors } from "@/lib/colors";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import {
   Flower2,
@@ -45,15 +46,16 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
   const mathCloseTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const router = useRouter();
 
-  const handleViewChange = (
-    view: "pfp" | "ecosystem" | "builder" | "bingo" | "math" | "allocation" | "usdm" | "bridge"
-  ) => {
-    if (onViewChange) {
-      onViewChange(view);
-    } else {
-      router.push(VIEW_ROUTES[view]);
-    }
-  };
+  const handleViewChange = useCallback(
+    (view: "pfp" | "ecosystem" | "builder" | "bingo" | "math" | "allocation" | "usdm" | "bridge") => {
+      if (onViewChange) {
+        onViewChange(view);
+      } else {
+        router.push(VIEW_ROUTES[view]);
+      }
+    },
+    [onViewChange, router]
+  );
 
   useEffect(() => {
     if (isDropdownOpen && buttonRef.current) {
@@ -75,33 +77,33 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
     }
   }, [isMathDropdownOpen]);
 
-  const handleMouseEnter = () => {
+  const handleMouseEnter = useCallback(() => {
     if (closeTimeoutRef.current) {
       clearTimeout(closeTimeoutRef.current);
       closeTimeoutRef.current = null;
     }
     setIsDropdownOpen(true);
-  };
+  }, []);
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = useCallback(() => {
     closeTimeoutRef.current = setTimeout(() => {
       setIsDropdownOpen(false);
     }, 100);
-  };
+  }, []);
 
-  const handleMathMouseEnter = () => {
+  const handleMathMouseEnter = useCallback(() => {
     if (mathCloseTimeoutRef.current) {
       clearTimeout(mathCloseTimeoutRef.current);
       mathCloseTimeoutRef.current = null;
     }
     setIsMathDropdownOpen(true);
-  };
+  }, []);
 
-  const handleMathMouseLeave = () => {
+  const handleMathMouseLeave = useCallback(() => {
     mathCloseTimeoutRef.current = setTimeout(() => {
       setIsMathDropdownOpen(false);
     }, 100);
-  };
+  }, []);
 
   return (
     <>
@@ -116,7 +118,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
           }}
         >
           {/* Middle border layer - black with padding */}
-          <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
+          <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
             {/* Inner content layer - dark with same clip-path */}
             <div
               className="bg-card-foreground"
@@ -137,7 +139,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   style={{
                     clipPath:
                       "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                    color: activeView === "ecosystem" ? "#19191a" : "#dfd9d9",
+                    color: activeView === "ecosystem" ? colors.foreground : colors.background,
                   }}
                 >
                   <Flower2 className="w-4 h-4" strokeWidth={3} />
@@ -159,8 +161,8 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                       clipPath:
                         "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
                       color: ["math", "allocation", "usdm"].includes(activeView)
-                        ? "#19191a"
-                        : "#dfd9d9",
+                        ? colors.foreground
+                        : colors.background,
                     }}
                   >
                     <Calculator className="w-4 h-4" strokeWidth={3} />
@@ -185,7 +187,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                   style={{
                     clipPath:
                       "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                    color: activeView === "bridge" ? "#19191a" : "#dfd9d9",
+                    color: activeView === "bridge" ? colors.foreground : colors.background,
                   }}
                 >
                   <ArrowLeftRight className="w-4 h-4" strokeWidth={3} />
@@ -210,8 +212,8 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                       clipPath:
                         "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
                       color: ["pfp", "builder", "bingo"].includes(activeView)
-                        ? "#19191a"
-                        : "#dfd9d9",
+                        ? colors.foreground
+                        : colors.background,
                     }}
                   >
                     <Rabbit className="w-4 h-4" strokeWidth={3} />
@@ -249,10 +251,10 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                 "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
             }}
           >
-            <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+            <div style={{ backgroundColor: colors.background, padding: "2px" }}>
               <div
                 style={{
-                  backgroundColor: "#19191a",
+                  backgroundColor: colors.foreground,
                   clipPath:
                     "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
                   padding: "8px",
@@ -269,7 +271,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     style={{
                       clipPath:
                         "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                      color: activeView === "math" ? "#19191a" : "#dfd9d9",
+                      color: activeView === "math" ? colors.foreground : colors.background,
                     }}
                   >
                     <Calculator className="w-4 h-4" strokeWidth={3} />
@@ -288,7 +290,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     style={{
                       clipPath:
                         "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                      color: activeView === "allocation" ? "#19191a" : "#dfd9d9",
+                      color: activeView === "allocation" ? colors.foreground : colors.background,
                     }}
                   >
                     <Wallet className="w-4 h-4" strokeWidth={3} />
@@ -307,7 +309,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     style={{
                       clipPath:
                         "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                      color: activeView === "usdm" ? "#19191a" : "#dfd9d9",
+                      color: activeView === "usdm" ? colors.foreground : colors.background,
                     }}
                   >
                     <DollarSign className="w-4 h-4" strokeWidth={3} />
@@ -344,11 +346,11 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
             }}
           >
             {/* Middle border layer - light with padding */}
-            <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+            <div style={{ backgroundColor: colors.background, padding: "2px" }}>
               {/* Inner content layer - dark with same clip-path */}
               <div
                 style={{
-                  backgroundColor: "#19191a",
+                  backgroundColor: colors.foreground,
                   clipPath:
                     "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
                   padding: "8px",
@@ -365,7 +367,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     style={{
                       clipPath:
                         "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                      color: activeView === "builder" ? "#19191a" : "#dfd9d9",
+                      color: activeView === "builder" ? colors.foreground : colors.background,
                     }}
                   >
                     <Rabbit className="w-4 h-4" strokeWidth={3} />
@@ -384,7 +386,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     style={{
                       clipPath:
                         "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                      color: activeView === "pfp" ? "#19191a" : "#dfd9d9",
+                      color: activeView === "pfp" ? colors.foreground : colors.background,
                     }}
                   >
                     <Image className="w-4 h-4" strokeWidth={3} />
@@ -403,7 +405,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     style={{
                       clipPath:
                         "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                      color: activeView === "bingo" ? "#19191a" : "#dfd9d9",
+                      color: activeView === "bingo" ? colors.foreground : colors.background,
                     }}
                   >
                     <Grid className="w-4 h-4" strokeWidth={3} />
@@ -422,7 +424,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
       {/* Mobile Bottom Navigation */}
       <div
         className="sm:hidden fixed bottom-0 left-0 right-0 z-50 border-t-4 border-foreground pb-safe"
-        style={{ backgroundColor: "#19191a" }}
+        style={{ backgroundColor: colors.foreground }}
       >
         <div className="flex items-center justify-around px-2 py-3">
           {/* Ecosystem */}
@@ -431,7 +433,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
             className={`flex flex-col items-center gap-1 p-2 ${
               activeView === "ecosystem" ? "opacity-100" : "opacity-60"
             }`}
-            style={{ color: "#dfd9d9" }}
+            style={{ color: colors.background }}
           >
             <Flower2 className="w-6 h-6" strokeWidth={3} />
             <span className="text-[10px] font-black uppercase">ECO</span>
@@ -445,14 +447,14 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                 ? "opacity-100"
                 : "opacity-60"
             }`}
-            style={{ color: "#dfd9d9" }}
+            style={{ color: colors.background }}
           >
             <div className="relative">
               <Calculator className="w-6 h-6" strokeWidth={3} />
               <ChevronDown
                 className="w-3 h-3 absolute -bottom-1 -right-1"
                 strokeWidth={3}
-                style={{ backgroundColor: "#19191a" }}
+                style={{ backgroundColor: colors.foreground }}
               />
             </div>
             <span className="text-[10px] font-black uppercase">MATH</span>
@@ -464,7 +466,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
             className={`flex flex-col items-center gap-1 p-2 ${
               activeView === "bridge" ? "opacity-100" : "opacity-60"
             }`}
-            style={{ color: "#dfd9d9" }}
+            style={{ color: colors.background }}
           >
             <ArrowLeftRight className="w-6 h-6" strokeWidth={3} />
             <span className="text-[10px] font-black uppercase">GAS</span>
@@ -478,14 +480,14 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                 ? "opacity-100"
                 : "opacity-60"
             }`}
-            style={{ color: "#dfd9d9" }}
+            style={{ color: colors.background }}
           >
             <div className="relative">
               <Rabbit className="w-6 h-6" strokeWidth={3} />
               <ChevronDown
                 className="w-3 h-3 absolute -bottom-1 -right-1"
                 strokeWidth={3}
-                style={{ backgroundColor: "#19191a" }}
+                style={{ backgroundColor: colors.foreground }}
               />
             </div>
             <span className="text-[10px] font-black uppercase">TOOLS</span>
@@ -501,11 +503,11 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
         >
           <div
             className="absolute inset-x-0 bottom-0 border-t-4 border-foreground"
-            style={{ backgroundColor: "#19191a" }}
+            style={{ backgroundColor: colors.foreground }}
           >
             <div
               className="flex items-center justify-between px-4 py-4 border-b-3 border-foreground"
-              style={{ color: "#dfd9d9" }}
+              style={{ color: colors.background }}
             >
               <div className="flex items-center gap-2">
                 <Calculator className="w-5 h-5" strokeWidth={3} />
@@ -514,7 +516,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
               <button
                 onClick={() => setIsMobileMenuOpenMath(false)}
                 className="p-2 border-3 border-foreground hover:bg-muted"
-                style={{ color: "#dfd9d9" }}
+                style={{ color: colors.background }}
               >
                 <X className="w-5 h-5" strokeWidth={3} />
               </button>
@@ -531,7 +533,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     : "bg-transparent hover:bg-muted"
                 }`}
                 style={{
-                  color: activeView === "math" ? "#19191a" : "#dfd9d9",
+                  color: activeView === "math" ? colors.foreground : colors.background,
                 }}
               >
                 <Calculator className="w-5 h-5" strokeWidth={3} />
@@ -551,7 +553,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     : "bg-transparent hover:bg-muted"
                 }`}
                 style={{
-                  color: activeView === "allocation" ? "#19191a" : "#dfd9d9",
+                  color: activeView === "allocation" ? colors.foreground : colors.background,
                 }}
               >
                 <Wallet className="w-5 h-5" strokeWidth={3} />
@@ -571,7 +573,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     : "bg-transparent hover:bg-muted"
                 }`}
                 style={{
-                  color: activeView === "usdm" ? "#19191a" : "#dfd9d9",
+                  color: activeView === "usdm" ? colors.foreground : colors.background,
                 }}
               >
                 <DollarSign className="w-5 h-5" strokeWidth={3} />
@@ -593,11 +595,11 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
         >
           <div
             className="absolute inset-x-0 bottom-0 border-t-4 border-foreground"
-            style={{ backgroundColor: "#19191a" }}
+            style={{ backgroundColor: colors.foreground }}
           >
             <div
               className="flex items-center justify-between px-4 py-4 border-b-3 border-foreground"
-              style={{ color: "#dfd9d9" }}
+              style={{ color: colors.background }}
             >
               <div className="flex items-center gap-2">
                 <Rabbit className="w-5 h-5" strokeWidth={3} />
@@ -608,7 +610,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="p-2 border-3 border-foreground hover:bg-muted"
-                style={{ color: "#dfd9d9" }}
+                style={{ color: colors.background }}
               >
                 <X className="w-5 h-5" strokeWidth={3} />
               </button>
@@ -625,7 +627,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     : "bg-transparent hover:bg-muted"
                 }`}
                 style={{
-                  color: activeView === "builder" ? "#19191a" : "#dfd9d9",
+                  color: activeView === "builder" ? colors.foreground : colors.background,
                 }}
               >
                 <Rabbit className="w-5 h-5" strokeWidth={3} />
@@ -644,7 +646,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     ? "bg-pink"
                     : "bg-transparent hover:bg-muted"
                 }`}
-                style={{ color: activeView === "pfp" ? "#19191a" : "#dfd9d9" }}
+                style={{ color: activeView === "pfp" ? colors.foreground : colors.background }}
               >
                 <Image className="w-5 h-5" strokeWidth={3} />
                 <span className="flex-1 text-left">PFP GENERATOR</span>
@@ -663,7 +665,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     : "bg-transparent hover:bg-muted"
                 }`}
                 style={{
-                  color: activeView === "bingo" ? "#19191a" : "#dfd9d9",
+                  color: activeView === "bingo" ? colors.foreground : colors.background,
                 }}
               >
                 <Grid className="w-5 h-5" strokeWidth={3} />

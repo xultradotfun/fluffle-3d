@@ -1,3 +1,7 @@
+import { Button } from "@/components/ui/Button";
+import { getClipPath } from "@/components/ui/BorderedBox";
+import { colors } from "@/lib/colors";
+
 type ZoomLevel = "full" | "bust";
 
 interface ZoomControlsProps {
@@ -7,22 +11,17 @@ interface ZoomControlsProps {
 
 export function ZoomControls({ currentZoom, onZoomChange }: ZoomControlsProps) {
   return (
-    <div className="flex items-center gap-2 p-2 bg-transparent border-3 border-background"
-      style={{
-        clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-      }}
+    <div
+      className="flex items-center gap-2 p-2 bg-transparent border-3 border-background"
+      style={{ clipPath: getClipPath(8) }}
     >
-      <button
+      <Button
+        variant={currentZoom === "full" ? "brutalist-active" : "brutalist"}
+        size="sm"
+        cornerSize={4}
         onClick={() => onZoomChange("full")}
-        className={`flex-1 px-3 py-2 text-xs font-black uppercase border-3 transition-all ${
-          currentZoom === "full"
-            ? "bg-pink text-foreground border-foreground"
-            : "bg-transparent border-background hover:bg-pink hover:text-foreground hover:border-foreground"
-        }`}
-        style={{
-          color: currentZoom === "full" ? "#19191a" : "#dfd9d9",
-          clipPath: "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
-        }}
+        className="flex-1 text-xs"
+        style={{ color: currentZoom === "full" ? colors.foreground : colors.background }}
       >
         <div className="flex items-center justify-center gap-1.5">
           <svg
@@ -40,18 +39,14 @@ export function ZoomControls({ currentZoom, onZoomChange }: ZoomControlsProps) {
           </svg>
           Full Body
         </div>
-      </button>
-      <button
+      </Button>
+      <Button
+        variant={currentZoom === "bust" ? "brutalist-active" : "brutalist"}
+        size="sm"
+        cornerSize={4}
         onClick={() => onZoomChange("bust")}
-        className={`flex-1 px-3 py-2 text-xs font-black uppercase border-3 transition-all ${
-          currentZoom === "bust"
-            ? "bg-pink text-foreground border-foreground"
-            : "bg-transparent border-background hover:bg-pink hover:text-foreground hover:border-foreground"
-        }`}
-        style={{
-          color: currentZoom === "bust" ? "#19191a" : "#dfd9d9",
-          clipPath: "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
-        }}
+        className="flex-1 text-xs"
+        style={{ color: currentZoom === "bust" ? colors.foreground : colors.background }}
       >
         <div className="flex items-center justify-center gap-1.5">
           <svg
@@ -69,7 +64,7 @@ export function ZoomControls({ currentZoom, onZoomChange }: ZoomControlsProps) {
           </svg>
           Bust
         </div>
-      </button>
+      </Button>
     </div>
   );
 }

@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ViewSwitcher } from "@/components/ViewSwitcher";
-import Hero from "@/components/Hero";
-import PageHeader from "@/components/PageHeader";
+import { colors } from "@/lib/colors";
+import { ViewSwitcher } from "@/components/layout/ViewSwitcher";
+import Hero from "@/components/layout/Hero";
+import PageHeader from "@/components/layout/PageHeader";
 import RoundSelector from "@/components/math/RoundSelector";
 import TokenScrollPicker from "@/components/math/TokenScrollPicker";
 import ResultsDisplay from "@/components/math/ResultsDisplay";
@@ -184,11 +185,11 @@ export default function MathPage() {
                     "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
                 }}
               >
-                <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
+                <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
                   <div
                     className="p-6 animate-pulse"
                     style={{
-                      backgroundColor: "#19191a",
+                      backgroundColor: colors.foreground,
                       clipPath:
                         "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
                       minHeight: "400px",
@@ -215,11 +216,11 @@ export default function MathPage() {
                     "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
                 }}
               >
-                <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
+                <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
                   <div
                     className="p-6 animate-pulse"
                     style={{
-                      backgroundColor: "#19191a",
+                      backgroundColor: colors.foreground,
                       clipPath:
                         "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
                       minHeight: "400px",
@@ -245,11 +246,11 @@ export default function MathPage() {
                   "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
               }}
             >
-              <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
+              <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
                 <div
                   className="p-6 animate-pulse"
                   style={{
-                    backgroundColor: "#19191a",
+                    backgroundColor: colors.foreground,
                     clipPath:
                       "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
                   }}

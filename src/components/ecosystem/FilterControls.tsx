@@ -1,7 +1,11 @@
-import { FlaskConical, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import type { VoteFilter, SortMethod } from "@/types/ecosystem";
+import { BorderedBox, getClipPath } from "@/components/ui/BorderedBox";
+import { Button } from "@/components/ui/Button";
+import { IconButton } from "@/components/ui/IconButton";
+import { colors } from "@/lib/colors";
 
 interface FilterControlsProps {
   selectedCategory: string | null;
@@ -24,6 +28,28 @@ interface FilterControlsProps {
   totalProjects: number;
   sortMethod: SortMethod;
   onSortChange: (method: SortMethod) => void;
+}
+
+// Reusable filter button component
+interface FilterButtonProps {
+  isActive: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}
+
+function FilterButton({ isActive, onClick, children }: FilterButtonProps) {
+  return (
+    <Button
+      variant={isActive ? "brutalist-active" : "brutalist"}
+      size="sm"
+      cornerSize={6}
+      onClick={onClick}
+      className="px-3 py-1.5 text-xs font-bold"
+      style={{ color: isActive ? colors.foreground : colors.background }}
+    >
+      {children}
+    </Button>
+  );
 }
 
 export function FilterControls({
@@ -50,355 +76,203 @@ export function FilterControls({
 }: FilterControlsProps) {
   const [showCategories, setShowCategories] = useState(false);
 
-  const activeFiltersCount = 
-    (showMegaMafiaOnly ? 1 : 0) + 
-    (showNativeOnly ? 1 : 0) + 
-    (showLiveOnly ? 1 : 0) + 
-    (voteFilter !== "all" ? 1 : 0) + 
+  const activeFiltersCount =
+    (showMegaMafiaOnly ? 1 : 0) +
+    (showNativeOnly ? 1 : 0) +
+    (showLiveOnly ? 1 : 0) +
+    (voteFilter !== "all" ? 1 : 0) +
     (selectedCategory !== null ? 1 : 0);
 
   return (
     <div className="w-full">
-      {/* Outer wrapper with clip-path */}
-      <div
-        style={{
-          clipPath:
-            "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-        }}
-      >
-        {/* Middle border layer */}
-        <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
-          {/* Inner content layer */}
-          <div
-            className="bg-card-foreground p-4"
-            style={{
-              clipPath:
-                "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-            }}
-          >
-            <div className="flex flex-col gap-3">
-              {/* Main filters row */}
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="font-black uppercase text-xs mr-2" style={{ color: "#dfd9d9" }}>
-                  FILTERS {activeFiltersCount > 0 && `(${activeFiltersCount})`}:
-                </span>
+      <BorderedBox cornerSize={12} borderColor="dark" className="bg-card-foreground p-4">
+        <div className="flex flex-col gap-3">
+          {/* Main filters row */}
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-black uppercase text-xs mr-2" style={{ color: colors.background }}>
+              FILTERS {activeFiltersCount > 0 && `(${activeFiltersCount})`}:
+            </span>
 
-                {/* Quick filters */}
-        <button
-          onClick={() => {
-            setShowMegaMafiaOnly(!showMegaMafiaOnly);
-            setShowNativeOnly(false);
-                    setShowLiveOnly(false);
-          }}
-                  className={`px-3 py-1.5 border-3 font-bold uppercase text-xs transition-colors ${
-            showMegaMafiaOnly
-                      ? "bg-pink border-foreground"
-                      : "bg-transparent border-background hover:bg-muted"
-          }`}
-                  style={{
-                    color: showMegaMafiaOnly ? "#19191a" : "#dfd9d9",
-                    clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                  }}
-        >
-                  <div className="flex items-center gap-1.5">
-            <img
-                      src="/ui/pixelmafia.png"
-              alt="MegaMafia"
-                      className="w-4 h-4 object-contain"
-                      style={{
-                        filter: showMegaMafiaOnly ? 'brightness(0)' : 'brightness(0) invert(1)',
-                      }}
-            />
-                    <span>MAFIA</span>
-                    <span className="font-black font-data">({getMegaMafiaCount()})</span>
-          </div>
-        </button>
-
-        <button
-          onClick={() => {
-            setShowNativeOnly(!showNativeOnly);
-            setShowMegaMafiaOnly(false);
-                    setShowLiveOnly(false);
-          }}
-                  className={`px-3 py-1.5 border-3 font-bold uppercase text-xs transition-colors ${
-            showNativeOnly
-                      ? "bg-pink border-foreground"
-                      : "bg-transparent border-background hover:bg-muted"
-          }`}
-                  style={{
-                    color: showNativeOnly ? "#19191a" : "#dfd9d9",
-                    clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                  }}
-                >
-                  <div className="flex items-center gap-1.5">
-                    <span>OMEGA</span>
-                    <span className="font-black font-data">({getNativeCount()})</span>
-          </div>
-        </button>
-
-        <button
-          onClick={() => {
-                    setShowLiveOnly(!showLiveOnly);
-            setShowMegaMafiaOnly(false);
-            setShowNativeOnly(false);
-          }}
-                  className={`px-3 py-1.5 border-3 font-bold uppercase text-xs transition-colors ${
-                    showLiveOnly
-                      ? "bg-pink border-foreground"
-                      : "bg-transparent border-background hover:bg-muted"
-                  }`}
-                  style={{
-                    color: showLiveOnly ? "#19191a" : "#dfd9d9",
-                    clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                  }}
-        >
-                  <div className="flex items-center gap-1.5">
-                    <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                      <circle cx="12" cy="12" r="8" />
-                    </svg>
-                    <span>LIVE</span>
-                    <span className="font-black font-data">({getLiveCount()})</span>
-          </div>
-        </button>
-
-                <div className="w-px h-8 bg-background mx-2" />
-
-                {/* Vote filters */}
-        <button
-                  onClick={() => setVoteFilter("all")}
-                  className={`px-3 py-1.5 border-3 font-bold uppercase text-xs transition-colors ${
-                    voteFilter === "all"
-                      ? "bg-pink border-foreground"
-                      : "bg-transparent border-background hover:bg-muted"
-                  }`}
-                  style={{
-                    color: voteFilter === "all" ? "#19191a" : "#dfd9d9",
-                    clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                  }}
-        >
-                  ALL <span className="font-black font-data">({totalProjects})</span>
-                </button>
-
-                <button
-                  onClick={() => setVoteFilter("voted")}
-                  className={`px-3 py-1.5 border-3 font-bold uppercase text-xs transition-colors ${
-                    voteFilter === "voted"
-                      ? "bg-pink border-foreground"
-                      : "bg-transparent border-background hover:bg-muted"
-                  }`}
-                  style={{
-                    color: voteFilter === "voted" ? "#19191a" : "#dfd9d9",
-                    clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                  }}
-                >
-                  VOTED <span className="font-black font-data">({getUserVotedCount()})</span>
-                </button>
-
-                <button
-                  onClick={() => setVoteFilter("not_voted")}
-                  className={`px-3 py-1.5 border-3 font-bold uppercase text-xs transition-colors ${
-                    voteFilter === "not_voted"
-                      ? "bg-pink border-foreground"
-                      : "bg-transparent border-background hover:bg-muted"
-                  }`}
-                  style={{
-                    color: voteFilter === "not_voted" ? "#19191a" : "#dfd9d9",
-                    clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                  }}
+            {/* Quick filters */}
+            <FilterButton
+              isActive={showMegaMafiaOnly}
+              onClick={() => {
+                setShowMegaMafiaOnly(!showMegaMafiaOnly);
+                setShowNativeOnly(false);
+                setShowLiveOnly(false);
+              }}
             >
-                  NOT VOTED <span className="font-black font-data">({getUserNotVotedCount()})</span>
-        </button>
-
-                <div className="w-px h-6 bg-background mx-1" />
-
-                {/* Category toggle */}
-        <button
-                  onClick={() => setShowCategories(!showCategories)}
-                  className={`px-3 py-1.5 border-3 font-bold uppercase text-xs transition-colors ${
-                    selectedCategory !== null
-                      ? "bg-pink border-foreground"
-                      : "bg-transparent border-background hover:bg-muted"
-                  }`}
-                  style={{
-                    color: selectedCategory !== null ? "#19191a" : "#dfd9d9",
-                    clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                  }}
-        >
-                  <div className="flex items-center gap-1.5">
-                    <span>{selectedCategory || "CATEGORY"}</span>
-                    <ChevronDown
-                      className={`w-3.5 h-3.5 transition-transform ${
-                        showCategories ? "rotate-180" : ""
-              }`}
-                      strokeWidth={3}
-                    />
-          </div>
-        </button>
-
-                {/* Sort controls - desktop only */}
-                <div className="hidden md:flex items-center gap-2 ml-auto">
-                  <span className="font-black uppercase text-xs" style={{ color: "#dfd9d9" }}>
-                    SORT:
-                  </span>
-                  <button
-                    onClick={() => onSortChange({ type: "score", direction: sortMethod.type === "score" && sortMethod.direction === "desc" ? "asc" : "desc" })}
-                    className={`px-3 py-1.5 border-3 font-bold uppercase text-xs transition-colors ${
-                      sortMethod.type === "score"
-                        ? "bg-pink border-foreground"
-                        : "bg-transparent border-background hover:bg-muted"
-                    }`}
-                    style={{
-                      color: sortMethod.type === "score" ? "#19191a" : "#dfd9d9",
-                      clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                    }}
-                  >
-                    SCORE{sortMethod.type === "score" && (sortMethod.direction === "desc" ? "↓" : "↑")}
-                  </button>
-                  <button
-                    onClick={() => onSortChange({ type: "alphabetical", direction: sortMethod.type === "alphabetical" && sortMethod.direction === "asc" ? "desc" : "asc" })}
-                    className={`px-3 py-1.5 border-3 font-bold uppercase text-xs transition-colors ${
-                      sortMethod.type === "alphabetical"
-                        ? "bg-pink border-foreground"
-                        : "bg-transparent border-background hover:bg-muted"
-                    }`}
-                    style={{
-                      color: sortMethod.type === "alphabetical" ? "#19191a" : "#dfd9d9",
-                      clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                    }}
-                  >
-                    A-Z{sortMethod.type === "alphabetical" && (sortMethod.direction === "asc" ? "↓" : "↑")}
-                  </button>
-                  <button
-                    onClick={() => onSortChange({ type: "latest", direction: sortMethod.type === "latest" && sortMethod.direction === "desc" ? "asc" : "desc" })}
-                    className={`px-3 py-1.5 border-3 font-bold uppercase text-xs transition-colors ${
-                      sortMethod.type === "latest"
-                        ? "bg-pink border-foreground"
-                        : "bg-transparent border-background hover:bg-muted"
-                    }`}
-                    style={{
-                      color: sortMethod.type === "latest" ? "#19191a" : "#dfd9d9",
-                      clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                    }}
-                  >
-                    LATEST{sortMethod.type === "latest" && (sortMethod.direction === "desc" ? "↓" : "↑")}
-                  </button>
-                  
-                  {/* Info tooltip */}
-                  <Tooltip.Provider delayDuration={100}>
-                    <Tooltip.Root>
-                      <Tooltip.Trigger asChild>
-                        <button
-                          className="w-6 h-6 flex items-center justify-center border-3 border-background bg-transparent hover:bg-pink transition-colors"
-                          style={{
-                            color: "#dfd9d9",
-                            clipPath: "polygon(3px 0, 100% 0, 100% calc(100% - 3px), calc(100% - 3px) 100%, 0 100%, 0 3px)",
-                          }}
-                        >
-                          <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
-                          </svg>
-                        </button>
-                      </Tooltip.Trigger>
-                      <Tooltip.Portal>
-                        <Tooltip.Content side="top" align="center" sideOffset={8} className="z-50">
-                          {/* Outer wrapper with clip-path */}
-                          <div
-                            style={{
-                              clipPath:
-                                "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-                            }}
-                          >
-                            {/* Middle border layer */}
-                            <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
-                              {/* Inner content layer */}
-                              <div
-                                className="max-w-[280px] p-4 font-bold uppercase text-xs"
-                                style={{
-                                  backgroundColor: "#19191a",
-                                  color: "#dfd9d9",
-                                  clipPath:
-                                    "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-                                }}
-                              >
-                                Projects are sorted by weighted score based on role-based voting power. Click arrows to reverse order.
-                              </div>
-                            </div>
-                          </div>
-                        </Tooltip.Content>
-                      </Tooltip.Portal>
-                    </Tooltip.Root>
-                  </Tooltip.Provider>
-                </div>
-
-                {/* Clear all filters */}
-                {activeFiltersCount > 0 && (
-        <button
-                    onClick={() => {
-                      setSelectedCategory(null);
-                      setShowMegaMafiaOnly(false);
-                      setShowNativeOnly(false);
-                      setShowLiveOnly(false);
-                      setVoteFilter("all");
-                    }}
-                    className="px-3 py-1.5 border-3 border-red bg-transparent hover:bg-red hover:text-background font-bold uppercase text-xs transition-colors"
-                    style={{ 
-                      color: "#dfd9d9",
-                      clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                    }}
-                  >
-                    CLEAR
-                  </button>
-                )}
+              <div className="flex items-center gap-1.5">
+                <img
+                  src="/ui/pixelmafia.png"
+                  alt="MegaMafia"
+                  className="w-4 h-4 object-contain"
+                  style={{ filter: showMegaMafiaOnly ? 'brightness(0)' : 'brightness(0) invert(1)' }}
+                />
+                <span>MAFIA</span>
+                <span className="font-black font-data">({getMegaMafiaCount()})</span>
               </div>
+            </FilterButton>
 
-              {/* Categories dropdown */}
-              {showCategories && (
-              <div className="flex flex-wrap gap-2 pt-3 border-t-2 border-background/30 transition-all"
+            <FilterButton
+              isActive={showNativeOnly}
+              onClick={() => {
+                setShowNativeOnly(!showNativeOnly);
+                setShowMegaMafiaOnly(false);
+                setShowLiveOnly(false);
+              }}
+            >
+              <div className="flex items-center gap-1.5">
+                <span>OMEGA</span>
+                <span className="font-black font-data">({getNativeCount()})</span>
+              </div>
+            </FilterButton>
+
+            <FilterButton
+              isActive={showLiveOnly}
+              onClick={() => {
+                setShowLiveOnly(!showLiveOnly);
+                setShowMegaMafiaOnly(false);
+                setShowNativeOnly(false);
+              }}
+            >
+              <div className="flex items-center gap-1.5">
+                <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="8" />
+                </svg>
+                <span>LIVE</span>
+                <span className="font-black font-data">({getLiveCount()})</span>
+              </div>
+            </FilterButton>
+
+            <div className="w-px h-8 bg-background mx-2" />
+
+            {/* Vote filters */}
+            <FilterButton isActive={voteFilter === "all"} onClick={() => setVoteFilter("all")}>
+              ALL <span className="font-black font-data">({totalProjects})</span>
+            </FilterButton>
+
+            <FilterButton isActive={voteFilter === "voted"} onClick={() => setVoteFilter("voted")}>
+              VOTED <span className="font-black font-data">({getUserVotedCount()})</span>
+            </FilterButton>
+
+            <FilterButton isActive={voteFilter === "not_voted"} onClick={() => setVoteFilter("not_voted")}>
+              NOT VOTED <span className="font-black font-data">({getUserNotVotedCount()})</span>
+            </FilterButton>
+
+            <div className="w-px h-6 bg-background mx-1" />
+
+            {/* Category toggle */}
+            <FilterButton
+              isActive={selectedCategory !== null}
+              onClick={() => setShowCategories(!showCategories)}
+            >
+              <div className="flex items-center gap-1.5">
+                <span>{selectedCategory || "CATEGORY"}</span>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 transition-transform ${showCategories ? "rotate-180" : ""}`}
+                  strokeWidth={3}
+                />
+              </div>
+            </FilterButton>
+
+            {/* Sort controls - desktop only */}
+            <div className="hidden md:flex items-center gap-2 ml-auto">
+              <span className="font-black uppercase text-xs" style={{ color: colors.background }}>
+                SORT:
+              </span>
+              <FilterButton
+                isActive={sortMethod.type === "score"}
+                onClick={() => onSortChange({ type: "score", direction: sortMethod.type === "score" && sortMethod.direction === "desc" ? "asc" : "desc" })}
               >
-                <button
+                SCORE{sortMethod.type === "score" && (sortMethod.direction === "desc" ? "↓" : "↑")}
+              </FilterButton>
+              <FilterButton
+                isActive={sortMethod.type === "alphabetical"}
+                onClick={() => onSortChange({ type: "alphabetical", direction: sortMethod.type === "alphabetical" && sortMethod.direction === "asc" ? "desc" : "asc" })}
+              >
+                A-Z{sortMethod.type === "alphabetical" && (sortMethod.direction === "asc" ? "↓" : "↑")}
+              </FilterButton>
+              <FilterButton
+                isActive={sortMethod.type === "latest"}
+                onClick={() => onSortChange({ type: "latest", direction: sortMethod.type === "latest" && sortMethod.direction === "desc" ? "asc" : "desc" })}
+              >
+                LATEST{sortMethod.type === "latest" && (sortMethod.direction === "desc" ? "↓" : "↑")}
+              </FilterButton>
+
+              {/* Info tooltip */}
+              <Tooltip.Provider delayDuration={100}>
+                <Tooltip.Root>
+                  <Tooltip.Trigger asChild>
+                    <IconButton variant="default" size="sm" cornerSize={3} className="w-6 h-6">
+                      <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" />
+                      </svg>
+                    </IconButton>
+                  </Tooltip.Trigger>
+                  <Tooltip.Portal>
+                    <Tooltip.Content side="top" align="center" sideOffset={8} className="z-50">
+                      <BorderedBox cornerSize={8} variant="tooltip" style={{ color: colors.background }}>
+                        <span className="font-bold uppercase text-xs">
+                          Projects are sorted by weighted score based on role-based voting power. Click arrows to reverse order.
+                        </span>
+                      </BorderedBox>
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                </Tooltip.Root>
+              </Tooltip.Provider>
+            </div>
+
+            {/* Clear all filters */}
+            {activeFiltersCount > 0 && (
+              <Button
+                variant="brutalist"
+                size="sm"
+                cornerSize={6}
+                onClick={() => {
+                  setSelectedCategory(null);
+                  setShowMegaMafiaOnly(false);
+                  setShowNativeOnly(false);
+                  setShowLiveOnly(false);
+                  setVoteFilter("all");
+                }}
+                className="px-3 py-1.5 text-xs font-bold border-red hover:bg-red hover:text-background"
+                style={{ color: colors.background }}
+              >
+                CLEAR
+              </Button>
+            )}
+          </div>
+
+          {/* Categories dropdown */}
+          {showCategories && (
+            <div className="flex flex-wrap gap-2 pt-3 border-t-2 border-background/30 transition-all">
+              <FilterButton
+                isActive={selectedCategory === null}
+                onClick={() => {
+                  setSelectedCategory(null);
+                  setShowCategories(false);
+                }}
+              >
+                ALL <span className="font-black font-data">({totalProjects})</span>
+              </FilterButton>
+
+              {categories.map((category) => (
+                <FilterButton
+                  key={category}
+                  isActive={selectedCategory === category}
                   onClick={() => {
-                    setSelectedCategory(null);
+                    setSelectedCategory(selectedCategory === category ? null : category);
                     setShowCategories(false);
                   }}
-                  className={`px-3 py-1.5 border-3 font-bold uppercase text-xs transition-colors ${
-                    selectedCategory === null
-                      ? "bg-pink border-foreground"
-                      : "bg-transparent border-background hover:bg-muted"
-              }`}
-                  style={{
-                    color: selectedCategory === null ? "#19191a" : "#dfd9d9",
-                    clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                  }}
                 >
-                  ALL <span className="font-black font-data">({totalProjects})</span>
-        </button>
-
-        {categories.map((category) => (
-          <button
-            key={category}
-                      onClick={() => {
-                        setSelectedCategory(selectedCategory === category ? null : category);
-                        setShowCategories(false);
-                      }}
-                      className={`px-3 py-1.5 border-3 font-bold uppercase text-xs transition-colors ${
-              selectedCategory === category
-                          ? "bg-pink border-foreground"
-                          : "bg-transparent border-background hover:bg-muted"
-            }`}
-                      style={{
-                        color: selectedCategory === category ? "#19191a" : "#dfd9d9",
-                        clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                      }}
-                    >
-                      {category} <span className="font-black font-data">({getCategoryCount(category)})</span>
-                    </button>
-                  ))}
-              </div>
-              )}
+                  {category} <span className="font-black font-data">({getCategoryCount(category)})</span>
+                </FilterButton>
+              ))}
             </div>
-          </div>
+          )}
         </div>
-      </div>
+      </BorderedBox>
     </div>
   );
 }

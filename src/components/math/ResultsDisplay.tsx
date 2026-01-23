@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { colors } from "@/lib/colors";
 
 interface Token {
   name: string;
@@ -30,10 +31,10 @@ export default function ResultsDisplay({
   const LAMBO_PRICE = 300_000; // Average Lamborghini price
 
   const getMultiplierColor = (mult: number) => {
-    if (mult >= 100) return "#058d5e"; // green
-    if (mult >= 50) return "#f380cd"; // pink
-    if (mult >= 20) return "#f380cd"; // pink
-    return "#dfd9d9"; // default light
+    if (mult >= 100) return colors.green;
+    if (mult >= 50) return colors.pink;
+    if (mult >= 20) return colors.pink;
+    return colors.background;
   };
 
   const formatValue = (value: number) => {
@@ -51,7 +52,7 @@ export default function ResultsDisplay({
           "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
       }}
     >
-      <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
+      <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
         <div
           className="p-6 relative overflow-hidden"
           style={{
@@ -117,7 +118,7 @@ export default function ResultsDisplay({
                   "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
               }}
             >
-              <div style={{ backgroundColor: "#19191a", padding: "2px", height: "100%" }}>
+              <div style={{ backgroundColor: colors.foreground, padding: "2px", height: "100%" }}>
                 <div
                   className="text-center p-4 flex flex-col justify-center"
                   style={{
@@ -127,10 +128,10 @@ export default function ResultsDisplay({
                     minHeight: "110px",
                   }}
                 >
-                  <div className="text-sm font-black mb-1 uppercase tracking-wider" style={{ color: "#19191a" }}>
+                  <div className="text-sm font-black mb-1 uppercase tracking-wider" style={{ color: colors.foreground }}>
                     Your Investment
                   </div>
-                  <div className="text-4xl font-black" style={{ color: "#19191a" }}>
+                  <div className="text-4xl font-black" style={{ color: colors.foreground }}>
                     ${investment.toLocaleString()}
                   </div>
                 </div>
@@ -144,7 +145,7 @@ export default function ResultsDisplay({
                   "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
               }}
             >
-              <div style={{ backgroundColor: "#19191a", padding: "2px", height: "100%" }}>
+              <div style={{ backgroundColor: colors.foreground, padding: "2px", height: "100%" }}>
                 <div
                   className="text-center p-4 relative flex flex-col justify-center"
                   style={{
@@ -155,7 +156,7 @@ export default function ResultsDisplay({
                   }}
                 >
                   <div className="flex items-center justify-center gap-2 mb-1">
-                    <div className="text-sm font-black uppercase tracking-wider" style={{ color: "#19191a" }}>
+                    <div className="text-sm font-black uppercase tracking-wider" style={{ color: colors.foreground }}>
                       Position Value
                     </div>
                     <button
@@ -173,7 +174,7 @@ export default function ResultsDisplay({
                       🏎️
                     </button>
                   </div>
-                  <div className="text-4xl font-black" style={{ color: "#058d5e" }}>
+                  <div className="text-4xl font-black" style={{ color: colors.green }}>
                     {formatValue(positionValue)}
                   </div>
                 </div>
@@ -187,7 +188,7 @@ export default function ResultsDisplay({
                   "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
               }}
             >
-              <div style={{ backgroundColor: "#19191a", padding: "2px", height: "100%" }}>
+              <div style={{ backgroundColor: colors.foreground, padding: "2px", height: "100%" }}>
                 <div
                   className="text-center p-4 flex flex-col justify-center"
                   style={{
@@ -197,7 +198,7 @@ export default function ResultsDisplay({
                     minHeight: "110px",
                   }}
                 >
-                  <div className="text-sm font-black mb-1 uppercase tracking-wider" style={{ color: "#19191a" }}>
+                  <div className="text-sm font-black mb-1 uppercase tracking-wider" style={{ color: colors.foreground }}>
                     Return Multiple
                   </div>
                   <div

@@ -19,6 +19,31 @@ export interface NFTTrait {
   face_display_name: string | number;
 }
 
+/**
+ * Default empty traits object for initializing NFT state.
+ * Use -1 for numeric traits to indicate "not set".
+ */
+export const EMPTY_TRAITS: NFTTrait = {
+  tribe: -1,
+  skin: -1,
+  hair: -1,
+  eyeball: -1,
+  eyeliner: -1,
+  eyebrow: -1,
+  head: -1,
+  ear: -1,
+  face: -1,
+  tribe_display_name: "",
+  skin_display_name: "",
+  hair_display_name: "",
+  eyeball_display_name: "",
+  eyeliner_display_name: "",
+  eyebrow_display_name: "",
+  head_display_name: "",
+  ear_display_name: "",
+  face_display_name: "",
+};
+
 interface NFTAttribute {
   trait_type: string;
   value: string | number;

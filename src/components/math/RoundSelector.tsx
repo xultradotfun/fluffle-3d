@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { colors } from "@/lib/colors";
 
 interface Round {
   name: string;
@@ -41,24 +42,24 @@ export default function RoundSelector({
           "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
       }}
     >
-      <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
+      <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
         <div
           className="p-6"
           style={{
-            backgroundColor: "#19191a",
+            backgroundColor: colors.foreground,
             clipPath:
               "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
           }}
         >
           <h2
             className="text-lg font-black uppercase mb-2"
-            style={{ color: "#dfd9d9" }}
+            style={{ color: colors.background }}
           >
             Select Round
           </h2>
           <p
             className="text-sm font-bold uppercase mb-6"
-            style={{ color: "#dfd9d9" }}
+            style={{ color: colors.background }}
           >
             Choose one or more rounds to see cumulative results
           </p>
@@ -75,7 +76,7 @@ export default function RoundSelector({
               style={{
                 clipPath:
                   "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                color: selectedRounds.includes("echo") ? "#19191a" : "#dfd9d9",
+                color: selectedRounds.includes("echo") ? colors.foreground : colors.background,
               }}
             >
               <div className="relative w-20 h-20 flex-shrink-0">
@@ -109,8 +110,8 @@ export default function RoundSelector({
                 clipPath:
                   "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
                 color: selectedRounds.includes("fluffle")
-                  ? "#19191a"
-                  : "#dfd9d9",
+                  ? colors.foreground
+                  : colors.background,
               }}
             >
               <div className="relative w-20 h-20 flex-shrink-0">
@@ -140,11 +141,11 @@ export default function RoundSelector({
                     "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
                 }}
               >
-                <div style={{ backgroundColor: "#f380cd", padding: "2px" }}>
+                <div style={{ backgroundColor: colors.pink, padding: "2px" }}>
                   <div
                     className="space-y-3 p-4"
                     style={{
-                      backgroundColor: "#19191a",
+                      backgroundColor: colors.foreground,
                       clipPath:
                         "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
                     }}
@@ -161,13 +162,13 @@ export default function RoundSelector({
                   <div className="flex-1">
                     <div
                       className="text-xl font-black uppercase tracking-tight"
-                      style={{ color: "#dfd9d9" }}
+                      style={{ color: colors.background }}
                     >
                       Sonar Round
                     </div>
                     <div
                       className="text-sm font-data font-bold"
-                      style={{ color: "#dfd9d9" }}
+                      style={{ color: colors.background }}
                     >
                       {formatCurrency(rounds.sonar.fdv)}
                     </div>
@@ -176,7 +177,7 @@ export default function RoundSelector({
                     onClick={() => onRoundToggle("sonar")}
                     className="h-8 w-8 p-0 border-3 border-foreground bg-destructive hover:bg-pink font-bold transition-colors"
                     style={{
-                      color: "#dfd9d9",
+                      color: colors.background,
                       clipPath:
                         "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                     }}
@@ -188,7 +189,7 @@ export default function RoundSelector({
                   <label
                     htmlFor="sonar-investment"
                     className="font-data font-bold uppercase text-xs block"
-                    style={{ color: "#dfd9d9" }}
+                    style={{ color: colors.background }}
                   >
                     Investment Amount ($)
                   </label>
@@ -204,15 +205,15 @@ export default function RoundSelector({
                     placeholder="186282"
                     className="w-full border-3 border-background px-4 py-3 font-data font-bold focus:border-pink focus:ring-0 focus:outline-none"
                     style={{
-                      backgroundColor: "#e0e0e0",
-                      color: "#19191a",
+                      backgroundColor: colors.light,
+                      color: colors.foreground,
                       clipPath:
                         "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
                     }}
                   />
                   <p
                     className="text-xs font-data font-bold"
-                    style={{ color: "#dfd9d9" }}
+                    style={{ color: colors.background }}
                   >
                     Max: $186,282
                   </p>
@@ -227,7 +228,7 @@ export default function RoundSelector({
                 style={{
                   clipPath:
                     "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                  color: "#dfd9d9",
+                  color: colors.background,
                 }}
               >
                 <div className="relative w-20 h-20 flex-shrink-0">
@@ -258,11 +259,11 @@ export default function RoundSelector({
                     "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
                 }}
               >
-                <div style={{ backgroundColor: "#f380cd", padding: "2px" }}>
+                <div style={{ backgroundColor: colors.pink, padding: "2px" }}>
                   <div
                     className="space-y-3 p-4"
                     style={{
-                      backgroundColor: "#19191a",
+                      backgroundColor: colors.foreground,
                       clipPath:
                         "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
                     }}
@@ -270,7 +271,7 @@ export default function RoundSelector({
                 <div className="flex items-center justify-between">
                   <div
                     className="text-xl font-black uppercase tracking-tight"
-                    style={{ color: "#dfd9d9" }}
+                    style={{ color: colors.background }}
                   >
                     Custom Round
                   </div>
@@ -278,7 +279,7 @@ export default function RoundSelector({
                     onClick={() => onRoundToggle("custom")}
                     className="h-8 w-8 p-0 border-3 border-foreground bg-destructive hover:bg-pink font-bold transition-colors"
                     style={{
-                      color: "#dfd9d9",
+                      color: colors.background,
                       clipPath:
                         "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                     }}
@@ -291,7 +292,7 @@ export default function RoundSelector({
                     <label
                       htmlFor="investment"
                       className="font-data font-bold uppercase text-xs block"
-                      style={{ color: "#dfd9d9" }}
+                      style={{ color: colors.background }}
                     >
                       Investment Amount ($)
                     </label>
@@ -305,8 +306,8 @@ export default function RoundSelector({
                       placeholder="5000"
                       className="w-full border-3 border-background px-4 py-3 font-data font-bold focus:border-pink focus:ring-0 focus:outline-none"
                       style={{
-                        backgroundColor: "#e0e0e0",
-                        color: "#19191a",
+                        backgroundColor: colors.light,
+                        color: colors.foreground,
                         clipPath:
                           "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
                       }}
@@ -316,7 +317,7 @@ export default function RoundSelector({
                     <label
                       htmlFor="fdv"
                       className="font-data font-bold uppercase text-xs block"
-                      style={{ color: "#dfd9d9" }}
+                      style={{ color: colors.background }}
                     >
                       Fully Diluted Valuation ($)
                     </label>
@@ -330,15 +331,15 @@ export default function RoundSelector({
                       placeholder="300000000"
                       className="w-full border-3 border-background px-4 py-3 font-data font-bold focus:border-pink focus:ring-0 focus:outline-none"
                       style={{
-                        backgroundColor: "#e0e0e0",
-                        color: "#19191a",
+                        backgroundColor: colors.light,
+                        color: colors.foreground,
                         clipPath:
                           "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
                       }}
                     />
                     <p
                       className="text-xs font-data font-bold"
-                      style={{ color: "#dfd9d9" }}
+                      style={{ color: colors.background }}
                     >
                       {formatCurrency(customFdv)}
                     </p>
@@ -358,7 +359,7 @@ export default function RoundSelector({
               >
                 <div
                   className="text-4xl font-black transition-colors"
-                  style={{ color: "#dfd9d9" }}
+                  style={{ color: colors.background }}
                 >
                   +
                 </div>

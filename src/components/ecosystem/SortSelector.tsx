@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { useState } from "react";
 import type { SortMethod, SortType } from "@/types/ecosystem";
+import { colors } from "@/lib/colors";
 
 interface SortSelectorProps {
   sortMethod: SortMethod;
@@ -38,7 +39,7 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
         {/* Middle layer - border */}
         <div
           style={{
-            backgroundColor: "#19191a",
+            backgroundColor: colors.foreground,
             padding: "2px",
           }}
         >
@@ -49,7 +50,7 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
               clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
             }}
           >
-            <span className="text-sm font-black uppercase" style={{ color: "#dfd9d9" }}>SORT:</span>
+            <span className="text-sm font-black uppercase" style={{ color: colors.background }}>SORT:</span>
             <div className="flex gap-2">
           <button
             onClick={() => handleSortClick("score")}
@@ -59,7 +60,7 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
                     : "bg-transparent border-background hover:bg-muted"
             }`}
                 style={{
-                  color: sortMethod.type === "score" ? "#19191a" : "#dfd9d9",
+                  color: sortMethod.type === "score" ? colors.foreground : colors.background,
                   clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
                 }}
               >
@@ -77,7 +78,7 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
                     : "bg-transparent border-background hover:bg-muted"
             }`}
                 style={{
-                  color: sortMethod.type === "alphabetical" ? "#19191a" : "#dfd9d9",
+                  color: sortMethod.type === "alphabetical" ? colors.foreground : colors.background,
                   clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
                 }}
               >
@@ -95,7 +96,7 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
                     : "bg-transparent border-background hover:bg-muted"
             }`}
                 style={{
-                  color: sortMethod.type === "latest" ? "#19191a" : "#dfd9d9",
+                  color: sortMethod.type === "latest" ? colors.foreground : colors.background,
                   clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
                 }}
               >
@@ -111,8 +112,8 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
             <button
               type="button"
                   className="p-1.5 border-3 border-background bg-transparent hover:bg-muted transition-colors"
-                  style={{ 
-                    color: "#dfd9d9",
+                  style={{
+                    color: colors.background,
                     clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
                   }}
               onClick={() => setTooltipOpen(true)}
@@ -136,13 +137,14 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
             >
                   <div
                     style={{
-                      backgroundColor: "#19191a",
+                      backgroundColor: colors.foreground,
                       padding: "2px",
                     }}
                   >
                     <div
-                      className="max-w-[320px] bg-[#e0e0e0] p-4"
+                      className="max-w-[320px] p-4"
                       style={{
+                        backgroundColor: colors.light,
                         clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
                       }}
                     >

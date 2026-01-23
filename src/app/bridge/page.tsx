@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { ArrowLeftRight, Search, AlertCircle, ArrowLeft, Loader2 } from "lucide-react";
+import { colors } from "@/lib/colors";
 import { BridgeForm } from "@/components/bridge/BridgeForm";
 import { TxInput } from "@/components/bridge/TxInput";
 import { StatusStepper } from "@/components/bridge/StatusStepper";
@@ -9,8 +10,8 @@ import { DepositDetails } from "@/components/bridge/DepositDetails";
 import { useBridgeStatus } from "@/hooks/useBridgeStatus";
 import { fetchBridgeHealth } from "@/lib/bridgeApi";
 import { HealthResponse } from "@/types/bridge";
-import { ViewSwitcher } from "@/components/ViewSwitcher";
-import PageHeader from "@/components/PageHeader";
+import { ViewSwitcher } from "@/components/layout/ViewSwitcher";
+import PageHeader from "@/components/layout/PageHeader";
 
 export default function BridgePage() {
   const [view, setView] = useState<"bridge" | "track">("bridge");
@@ -36,7 +37,7 @@ export default function BridgePage() {
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#dfd9d9" }}>
+    <div className="min-h-screen" style={{ backgroundColor: colors.background }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 xl:px-24 2xl:px-32 py-8">
         <PageHeader
           title="COMMUNITY GAS BRIDGE"
@@ -56,10 +57,10 @@ export default function BridgePage() {
                 "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
             }}
           >
-            <div style={{ backgroundColor: "#f380cd", padding: "2px" }}>
+            <div style={{ backgroundColor: colors.pink, padding: "2px" }}>
               <div
                 style={{
-                  backgroundColor: "#19191a",
+                  backgroundColor: colors.foreground,
                   clipPath:
                     "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
                 }}
@@ -72,8 +73,8 @@ export default function BridgePage() {
                       view === "bridge" ? "" : "opacity-50"
                     }`}
                     style={{
-                      backgroundColor: view === "bridge" ? "#f380cd" : "transparent",
-                      color: view === "bridge" ? "#19191a" : "#dfd9d9",
+                      backgroundColor: view === "bridge" ? colors.pink : "transparent",
+                      color: view === "bridge" ? colors.foreground : colors.background,
                       clipPath:
                         view === "bridge"
                           ? "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)"
@@ -89,8 +90,8 @@ export default function BridgePage() {
                       view === "track" ? "" : "opacity-50"
                     }`}
                     style={{
-                      backgroundColor: view === "track" ? "#f380cd" : "transparent",
-                      color: view === "track" ? "#19191a" : "#dfd9d9",
+                      backgroundColor: view === "track" ? colors.pink : "transparent",
+                      color: view === "track" ? colors.foreground : colors.background,
                       clipPath:
                         view === "track"
                           ? "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)"
@@ -109,13 +110,13 @@ export default function BridgePage() {
                       <div className="p-8 text-center">
                         <AlertCircle
                           className="w-12 h-12 mx-auto mb-4"
-                          style={{ color: "#f44336" }}
+                          style={{ color: colors.error }}
                           strokeWidth={3}
                         />
-                        <p className="font-black text-lg uppercase" style={{ color: "#f44336" }}>
+                        <p className="font-black text-lg uppercase" style={{ color: colors.error }}>
                           {healthError}
                         </p>
-                        <p className="font-bold text-sm mt-2" style={{ color: "#dfd9d9" }}>
+                        <p className="font-bold text-sm mt-2" style={{ color: colors.background }}>
                           Please try again later
                         </p>
                       </div>
@@ -125,10 +126,10 @@ export default function BridgePage() {
                       <div className="p-12 text-center">
                         <Loader2
                           className="w-12 h-12 mx-auto animate-spin"
-                          style={{ color: "#f380cd" }}
+                          style={{ color: colors.pink }}
                           strokeWidth={3}
                         />
-                        <p className="font-black text-lg uppercase mt-4" style={{ color: "#dfd9d9" }}>
+                        <p className="font-black text-lg uppercase mt-4" style={{ color: colors.background }}>
                           Loading...
                         </p>
                       </div>
@@ -141,7 +142,7 @@ export default function BridgePage() {
                             setTxHash(null);
                           }}
                           className="flex items-center gap-1 text-sm font-bold uppercase mb-4 transition-opacity hover:opacity-70"
-                          style={{ color: "#dfd9d9" }}
+                          style={{ color: colors.background }}
                         >
                           <ArrowLeft className="w-4 h-4" strokeWidth={3} />
                           New search
@@ -160,10 +161,10 @@ export default function BridgePage() {
                             <div className="py-12 text-center">
                               <Loader2
                                 className="w-12 h-12 mx-auto animate-spin"
-                                style={{ color: "#f380cd" }}
+                                style={{ color: colors.pink }}
                                 strokeWidth={3}
                               />
-                              <p className="font-black text-lg uppercase mt-4" style={{ color: "#dfd9d9" }}>
+                              <p className="font-black text-lg uppercase mt-4" style={{ color: colors.background }}>
                                 Loading...
                               </p>
                             </div>
@@ -174,24 +175,24 @@ export default function BridgePage() {
                                   "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
                               }}
                             >
-                              <div style={{ backgroundColor: "#f44336", padding: "2px" }}>
+                              <div style={{ backgroundColor: colors.error, padding: "2px" }}>
                                 <div
                                   className="p-6 text-center"
                                   style={{
-                                    backgroundColor: "#19191a",
+                                    backgroundColor: colors.foreground,
                                     clipPath:
                                       "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
                                   }}
                                 >
                                   <AlertCircle
                                     className="w-10 h-10 mx-auto mb-3"
-                                    style={{ color: "#f44336" }}
+                                    style={{ color: colors.error }}
                                     strokeWidth={3}
                                   />
-                                  <p className="font-black uppercase" style={{ color: "#f44336" }}>
+                                  <p className="font-black uppercase" style={{ color: colors.error }}>
                                     {error}
                                   </p>
-                                  <p className="text-sm font-bold mt-2" style={{ color: "#dfd9d9" }}>
+                                  <p className="text-sm font-bold mt-2" style={{ color: colors.background }}>
                                     Make sure this is a valid bridge deposit
                                   </p>
                                 </div>
@@ -220,7 +221,7 @@ export default function BridgePage() {
                           }}
                         >
                           <Search className="w-8 h-8 mx-auto mb-3" style={{ color: "#666" }} strokeWidth={3} />
-                          <p className="text-sm font-bold" style={{ color: "#dfd9d9" }}>
+                          <p className="text-sm font-bold" style={{ color: colors.background }}>
                             Enter your Arbitrum tx hash to track status
                           </p>
                         </div>

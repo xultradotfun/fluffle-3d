@@ -4,8 +4,8 @@ import { useState, useRef, useEffect } from "react";
 import { NFTBadge } from "./NFTBadge";
 import { PreviewCard } from "./PreviewCard";
 import { InputCard } from "./InputCard";
-import PageHeader from "@/components/PageHeader";
-import type { NFTTrait } from "@/utils/nftLoader";
+import PageHeader from "@/components/layout/PageHeader";
+import { type NFTTrait, EMPTY_TRAITS } from "@/utils/nftLoader";
 import { getTraitImageUrl } from "@/utils/traitImageMap";
 
 type ZoomLevel = "full" | "bust";
@@ -40,27 +40,7 @@ export function PFPGenerator() {
         setCurrentBgImage(img);
         
         // Load default NFT after background is ready
-        const emptyTraits: NFTTrait = {
-          tribe: -1,
-          skin: -1,
-          hair: -1,
-          eyeball: -1,
-          eyeliner: -1,
-          eyebrow: -1,
-          head: -1,
-          ear: -1,
-          face: -1,
-          tribe_display_name: "",
-          skin_display_name: "",
-          hair_display_name: "",
-          eyeball_display_name: "",
-          eyeliner_display_name: "",
-          eyebrow_display_name: "",
-          head_display_name: "",
-          ear_display_name: "",
-          face_display_name: "",
-        };
-        setSelectedNFT({ id: defaultNFTId, traits: emptyTraits });
+        setSelectedNFT({ id: defaultNFTId, traits: EMPTY_TRAITS });
         await generatePFP(defaultNFTId, "bust", true, img);
       } catch (err) {
         console.error("Error loading initial background:", err);

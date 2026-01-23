@@ -4,6 +4,7 @@ import { ExternalLink, Copy, CheckCircle2, Sparkles, AlertCircle } from "lucide-
 import { useState } from "react";
 import { DepositStatusResponse } from "@/types/bridge";
 import { truncateHash } from "@/utils/bridge";
+import { colors } from "@/lib/colors";
 
 interface DepositDetailsProps {
   data: DepositStatusResponse;
@@ -25,9 +26,9 @@ function CopyButton({ text }: { text: string }) {
       type="button"
     >
       {copied ? (
-        <CheckCircle2 className="h-4 w-4" style={{ color: "#f380cd" }} strokeWidth={3} />
+        <CheckCircle2 className="h-4 w-4" style={{ color: colors.pink }} strokeWidth={3} />
       ) : (
-        <Copy className="h-4 w-4" style={{ color: "#dfd9d9" }} strokeWidth={3} />
+        <Copy className="h-4 w-4" style={{ color: colors.background }} strokeWidth={3} />
       )}
     </button>
   );
@@ -49,22 +50,22 @@ export function DepositDetails({ data }: DepositDetailsProps) {
               "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
           }}
         >
-          <div style={{ backgroundColor: "#f380cd", padding: "2px" }}>
+          <div style={{ backgroundColor: colors.pink, padding: "2px" }}>
             <div
               className="p-4"
               style={{
-                backgroundColor: "#19191a",
+                backgroundColor: colors.foreground,
                 clipPath:
                   "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
               }}
             >
               <div className="flex items-center gap-3">
-                <Sparkles className="h-6 w-6" style={{ color: "#f380cd" }} strokeWidth={3} />
+                <Sparkles className="h-6 w-6" style={{ color: colors.pink }} strokeWidth={3} />
                 <div>
-                  <p className="font-black text-base uppercase" style={{ color: "#f380cd" }}>
+                  <p className="font-black text-base uppercase" style={{ color: colors.pink }}>
                     FUNDS RECEIVED
                   </p>
-                  <p className="text-sm font-bold mt-1" style={{ color: "#dfd9d9" }}>
+                  <p className="text-sm font-bold mt-1" style={{ color: colors.background }}>
                     {formatted.payoutAmount} ETH sent to your address
                   </p>
                 </div>
@@ -81,22 +82,22 @@ export function DepositDetails({ data }: DepositDetailsProps) {
               "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
           }}
         >
-          <div style={{ backgroundColor: "#f44336", padding: "2px" }}>
+          <div style={{ backgroundColor: colors.error, padding: "2px" }}>
             <div
               className="p-4"
               style={{
-                backgroundColor: "#19191a",
+                backgroundColor: colors.foreground,
                 clipPath:
                   "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
               }}
             >
               <div className="flex items-center gap-3">
-                <AlertCircle className="h-6 w-6" style={{ color: "#f44336" }} strokeWidth={3} />
+                <AlertCircle className="h-6 w-6" style={{ color: colors.error }} strokeWidth={3} />
                 <div>
-                  <p className="font-black text-base uppercase" style={{ color: "#f44336" }}>
+                  <p className="font-black text-base uppercase" style={{ color: colors.error }}>
                     {isOrphaned ? "DEPOSIT ORPHANED" : "PAYOUT FAILED"}
                   </p>
-                  <p className="text-sm font-bold mt-1" style={{ color: "#dfd9d9" }}>
+                  <p className="text-sm font-bold mt-1" style={{ color: colors.background }}>
                     {isOrphaned
                       ? "Chain reorganization detected. Deposit will not be processed."
                       : "The payout transaction failed. Please contact support."}
@@ -115,7 +116,7 @@ export function DepositDetails({ data }: DepositDetailsProps) {
             "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
         }}
       >
-        <div style={{ backgroundColor: "#f380cd", padding: "2px" }}>
+        <div style={{ backgroundColor: colors.pink, padding: "2px" }}>
           <div
             className="p-5"
             style={{
@@ -127,17 +128,17 @@ export function DepositDetails({ data }: DepositDetailsProps) {
             <div className="space-y-4">
               {/* Status */}
               <div className="flex justify-between items-center">
-                <span className="text-sm font-black uppercase" style={{ color: "#19191a" }}>
+                <span className="text-sm font-black uppercase" style={{ color: colors.foreground }}>
                   Status
                 </span>
                 <span
                   className="text-xs font-black uppercase px-3 py-1"
                   style={{
                     backgroundColor: isCompleted
-                      ? "#f380cd"
+                      ? colors.pink
                       : isOrphaned || isFailed
-                      ? "#f44336"
-                      : "#19191a",
+                      ? colors.error
+                      : colors.foreground,
                     color: "#fff",
                     clipPath:
                       "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
@@ -149,17 +150,17 @@ export function DepositDetails({ data }: DepositDetailsProps) {
 
               {/* Deposit Amount */}
               <div className="flex justify-between items-center">
-                <span className="text-sm font-black uppercase" style={{ color: "#19191a" }}>
+                <span className="text-sm font-black uppercase" style={{ color: colors.foreground }}>
                   Deposit
                 </span>
-                <span className="font-mono font-bold text-sm" style={{ color: "#19191a" }}>
+                <span className="font-mono font-bold text-sm" style={{ color: colors.foreground }}>
                   {formatted.depositAmount} ETH
                 </span>
               </div>
 
               {/* Fee */}
               <div className="flex justify-between items-center">
-                <span className="text-sm font-black uppercase" style={{ color: "#19191a" }}>
+                <span className="text-sm font-black uppercase" style={{ color: colors.foreground }}>
                   Fee (0.30%)
                 </span>
                 <span className="font-mono font-bold text-sm" style={{ color: "#666" }}>
@@ -169,21 +170,21 @@ export function DepositDetails({ data }: DepositDetailsProps) {
 
               {/* Payout */}
               <div className="flex justify-between items-center">
-                <span className="text-sm font-black uppercase" style={{ color: "#19191a" }}>
+                <span className="text-sm font-black uppercase" style={{ color: colors.foreground }}>
                   Payout
                 </span>
-                <span className="font-mono font-bold text-sm" style={{ color: "#f380cd" }}>
+                <span className="font-mono font-bold text-sm" style={{ color: colors.pink }}>
                   {formatted.payoutAmount} ETH
                 </span>
               </div>
 
               {/* Sender */}
               <div className="flex justify-between items-center">
-                <span className="text-sm font-black uppercase" style={{ color: "#19191a" }}>
+                <span className="text-sm font-black uppercase" style={{ color: colors.foreground }}>
                   Sender
                 </span>
                 <div className="flex items-center gap-1">
-                  <span className="font-mono text-sm font-bold" style={{ color: "#19191a" }}>
+                  <span className="font-mono text-sm font-bold" style={{ color: colors.foreground }}>
                     {truncateHash(deposit.sender)}
                   </span>
                   <CopyButton text={deposit.sender} />
@@ -192,11 +193,11 @@ export function DepositDetails({ data }: DepositDetailsProps) {
 
               {/* Arbitrum TX */}
               <div className="flex justify-between items-center">
-                <span className="text-sm font-black uppercase" style={{ color: "#19191a" }}>
+                <span className="text-sm font-black uppercase" style={{ color: colors.foreground }}>
                   Arbitrum TX
                 </span>
                 <div className="flex items-center gap-1">
-                  <span className="font-mono text-sm font-bold" style={{ color: "#19191a" }}>
+                  <span className="font-mono text-sm font-bold" style={{ color: colors.foreground }}>
                     {truncateHash(deposit.arb_tx_hash)}
                   </span>
                   <CopyButton text={deposit.arb_tx_hash} />
@@ -207,7 +208,7 @@ export function DepositDetails({ data }: DepositDetailsProps) {
                       rel="noopener noreferrer"
                       className="p-1 hover:opacity-70 transition-opacity"
                     >
-                      <ExternalLink className="h-4 w-4" style={{ color: "#f380cd" }} strokeWidth={3} />
+                      <ExternalLink className="h-4 w-4" style={{ color: colors.pink }} strokeWidth={3} />
                     </a>
                   )}
                 </div>
@@ -216,11 +217,11 @@ export function DepositDetails({ data }: DepositDetailsProps) {
               {/* MegaETH TX */}
               {deposit.mega_tx_hash && (
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-black uppercase" style={{ color: "#19191a" }}>
+                  <span className="text-sm font-black uppercase" style={{ color: colors.foreground }}>
                     MegaETH TX
                   </span>
                   <div className="flex items-center gap-1">
-                    <span className="font-mono text-sm font-bold" style={{ color: "#19191a" }}>
+                    <span className="font-mono text-sm font-bold" style={{ color: colors.foreground }}>
                       {truncateHash(deposit.mega_tx_hash)}
                     </span>
                     <CopyButton text={deposit.mega_tx_hash} />
@@ -231,7 +232,7 @@ export function DepositDetails({ data }: DepositDetailsProps) {
                         rel="noopener noreferrer"
                         className="p-1 hover:opacity-70 transition-opacity"
                       >
-                        <ExternalLink className="h-4 w-4" style={{ color: "#f380cd" }} strokeWidth={3} />
+                        <ExternalLink className="h-4 w-4" style={{ color: colors.pink }} strokeWidth={3} />
                       </a>
                     )}
                   </div>
@@ -240,7 +241,7 @@ export function DepositDetails({ data }: DepositDetailsProps) {
 
               {/* Detected Time */}
               <div className="flex justify-between items-center">
-                <span className="text-sm font-black uppercase" style={{ color: "#19191a" }}>
+                <span className="text-sm font-black uppercase" style={{ color: colors.foreground }}>
                   Detected
                 </span>
                 <span className="text-sm font-bold" style={{ color: "#666" }}>

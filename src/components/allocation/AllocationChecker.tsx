@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { colors } from "@/lib/colors";
 import {
   Wallet,
   Loader2,
@@ -224,10 +225,10 @@ export function AllocationChecker() {
             "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
         }}
       >
-        <div style={{ backgroundColor: "#f380cd", padding: "2px" }}>
+        <div style={{ backgroundColor: colors.pink, padding: "2px" }}>
           <div
             style={{
-              backgroundColor: "#19191a",
+              backgroundColor: colors.foreground,
               clipPath:
                 "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
               padding: "24px",
@@ -237,12 +238,12 @@ export function AllocationChecker() {
               <div className="flex items-center gap-2 mb-4">
                 <Wallet
                   className="w-5 h-5"
-                  style={{ color: "#f380cd" }}
+                  style={{ color: colors.pink }}
                   strokeWidth={3}
                 />
                 <h3
                   className="text-lg font-black uppercase"
-                  style={{ color: "#dfd9d9" }}
+                  style={{ color: colors.background }}
                 >
                   Enter Wallet Addresses
                 </h3>
@@ -255,9 +256,9 @@ export function AllocationChecker() {
                 rows={6}
                 className="w-full px-4 py-3 border-3 font-mono text-sm resize-none focus:outline-none focus:border-pink transition-colors"
                 style={{
-                  backgroundColor: "#fff",
-                  color: "#19191a",
-                  borderColor: "#19191a",
+                  backgroundColor: colors.white,
+                  color: colors.foreground,
+                  borderColor: colors.foreground,
                   clipPath:
                     "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
                 }}
@@ -266,7 +267,7 @@ export function AllocationChecker() {
 
               <p
                 className="text-xs font-bold uppercase"
-                style={{ color: "#dfd9d9" }}
+                style={{ color: colors.background }}
               >
                 Enter one or multiple addresses (separated by newlines, commas,
                 or spaces)
@@ -278,9 +279,9 @@ export function AllocationChecker() {
                   disabled={isChecking || !walletInput.trim()}
                   className="flex-1 flex items-center justify-center gap-2 px-6 py-3 border-3 font-bold uppercase text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed hover:bg-pink hover:border-foreground"
                   style={{
-                    backgroundColor: "#f380cd",
-                    borderColor: "#19191a",
-                    color: "#19191a",
+                    backgroundColor: colors.pink,
+                    borderColor: colors.foreground,
+                    color: colors.foreground,
                     clipPath:
                       "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
                   }}
@@ -306,9 +307,9 @@ export function AllocationChecker() {
                   disabled={isChecking}
                   className="px-6 py-3 border-3 font-bold uppercase text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed hover:bg-destructive"
                   style={{
-                    backgroundColor: "#e0e0e0",
-                    borderColor: "#19191a",
-                    color: "#19191a",
+                    backgroundColor: colors.light,
+                    borderColor: colors.foreground,
+                    color: colors.foreground,
                     clipPath:
                       "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
                   }}
@@ -329,10 +330,10 @@ export function AllocationChecker() {
               "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
           }}
         >
-          <div style={{ backgroundColor: "#f380cd", padding: "2px" }}>
+          <div style={{ backgroundColor: colors.pink, padding: "2px" }}>
             <div
               style={{
-                backgroundColor: "#19191a",
+                backgroundColor: colors.foreground,
                 clipPath:
                   "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
                 padding: "24px",
@@ -341,7 +342,7 @@ export function AllocationChecker() {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                 <h3
                   className="text-lg font-black uppercase"
-                  style={{ color: "#dfd9d9" }}
+                  style={{ color: colors.background }}
                 >
                   Results ({results.length} wallet
                   {results.length > 1 ? "s" : ""})
@@ -358,13 +359,13 @@ export function AllocationChecker() {
                         style={{
                           backgroundColor:
                             selectedFdv === preset.value
-                              ? "#f380cd"
+                              ? colors.pink
                               : "transparent",
-                          borderColor: "#dfd9d9",
+                          borderColor: colors.background,
                           color:
                             selectedFdv === preset.value
-                              ? "#19191a"
-                              : "#dfd9d9",
+                              ? colors.foreground
+                              : colors.background,
                           clipPath:
                             "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                         }}
@@ -380,10 +381,10 @@ export function AllocationChecker() {
                     className="flex items-center gap-2 px-3 py-2 border-3 font-bold uppercase text-xs transition-colors hover:bg-muted"
                     style={{
                       backgroundColor: hideAddresses
-                        ? "#f380cd"
+                        ? colors.pink
                         : "transparent",
-                      borderColor: "#dfd9d9",
-                      color: hideAddresses ? "#19191a" : "#dfd9d9",
+                      borderColor: colors.background,
+                      color: hideAddresses ? colors.foreground : colors.background,
                       clipPath:
                         "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
                     }}
@@ -403,8 +404,8 @@ export function AllocationChecker() {
                 <div
                   className="mb-4 p-4 border-3"
                   style={{
-                    backgroundColor: "#058d5e",
-                    borderColor: "#19191a",
+                    backgroundColor: colors.green,
+                    borderColor: colors.foreground,
                     clipPath:
                       "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
                   }}
@@ -412,14 +413,14 @@ export function AllocationChecker() {
                   <div className="flex items-center justify-between">
                     <span
                       className="text-sm font-black uppercase"
-                      style={{ color: "#fff" }}
+                      style={{ color: colors.white }}
                     >
                       Total Allocation
                     </span>
                     <div className="text-right">
                       <div
                         className="text-2xl font-black"
-                        style={{ color: "#fff" }}
+                        style={{ color: colors.white }}
                       >
                         {totalAllocation.toLocaleString(undefined, {
                           maximumFractionDigits: 2,
@@ -428,7 +429,7 @@ export function AllocationChecker() {
                       </div>
                       <div
                         className="text-sm font-bold"
-                        style={{ color: "#e0e0e0" }}
+                        style={{ color: colors.light }}
                       >
                         $
                         {calculateValueAtFdv(totalAllocation).toLocaleString(
@@ -456,9 +457,9 @@ export function AllocationChecker() {
                     style={{
                       backgroundColor:
                         result.allocation && result.allocation > 0
-                          ? "#fff"
-                          : "#e0e0e0",
-                      borderColor: "#19191a",
+                          ? colors.white
+                          : colors.light,
+                      borderColor: colors.foreground,
                       clipPath:
                         "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
                     }}
@@ -469,19 +470,19 @@ export function AllocationChecker() {
                         result.allocation > 0 ? (
                           <CheckCircle2
                             className="w-5 h-5 flex-shrink-0"
-                            style={{ color: "#058d5e" }}
+                            style={{ color: colors.green }}
                             strokeWidth={3}
                           />
                         ) : result.error ? (
                           <XCircle
                             className="w-5 h-5 flex-shrink-0"
-                            style={{ color: "#dc2626" }}
+                            style={{ color: colors.error }}
                             strokeWidth={3}
                           />
                         ) : (
                           <XCircle
                             className="w-5 h-5 flex-shrink-0"
-                            style={{ color: "#999" }}
+                            style={{ color: colors.mutedLight }}
                             strokeWidth={3}
                           />
                         )}
@@ -489,7 +490,7 @@ export function AllocationChecker() {
                           <span
                             className="font-mono text-sm font-bold truncate"
                             style={{
-                              color: "#19191a",
+                              color: colors.foreground,
                               filter: hideAddresses ? "blur(6px)" : "none",
                               userSelect: hideAddresses ? "none" : "auto",
                             }}
@@ -506,9 +507,9 @@ export function AllocationChecker() {
                               <span
                                 className="text-[10px] font-black uppercase px-1.5 py-0.5 border-2"
                                 style={{
-                                  backgroundColor: "#fff",
-                                  borderColor: "#19191a",
-                                  color: "#19191a",
+                                  backgroundColor: colors.white,
+                                  borderColor: colors.foreground,
+                                  color: colors.foreground,
                                 }}
                                 title="Overall rank"
                               >
@@ -519,10 +520,10 @@ export function AllocationChecker() {
                                 style={{
                                   backgroundColor:
                                     result.rank.categoryType === "locked"
-                                      ? "#f380cd"
-                                      : "#e0e0e0",
-                                  borderColor: "#19191a",
-                                  color: "#19191a",
+                                      ? colors.pink
+                                      : colors.light,
+                                  borderColor: colors.foreground,
+                                  color: colors.foreground,
                                 }}
                                 title={`Rank among ${result.rank.categoryType} bids`}
                               >
@@ -550,7 +551,7 @@ export function AllocationChecker() {
                               className="text-lg font-black"
                               style={{
                                 color:
-                                  result.allocation > 0 ? "#058d5e" : "#999",
+                                  result.allocation > 0 ? colors.green : colors.mutedLight,
                               }}
                             >
                               {result.allocation.toLocaleString(undefined, {
@@ -561,7 +562,7 @@ export function AllocationChecker() {
                             <div className="flex items-center gap-2">
                               <span
                                 className="text-xs font-bold"
-                                style={{ color: "#666" }}
+                                style={{ color: colors.muted }}
                               >
                                 $
                                 {calculateValueAtFdv(
@@ -575,8 +576,8 @@ export function AllocationChecker() {
                                       style={{
                                         color:
                                           result.fillPercentage > 0
-                                            ? "#f380cd"
-                                            : "#999",
+                                            ? colors.pink
+                                            : colors.mutedLight,
                                         marginLeft: "8px",
                                       }}
                                     >
@@ -593,10 +594,10 @@ export function AllocationChecker() {
                                   className="text-[10px] font-black uppercase px-1.5 py-0.5 border-2"
                                   style={{
                                     backgroundColor: result.lockup
-                                      ? "#f380cd"
-                                      : "#e0e0e0",
-                                    borderColor: "#19191a",
-                                    color: "#19191a",
+                                      ? colors.pink
+                                      : colors.light,
+                                    borderColor: colors.foreground,
+                                    color: colors.foreground,
                                   }}
                                 >
                                   {result.lockup ? "🔒 LOCKED" : "UNLOCKED"}
@@ -607,7 +608,7 @@ export function AllocationChecker() {
                         ) : (
                           <span
                             className="text-sm font-bold uppercase"
-                            style={{ color: "#dc2626" }}
+                            style={{ color: colors.error }}
                           >
                             {result.error || "No allocation"}
                           </span>
@@ -629,10 +630,10 @@ export function AllocationChecker() {
             "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
         }}
       >
-        <div style={{ backgroundColor: "#19191a", padding: "2px" }}>
+        <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
           <div
             style={{
-              backgroundColor: "#e0e0e0",
+              backgroundColor: colors.light,
               clipPath:
                 "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
             }}
@@ -644,12 +645,12 @@ export function AllocationChecker() {
               <div className="flex items-center gap-2">
                 <Code
                   className="w-4 h-4"
-                  style={{ color: "#19191a" }}
+                  style={{ color: colors.foreground }}
                   strokeWidth={3}
                 />
                 <span
                   className="text-sm font-black uppercase"
-                  style={{ color: "#19191a" }}
+                  style={{ color: colors.foreground }}
                 >
                   API Documentation
                 </span>
@@ -657,13 +658,13 @@ export function AllocationChecker() {
               {showApiDocs ? (
                 <ChevronUp
                   className="w-4 h-4"
-                  style={{ color: "#19191a" }}
+                  style={{ color: colors.foreground }}
                   strokeWidth={3}
                 />
               ) : (
                 <ChevronDown
                   className="w-4 h-4"
-                  style={{ color: "#19191a" }}
+                  style={{ color: colors.foreground }}
                   strokeWidth={3}
                 />
               )}
@@ -672,21 +673,21 @@ export function AllocationChecker() {
             {showApiDocs && (
               <div
                 className="px-4 pb-4 space-y-3 border-t-2"
-                style={{ borderColor: "#19191a" }}
+                style={{ borderColor: colors.foreground }}
               >
                 <div className="pt-3">
                   <p
                     className="text-xs font-bold mb-2"
-                    style={{ color: "#19191a" }}
+                    style={{ color: colors.foreground }}
                   >
                     ENDPOINT
                   </p>
                   <code
                     className="block px-3 py-2 text-xs font-mono rounded border-2"
                     style={{
-                      backgroundColor: "#fff",
-                      color: "#19191a",
-                      borderColor: "#19191a",
+                      backgroundColor: colors.white,
+                      color: colors.foreground,
+                      borderColor: colors.foreground,
                     }}
                   >
                     POST https://megasale-check.xultra.fun/api/allocations/check
@@ -696,16 +697,16 @@ export function AllocationChecker() {
                 <div>
                   <p
                     className="text-xs font-bold mb-2"
-                    style={{ color: "#19191a" }}
+                    style={{ color: colors.foreground }}
                   >
                     REQUEST BODY
                   </p>
                   <pre
                     className="px-3 py-2 text-xs font-mono rounded border-2 overflow-x-auto"
                     style={{
-                      backgroundColor: "#fff",
-                      color: "#19191a",
-                      borderColor: "#19191a",
+                      backgroundColor: colors.white,
+                      color: colors.foreground,
+                      borderColor: colors.foreground,
                     }}
                   >
                     {`{
@@ -720,16 +721,16 @@ export function AllocationChecker() {
                 <div>
                   <p
                     className="text-xs font-bold mb-2"
-                    style={{ color: "#19191a" }}
+                    style={{ color: colors.foreground }}
                   >
                     RESPONSE
                   </p>
                   <pre
                     className="px-3 py-2 text-xs font-mono rounded border-2 overflow-x-auto"
                     style={{
-                      backgroundColor: "#fff",
-                      color: "#19191a",
-                      borderColor: "#19191a",
+                      backgroundColor: colors.white,
+                      color: colors.foreground,
+                      borderColor: colors.foreground,
                     }}
                   >
                     {`{
@@ -772,16 +773,16 @@ export function AllocationChecker() {
                 <div>
                   <p
                     className="text-xs font-bold mb-2"
-                    style={{ color: "#19191a" }}
+                    style={{ color: colors.foreground }}
                   >
                     EXAMPLE (JAVASCRIPT)
                   </p>
                   <pre
                     className="px-3 py-2 text-xs font-mono rounded border-2 overflow-x-auto"
                     style={{
-                      backgroundColor: "#fff",
-                      color: "#19191a",
-                      borderColor: "#19191a",
+                      backgroundColor: colors.white,
+                      color: colors.foreground,
+                      borderColor: colors.foreground,
                     }}
                   >
                     {`const response = await fetch(

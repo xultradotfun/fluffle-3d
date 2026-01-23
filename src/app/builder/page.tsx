@@ -1,7 +1,7 @@
 "use client";
 
-import { ViewSwitcher } from "@/components/ViewSwitcher";
-import Hero from "@/components/Hero";
+import { ViewSwitcher } from "@/components/layout/ViewSwitcher";
+import Hero from "@/components/layout/Hero";
 import NFTBuilder from "@/components/builder/NFTBuilder";
 
 export default function BuilderPage() {

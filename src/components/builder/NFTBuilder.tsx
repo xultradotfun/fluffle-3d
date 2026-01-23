@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { colors } from "@/lib/colors";
 import { SelectedTraits, TraitType } from "@/types/traits";
 import {
   TRAIT_CATEGORIES,
@@ -12,7 +13,7 @@ import TraitSelector from "./TraitSelector";
 import ViewControls from "./ViewControls";
 import ActionButtons from "./ActionButtons";
 import TraitCategoryTabs from "./TraitCategoryTabs";
-import PageHeader from "@/components/PageHeader";
+import PageHeader from "@/components/layout/PageHeader";
 import { getTraitImageUrl, getTraitBackImageUrl } from "@/utils/traitImageMap";
 import { LAYER_ORDER, HAIR_WITH_BACK, LayerGroup } from "@/utils/layerOrder";
 import { ZOOM_PRESETS } from "@/constants/zoom";
@@ -357,14 +358,14 @@ export default function NFTBuilder() {
           >
             <div
               style={{
-                backgroundColor: "#19191a",
+                backgroundColor: colors.foreground,
                 padding: "2px",
               }}
             >
               <div
                 className="p-4 lg:p-6"
                 style={{
-                  backgroundColor: "#19191a",
+                  backgroundColor: colors.foreground,
                   clipPath:
                     "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
                 }}
@@ -377,11 +378,11 @@ export default function NFTBuilder() {
                         "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                     }}
                   >
-                    <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+                    <div style={{ backgroundColor: colors.background, padding: "2px" }}>
                       <div
                         className="w-8 h-8 flex items-center justify-center"
                         style={{
-                          backgroundColor: "#f380cd",
+                          backgroundColor: colors.pink,
                           clipPath:
                             "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                         }}
@@ -392,7 +393,7 @@ export default function NFTBuilder() {
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                           strokeWidth={3}
-                          style={{ color: "#dfd9d9" }}
+                          style={{ color: colors.background }}
                   >
                     <path
                             strokeLinecap="square"
@@ -406,13 +407,13 @@ export default function NFTBuilder() {
                 <div>
                     <h3
                       className="text-sm font-black uppercase"
-                      style={{ color: "#dfd9d9" }}
+                      style={{ color: colors.background }}
                     >
                     Preview
                   </h3>
                     <p
                       className="text-xs font-bold uppercase"
-                      style={{ color: "#dfd9d9" }}
+                      style={{ color: colors.background }}
                     >
                     Your Fluffle will appear here
                   </p>
@@ -427,11 +428,11 @@ export default function NFTBuilder() {
                       "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
                   }}
                 >
-                  <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+                  <div style={{ backgroundColor: colors.background, padding: "2px" }}>
                     <div
                       className="relative aspect-square"
                       style={{
-                        backgroundColor: "#e0e0e0",
+                        backgroundColor: colors.light,
                         clipPath:
                           "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
                       }}
@@ -459,14 +460,14 @@ export default function NFTBuilder() {
           >
             <div
               style={{
-                backgroundColor: "#19191a",
+                backgroundColor: colors.foreground,
                 padding: "2px",
               }}
             >
               <div
                 className="p-4 lg:p-6 space-y-6"
                 style={{
-                  backgroundColor: "#19191a",
+                  backgroundColor: colors.foreground,
                   clipPath:
                     "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
                 }}
@@ -479,11 +480,11 @@ export default function NFTBuilder() {
                         "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                     }}
                   >
-                    <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+                    <div style={{ backgroundColor: colors.background, padding: "2px" }}>
                       <div
                         className="w-8 h-8 flex items-center justify-center"
                         style={{
-                          backgroundColor: "#058d5e",
+                          backgroundColor: colors.green,
                           clipPath:
                             "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                         }}
@@ -494,7 +495,7 @@ export default function NFTBuilder() {
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                           strokeWidth={3}
-                          style={{ color: "#dfd9d9" }}
+                          style={{ color: colors.background }}
                   >
                     <path
                             strokeLinecap="square"
@@ -514,13 +515,13 @@ export default function NFTBuilder() {
                 <div>
                     <h3
                       className="text-sm font-black uppercase"
-                      style={{ color: "#dfd9d9" }}
+                      style={{ color: colors.background }}
                     >
                     Controls
                   </h3>
                     <p
                       className="text-xs font-bold uppercase"
-                      style={{ color: "#dfd9d9" }}
+                      style={{ color: colors.background }}
                     >
                     Adjust view and export options
                   </p>
@@ -555,14 +556,14 @@ export default function NFTBuilder() {
           >
             <div
               style={{
-                backgroundColor: "#19191a",
+                backgroundColor: colors.foreground,
                 padding: "2px",
               }}
             >
               <div
                 className="p-4 lg:p-6"
                 style={{
-                  backgroundColor: "#19191a",
+                  backgroundColor: colors.foreground,
                   clipPath:
                     "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
                 }}
@@ -575,11 +576,11 @@ export default function NFTBuilder() {
                         "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                     }}
                   >
-                    <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+                    <div style={{ backgroundColor: colors.background, padding: "2px" }}>
                       <div
                         className="w-8 h-8 flex items-center justify-center"
                         style={{
-                          backgroundColor: "#058d5e",
+                          backgroundColor: colors.green,
                           clipPath:
                             "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
                         }}
@@ -590,7 +591,7 @@ export default function NFTBuilder() {
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                           strokeWidth={3}
-                          style={{ color: "#dfd9d9" }}
+                          style={{ color: colors.background }}
                   >
                     <path
                             strokeLinecap="square"
@@ -604,13 +605,13 @@ export default function NFTBuilder() {
                 <div>
                     <h3
                       className="text-sm font-black uppercase"
-                      style={{ color: "#dfd9d9" }}
+                      style={{ color: colors.background }}
                     >
                     Traits
                   </h3>
                     <p
                       className="text-xs font-bold uppercase"
-                      style={{ color: "#dfd9d9" }}
+                      style={{ color: colors.background }}
                     >
                     Customize your character's appearance
                   </p>
@@ -631,11 +632,11 @@ export default function NFTBuilder() {
                         "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
                     }}
                   >
-                    <div style={{ backgroundColor: "#dfd9d9", padding: "2px" }}>
+                    <div style={{ backgroundColor: colors.background, padding: "2px" }}>
                       <div
                         className="overflow-y-auto max-h-[600px] p-4 scrollbar-thin scrollbar-thumb-foreground scrollbar-track-transparent hover:scrollbar-thumb-pink"
                         style={{
-                          backgroundColor: "#e0e0e0",
+                          backgroundColor: colors.light,
                           clipPath:
                             "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
                         }}
