@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+export const dynamic = "force-dynamic";
+
 const BRIDGE_API_URL = process.env.NEXT_PUBLIC_BRIDGE_API_URL;
 
 export async function GET() {

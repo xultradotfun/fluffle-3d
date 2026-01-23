@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { ArrowLeftRight, Search, AlertCircle, ArrowLeft, Loader2 } from "lucide-react";
 import { colors } from "@/lib/colors";
-import { BridgeForm } from "@/components/bridge/BridgeForm";
 import { TxInput } from "@/components/bridge/TxInput";
 import { StatusStepper } from "@/components/bridge/StatusStepper";
 import { DepositDetails } from "@/components/bridge/DepositDetails";
@@ -12,6 +12,12 @@ import { fetchBridgeHealth } from "@/lib/bridgeApi";
 import { HealthResponse } from "@/types/bridge";
 import { ViewSwitcher } from "@/components/layout/ViewSwitcher";
 import PageHeader from "@/components/layout/PageHeader";
+
+// Dynamic import to avoid localStorage errors during SSR
+const BridgeForm = dynamic(
+  () => import("@/components/bridge/BridgeForm").then((mod) => mod.BridgeForm),
+  { ssr: false }
+);
 
 export default function BridgePage() {
   const [view, setView] = useState<"bridge" | "track">("bridge");
