@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils";
 import { colors } from "@/lib/colors";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
@@ -11,13 +10,12 @@ import {
   Calculator,
   Wallet,
   DollarSign,
-  ArrowLeftRight,
 } from "lucide-react";
 
 interface ViewSwitcherProps {
-  activeView: "pfp" | "ecosystem" | "builder" | "math" | "allocation" | "usdm" | "bridge";
+  activeView: "pfp" | "ecosystem" | "builder" | "math" | "allocation" | "usdm";
   onViewChange?: (
-    view: "pfp" | "ecosystem" | "builder" | "math" | "allocation" | "usdm" | "bridge"
+    view: "pfp" | "ecosystem" | "builder" | "math" | "allocation" | "usdm"
   ) => void;
 }
 
@@ -28,7 +26,6 @@ const VIEW_ROUTES = {
   math: "/math",
   allocation: "/allocation",
   usdm: "/usdm",
-  bridge: "/bridge",
 } as const;
 
 export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
@@ -45,7 +42,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
   const router = useRouter();
 
   const handleViewChange = useCallback(
-    (view: "pfp" | "ecosystem" | "builder" | "math" | "allocation" | "usdm" | "bridge") => {
+    (view: "pfp" | "ecosystem" | "builder" | "math" | "allocation" | "usdm") => {
       if (onViewChange) {
         onViewChange(view);
       } else {
@@ -173,24 +170,6 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     />
                   </button>
                 </div>
-
-                {/* Bridge */}
-                <button
-                  onClick={() => handleViewChange("bridge")}
-                  className={`flex items-center gap-2 px-4 py-2 border-3 font-bold uppercase text-xs ${
-                    activeView === "bridge"
-                      ? "bg-pink border-foreground"
-                      : "bg-transparent border-background hover:bg-muted"
-                  }`}
-                  style={{
-                    clipPath:
-                      "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                    color: activeView === "bridge" ? colors.foreground : colors.background,
-                  }}
-                >
-                  <ArrowLeftRight className="w-4 h-4" strokeWidth={3} />
-                  <span>GAS BRIDGE</span>
-                </button>
 
                 {/* Divider */}
                 <div className="w-px h-10 bg-foreground" />
@@ -437,18 +416,6 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
               />
             </div>
             <span className="text-[10px] font-black uppercase">MATH</span>
-          </button>
-
-          {/* Bridge */}
-          <button
-            onClick={() => handleViewChange("bridge")}
-            className={`flex flex-col items-center gap-1 p-2 ${
-              activeView === "bridge" ? "opacity-100" : "opacity-60"
-            }`}
-            style={{ color: colors.background }}
-          >
-            <ArrowLeftRight className="w-6 h-6" strokeWidth={3} />
-            <span className="text-[10px] font-black uppercase">GAS</span>
           </button>
 
           {/* Tools Dropdown Button */}
