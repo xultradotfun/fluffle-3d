@@ -10,7 +10,6 @@ import { DepositDetails } from "@/components/bridge/DepositDetails";
 import { useBridgeStatus } from "@/hooks/useBridgeStatus";
 import { fetchBridgeHealth } from "@/lib/bridgeApi";
 import { HealthResponse } from "@/types/bridge";
-import { ViewSwitcher } from "@/components/layout/ViewSwitcher";
 import PageHeader from "@/components/layout/PageHeader";
 
 // Dynamic import to avoid localStorage errors during SSR
@@ -49,10 +48,6 @@ export default function BridgePage() {
           title="COMMUNITY GAS BRIDGE"
           description="Fund your MegaETH account with gas from Arbitrum"
         />
-
-        <div className="mt-8">
-          <ViewSwitcher activeView="bridge" />
-        </div>
 
         {/* Content */}
         <div className="max-w-2xl mx-auto mt-8">
@@ -206,8 +201,8 @@ export default function BridgePage() {
                             </div>
                           ) : data ? (
                             <div className="space-y-6">
-                              <StatusStepper 
-                                currentStep={data.step} 
+                              <StatusStepper
+                                currentStep={data.step}
                                 status={data.deposit.status}
                                 queuePosition={data.queuePosition}
                               />
