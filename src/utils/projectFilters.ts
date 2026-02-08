@@ -1,35 +1,32 @@
-import type { Project, ProjectFilters, VoteFilter } from "@/types/ecosystem";
+import type { Project, ProjectFilters } from "@/types/ecosystem";
+
+function matchesBaseFilters(
+  project: Project,
+  filters: Partial<ProjectFilters>
+): boolean {
+  if (filters.showMegaMafiaOnly && !project.megaMafia) return false;
+  if (filters.showNativeOnly && !project.native) return false;
+  if (filters.showLiveOnly && !project.live) return false;
+  if (
+    filters.voteFilter &&
+    filters.voteFilter !== "all"
+  ) {
+    const hasVoted = project.votes?.userVote !== null;
+    if (filters.voteFilter === "voted" && !hasVoted) return false;
+    if (filters.voteFilter === "not_voted" && hasVoted) return false;
+  }
+  return true;
+}
 
 export function filterProjects(
   projects: Project[],
   filters: ProjectFilters
 ): Project[] {
   return projects.filter((project) => {
-    const categoryMatch = filters.selectedCategory
-      ? project.category === filters.selectedCategory
-      : true;
-
-    const megaMafiaMatch = filters.showMegaMafiaOnly
-      ? project.megaMafia
-      : true;
-
-    const nativeMatch = filters.showNativeOnly ? project.native : true;
-
-    const liveMatch = filters.showLiveOnly ? project.live : true;
-
-    const userVoteMatch =
-      filters.voteFilter === "all" ||
-      (filters.voteFilter === "voted"
-        ? project.votes?.userVote !== null
-        : project.votes?.userVote === null);
-
-    return (
-      categoryMatch &&
-      megaMafiaMatch &&
-      nativeMatch &&
-      liveMatch &&
-      userVoteMatch
-    );
+    if (filters.selectedCategory && project.category !== filters.selectedCategory) {
+      return false;
+    }
+    return matchesBaseFilters(project, filters);
   });
 }
 
@@ -39,26 +36,8 @@ export function getCategoryCount(
   filters: Partial<ProjectFilters> = {}
 ): number {
   return projects.filter((project) => {
-    const categoryMatch = project.category === category;
-    const megaMafiaMatch = filters.showMegaMafiaOnly
-      ? project.megaMafia
-      : true;
-    const nativeMatch = filters.showNativeOnly ? project.native : true;
-    const liveMatch = filters.showLiveOnly ? project.live : true;
-    const voteMatch =
-      !filters.voteFilter ||
-      filters.voteFilter === "all" ||
-      (filters.voteFilter === "voted"
-        ? project.votes?.userVote !== null
-        : project.votes?.userVote === null);
-
-    return (
-      categoryMatch &&
-      megaMafiaMatch &&
-      nativeMatch &&
-      liveMatch &&
-      voteMatch
-    );
+    if (project.category !== category) return false;
+    return matchesBaseFilters(project, filters);
   }).length;
 }
 

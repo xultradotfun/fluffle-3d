@@ -44,8 +44,6 @@ export function RevenueLeaderboard() {
         // Convert from wei (6 decimals for USDC)
         const totalDepositedUSDC = Number(totalDeposited) / 1e6;
 
-        console.log("Total USDM deposited:", totalDepositedUSDC);
-
         // Store total supply (even if 0)
         setTotalSupply(totalDepositedUSDC);
 

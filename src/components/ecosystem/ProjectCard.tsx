@@ -8,7 +8,7 @@ import { ProjectHeader } from "./ProjectHeader";
 import { ProjectLinks } from "./ProjectLinks";
 import { ProjectVoting } from "./ProjectVoting";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import type { Project } from "@/types/ecosystem";
+import type { Project, ProjectVotes } from "@/types/ecosystem";
 import { getProjectImage } from "@/utils/projectUtils";
 import { getClipPath } from "@/components/ui/BorderedBox";
 import { colors } from "@/lib/colors";
@@ -16,7 +16,7 @@ import { colors } from "@/lib/colors";
 interface ProjectCardProps {
   project: Project;
   isLoadingVotes: boolean;
-  onVoteUpdate?: (twitter: string, voteData: any) => void;
+  onVoteUpdate?: (twitter: string, voteData: ProjectVotes) => void;
 }
 
 function ProjectCardComponent({

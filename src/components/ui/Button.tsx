@@ -67,7 +67,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    const isBrutalist = brutalistVariants.includes(variant as string);
+    const isBrutalist = variant != null && brutalistVariants.includes(variant);
     const clipPath = isBrutalist && cornerSize > 0 ? getClipPath(cornerSize) : undefined;
 
     return (

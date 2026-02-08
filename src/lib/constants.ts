@@ -10,8 +10,7 @@ export const ENV = {
   DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID || "",
   DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET || "",
   DISCORD_BOT_TOKEN: process.env.DISCORD_BOT_TOKEN || "",
-  JWT_SECRET:
-    process.env.JWT_SECRET || "fluffle-default-secret-change-in-production",
+  JWT_SECRET: process.env.JWT_SECRET || "",
   NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL || "",
 } as const;
 
@@ -76,6 +75,11 @@ export const SECURITY_HEADERS = {
 export const JWT_CONFIG = {
   SECRET: ENV.JWT_SECRET,
   EXPIRY: 60 * 60, // 1 hour in seconds
+} as const;
+
+// Projects API
+export const PROJECTS_API = {
+  FULL: "api/projects/full",
 } as const;
 
 // Cache Configuration

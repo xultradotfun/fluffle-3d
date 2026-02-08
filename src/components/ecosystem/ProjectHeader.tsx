@@ -3,6 +3,7 @@ import { FlaskConical } from "lucide-react";
 import { memo } from "react";
 
 import { getProjectImage } from "@/utils/projectUtils";
+import type { Project } from "@/types/ecosystem";
 
 interface ProjectHeaderProps {
   name: string;
@@ -34,7 +35,7 @@ function ProjectHeaderComponent(props: ProjectHeaderProps) {
             }}
           >
             <Image
-              src={getProjectImage({ ...props, img: props.img || undefined } as any)}
+              src={getProjectImage({ ...props, img: props.img || undefined } as Project)}
               alt={`${props.name} Logo`}
               width={64}
               height={64}

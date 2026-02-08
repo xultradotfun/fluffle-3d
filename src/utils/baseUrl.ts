@@ -18,7 +18,7 @@ export function getBaseUrl(): string {
     const currentOrigin = window.location.origin;
 
     // If the current origin is in our allowed list, use it
-    if (ALLOWED_BASE_URLS.includes(currentOrigin as any)) {
+    if ((ALLOWED_BASE_URLS as readonly string[]).includes(currentOrigin)) {
       return currentOrigin;
     }
   }

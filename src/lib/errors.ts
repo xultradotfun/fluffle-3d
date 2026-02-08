@@ -227,7 +227,7 @@ export const ErrorResponses = {
 /**
  * Error logging utility
  */
-export function logError(error: any, context?: string) {
+export function logError(error: unknown, context?: string) {
   const timestamp = new Date().toISOString();
   const contextStr = context ? ` [${context}]` : "";
 

@@ -71,7 +71,7 @@ export async function GET(request: Request) {
 
     // Check if user is in the required server
     const isInServer = guildsData.some(
-      (guild: any) => guild.id === DISCORD_CONFIG.REQUIRED_SERVER_ID
+      (guild: { id: string }) => guild.id === DISCORD_CONFIG.REQUIRED_SERVER_ID
     );
     let hasRequiredRole = false;
 

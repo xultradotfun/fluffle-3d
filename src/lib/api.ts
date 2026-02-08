@@ -81,7 +81,7 @@ export const apiClient = {
     return response.json();
   },
 
-  async post(path: string, data?: any, options?: RequestInit) {
+  async post(path: string, data?: Record<string, unknown>, options?: RequestInit) {
     const token = await getAuthToken();
     const headers = {
       "Content-Type": "application/json",
@@ -106,7 +106,7 @@ export const apiClient = {
     return response.json();
   },
 
-  async delete(path: string, data?: any, options?: RequestInit) {
+  async delete(path: string, data?: Record<string, unknown>, options?: RequestInit) {
     const token = await getAuthToken();
     const headers = {
       "Content-Type": "application/json",

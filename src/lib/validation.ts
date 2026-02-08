@@ -3,7 +3,7 @@
  * Eliminates duplicate validation logic across the codebase
  */
 
-import { VALIDATION_RULES, VOTE_TYPES } from "./constants";
+import { VALIDATION_RULES, VOTE_TYPES, DISCORD_CONFIG } from "./constants";
 
 export type VoteType = (typeof VOTE_TYPES)[number];
 
@@ -151,14 +151,14 @@ export function validateNftIds(
 /**
  * Vote request validation
  */
-export function validateVoteRequest(body: any): body is VoteRequest {
+export function validateVoteRequest(body: unknown): body is VoteRequest {
   if (!body || typeof body !== "object") return false;
 
-  const { twitter, vote, userId } = body;
+  const { twitter, vote, userId } = body as Record<string, unknown>;
 
   if (typeof twitter !== "string" || !twitter.trim()) return false;
   if (typeof userId !== "string" || !userId.trim()) return false;
-  if (!isValidVoteType(vote)) return false;
+  if (typeof vote !== "string" || !isValidVoteType(vote)) return false;
 
   // Additional validation rules
   if (!validateTwitterHandle(twitter)) return false;
@@ -170,10 +170,10 @@ export function validateVoteRequest(body: any): body is VoteRequest {
 /**
  * User data format validation
  */
-export function validateUserData(userData: any): boolean {
+export function validateUserData(userData: unknown): boolean {
   if (!userData || typeof userData !== "object") return false;
 
-  const { id, username, guildIds } = userData;
+  const { id, username, guildIds } = userData as Record<string, unknown>;
 
   if (!id || typeof id !== "string") return false;
   if (!username || typeof username !== "string") return false;
@@ -186,26 +186,27 @@ export function validateUserData(userData: any): boolean {
  * Server membership validation
  */
 export function validateServerMembership(guildIds: string[]): boolean {
-  const { REQUIRED_SERVER_ID } = require("./constants").DISCORD_CONFIG;
-  return guildIds.includes(REQUIRED_SERVER_ID);
+  return guildIds.includes(DISCORD_CONFIG.REQUIRED_SERVER_ID);
 }
 
 /**
  * MegaETH collection validation (for proxy filtering)
  */
-export function isMegaETHCollection(collection: any): boolean {
-  if (!collection) return false;
+export function isMegaETHCollection(collection: unknown): boolean {
+  if (!collection || typeof collection !== "object") return false;
+
+  const col = collection as Record<string, unknown>;
 
   const isMegaETH =
-    collection?.contract_address ===
+    col.contract_address ===
       "0x9b5C1a2b7c3c7D3A6b7C5e3b4A4C4D8E5F6A7B8C" ||
-    collection?.name?.toLowerCase().includes("megaeth") ||
-    collection?.symbol?.toLowerCase().includes("mega");
+    (typeof col.name === "string" && col.name.toLowerCase().includes("megaeth")) ||
+    (typeof col.symbol === "string" && col.symbol.toLowerCase().includes("mega"));
 
   const isBadBunnz =
-    collection?.contract_address ===
+    col.contract_address ===
       "0x1234567890abcdef1234567890abcdef12345678" ||
-    collection?.name?.toLowerCase().includes("badbunnz");
+    (typeof col.name === "string" && col.name.toLowerCase().includes("badbunnz"));
 
   return isMegaETH || isBadBunnz;
 }
