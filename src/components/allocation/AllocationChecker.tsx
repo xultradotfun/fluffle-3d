@@ -6,16 +6,12 @@ import {
   Wallet,
   Loader2,
   CheckCircle2,
-  XCircle,
   Eye,
   EyeOff,
-  ChevronDown,
-  ChevronUp,
-  Code,
-  Lock,
-  LockOpen,
 } from "lucide-react";
 import { toast } from "sonner";
+import { AllocationResultCard } from "./AllocationResultCard";
+import { ApiDocumentation } from "./ApiDocumentation";
 
 interface AllocationData {
   walletAddress: string;
@@ -71,7 +67,6 @@ export function AllocationChecker() {
   const [results, setResults] = useState<AllocationResult[]>([]);
   const [hideAddresses, setHideAddresses] = useState(false);
   const [selectedFdv, setSelectedFdv] = useState(999_000_000); // Default 999M
-  const [showApiDocs, setShowApiDocs] = useState(false);
 
   const parseWallets = (input: string): string[] => {
     // Split by newlines, commas, or spaces and filter out empty strings
@@ -451,171 +446,12 @@ export function AllocationChecker() {
               {/* Individual Results */}
               <div className="space-y-2">
                 {results.map((result, index) => (
-                  <div
+                  <AllocationResultCard
                     key={index}
-                    className="p-4 border-3"
-                    style={{
-                      backgroundColor:
-                        result.allocation && result.allocation > 0
-                          ? colors.white
-                          : colors.light,
-                      borderColor: colors.foreground,
-                      clipPath:
-                        "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-                    }}
-                  >
-                    <div className="flex items-center justify-between gap-4">
-                      <div className="flex items-center gap-3 min-w-0 flex-1">
-                        {result.allocation !== undefined &&
-                        result.allocation > 0 ? (
-                          <CheckCircle2
-                            className="w-5 h-5 flex-shrink-0"
-                            style={{ color: colors.green }}
-                            strokeWidth={3}
-                          />
-                        ) : result.error ? (
-                          <XCircle
-                            className="w-5 h-5 flex-shrink-0"
-                            style={{ color: colors.error }}
-                            strokeWidth={3}
-                          />
-                        ) : (
-                          <XCircle
-                            className="w-5 h-5 flex-shrink-0"
-                            style={{ color: colors.mutedLight }}
-                            strokeWidth={3}
-                          />
-                        )}
-                        <div className="flex items-center gap-2 min-w-0 flex-1">
-                          <span
-                            className="font-mono text-sm font-bold truncate"
-                            style={{
-                              color: colors.foreground,
-                              filter: hideAddresses ? "blur(6px)" : "none",
-                              userSelect: hideAddresses ? "none" : "auto",
-                            }}
-                            title={
-                              hideAddresses
-                                ? "Address blurred for privacy"
-                                : result.wallet
-                            }
-                          >
-                            {result.wallet}
-                          </span>
-                          {result.rank && (
-                            <div className="flex items-center gap-1 flex-shrink-0">
-                              <span
-                                className="text-[10px] font-black uppercase px-1.5 py-0.5 border-2"
-                                style={{
-                                  backgroundColor: colors.white,
-                                  borderColor: colors.foreground,
-                                  color: colors.foreground,
-                                }}
-                                title="Overall rank"
-                              >
-                                #{result.rank.overall}
-                              </span>
-                              <span
-                                className="text-[10px] font-black uppercase px-1.5 py-0.5 border-2 flex items-center gap-1"
-                                style={{
-                                  backgroundColor:
-                                    result.rank.categoryType === "locked"
-                                      ? colors.pink
-                                      : colors.light,
-                                  borderColor: colors.foreground,
-                                  color: colors.foreground,
-                                }}
-                                title={`Rank among ${result.rank.categoryType} bids`}
-                              >
-                                {result.rank.categoryType === "locked" ? (
-                                  <Lock
-                                    className="w-2.5 h-2.5"
-                                    strokeWidth={3}
-                                  />
-                                ) : (
-                                  <LockOpen
-                                    className="w-2.5 h-2.5"
-                                    strokeWidth={3}
-                                  />
-                                )}
-                                #{result.rank.category}
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <div className="flex-shrink-0 text-right">
-                        {result.allocation !== undefined ? (
-                          <div className="flex flex-col items-end gap-0.5">
-                            <span
-                              className="text-lg font-black"
-                              style={{
-                                color:
-                                  result.allocation > 0 ? colors.green : colors.mutedLight,
-                              }}
-                            >
-                              {result.allocation.toLocaleString(undefined, {
-                                maximumFractionDigits: 2,
-                              })}{" "}
-                              MEGA
-                            </span>
-                            <div className="flex items-center gap-2">
-                              <span
-                                className="text-xs font-bold"
-                                style={{ color: colors.muted }}
-                              >
-                                $
-                                {calculateValueAtFdv(
-                                  result.allocation
-                                ).toLocaleString(undefined, {
-                                  maximumFractionDigits: 2,
-                                })}
-                                {result.bidAmount !== undefined &&
-                                  result.fillPercentage !== undefined && (
-                                    <span
-                                      style={{
-                                        color:
-                                          result.fillPercentage > 0
-                                            ? colors.pink
-                                            : colors.mutedLight,
-                                        marginLeft: "8px",
-                                      }}
-                                    >
-                                      {result.fillPercentage > 0
-                                        ? `(${result.fillPercentage.toFixed(
-                                            2
-                                          )}% filled)`
-                                        : `(0% filled)`}
-                                    </span>
-                                  )}
-                              </span>
-                              {result.lockup !== undefined && (
-                                <span
-                                  className="text-[10px] font-black uppercase px-1.5 py-0.5 border-2"
-                                  style={{
-                                    backgroundColor: result.lockup
-                                      ? colors.pink
-                                      : colors.light,
-                                    borderColor: colors.foreground,
-                                    color: colors.foreground,
-                                  }}
-                                >
-                                  {result.lockup ? "🔒 LOCKED" : "UNLOCKED"}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        ) : (
-                          <span
-                            className="text-sm font-bold uppercase"
-                            style={{ color: colors.error }}
-                          >
-                            {result.error || "No allocation"}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
+                    result={result}
+                    hideAddresses={hideAddresses}
+                    calculateValueAtFdv={calculateValueAtFdv}
+                  />
                 ))}
               </div>
             </div>
@@ -624,185 +460,7 @@ export function AllocationChecker() {
       )}
 
       {/* API Documentation */}
-      <div
-        style={{
-          clipPath:
-            "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-        }}
-      >
-        <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
-          <div
-            style={{
-              backgroundColor: colors.light,
-              clipPath:
-                "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-            }}
-          >
-            <button
-              onClick={() => setShowApiDocs(!showApiDocs)}
-              className="w-full px-4 py-3 flex items-center justify-between hover:bg-gray-200 transition-colors"
-            >
-              <div className="flex items-center gap-2">
-                <Code
-                  className="w-4 h-4"
-                  style={{ color: colors.foreground }}
-                  strokeWidth={3}
-                />
-                <span
-                  className="text-sm font-black uppercase"
-                  style={{ color: colors.foreground }}
-                >
-                  API Documentation
-                </span>
-              </div>
-              {showApiDocs ? (
-                <ChevronUp
-                  className="w-4 h-4"
-                  style={{ color: colors.foreground }}
-                  strokeWidth={3}
-                />
-              ) : (
-                <ChevronDown
-                  className="w-4 h-4"
-                  style={{ color: colors.foreground }}
-                  strokeWidth={3}
-                />
-              )}
-            </button>
-
-            {showApiDocs && (
-              <div
-                className="px-4 pb-4 space-y-3 border-t-2"
-                style={{ borderColor: colors.foreground }}
-              >
-                <div className="pt-3">
-                  <p
-                    className="text-xs font-bold mb-2"
-                    style={{ color: colors.foreground }}
-                  >
-                    ENDPOINT
-                  </p>
-                  <code
-                    className="block px-3 py-2 text-xs font-mono rounded border-2"
-                    style={{
-                      backgroundColor: colors.white,
-                      color: colors.foreground,
-                      borderColor: colors.foreground,
-                    }}
-                  >
-                    POST https://megasale-check.xultra.fun/api/allocations/check
-                  </code>
-                </div>
-
-                <div>
-                  <p
-                    className="text-xs font-bold mb-2"
-                    style={{ color: colors.foreground }}
-                  >
-                    REQUEST BODY
-                  </p>
-                  <pre
-                    className="px-3 py-2 text-xs font-mono rounded border-2 overflow-x-auto"
-                    style={{
-                      backgroundColor: colors.white,
-                      color: colors.foreground,
-                      borderColor: colors.foreground,
-                    }}
-                  >
-                    {`{
-  "wallets": [
-    "0x1234567890123456789012345678901234567890",
-    "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"
-  ]
-}`}
-                  </pre>
-                </div>
-
-                <div>
-                  <p
-                    className="text-xs font-bold mb-2"
-                    style={{ color: colors.foreground }}
-                  >
-                    RESPONSE
-                  </p>
-                  <pre
-                    className="px-3 py-2 text-xs font-mono rounded border-2 overflow-x-auto"
-                    style={{
-                      backgroundColor: colors.white,
-                      color: colors.foreground,
-                      borderColor: colors.foreground,
-                    }}
-                  >
-                    {`{
-  "success": true,
-  "count": 2,
-  "data": [
-    {
-      "walletAddress": "0x1234567890123456789012345678901234567890",
-      "usdAmount": 5000.00,
-      "megaAmount": 50050.05,
-      "hasAllocation": true,
-      "status": "ACTIVE",
-      "bidAmount": 186282,
-      "locked": false,
-      "rank": {
-        "overall": 123,
-        "category": 45,
-        "categoryType": "unlocked"
-      }
-    },
-    {
-      "walletAddress": "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd",
-      "usdAmount": 10000.00,
-      "megaAmount": 100100.10,
-      "hasAllocation": true,
-      "status": "ACTIVE",
-      "bidAmount": 186282,
-      "locked": true,
-      "rank": {
-        "overall": 67,
-        "category": 12,
-        "categoryType": "locked"
-      }
-    }
-  ]
-}`}
-                  </pre>
-                </div>
-
-                <div>
-                  <p
-                    className="text-xs font-bold mb-2"
-                    style={{ color: colors.foreground }}
-                  >
-                    EXAMPLE (JAVASCRIPT)
-                  </p>
-                  <pre
-                    className="px-3 py-2 text-xs font-mono rounded border-2 overflow-x-auto"
-                    style={{
-                      backgroundColor: colors.white,
-                      color: colors.foreground,
-                      borderColor: colors.foreground,
-                    }}
-                  >
-                    {`const response = await fetch(
-  'https://megasale-check.xultra.fun/api/allocations/check',
-  {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      wallets: ['0x1234567890123456789012345678901234567890']
-    })
-  }
-);
-const data = await response.json();`}
-                  </pre>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+      <ApiDocumentation />
     </div>
   );
 }

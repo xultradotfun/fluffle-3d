@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import { colors } from "@/lib/colors";
 import { SelectedTraits, TraitType } from "@/types/traits";
 import {
-  TRAIT_CATEGORIES,
   getRandomTraits,
   getInitialTraits,
 } from "@/utils/traitUtils";
@@ -14,8 +13,7 @@ import ViewControls from "./ViewControls";
 import ActionButtons from "./ActionButtons";
 import TraitCategoryTabs from "./TraitCategoryTabs";
 import PageHeader from "@/components/layout/PageHeader";
-import { getTraitImageUrl, getTraitBackImageUrl } from "@/utils/traitImageMap";
-import { LAYER_ORDER, HAIR_WITH_BACK, LayerGroup } from "@/utils/layerOrder";
+import { renderTraitsToCanvas, canvasToBlob } from "@/utils/canvasRenderer";
 import { ZOOM_PRESETS } from "@/constants/zoom";
 
 export default function NFTBuilder() {
@@ -57,137 +55,10 @@ export default function NFTBuilder() {
   const handleCopyToClipboard = async () => {
     try {
       if (!previewRef.current) return;
-
-      // Create a canvas to draw the preview
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return;
-
-      // Set canvas size
-      canvas.width = 1000;
-      canvas.height = 1000;
-
-      // Define drawImage function
-      const drawImage = async (
-        src: string,
-        isBackground: boolean = false
-      ): Promise<void> => {
-        return new Promise((resolve, reject) => {
-          const img = new Image();
-          img.crossOrigin = "anonymous";
-          img.onload = () => {
-            if (isBackground) {
-              // Background should fill the canvas
-              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            } else {
-              // For traits, maintain aspect ratio and center
-              const baseScale = Math.min(
-                canvas.width / img.width,
-                canvas.height / img.height
-              );
-              const scaledWidth = img.width * baseScale;
-              const scaledHeight = img.height * baseScale;
-              const x = (canvas.width - scaledWidth) / 2;
-              const y = (canvas.height - scaledHeight) / 2;
-              ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
-            }
-            resolve();
-          };
-          img.onerror = reject;
-          img.src = src;
-        });
-      };
-
-      // Draw background if selected (before any transformations)
-      if (selectedTraits.background) {
-        await drawImage(
-          getTraitImageUrl("background", selectedTraits.background),
-          true // isBackground
-        );
-      }
-
-      // Save the initial context state
-      ctx.save();
-
-      // Apply zoom and offset to the entire context
-      ctx.translate(canvas.width / 2, canvas.height / 2);
-      ctx.scale(zoom, zoom);
-      ctx.translate(
-        -canvas.width / 2,
-        -canvas.height / 2 + (offsetY * canvas.height) / 100
-      );
-
-      // Draw hair back part if applicable
-      if (
-        selectedTraits.hair &&
-        HAIR_WITH_BACK.includes(
-          selectedTraits.hair as (typeof HAIR_WITH_BACK)[number]
-        )
-      ) {
-        await drawImage(getTraitBackImageUrl("hair", selectedTraits.hair)!);
-      }
-
-      // Draw base character
-      for (const traitType of LAYER_ORDER.BASE) {
-        if (selectedTraits[traitType]) {
-          await drawImage(
-            getTraitImageUrl(traitType, selectedTraits[traitType]!)
-          );
-        }
-      }
-
-      // Draw face features
-      for (const traitType of LAYER_ORDER.FACE_FEATURES) {
-        if (selectedTraits[traitType]) {
-          await drawImage(
-            getTraitImageUrl(traitType, selectedTraits[traitType]!)
-          );
-        }
-      }
-
-      // Draw eye details
-      for (const traitType of LAYER_ORDER.EYE_DETAILS) {
-        if (selectedTraits[traitType]) {
-          await drawImage(
-            getTraitImageUrl(traitType, selectedTraits[traitType]!)
-          );
-        }
-      }
-
-      // Draw clothes
-      for (const traitType of LAYER_ORDER.CLOTHES) {
-        if (selectedTraits[traitType]) {
-          await drawImage(
-            getTraitImageUrl(traitType, selectedTraits[traitType]!)
-          );
-        }
-      }
-
-      // Draw hair front part if applicable
-      if (selectedTraits.hair) {
-        await drawImage(getTraitImageUrl("hair", selectedTraits.hair));
-      }
-
-      // Draw accessories
-      for (const traitType of LAYER_ORDER.ACCESSORIES) {
-        if (selectedTraits[traitType]) {
-          await drawImage(
-            getTraitImageUrl(traitType, selectedTraits[traitType]!)
-          );
-        }
-      }
-
-      // Restore the context state
-      ctx.restore();
-
-      // Convert to blob and copy to clipboard
-      const blob = await new Promise<Blob>((resolve) =>
-        canvas.toBlob((blob) => resolve(blob!), "image/png")
-      );
+      const canvas = await renderTraitsToCanvas(selectedTraits, zoom, offsetY);
+      const blob = await canvasToBlob(canvas);
       await navigator.clipboard.write([
-        new ClipboardItem({
-          [blob.type]: blob,
-        }),
+        new ClipboardItem({ [blob.type]: blob }),
       ]);
       setIsCopied(true);
       setTimeout(() => setIsCopied(false), 2000);
@@ -199,133 +70,8 @@ export default function NFTBuilder() {
   const handleDownload = async () => {
     try {
       if (!previewRef.current) return;
-
-      // Create a canvas to draw the preview
-      const canvas = document.createElement("canvas");
-      const ctx = canvas.getContext("2d");
-      if (!ctx) return;
-
-      // Set canvas size
-      canvas.width = 1000;
-      canvas.height = 1000;
-
-      // Define drawImage function
-      const drawImage = async (
-        src: string,
-        isBackground: boolean = false
-      ): Promise<void> => {
-        return new Promise((resolve, reject) => {
-          const img = new Image();
-          img.crossOrigin = "anonymous";
-          img.onload = () => {
-            if (isBackground) {
-              // Background should fill the canvas
-              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            } else {
-              // For traits, maintain aspect ratio and center
-              const baseScale = Math.min(
-                canvas.width / img.width,
-                canvas.height / img.height
-              );
-              const scaledWidth = img.width * baseScale;
-              const scaledHeight = img.height * baseScale;
-              const x = (canvas.width - scaledWidth) / 2;
-              const y = (canvas.height - scaledHeight) / 2;
-              ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
-            }
-            resolve();
-          };
-          img.onerror = reject;
-          img.src = src;
-        });
-      };
-
-      // Draw background if selected (before any transformations)
-      if (selectedTraits.background) {
-        await drawImage(
-          getTraitImageUrl("background", selectedTraits.background),
-          true // isBackground
-        );
-      }
-
-      // Save the initial context state
-      ctx.save();
-
-      // Apply zoom and offset to the entire context
-      ctx.translate(canvas.width / 2, canvas.height / 2);
-      ctx.scale(zoom, zoom);
-      ctx.translate(
-        -canvas.width / 2,
-        -canvas.height / 2 + (offsetY * canvas.height) / 100
-      );
-
-      // Draw hair back part if applicable
-      if (
-        selectedTraits.hair &&
-        HAIR_WITH_BACK.includes(
-          selectedTraits.hair as (typeof HAIR_WITH_BACK)[number]
-        )
-      ) {
-        await drawImage(getTraitBackImageUrl("hair", selectedTraits.hair)!);
-      }
-
-      // Draw base character
-      for (const traitType of LAYER_ORDER.BASE) {
-        if (selectedTraits[traitType]) {
-          await drawImage(
-            getTraitImageUrl(traitType, selectedTraits[traitType]!)
-          );
-        }
-      }
-
-      // Draw face features
-      for (const traitType of LAYER_ORDER.FACE_FEATURES) {
-        if (selectedTraits[traitType]) {
-          await drawImage(
-            getTraitImageUrl(traitType, selectedTraits[traitType]!)
-          );
-        }
-      }
-
-      // Draw eye details
-      for (const traitType of LAYER_ORDER.EYE_DETAILS) {
-        if (selectedTraits[traitType]) {
-          await drawImage(
-            getTraitImageUrl(traitType, selectedTraits[traitType]!)
-          );
-        }
-      }
-
-      // Draw clothes
-      for (const traitType of LAYER_ORDER.CLOTHES) {
-        if (selectedTraits[traitType]) {
-          await drawImage(
-            getTraitImageUrl(traitType, selectedTraits[traitType]!)
-          );
-        }
-      }
-
-      // Draw hair front part if applicable
-      if (selectedTraits.hair) {
-        await drawImage(getTraitImageUrl("hair", selectedTraits.hair));
-      }
-
-      // Draw accessories
-      for (const traitType of LAYER_ORDER.ACCESSORIES) {
-        if (selectedTraits[traitType]) {
-          await drawImage(
-            getTraitImageUrl(traitType, selectedTraits[traitType]!)
-          );
-        }
-      }
-
-      // Restore the context state
-      ctx.restore();
-
-      // Convert to blob and download
-      const blob = await new Promise<Blob>((resolve) =>
-        canvas.toBlob((blob) => resolve(blob!), "image/png")
-      );
+      const canvas = await renderTraitsToCanvas(selectedTraits, zoom, offsetY);
+      const blob = await canvasToBlob(canvas);
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
