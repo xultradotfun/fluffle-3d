@@ -4,6 +4,7 @@ import { DollarSign, TrendingUp, Calendar } from "lucide-react";
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { colors } from "@/lib/colors";
+import { BorderedBox } from "@/components/ui/BorderedBox";
 
 interface ChainRevenueData {
   name: string;
@@ -118,135 +119,72 @@ export function RevenueLeaderboard() {
       {/* Header Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Total Supply Locked */}
-        <div
-          style={{
-            clipPath:
-              "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-          }}
-        >
-          <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
-            <div
-              className="px-6 py-5"
-              style={{
-                backgroundColor: colors.white,
-                clipPath:
-                  "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-              }}
+        <BorderedBox cornerSize="lg" borderColor="dark" bgColor="white" className="px-6 py-5">
+          <div className="flex items-center gap-2 mb-2">
+            <DollarSign
+              className="w-4 h-4"
+              strokeWidth={3}
+              style={{ color: colors.foreground }}
+            />
+            <span
+              className="font-black uppercase text-xs tracking-wider"
+              style={{ color: colors.foreground }}
             >
-              <div className="flex items-center gap-2 mb-2">
-                <DollarSign
-                  className="w-4 h-4"
-                  strokeWidth={3}
-                  style={{ color: colors.foreground }}
-                />
-                <span
-                  className="font-black uppercase text-xs tracking-wider"
-                  style={{ color: colors.foreground }}
-                >
-                  Total USDM Supply
-                </span>
-              </div>
-              <div className="text-3xl font-black" style={{ color: colors.foreground }}>
-                {totalSupply !== null
-                  ? `$${Math.round(totalSupply).toLocaleString()}`
-                  : "Loading..."}
-              </div>
-            </div>
+              Total USDM Supply
+            </span>
           </div>
-        </div>
+          <div className="text-3xl font-black" style={{ color: colors.foreground }}>
+            {totalSupply !== null
+              ? `$${Math.round(totalSupply).toLocaleString()}`
+              : "Loading..."}
+          </div>
+        </BorderedBox>
 
         {/* MegaETH Placement */}
-        <div
-          style={{
-            clipPath:
-              "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-          }}
-        >
-          <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
-            <div
-              className="px-6 py-5"
-              style={{
-                backgroundColor: colors.white,
-                clipPath:
-                  "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-              }}
+        <BorderedBox cornerSize="lg" borderColor="dark" bgColor="white" className="px-6 py-5">
+          <div className="flex items-center gap-2 mb-2">
+            <TrendingUp
+              className="w-4 h-4"
+              strokeWidth={3}
+              style={{ color: colors.foreground }}
+            />
+            <span
+              className="font-black uppercase text-xs tracking-wider"
+              style={{ color: colors.foreground }}
             >
-              <div className="flex items-center gap-2 mb-2">
-                <TrendingUp
-                  className="w-4 h-4"
-                  strokeWidth={3}
-                  style={{ color: colors.foreground }}
-                />
-                <span
-                  className="font-black uppercase text-xs tracking-wider"
-                  style={{ color: colors.foreground }}
-                >
-                  MegaETH Placement
-                </span>
-              </div>
-              <div className="text-3xl font-black text-pink">
-                #{megaEthPlacement || "--"}
-              </div>
-            </div>
+              MegaETH Placement
+            </span>
           </div>
-        </div>
+          <div className="text-3xl font-black text-pink">
+            #{megaEthPlacement || "--"}
+          </div>
+        </BorderedBox>
 
         {/* 30d Revenue Projected */}
-        <div
-          style={{
-            clipPath:
-              "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-          }}
-        >
-          <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
-            <div
-              className="px-6 py-5"
-              style={{
-                backgroundColor: colors.white,
-                clipPath:
-                  "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-              }}
+        <BorderedBox cornerSize="lg" borderColor="dark" bgColor="white" className="px-6 py-5">
+          <div className="flex items-center gap-2 mb-2">
+            <Calendar
+              className="w-4 h-4"
+              strokeWidth={3}
+              style={{ color: colors.foreground }}
+            />
+            <span
+              className="font-black uppercase text-xs tracking-wider"
+              style={{ color: colors.foreground }}
             >
-              <div className="flex items-center gap-2 mb-2">
-                <Calendar
-                  className="w-4 h-4"
-                  strokeWidth={3}
-                  style={{ color: colors.foreground }}
-                />
-                <span
-                  className="font-black uppercase text-xs tracking-wider"
-                  style={{ color: colors.foreground }}
-                >
-                  30d Revenue Projected
-                </span>
-              </div>
-              <div className="text-3xl font-black" style={{ color: colors.foreground }}>
-                {megaEthData
-                  ? `$${megaEthData.total30d?.toLocaleString() || "0"}`
-                  : "Loading..."}
-              </div>
-            </div>
+              30d Revenue Projected
+            </span>
           </div>
-        </div>
+          <div className="text-3xl font-black" style={{ color: colors.foreground }}>
+            {megaEthData
+              ? `$${megaEthData.total30d?.toLocaleString() || "0"}`
+              : "Loading..."}
+          </div>
+        </BorderedBox>
       </div>
 
       {/* Leaderboard */}
-      <div
-        style={{
-          clipPath:
-            "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
-        }}
-      >
-        <div style={{ backgroundColor: colors.pink, padding: "2px" }}>
-          <div
-            style={{
-              backgroundColor: colors.foreground,
-              clipPath:
-                "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
-              padding: "16px",
-            }}
-            className="sm:!p-6"
-          >
+      <BorderedBox cornerSize="xl" borderColor="pink" bgColor="dark" className="p-4 sm:p-6">
             <h2
               className="text-xl sm:text-2xl font-black uppercase mb-4 sm:mb-6 flex items-center gap-2 sm:gap-3"
               style={{ color: colors.background }}
@@ -263,27 +201,13 @@ export function RevenueLeaderboard() {
                 const isMegaETH = chain.name === "MegaETH";
 
                 return (
-                  <div
+                  <BorderedBox
                     key={chain.name}
-                    style={{
-                      clipPath:
-                        "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-                    }}
+                    cornerSize="md"
+                    borderColor={isMegaETH ? "pink" : "dark"}
+                    bgColor="white"
+                    className="p-3 sm:p-4"
                   >
-                    <div
-                      style={{
-                        backgroundColor: isMegaETH ? colors.pink : colors.foreground,
-                        padding: "2px",
-                      }}
-                    >
-                      <div
-                        className="p-3 sm:p-4"
-                        style={{
-                          backgroundColor: colors.white,
-                          clipPath:
-                            "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-                        }}
-                      >
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                           <div className="flex items-center gap-3 sm:gap-4">
                             <span
@@ -379,15 +303,11 @@ export function RevenueLeaderboard() {
                             }}
                           />
                         </div>
-                      </div>
-                    </div>
-                  </div>
+                  </BorderedBox>
                 );
               })}
             </div>
-          </div>
-        </div>
-      </div>
+      </BorderedBox>
     </div>
   );
 }

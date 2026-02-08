@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { colors } from "@/lib/colors";
+import { getClipPath } from "@/lib/sizes";
+import { BorderedBox } from "@/components/ui/BorderedBox";
 
 interface Token {
   name: string;
@@ -48,8 +50,7 @@ export default function ResultsDisplay({
   return (
     <div
       style={{
-        clipPath:
-          "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
+        clipPath: getClipPath("2xl"),
       }}
     >
       <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
@@ -58,8 +59,7 @@ export default function ResultsDisplay({
           style={{
             background:
               "linear-gradient(135deg, rgba(224, 224, 224, 0.5) 0%, rgba(224, 224, 224, 0.45) 100%)",
-            clipPath:
-              "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
+            clipPath: getClipPath("2xl"),
           }}
         >
           {/* Background icon layer - behind content */}
@@ -112,104 +112,70 @@ export default function ResultsDisplay({
 
           <div className="grid md:grid-cols-3 gap-6">
             {/* Your Investment */}
-            <div
-              style={{
-                clipPath:
-                  "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-              }}
+            <BorderedBox
+              cornerSize="lg"
+              borderColor="dark"
+              bgColor="white"
+              className="text-center p-4 flex flex-col justify-center"
+              style={{ minHeight: "110px" }}
             >
-              <div style={{ backgroundColor: colors.foreground, padding: "2px", height: "100%" }}>
-                <div
-                  className="text-center p-4 flex flex-col justify-center"
-                  style={{
-                    backgroundColor: "#fff",
-                    clipPath:
-                      "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                    minHeight: "110px",
-                  }}
-                >
-                  <div className="text-sm font-black mb-1 uppercase tracking-wider" style={{ color: colors.foreground }}>
-                    Your Investment
-                  </div>
-                  <div className="text-4xl font-black" style={{ color: colors.foreground }}>
-                    ${investment.toLocaleString()}
-                  </div>
-                </div>
+              <div className="text-sm font-black mb-1 uppercase tracking-wider" style={{ color: colors.foreground }}>
+                Your Investment
               </div>
-            </div>
+              <div className="text-4xl font-black" style={{ color: colors.foreground }}>
+                ${investment.toLocaleString()}
+              </div>
+            </BorderedBox>
 
             {/* Position Value */}
-            <div
-              style={{
-                clipPath:
-                  "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-              }}
+            <BorderedBox
+              cornerSize="lg"
+              borderColor="dark"
+              bgColor="white"
+              className="text-center p-4 relative flex flex-col justify-center"
+              style={{ minHeight: "110px" }}
             >
-              <div style={{ backgroundColor: colors.foreground, padding: "2px", height: "100%" }}>
-                <div
-                  className="text-center p-4 relative flex flex-col justify-center"
+              <div className="flex items-center justify-center gap-2 mb-1">
+                <div className="text-sm font-black uppercase tracking-wider" style={{ color: colors.foreground }}>
+                  Position Value
+                </div>
+                <button
+                  onClick={onLamboModeToggle}
+                  className={`h-6 px-2 text-xs font-black border-3 transition-colors ${
+                    lamboMode
+                      ? "bg-foreground text-background border-foreground"
+                      : "bg-transparent text-foreground border-foreground hover:bg-foreground hover:text-background"
+                  }`}
                   style={{
-                    backgroundColor: "#fff",
-                    clipPath:
-                      "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                    minHeight: "110px",
+                    clipPath: getClipPath(3),
                   }}
                 >
-                  <div className="flex items-center justify-center gap-2 mb-1">
-                    <div className="text-sm font-black uppercase tracking-wider" style={{ color: colors.foreground }}>
-                      Position Value
-                    </div>
-                    <button
-                      onClick={onLamboModeToggle}
-                      className={`h-6 px-2 text-xs font-black border-3 transition-colors ${
-                        lamboMode
-                          ? "bg-foreground text-background border-foreground"
-                          : "bg-transparent text-foreground border-foreground hover:bg-foreground hover:text-background"
-                      }`}
-                      style={{
-                        clipPath:
-                          "polygon(3px 0, 100% 0, 100% calc(100% - 3px), calc(100% - 3px) 100%, 0 100%, 0 3px)",
-                      }}
-                    >
-                      🏎️
-                    </button>
-                  </div>
-                  <div className="text-4xl font-black" style={{ color: colors.green }}>
-                    {formatValue(positionValue)}
-                  </div>
-                </div>
+                  🏎️
+                </button>
               </div>
-            </div>
+              <div className="text-4xl font-black" style={{ color: colors.green }}>
+                {formatValue(positionValue)}
+              </div>
+            </BorderedBox>
 
             {/* Return Multiple */}
-            <div
-              style={{
-                clipPath:
-                  "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-              }}
+            <BorderedBox
+              cornerSize="lg"
+              borderColor="dark"
+              bgColor="white"
+              className="text-center p-4 flex flex-col justify-center"
+              style={{ minHeight: "110px" }}
             >
-              <div style={{ backgroundColor: colors.foreground, padding: "2px", height: "100%" }}>
-                <div
-                  className="text-center p-4 flex flex-col justify-center"
-                  style={{
-                    backgroundColor: "#fff",
-                    clipPath:
-                      "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                    minHeight: "110px",
-                  }}
-                >
-                  <div className="text-sm font-black mb-1 uppercase tracking-wider" style={{ color: colors.foreground }}>
-                    Return Multiple
-                  </div>
-                  <div
-                    className="text-4xl font-black"
-                    style={{ color: getMultiplierColor(multiplier) }}
-                  >
-                    {multiplier.toFixed(1)}x
-                  </div>
-                </div>
+              <div className="text-sm font-black mb-1 uppercase tracking-wider" style={{ color: colors.foreground }}>
+                Return Multiple
               </div>
-            </div>
+              <div
+                className="text-4xl font-black"
+                style={{ color: getMultiplierColor(multiplier) }}
+              >
+                {multiplier.toFixed(1)}x
+              </div>
+            </BorderedBox>
           </div>
           </div>
           {/* End content wrapper */}

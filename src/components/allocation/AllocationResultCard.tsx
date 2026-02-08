@@ -1,4 +1,5 @@
 import { colors } from "@/lib/colors";
+import { getClipPath } from "@/lib/sizes";
 import {
   CheckCircle2,
   XCircle,
@@ -43,8 +44,7 @@ export function AllocationResultCard({
             ? colors.white
             : colors.light,
         borderColor: colors.foreground,
-        clipPath:
-          "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+        clipPath: getClipPath("md"),
       }}
     >
       <div className="flex items-center justify-between gap-4">

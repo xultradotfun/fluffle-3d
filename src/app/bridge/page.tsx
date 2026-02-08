@@ -1,6 +1,8 @@
 "use client";
 
 import { colors } from "@/lib/colors";
+import { getClipPath } from "@/lib/sizes";
+import { BorderedBox } from "@/components/ui/BorderedBox";
 import PageHeader from "@/components/layout/PageHeader";
 import Hero from "@/components/layout/Hero";
 import { ViewSwitcher } from "@/components/layout/ViewSwitcher";
@@ -100,8 +102,7 @@ function TagBadge({ label, icon }: { label: string; icon?: React.ReactNode }) {
       style={{
         backgroundColor: colors.foreground,
         color: colors.pink,
-        clipPath:
-          "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
+        clipPath: getClipPath("xs"),
       }}
     >
       {icon}
@@ -120,26 +121,12 @@ function BridgeCard({ bridge }: { bridge: Bridge }) {
       rel="noopener noreferrer"
       className="group block"
     >
-      <div
-        style={{
-          clipPath:
-            "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-        }}
+      <BorderedBox
+        cornerSize="lg"
+        borderColor={isFeatured ? "pink" : "dark"}
+        bgColor="dark"
+        className="relative overflow-hidden transition-all duration-200"
       >
-        <div
-          style={{
-            backgroundColor: isFeatured ? colors.pink : colors.foreground,
-            padding: "2px",
-          }}
-        >
-          <div
-            className="relative overflow-hidden transition-all duration-200"
-            style={{
-              backgroundColor: colors.foreground,
-              clipPath:
-                "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-            }}
-          >
             {/* Hover overlay */}
             <div
               className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
@@ -167,8 +154,7 @@ function BridgeCard({ bridge }: { bridge: Bridge }) {
                   style={{
                     backgroundColor: isFeatured ? colors.pink : colors.background,
                     color: colors.foreground,
-                    clipPath:
-                      "polygon(3px 0, 100% 0, 100% calc(100% - 3px), calc(100% - 3px) 100%, 0 100%, 0 3px)",
+                    clipPath: getClipPath(3),
                   }}
                 >
                   {bridge.assets}
@@ -202,9 +188,7 @@ function BridgeCard({ bridge }: { bridge: Bridge }) {
                 ))}
               </div>
             </div>
-          </div>
-        </div>
-      </div>
+      </BorderedBox>
     </a>
   );
 }
@@ -215,12 +199,7 @@ function PartnerLink({ partner }: { partner: Partner }) {
       href={partner.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex items-center gap-2 px-4 py-3 border-2 transition-all duration-150 hover:border-pink"
-      style={{
-        borderColor: colors.border,
-        clipPath:
-          "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-      }}
+      className="group flex items-center gap-2 px-4 py-3 transition-all duration-150 hover:bg-white/5"
     >
       <span
         className="text-xs font-black uppercase flex-1"
@@ -302,33 +281,18 @@ export default function BridgePage() {
             />
           </div>
 
-          <div
-            style={{
-              clipPath:
-                "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-            }}
+          <BorderedBox
+            cornerSize="lg"
+            borderColor="dark"
+            bgColor="dark"
+            className="p-2"
           >
-            <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
-              <div
-                style={{
-                  backgroundColor: colors.foreground,
-                  clipPath:
-                    "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                }}
-              >
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-[1px] bg-[#333]">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                   {PARTNERS.map((partner) => (
-                    <div
-                      key={partner.name}
-                      style={{ backgroundColor: colors.foreground }}
-                    >
-                      <PartnerLink partner={partner} />
-                    </div>
+                    <PartnerLink key={partner.name} partner={partner} />
                   ))}
                 </div>
-              </div>
-            </div>
-          </div>
+          </BorderedBox>
         </div>
       </div>
     </div>

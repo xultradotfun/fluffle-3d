@@ -3,6 +3,7 @@
 import { TraitType, SelectedTraits } from "@/types/traits";
 import { getTraitOptions } from "@/utils/traitUtils";
 import { useState, useRef, useEffect } from "react";
+import { getClipPath } from "@/lib/sizes";
 
 interface TraitSelectorProps {
   type: TraitType;
@@ -29,8 +30,7 @@ function NoneButton({
           : "bg-card text-foreground hover:bg-pink"
       }`}
       style={{
-        clipPath:
-          "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+        clipPath: getClipPath("md"),
       }}
     >
       <div className="w-full aspect-square bg-foreground/10 flex items-center justify-center border-2 border-foreground">
@@ -76,8 +76,7 @@ function TraitButton({
           : "bg-card text-foreground hover:bg-pink"
       }`}
       style={{
-        clipPath:
-          "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+        clipPath: getClipPath("md"),
       }}
     >
       <div className="w-full aspect-square overflow-hidden relative border-2 border-foreground">

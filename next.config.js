@@ -1,6 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   transpilePackages: ["three"],
+  async redirects() {
+    return [
+      {
+        source: "/logo192.png",
+        destination: "/favicon.ico",
+        permanent: true,
+      },
+    ];
+  },
   env: {
     // Backend API URL configuration - Next.js needs this for build-time injection
     NEXT_PUBLIC_API_URL:

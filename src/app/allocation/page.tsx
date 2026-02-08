@@ -11,9 +11,9 @@ export default function AllocationPage() {
       <Hero />
       <ViewSwitcher activeView="allocation" />
 
-      <main className="container mx-auto px-4 pt-32 pb-32">
+      <main className="container mx-auto px-4 pt-32 pb-32 max-w-4xl">
         <PageHeader
-          title="MEGAETH ALLOCATION CHECKER"
+          title="ALLOCATION CHECKER"
           description="Check your MegaETH sale allocation by entering wallet addresses"
         />
 

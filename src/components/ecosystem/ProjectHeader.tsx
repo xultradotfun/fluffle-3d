@@ -4,6 +4,7 @@ import { memo } from "react";
 
 import { getProjectImage } from "@/utils/projectUtils";
 import type { Project } from "@/types/ecosystem";
+import { getClipPath } from "@/lib/sizes";
 
 interface ProjectHeaderProps {
   name: string;
@@ -22,15 +23,13 @@ function ProjectHeaderComponent(props: ProjectHeaderProps) {
       <div
         className="w-16 h-16 flex-shrink-0"
         style={{
-          clipPath:
-            "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+          clipPath: getClipPath("md"),
         }}
       >
         <div style={{ backgroundColor: "#fff", padding: "2px", height: "100%" }}>
           <div
             style={{
-              clipPath:
-                "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+              clipPath: getClipPath("md"),
               height: "100%",
             }}
           >

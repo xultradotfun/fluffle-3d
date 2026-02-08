@@ -1,25 +1,13 @@
 import { useState } from "react";
 import { colors } from "@/lib/colors";
+import { BorderedBox } from "@/components/ui/BorderedBox";
 import { Code, ChevronDown, ChevronUp } from "lucide-react";
 
 export function ApiDocumentation() {
   const [showApiDocs, setShowApiDocs] = useState(false);
 
   return (
-    <div
-      style={{
-        clipPath:
-          "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-      }}
-    >
-      <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
-        <div
-          style={{
-            backgroundColor: colors.light,
-            clipPath:
-              "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-          }}
-        >
+    <BorderedBox cornerSize="lg" borderColor="dark" bgColor="light">
           <button
             onClick={() => setShowApiDocs(!showApiDocs)}
             className="w-full px-4 py-3 flex items-center justify-between hover:bg-gray-200 transition-colors"
@@ -182,8 +170,6 @@ const data = await response.json();`}
               </div>
             </div>
           )}
-        </div>
-      </div>
-    </div>
+    </BorderedBox>
   );
 }

@@ -3,6 +3,8 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import { useState } from "react";
 import type { SortMethod, SortType } from "@/types/ecosystem";
 import { colors } from "@/lib/colors";
+import { getClipPath } from "@/lib/sizes";
+import { BorderedBox } from "@/components/ui/BorderedBox";
 
 interface SortSelectorProps {
   sortMethod: SortMethod;
@@ -31,25 +33,12 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
   return (
     <Tooltip.Provider delayDuration={100} skipDelayDuration={0}>
       {/* Outer wrapper with clip-path */}
-      <div
-        style={{
-          clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-        }}
+      <BorderedBox
+        cornerSize="md"
+        borderColor="dark"
+        bgColor="dark"
+        className="flex items-center gap-3 px-4 py-3"
       >
-        {/* Middle layer - border */}
-        <div
-          style={{
-            backgroundColor: colors.foreground,
-            padding: "2px",
-          }}
-        >
-          {/* Inner content layer */}
-          <div
-            className="flex items-center gap-3 px-4 py-3 bg-card-foreground"
-            style={{
-              clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-            }}
-          >
             <span className="text-sm font-black uppercase" style={{ color: colors.background }}>SORT:</span>
             <div className="flex gap-2">
           <button
@@ -61,7 +50,7 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
             }`}
                 style={{
                   color: sortMethod.type === "score" ? colors.foreground : colors.background,
-                  clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                  clipPath: getClipPath("sm"),
                 }}
               >
                 SCORE
@@ -79,7 +68,7 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
             }`}
                 style={{
                   color: sortMethod.type === "alphabetical" ? colors.foreground : colors.background,
-                  clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                  clipPath: getClipPath("sm"),
                 }}
               >
                 A-Z
@@ -97,7 +86,7 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
             }`}
                 style={{
                   color: sortMethod.type === "latest" ? colors.foreground : colors.background,
-                  clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                  clipPath: getClipPath("sm"),
                 }}
               >
                 LATEST
@@ -114,7 +103,7 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
                   className="p-1.5 border-3 border-background bg-transparent hover:bg-muted transition-colors"
                   style={{
                     color: colors.background,
-                    clipPath: "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                    clipPath: getClipPath("sm"),
                   }}
               onClick={() => setTooltipOpen(true)}
             >
@@ -131,23 +120,13 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
                   className="z-50"
               onPointerDownOutside={() => setTooltipOpen(false)}
               onEscapeKeyDown={() => setTooltipOpen(false)}
-                  style={{
-                    clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-                  }}
             >
-                  <div
-                    style={{
-                      backgroundColor: colors.foreground,
-                      padding: "2px",
-                    }}
+                  <BorderedBox
+                    cornerSize="md"
+                    borderColor="dark"
+                    bgColor="light"
+                    className="max-w-[320px] p-4"
                   >
-                    <div
-                      className="max-w-[320px] p-4"
-                      style={{
-                        backgroundColor: colors.light,
-                        clipPath: "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-                      }}
-                    >
                       <div className="space-y-3">
                         <div className="border-b-2 border-foreground pb-2">
                           <strong className="font-black uppercase text-xs">SCORE:</strong>
@@ -168,14 +147,11 @@ export function SortSelector({ sortMethod, onSortChange }: SortSelectorProps) {
                 </p>
               </div>
                       </div>
-                    </div>
-                  </div>
+                  </BorderedBox>
             </Tooltip.Content>
           </Tooltip.Portal>
         </Tooltip.Root>
-          </div>
-        </div>
-      </div>
+      </BorderedBox>
     </Tooltip.Provider>
   );
 }

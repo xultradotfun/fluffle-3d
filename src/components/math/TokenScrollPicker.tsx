@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import { colors } from "@/lib/colors";
+import { getClipPath } from "@/lib/sizes";
+import { BorderedBox } from "@/components/ui/BorderedBox";
 
 interface Token {
   id: string;
@@ -37,21 +39,12 @@ export default function TokenScrollPicker({
   }, [tokens.length]);
 
   return (
-    <div
-      style={{
-        clipPath:
-          "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
-      }}
+    <BorderedBox
+      cornerSize="2xl"
+      borderColor="dark"
+      bgColor="dark"
+      className="p-6"
     >
-      <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
-        <div
-          className="p-6"
-          style={{
-            backgroundColor: colors.foreground,
-            clipPath:
-              "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
-          }}
-        >
           <h2
             className="text-lg font-black uppercase mb-2"
             style={{ color: colors.background }}
@@ -81,8 +74,7 @@ export default function TokenScrollPicker({
                   }`}
                   style={{
                     backgroundColor: index === selectedIndex ? colors.pink : colors.light,
-                    clipPath:
-                      "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
+                    clipPath: getClipPath("md"),
                     color: colors.foreground,
                   }}
                 >
@@ -105,9 +97,7 @@ export default function TokenScrollPicker({
               ))}
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+    </BorderedBox>
   );
 }
 
