@@ -1,248 +1,298 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
-import { ArrowLeftRight, Search, AlertCircle, ArrowLeft, Loader2 } from "lucide-react";
 import { colors } from "@/lib/colors";
-import { TxInput } from "@/components/bridge/TxInput";
-import { StatusStepper } from "@/components/bridge/StatusStepper";
-import { DepositDetails } from "@/components/bridge/DepositDetails";
-import { useBridgeStatus } from "@/hooks/useBridgeStatus";
-import { fetchBridgeHealth } from "@/lib/bridgeApi";
-import { HealthResponse } from "@/types/bridge";
+import { getClipPath } from "@/lib/sizes";
+import { BorderedBox } from "@/components/ui/BorderedBox";
 import PageHeader from "@/components/layout/PageHeader";
+import Hero from "@/components/layout/Hero";
+import { ViewSwitcher } from "@/components/layout/ViewSwitcher";
+import { ExternalLink, ArrowUpRight, Zap, Shield, Globe } from "lucide-react";
 
-// Dynamic import to avoid localStorage errors during SSR
-const BridgeForm = dynamic(
-  () => import("@/components/bridge/BridgeForm").then((mod) => mod.BridgeForm),
-  { ssr: false }
-);
+interface Bridge {
+  name: string;
+  description: string;
+  url: string;
+  assets: string;
+  tags: string[];
+  featured?: boolean;
+}
 
-export default function BridgePage() {
-  const [view, setView] = useState<"bridge" | "track">("bridge");
-  const [txHash, setTxHash] = useState<string | null>(null);
-  const [health, setHealth] = useState<HealthResponse | null>(null);
-  const [healthError, setHealthError] = useState<string | null>(null);
-  const { data, loading, error } = useBridgeStatus(txHash);
+const FEATURED_BRIDGES: Bridge[] = [
+  {
+    name: "Rabbithole",
+    description:
+      "LiFi-powered aggregator with fast cross-chain swaps, Lombard BTC bridging, and Halliday fiat onramping. The all-in-one portal for getting onto MegaETH.",
+    url: "https://www.rabbithole.megaeth.com",
+    assets: "Onchain & Fiat",
+    tags: ["Aggregator", "Fiat", "BTC"],
+    featured: true,
+  },
+  {
+    name: "Stargate",
+    description:
+      "Cheap, secure and fast cross-chain bridging powered by LayerZero. Supports bridging out of MegaETH.",
+    url: "https://stargate.finance/transfer",
+    assets: "ETH, USDM, USDT0",
+    tags: ["Bridge In & Out", "LayerZero"],
+    featured: true,
+  },
+  {
+    name: "DeBridge",
+    description:
+      "Instant, near-zero slippage bridge for bridging in and out of MegaETH across 25+ chains.",
+    url: "https://app.debridge.com/r/32848",
+    assets: "Solana Assets",
+    tags: ["Bridge In & Out", "Solana"],
+    featured: true,
+  },
+  {
+    name: "Canonical Bridge",
+    description:
+      "The L1 deposit contract for MegaETH. Send any amount of ETH via native transfer. Takes ~30 min. For devs and power users.",
+    url: "https://docs.megaeth.com/frontier#using-the-canonical-bridge",
+    assets: "ETH",
+    tags: ["Official", "Native"],
+  },
+  {
+    name: "Jumper",
+    description:
+      "Powered by LiFi with the same liquidity aggregation, plus support for bridging out of MegaETH.",
+    url: "https://jumper.exchange/",
+    assets: "Multi-asset",
+    tags: ["Bridge In & Out", "Aggregator"],
+  },
+  {
+    name: "Lombard",
+    description: "BTC to BTC.b bridging on their own dedicated frontend.",
+    url: "https://www.lombard.finance/app/bridge/",
+    assets: "BTC",
+    tags: ["BTC"],
+  },
+];
 
-  useEffect(() => {
-    fetchBridgeHealth()
-      .then((data) => {
-        setHealth(data);
-      })
-      .catch((err) => {
-        console.error("Failed to fetch bridge health:", err);
-        setHealthError("Unable to connect to bridge service");
-      });
-  }, []);
+interface Partner {
+  name: string;
+  url: string;
+  note?: string;
+}
 
-  const handleBridgeSuccess = (hash: string) => {
-    setTxHash(hash);
-    setView("track");
-  };
+const PARTNERS: Partner[] = [
+  { name: "Across", url: "https://app.across.to/bridge-and-swap" },
+  { name: "Relay", url: "https://relay.link/bridge" },
+  {
+    name: "Hyperlane",
+    url: "https://nexus.hyperlane.xyz/?token=ezETH&destination=megaeth",
+    note: "Renzo ezETH",
+  },
+  { name: "Wormhole", url: "https://portalbridge.com/" },
+  { name: "XSwap", url: "https://xswap.link/bridge", note: "CCIP" },
+  { name: "Interport", url: "https://app.interport.fi", note: "CCIP" },
+  { name: "Gas.zip", url: "https://www.gas.zip/" },
+  {
+    name: "WarpX",
+    url: "https://wheelx.fi/?to_chain=4326&to_token=0xFAfDdbb3FC7688494971a79cc65DCa3EF82079E7",
+  },
+  { name: "Avail", url: "https://fastbridge.availproject.org/megaeth" },
+];
+
+function TagBadge({ label, icon }: { label: string; icon?: React.ReactNode }) {
+  return (
+    <span
+      className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider"
+      style={{
+        backgroundColor: colors.foreground,
+        color: colors.pink,
+        clipPath: getClipPath("xs"),
+      }}
+    >
+      {icon}
+      {label}
+    </span>
+  );
+}
+
+function BridgeCard({ bridge }: { bridge: Bridge }) {
+  const isFeatured = bridge.featured;
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: colors.background }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 xl:px-24 2xl:px-32 py-8">
-        <PageHeader
-          title="COMMUNITY GAS BRIDGE"
-          description="Fund your MegaETH account with gas from Arbitrum"
-        />
+    <a
+      href={bridge.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group block"
+    >
+      <BorderedBox
+        cornerSize="lg"
+        borderColor={isFeatured ? "pink" : "dark"}
+        bgColor="dark"
+        className="relative overflow-hidden transition-all duration-200"
+      >
+            {/* Hover overlay */}
+            <div
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"
+              style={{ backgroundColor: "rgba(243, 128, 205, 0.05)" }}
+            />
 
-        {/* Content */}
-        <div className="max-w-2xl mx-auto mt-8">
-          {/* Outer container with pink border */}
-          <div
-            style={{
-              clipPath:
-                "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
-            }}
-          >
-            <div style={{ backgroundColor: colors.pink, padding: "2px" }}>
-              <div
-                style={{
-                  backgroundColor: colors.foreground,
-                  clipPath:
-                    "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
-                }}
-              >
-                {/* Toggle Buttons */}
-                <div className="flex items-center gap-1 p-2 border-b-2 border-pink">
-                  <button
-                    onClick={() => setView("bridge")}
-                    className={`flex items-center gap-2 px-6 py-3 font-black uppercase text-sm transition-all ${
-                      view === "bridge" ? "" : "opacity-50"
-                    }`}
-                    style={{
-                      backgroundColor: view === "bridge" ? colors.pink : "transparent",
-                      color: view === "bridge" ? colors.foreground : colors.background,
-                      clipPath:
-                        view === "bridge"
-                          ? "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)"
-                          : "none",
-                    }}
+            <div className="relative p-5">
+              {/* Header row */}
+              <div className="flex items-start justify-between gap-3 mb-3">
+                <div className="flex items-center gap-2 min-w-0">
+                  <h3
+                    className="text-lg font-black uppercase tracking-tight truncate"
+                    style={{ color: colors.background }}
                   >
-                    <ArrowLeftRight className="w-4 h-4" strokeWidth={3} />
-                    Bridge
-                  </button>
-                  <button
-                    onClick={() => setView("track")}
-                    className={`flex items-center gap-2 px-6 py-3 font-black uppercase text-sm transition-all ${
-                      view === "track" ? "" : "opacity-50"
-                    }`}
-                    style={{
-                      backgroundColor: view === "track" ? colors.pink : "transparent",
-                      color: view === "track" ? colors.foreground : colors.background,
-                      clipPath:
-                        view === "track"
-                          ? "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)"
-                          : "none",
-                    }}
-                  >
-                    <Search className="w-4 h-4" strokeWidth={3} />
-                    Track
-                  </button>
+                    {bridge.name}
+                  </h3>
+                  <ArrowUpRight
+                    className="w-4 h-4 flex-shrink-0 opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-200"
+                    style={{ color: colors.pink }}
+                    strokeWidth={3}
+                  />
                 </div>
-
-                {/* Content */}
-                <div className="p-5">
-                  {view === "bridge" ? (
-                    healthError ? (
-                      <div className="p-8 text-center">
-                        <AlertCircle
-                          className="w-12 h-12 mx-auto mb-4"
-                          style={{ color: colors.error }}
-                          strokeWidth={3}
-                        />
-                        <p className="font-black text-lg uppercase" style={{ color: colors.error }}>
-                          {healthError}
-                        </p>
-                        <p className="font-bold text-sm mt-2" style={{ color: colors.background }}>
-                          Please try again later
-                        </p>
-                      </div>
-                    ) : health ? (
-                      <BridgeForm health={health} onBridgeSuccess={handleBridgeSuccess} />
-                    ) : (
-                      <div className="p-12 text-center">
-                        <Loader2
-                          className="w-12 h-12 mx-auto animate-spin"
-                          style={{ color: colors.pink }}
-                          strokeWidth={3}
-                        />
-                        <p className="font-black text-lg uppercase mt-4" style={{ color: colors.background }}>
-                          Loading...
-                        </p>
-                      </div>
-                    )
-                  ) : (
-                    <>
-                      {txHash && (
-                        <button
-                          onClick={() => {
-                            setTxHash(null);
-                          }}
-                          className="flex items-center gap-1 text-sm font-bold uppercase mb-4 transition-opacity hover:opacity-70"
-                          style={{ color: colors.background }}
-                        >
-                          <ArrowLeft className="w-4 h-4" strokeWidth={3} />
-                          New search
-                        </button>
-                      )}
-
-                      <TxInput
-                        onSubmit={setTxHash}
-                        disabled={loading}
-                        initialValue={txHash || ""}
-                      />
-
-                      {txHash && (
-                        <div className="mt-6">
-                          {loading && !data ? (
-                            <div className="py-12 text-center">
-                              <Loader2
-                                className="w-12 h-12 mx-auto animate-spin"
-                                style={{ color: colors.pink }}
-                                strokeWidth={3}
-                              />
-                              <p className="font-black text-lg uppercase mt-4" style={{ color: colors.background }}>
-                                Loading...
-                              </p>
-                            </div>
-                          ) : error ? (
-                            <div
-                              style={{
-                                clipPath:
-                                  "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                              }}
-                            >
-                              <div style={{ backgroundColor: colors.error, padding: "2px" }}>
-                                <div
-                                  className="p-6 text-center"
-                                  style={{
-                                    backgroundColor: colors.foreground,
-                                    clipPath:
-                                      "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                                  }}
-                                >
-                                  <AlertCircle
-                                    className="w-10 h-10 mx-auto mb-3"
-                                    style={{ color: colors.error }}
-                                    strokeWidth={3}
-                                  />
-                                  <p className="font-black uppercase" style={{ color: colors.error }}>
-                                    {error}
-                                  </p>
-                                  <p className="text-sm font-bold mt-2" style={{ color: colors.background }}>
-                                    Make sure this is a valid bridge deposit
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                          ) : data ? (
-                            <div className="space-y-6">
-                              <StatusStepper
-                                currentStep={data.step}
-                                status={data.deposit.status}
-                                queuePosition={data.queuePosition}
-                              />
-                              <DepositDetails data={data} />
-                            </div>
-                          ) : null}
-                        </div>
-                      )}
-
-                      {!txHash && (
-                        <div
-                          className="p-8 text-center mt-4"
-                          style={{
-                            backgroundColor: "#333",
-                            clipPath:
-                              "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                          }}
-                        >
-                          <Search className="w-8 h-8 mx-auto mb-3" style={{ color: "#666" }} strokeWidth={3} />
-                          <p className="text-sm font-bold" style={{ color: colors.background }}>
-                            Enter your Arbitrum tx hash to track status
-                          </p>
-                        </div>
-                      )}
-                    </>
-                  )}
+                <div
+                  className="flex-shrink-0 px-2 py-0.5 text-[10px] font-black uppercase"
+                  style={{
+                    backgroundColor: isFeatured ? colors.pink : colors.background,
+                    color: colors.foreground,
+                    clipPath: getClipPath(3),
+                  }}
+                >
+                  {bridge.assets}
                 </div>
               </div>
+
+              {/* Description */}
+              <p
+                className="text-xs font-bold leading-relaxed mb-4"
+                style={{ color: colors.mutedLight }}
+              >
+                {bridge.description}
+              </p>
+
+              {/* Tags */}
+              <div className="flex flex-wrap gap-1.5">
+                {bridge.tags.map((tag) => (
+                  <TagBadge
+                    key={tag}
+                    label={tag}
+                    icon={
+                      tag === "Official" ? (
+                        <Shield className="w-2.5 h-2.5" strokeWidth={3} />
+                      ) : tag === "Aggregator" ? (
+                        <Globe className="w-2.5 h-2.5" strokeWidth={3} />
+                      ) : tag.includes("Bridge In & Out") ? (
+                        <Zap className="w-2.5 h-2.5" strokeWidth={3} />
+                      ) : undefined
+                    }
+                  />
+                ))}
+              </div>
             </div>
+      </BorderedBox>
+    </a>
+  );
+}
+
+function PartnerLink({ partner }: { partner: Partner }) {
+  return (
+    <a
+      href={partner.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group flex items-center gap-2 px-4 py-3 transition-all duration-150 hover:bg-white/5"
+    >
+      <span
+        className="text-xs font-black uppercase flex-1"
+        style={{ color: colors.background }}
+      >
+        {partner.name}
+      </span>
+      {partner.note && (
+        <span
+          className="text-[9px] font-bold uppercase px-1.5 py-0.5"
+          style={{ backgroundColor: colors.border, color: colors.mutedLight }}
+        >
+          {partner.note}
+        </span>
+      )}
+      <ExternalLink
+        className="w-3 h-3 opacity-30 group-hover:opacity-100 transition-opacity"
+        style={{ color: colors.pink }}
+        strokeWidth={3}
+      />
+    </a>
+  );
+}
+
+export default function BridgePage() {
+  return (
+    <div className="min-h-screen" style={{ backgroundColor: colors.background }}>
+      <Hero />
+      <ViewSwitcher activeView="bridge" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-16 xl:px-24 2xl:px-32 py-8 pb-24">
+        <PageHeader
+          title="BRIDGE TO MEGAETH"
+          description="Official, aggregator & asset-specific bridges to get onto MegaETH"
+        />
+
+        {/* Featured / Main Bridges */}
+        <div className="mt-8">
+          <div className="flex items-center gap-3 mb-5">
+            <div
+              className="w-2 h-2"
+              style={{ backgroundColor: colors.pink }}
+            />
+            <h2
+              className="text-sm font-black uppercase tracking-wide"
+              style={{ color: colors.foreground }}
+            >
+              Bridges
+            </h2>
+            <div
+              className="flex-1 h-[2px]"
+              style={{ backgroundColor: colors.foreground }}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {FEATURED_BRIDGES.map((bridge) => (
+              <BridgeCard key={bridge.name} bridge={bridge} />
+            ))}
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="mt-12 text-center">
-          <p className="text-xs font-bold uppercase" style={{ color: "#666" }}>
-            Community Gas Bridge • Arbitrum → MegaETH
-          </p>
-          <p className="text-[10px] font-bold mt-1" style={{ color: "#999" }}>
-            Min: 0.00015 ETH • Max: 0.0015 ETH
-          </p>
+        {/* Partner Bridges */}
+        <div className="mt-12">
+          <div className="flex items-center gap-3 mb-5">
+            <div
+              className="w-2 h-2"
+              style={{ backgroundColor: colors.foreground }}
+            />
+            <h2
+              className="text-sm font-black uppercase tracking-wide"
+              style={{ color: colors.foreground }}
+            >
+              More Bridge Partners
+            </h2>
+            <div
+              className="flex-1 h-[2px]"
+              style={{ backgroundColor: colors.foreground }}
+            />
+          </div>
+
+          <BorderedBox
+            cornerSize="lg"
+            borderColor="dark"
+            bgColor="dark"
+            className="p-2"
+          >
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                  {PARTNERS.map((partner) => (
+                    <PartnerLink key={partner.name} partner={partner} />
+                  ))}
+                </div>
+          </BorderedBox>
         </div>
       </div>
     </div>

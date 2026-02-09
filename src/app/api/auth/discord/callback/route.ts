@@ -18,8 +18,6 @@ export async function GET(request: Request) {
   }
 
   try {
-    console.log("Exchanging code for token...");
-
     // Exchange code for access token
     const tokenResponse = await fetch("https://discord.com/api/oauth2/token", {
       method: "POST",
@@ -37,12 +35,10 @@ export async function GET(request: Request) {
 
     if (!tokenResponse.ok) {
       const errorData = await tokenResponse.text();
-      console.error("Token response error:", errorData);
       throw new Error(`Failed to get access token: ${errorData}`);
     }
 
     const tokenData = await tokenResponse.json();
-    console.log("Token exchange successful");
 
     // Get user data
     const userResponse = await fetch("https://discord.com/api/users/@me", {
@@ -52,13 +48,10 @@ export async function GET(request: Request) {
     });
 
     if (!userResponse.ok) {
-      const errorData = await userResponse.text();
-      console.error("User data error:", errorData);
       throw new Error("Failed to get user data");
     }
 
     const userData = await userResponse.json();
-    console.log("User data fetched successfully");
 
     // Get user's guilds
     const guildsResponse = await fetch(
@@ -71,17 +64,14 @@ export async function GET(request: Request) {
     );
 
     if (!guildsResponse.ok) {
-      const errorData = await guildsResponse.text();
-      console.error("Guilds data error:", errorData);
       throw new Error("Failed to get guilds data");
     }
 
     const guildsData = await guildsResponse.json();
-    console.log("Guilds data fetched successfully");
 
     // Check if user is in the required server
     const isInServer = guildsData.some(
-      (guild: any) => guild.id === DISCORD_CONFIG.REQUIRED_SERVER_ID
+      (guild: { id: string }) => guild.id === DISCORD_CONFIG.REQUIRED_SERVER_ID
     );
     let hasRequiredRole = false;
 
@@ -101,10 +91,6 @@ export async function GET(request: Request) {
         hasRequiredRole = memberData.roles.includes(
           DISCORD_CONFIG.REQUIRED_ROLE_ID
         );
-        console.log("Role check:", {
-          hasRequiredRole,
-          roles: memberData.roles,
-        });
 
         // Store or update user data in the database
         await prisma.discordUser.upsert({
@@ -121,11 +107,6 @@ export async function GET(request: Request) {
             lastUpdated: new Date(),
           },
         });
-      } else {
-        console.error(
-          "Failed to fetch member data:",
-          await memberResponse.text()
-        );
       }
     }
 
@@ -138,8 +119,8 @@ export async function GET(request: Request) {
         const stateData = JSON.parse(state);
         returnTo = stateData.returnTo || returnTo;
       }
-    } catch (error) {
-      console.error("Failed to parse state:", error);
+    } catch {
+      // Invalid state, use default returnTo
     }
 
     // Create the response first with auth_success parameter
@@ -189,22 +170,6 @@ export async function GET(request: Request) {
       name: "discord_user",
       value: JSON.stringify(minimalUserData),
       ...cookieOptions,
-    });
-
-    console.log("Auth successful, redirecting with cookies set");
-    console.log("Cookie configuration:", {
-      isProduction,
-      baseUrl,
-      isHttps,
-      secure: cookieOptions.secure,
-      sameSite: cookieOptions.sameSite,
-    });
-    console.log("Cookie values:", {
-      access_token: tokenData.access_token.substring(0, 10) + "...",
-      user_data: JSON.stringify(minimalUserData).substring(0, 50) + "...",
-      user_data_length: JSON.stringify(minimalUserData).length,
-      user_id: userData.id,
-      username: userData.username,
     });
 
     return response;

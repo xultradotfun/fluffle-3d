@@ -1,4 +1,6 @@
 import { colors } from "@/lib/colors";
+import { getClipPath } from "@/lib/sizes";
+import { BorderedBox } from "@/components/ui/BorderedBox";
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -10,12 +12,13 @@ import {
   Calculator,
   Wallet,
   DollarSign,
+  ArrowLeftRight,
 } from "lucide-react";
 
 interface ViewSwitcherProps {
-  activeView: "pfp" | "ecosystem" | "builder" | "math" | "allocation" | "usdm";
+  activeView: "pfp" | "ecosystem" | "builder" | "math" | "allocation" | "usdm" | "bridge";
   onViewChange?: (
-    view: "pfp" | "ecosystem" | "builder" | "math" | "allocation" | "usdm"
+    view: "pfp" | "ecosystem" | "builder" | "math" | "allocation" | "usdm" | "bridge"
   ) => void;
 }
 
@@ -26,6 +29,7 @@ const VIEW_ROUTES = {
   math: "/math",
   allocation: "/allocation",
   usdm: "/usdm",
+  bridge: "/bridge",
 } as const;
 
 export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
@@ -42,7 +46,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
   const router = useRouter();
 
   const handleViewChange = useCallback(
-    (view: "pfp" | "ecosystem" | "builder" | "math" | "allocation" | "usdm") => {
+    (view: "pfp" | "ecosystem" | "builder" | "math" | "allocation" | "usdm" | "bridge") => {
       if (onViewChange) {
         onViewChange(view);
       } else {
@@ -108,8 +112,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
         <div
           className="shadow-brutal"
           style={{
-            clipPath:
-              "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
+            clipPath: getClipPath("xl"),
           }}
         >
           {/* Middle border layer - black with padding */}
@@ -119,7 +122,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
               className="bg-card-foreground"
               style={{
                 clipPath:
-                  "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
+                  getClipPath("xl"),
               }}
             >
               <div className="flex items-center gap-2 p-2">
@@ -132,13 +135,29 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                       : "bg-transparent border-background hover:bg-muted"
                   }`}
                   style={{
-                    clipPath:
-                      "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                    clipPath: getClipPath("sm"),
                     color: activeView === "ecosystem" ? colors.foreground : colors.background,
                   }}
                 >
                   <Flower2 className="w-4 h-4" strokeWidth={3} />
                   <span>ECOSYSTEM</span>
+                </button>
+
+                {/* Bridge */}
+                <button
+                  onClick={() => handleViewChange("bridge")}
+                  className={`flex items-center gap-2 px-4 py-2 border-3 font-bold uppercase text-xs ${
+                    activeView === "bridge"
+                      ? "bg-pink border-foreground"
+                      : "bg-transparent border-background hover:bg-muted"
+                  }`}
+                  style={{
+                    clipPath: getClipPath("sm"),
+                    color: activeView === "bridge" ? colors.foreground : colors.background,
+                  }}
+                >
+                  <ArrowLeftRight className="w-4 h-4" strokeWidth={3} />
+                  <span>BRIDGE</span>
                 </button>
 
                 {/* Math Dropdown */}
@@ -154,7 +173,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     }`}
                     style={{
                       clipPath:
-                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                        getClipPath("sm"),
                       color: ["math", "allocation", "usdm"].includes(activeView)
                         ? colors.foreground
                         : colors.background,
@@ -187,7 +206,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     }`}
                     style={{
                       clipPath:
-                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                        getClipPath("sm"),
                       color: ["pfp", "builder"].includes(activeView)
                         ? colors.foreground
                         : colors.background,
@@ -222,21 +241,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
             zIndex: 9999,
           }}
         >
-          <div
-            style={{
-              clipPath:
-                "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-            }}
-          >
-            <div style={{ backgroundColor: colors.background, padding: "2px" }}>
-              <div
-                style={{
-                  backgroundColor: colors.foreground,
-                  clipPath:
-                    "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                  padding: "8px",
-                }}
-              >
+          <BorderedBox cornerSize="lg" bgColor="dark" className="p-2">
                 <div className="space-y-2">
                   <button
                     onClick={() => handleViewChange("math")}
@@ -247,7 +252,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     }`}
                     style={{
                       clipPath:
-                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                        getClipPath("sm"),
                       color: activeView === "math" ? colors.foreground : colors.background,
                     }}
                   >
@@ -266,7 +271,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     }`}
                     style={{
                       clipPath:
-                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                        getClipPath("sm"),
                       color: activeView === "allocation" ? colors.foreground : colors.background,
                     }}
                   >
@@ -285,7 +290,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     }`}
                     style={{
                       clipPath:
-                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                        getClipPath("sm"),
                       color: activeView === "usdm" ? colors.foreground : colors.background,
                     }}
                   >
@@ -296,9 +301,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     )}
                   </button>
                 </div>
-              </div>
-            </div>
-          </div>
+          </BorderedBox>
         </div>
       )}
 
@@ -315,24 +318,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
             zIndex: 9999,
           }}
         >
-          {/* Outer wrapper with clip-path */}
-          <div
-            style={{
-              clipPath:
-                "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-            }}
-          >
-            {/* Middle border layer - light with padding */}
-            <div style={{ backgroundColor: colors.background, padding: "2px" }}>
-              {/* Inner content layer - dark with same clip-path */}
-              <div
-                style={{
-                  backgroundColor: colors.foreground,
-                  clipPath:
-                    "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                  padding: "8px",
-                }}
-              >
+          <BorderedBox cornerSize="lg" bgColor="dark" className="p-2">
                 <div className="space-y-2">
                   <button
                     onClick={() => handleViewChange("builder")}
@@ -343,7 +329,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     }`}
                     style={{
                       clipPath:
-                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                        getClipPath("sm"),
                       color: activeView === "builder" ? colors.foreground : colors.background,
                     }}
                   >
@@ -362,7 +348,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     }`}
                     style={{
                       clipPath:
-                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                        getClipPath("sm"),
                       color: activeView === "pfp" ? colors.foreground : colors.background,
                     }}
                   >
@@ -373,9 +359,7 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
                     )}
                   </button>
                 </div>
-              </div>
-            </div>
-          </div>
+          </BorderedBox>
         </div>
       )}
 
@@ -395,6 +379,18 @@ export function ViewSwitcher({ activeView, onViewChange }: ViewSwitcherProps) {
           >
             <Flower2 className="w-6 h-6" strokeWidth={3} />
             <span className="text-[10px] font-black uppercase">ECO</span>
+          </button>
+
+          {/* Bridge */}
+          <button
+            onClick={() => handleViewChange("bridge")}
+            className={`flex flex-col items-center gap-1 p-2 ${
+              activeView === "bridge" ? "opacity-100" : "opacity-60"
+            }`}
+            style={{ color: colors.background }}
+          >
+            <ArrowLeftRight className="w-6 h-6" strokeWidth={3} />
+            <span className="text-[10px] font-black uppercase">BRIDGE</span>
           </button>
 
           {/* Math Dropdown Button */}

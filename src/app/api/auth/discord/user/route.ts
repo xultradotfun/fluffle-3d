@@ -13,32 +13,11 @@ export async function GET() {
     const userData = cookieStore.get("discord_user");
     const accessToken = cookieStore.get("discord_access_token");
 
-    console.log("Checking auth status...");
-    console.log("Cookies present:", {
-      userData: !!userData,
-      accessToken: !!accessToken,
-      userDataLength: userData?.value?.length || 0,
-      accessTokenLength: accessToken?.value?.length || 0,
-    });
-
-    if (userData) {
-      console.log(
-        "User data preview:",
-        userData.value.substring(0, 100) + "..."
-      );
-    }
-
     if (!userData || !accessToken) {
-      console.log("Missing required cookies");
       return ErrorResponses.notAuthenticated("No authentication cookies found");
     }
 
     const user = JSON.parse(userData.value);
-    console.log("User authenticated:", {
-      id: user.id,
-      username: user.username,
-      relevantGuilds: user.guildIds?.length || 0,
-    });
 
     // Verify the data format
     if (!validateUserData(user)) {
@@ -55,15 +34,6 @@ export async function GET() {
     const hasRequiredRole =
       dbUser?.roles.includes(DISCORD_CONFIG.REQUIRED_ROLE_ID) ?? false;
     const canVote = isServerMember && hasRequiredRole;
-
-    console.log("Authorization check:", {
-      isServerMember,
-      hasRequiredRole,
-      canVote,
-      requiredServer: DISCORD_CONFIG.REQUIRED_SERVER_ID,
-      requiredRole: DISCORD_CONFIG.REQUIRED_ROLE_ID,
-      storedRoles: dbUser?.roles,
-    });
 
     return NextResponse.json({
       ...user,

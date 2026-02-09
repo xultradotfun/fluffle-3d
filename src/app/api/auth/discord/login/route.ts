@@ -24,7 +24,6 @@ export async function GET(request: Request) {
   });
 
   const discordUrl = `https://discord.com/api/oauth2/authorize?${params.toString()}`;
-  console.log("Redirecting to Discord:", discordUrl);
 
   return NextResponse.redirect(discordUrl);
 }

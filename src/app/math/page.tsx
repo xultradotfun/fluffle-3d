@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { colors } from "@/lib/colors";
+import { getClipPath } from "@/lib/sizes";
 import { ViewSwitcher } from "@/components/layout/ViewSwitcher";
 import Hero from "@/components/layout/Hero";
 import PageHeader from "@/components/layout/PageHeader";
@@ -181,8 +182,7 @@ export default function MathPage() {
               <div
                 className="w-full"
                 style={{
-                  clipPath:
-                    "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
+                  clipPath: getClipPath("2xl"),
                 }}
               >
                 <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
@@ -190,8 +190,7 @@ export default function MathPage() {
                     className="p-6 animate-pulse"
                     style={{
                       backgroundColor: colors.foreground,
-                      clipPath:
-                        "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
+                      clipPath: getClipPath("2xl"),
                       minHeight: "400px",
                       minWidth: "300px",
                     }}
@@ -212,8 +211,7 @@ export default function MathPage() {
               <div
                 className="w-full"
                 style={{
-                  clipPath:
-                    "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
+                  clipPath: getClipPath("2xl"),
                 }}
               >
                 <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
@@ -221,8 +219,7 @@ export default function MathPage() {
                     className="p-6 animate-pulse"
                     style={{
                       backgroundColor: colors.foreground,
-                      clipPath:
-                        "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
+                      clipPath: getClipPath("2xl"),
                       minHeight: "400px",
                       minWidth: "300px",
                     }}
@@ -242,8 +239,7 @@ export default function MathPage() {
             {/* ResultsDisplay skeleton */}
             <div
               style={{
-                clipPath:
-                  "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
+                clipPath: getClipPath("2xl"),
               }}
             >
               <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
@@ -251,8 +247,7 @@ export default function MathPage() {
                   className="p-6 animate-pulse"
                   style={{
                     backgroundColor: colors.foreground,
-                    clipPath:
-                      "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
+                    clipPath: getClipPath("2xl"),
                   }}
                 >
                   <div className="flex items-center gap-4 mb-6">

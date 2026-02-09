@@ -1,4 +1,5 @@
 import { colors } from "@/lib/colors";
+import { getClipPath } from "@/lib/sizes";
 
 export default function Hero() {
   return (
@@ -46,8 +47,7 @@ export default function Hero() {
                     rel="noopener noreferrer"
                 className="flex items-center gap-2 px-3 sm:px-4 py-2 text-sm border-3 border-background bg-pink hover:bg-pink/80 font-bold uppercase"
                 style={{
-                  clipPath:
-                    "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                  clipPath: getClipPath("sm"),
                   color: colors.foreground,
                 }}
                   >

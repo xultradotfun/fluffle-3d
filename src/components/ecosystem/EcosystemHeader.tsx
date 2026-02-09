@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { apiClient, API_ENDPOINTS } from "@/lib/api";
 import CountUp from "@/components/ui/CountUp";
 import { colors } from "@/lib/colors";
+import { getClipPath, getClipPathTopLeft } from "@/lib/sizes";
 
 interface EcosystemHeaderProps {
   projectCount: number;
@@ -37,9 +38,8 @@ export function EcosystemHeader({
     fetchStats();
   }, []);
 
-  const clipMain =
-    "polygon(24px 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%, 0 24px)";
-  const clipStat = "polygon(16px 0, 100% 0, 100% 100%, 0 100%, 0 16px)";
+  const clipMain = getClipPath("3xl");
+  const clipStat = getClipPathTopLeft("xl");
 
   return (
     <div className="space-y-6">

@@ -1,8 +1,18 @@
 import { useState, useEffect } from "react";
 import { useDiscordAuth } from "@/contexts/DiscordAuthContext";
-import { apiClient, API_ENDPOINTS } from "@/lib/api";
-import type { Project } from "@/types/ecosystem";
+import { apiClient, API_ENDPOINTS, createApiUrl } from "@/lib/api";
+import { PROJECTS_API } from "@/lib/constants";
+import type { Project, ProjectVotes } from "@/types/ecosystem";
 import featuredProjectsData from "@/data/featured-projects.json";
+
+interface VotesApiProject {
+  twitter: string;
+  votes?: ProjectVotes;
+}
+
+interface VotesApiResponse {
+  projects: VotesApiProject[];
+}
 
 // Local storage key for user votes cache
 const USER_VOTES_CACHE_KEY = "fluffle_user_votes";
@@ -41,7 +51,7 @@ export function useProjectVotes() {
     const fetchProjects = async () => {
       try {
         setIsLoadingProjects(true);
-        const response = await fetch("https://api.fluffle.tools/api/projects/full");
+        const response = await fetch(createApiUrl(PROJECTS_API.FULL));
         if (!response.ok) {
           throw new Error(`Failed to fetch projects: ${response.statusText}`);
         }
@@ -101,13 +111,13 @@ export function useProjectVotes() {
         // Get cached user votes
         const cachedUserVotes = getCachedUserVotes(user?.id);
 
-        const votesData = await apiClient.get(API_ENDPOINTS.VOTES.LIST);
+        const votesData: VotesApiResponse = await apiClient.get(API_ENDPOINTS.VOTES.LIST);
 
         if (!isMounted) return;
 
         // Build a map of user votes from the API response
         const apiUserVotes: Record<string, "up" | "down"> = {};
-        votesData.projects?.forEach((p: any) => {
+        votesData.projects?.forEach((p) => {
           if (p.votes?.userVote) {
             apiUserVotes[p.twitter] = p.votes.userVote;
           }
@@ -124,7 +134,7 @@ export function useProjectVotes() {
         setProjects(prev =>
           prev.map(project => {
             const projectVotes = votesData.projects.find(
-              (v: any) => v.twitter === project.twitter
+              (v) => v.twitter === project.twitter
             )?.votes;
             
             // Use merged user votes (from cache or API)
@@ -174,7 +184,7 @@ export function useProjectVotes() {
     };
   }, [user, isLoading, projects.length]);
 
-  const updateProjectVote = (twitter: string, voteData: any) => {
+  const updateProjectVote = (twitter: string, voteData: ProjectVotes) => {
     setProjects((prevProjects) =>
       prevProjects.map((project) =>
         project.twitter === twitter

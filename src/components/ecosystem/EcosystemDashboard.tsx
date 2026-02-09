@@ -9,6 +9,7 @@ import { useProjectVotes } from "@/hooks/useProjectVotes";
 import { useProjectFilters } from "@/hooks/useProjectFilters";
 import { useProjectSorting } from "@/hooks/useProjectSorting";
 import { colors } from "@/lib/colors";
+import { getClipPath } from "@/lib/sizes";
 
 export function EcosystemDashboard() {
   const [highlightedProject, setHighlightedProject] = useState<string | null>(null);
@@ -95,8 +96,7 @@ export function EcosystemDashboard() {
                 key={i}
                 className="h-full"
                 style={{
-                  clipPath:
-                    "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
+                  clipPath: getClipPath("2xl"),
                 }}
               >
                 <div
@@ -111,8 +111,7 @@ export function EcosystemDashboard() {
                     style={{
                       background:
                         "linear-gradient(135deg, rgba(224, 224, 224, 0.5) 0%, rgba(224, 224, 224, 0.45) 100%)",
-                      clipPath:
-                        "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
+                      clipPath: getClipPath("2xl"),
                     }}
                   >
                     {/* Animated shimmer effect */}

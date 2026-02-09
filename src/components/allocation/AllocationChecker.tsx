@@ -2,20 +2,18 @@
 
 import { useState } from "react";
 import { colors } from "@/lib/colors";
+import { getClipPath } from "@/lib/sizes";
+import { BorderedBox } from "@/components/ui/BorderedBox";
 import {
   Wallet,
   Loader2,
   CheckCircle2,
-  XCircle,
   Eye,
   EyeOff,
-  ChevronDown,
-  ChevronUp,
-  Code,
-  Lock,
-  LockOpen,
 } from "lucide-react";
 import { toast } from "sonner";
+import { AllocationResultCard } from "./AllocationResultCard";
+import { ApiDocumentation } from "./ApiDocumentation";
 
 interface AllocationData {
   walletAddress: string;
@@ -71,7 +69,6 @@ export function AllocationChecker() {
   const [results, setResults] = useState<AllocationResult[]>([]);
   const [hideAddresses, setHideAddresses] = useState(false);
   const [selectedFdv, setSelectedFdv] = useState(999_000_000); // Default 999M
-  const [showApiDocs, setShowApiDocs] = useState(false);
 
   const parseWallets = (input: string): string[] => {
     // Split by newlines, commas, or spaces and filter out empty strings
@@ -217,592 +214,217 @@ export function AllocationChecker() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="space-y-6">
       {/* Input Section */}
-      <div
-        style={{
-          clipPath:
-            "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
-        }}
-      >
-        <div style={{ backgroundColor: colors.pink, padding: "2px" }}>
-          <div
-            style={{
-              backgroundColor: colors.foreground,
-              clipPath:
-                "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
-              padding: "24px",
-            }}
-          >
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 mb-4">
-                <Wallet
-                  className="w-5 h-5"
-                  style={{ color: colors.pink }}
-                  strokeWidth={3}
-                />
-                <h3
-                  className="text-lg font-black uppercase"
-                  style={{ color: colors.background }}
-                >
-                  Enter Wallet Addresses
-                </h3>
-              </div>
-
-              <textarea
-                value={walletInput}
-                onChange={(e) => setWalletInput(e.target.value)}
-                placeholder="0x123...&#10;0x456...&#10;0x789..."
-                rows={6}
-                className="w-full px-4 py-3 border-3 font-mono text-sm resize-none focus:outline-none focus:border-pink transition-colors"
-                style={{
-                  backgroundColor: colors.white,
-                  color: colors.foreground,
-                  borderColor: colors.foreground,
-                  clipPath:
-                    "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-                }}
-                disabled={isChecking}
-              />
-
-              <p
-                className="text-xs font-bold uppercase"
-                style={{ color: colors.background }}
-              >
-                Enter one or multiple addresses (separated by newlines, commas,
-                or spaces)
-              </p>
-
-              <div className="flex gap-3">
-                <button
-                  onClick={handleCheck}
-                  disabled={isChecking || !walletInput.trim()}
-                  className="flex-1 flex items-center justify-center gap-2 px-6 py-3 border-3 font-bold uppercase text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed hover:bg-pink hover:border-foreground"
-                  style={{
-                    backgroundColor: colors.pink,
-                    borderColor: colors.foreground,
-                    color: colors.foreground,
-                    clipPath:
-                      "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-                  }}
-                >
-                  {isChecking ? (
-                    <>
-                      <Loader2
-                        className="w-4 h-4 animate-spin"
-                        strokeWidth={3}
-                      />
-                      <span>CHECKING...</span>
-                    </>
-                  ) : (
-                    <>
-                      <CheckCircle2 className="w-4 h-4" strokeWidth={3} />
-                      <span>CHECK ALLOCATIONS</span>
-                    </>
-                  )}
-                </button>
-
-                <button
-                  onClick={handleClear}
-                  disabled={isChecking}
-                  className="px-6 py-3 border-3 font-bold uppercase text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed hover:bg-destructive"
-                  style={{
-                    backgroundColor: colors.light,
-                    borderColor: colors.foreground,
-                    color: colors.foreground,
-                    clipPath:
-                      "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-                  }}
-                >
-                  CLEAR
-                </button>
-              </div>
-            </div>
+      <BorderedBox cornerSize="xl" borderColor="pink" bgColor="dark" className="p-6">
+        <div className="space-y-4">
+          <div className="flex items-center gap-2 mb-4">
+            <Wallet
+              className="w-5 h-5"
+              style={{ color: colors.pink }}
+              strokeWidth={3}
+            />
+            <h3
+              className="text-lg font-black uppercase"
+              style={{ color: colors.background }}
+            >
+              Enter Wallet Addresses
+            </h3>
           </div>
-        </div>
-      </div>
 
-      {/* Results Section */}
-      {results.length > 0 && (
-        <div
-          style={{
-            clipPath:
-              "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
-          }}
-        >
-          <div style={{ backgroundColor: colors.pink, padding: "2px" }}>
-            <div
+          <textarea
+            value={walletInput}
+            onChange={(e) => setWalletInput(e.target.value)}
+            placeholder="0x123...&#10;0x456...&#10;0x789..."
+            rows={6}
+            className="w-full px-4 py-3 border-3 font-mono text-sm resize-none focus:outline-none focus:border-pink transition-colors"
+            style={{
+              backgroundColor: colors.white,
+              color: colors.foreground,
+              borderColor: colors.foreground,
+              clipPath: getClipPath("md"),
+            }}
+            disabled={isChecking}
+          />
+
+          <p
+            className="text-xs font-bold uppercase"
+            style={{ color: colors.background }}
+          >
+            Enter one or multiple addresses (separated by newlines, commas,
+            or spaces)
+          </p>
+
+          <div className="flex gap-3">
+            <button
+              onClick={handleCheck}
+              disabled={isChecking || !walletInput.trim()}
+              className="flex-1 flex items-center justify-center gap-2 px-6 py-3 border-3 font-bold uppercase text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed hover:bg-pink hover:border-foreground"
               style={{
-                backgroundColor: colors.foreground,
-                clipPath:
-                  "polygon(16px 0, 100% 0, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0 100%, 0 16px)",
-                padding: "24px",
+                backgroundColor: colors.pink,
+                borderColor: colors.foreground,
+                color: colors.foreground,
+                clipPath: getClipPath("md"),
               }}
             >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-                <h3
-                  className="text-lg font-black uppercase"
-                  style={{ color: colors.background }}
-                >
-                  Results ({results.length} wallet
-                  {results.length > 1 ? "s" : ""})
-                </h3>
-
-                <div className="flex items-center gap-2">
-                  {/* FDV Selector */}
-                  <div className="flex items-center gap-1">
-                    {FDV_PRESETS.map((preset) => (
-                      <button
-                        key={preset.value}
-                        onClick={() => setSelectedFdv(preset.value)}
-                        className="px-2 py-1.5 border-3 font-bold uppercase text-xs transition-colors"
-                        style={{
-                          backgroundColor:
-                            selectedFdv === preset.value
-                              ? colors.pink
-                              : "transparent",
-                          borderColor: colors.background,
-                          color:
-                            selectedFdv === preset.value
-                              ? colors.foreground
-                              : colors.background,
-                          clipPath:
-                            "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
-                        }}
-                      >
-                        {preset.label}
-                      </button>
-                    ))}
-                  </div>
-
-                  {/* Privacy Toggle */}
-                  <button
-                    onClick={() => setHideAddresses(!hideAddresses)}
-                    className="flex items-center gap-2 px-3 py-2 border-3 font-bold uppercase text-xs transition-colors hover:bg-muted"
-                    style={{
-                      backgroundColor: hideAddresses
-                        ? colors.pink
-                        : "transparent",
-                      borderColor: colors.background,
-                      color: hideAddresses ? colors.foreground : colors.background,
-                      clipPath:
-                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
-                    }}
-                    title={hideAddresses ? "Show addresses" : "Hide addresses"}
-                  >
-                    {hideAddresses ? (
-                      <EyeOff className="w-4 h-4" strokeWidth={3} />
-                    ) : (
-                      <Eye className="w-4 h-4" strokeWidth={3} />
-                    )}
-                  </button>
-                </div>
-              </div>
-
-              {/* Total Summary */}
-              {totalAllocation > 0 && (
-                <div
-                  className="mb-4 p-4 border-3"
-                  style={{
-                    backgroundColor: colors.green,
-                    borderColor: colors.foreground,
-                    clipPath:
-                      "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-                  }}
-                >
-                  <div className="flex items-center justify-between">
-                    <span
-                      className="text-sm font-black uppercase"
-                      style={{ color: colors.white }}
-                    >
-                      Total Allocation
-                    </span>
-                    <div className="text-right">
-                      <div
-                        className="text-2xl font-black"
-                        style={{ color: colors.white }}
-                      >
-                        {totalAllocation.toLocaleString(undefined, {
-                          maximumFractionDigits: 2,
-                        })}{" "}
-                        MEGA
-                      </div>
-                      <div
-                        className="text-sm font-bold"
-                        style={{ color: colors.light }}
-                      >
-                        $
-                        {calculateValueAtFdv(totalAllocation).toLocaleString(
-                          undefined,
-                          { maximumFractionDigits: 2 }
-                        )}{" "}
-                        @{" "}
-                        {
-                          FDV_PRESETS.find((p) => p.value === selectedFdv)
-                            ?.label
-                        }{" "}
-                        FDV
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* Individual Results */}
-              <div className="space-y-2">
-                {results.map((result, index) => (
-                  <div
-                    key={index}
-                    className="p-4 border-3"
-                    style={{
-                      backgroundColor:
-                        result.allocation && result.allocation > 0
-                          ? colors.white
-                          : colors.light,
-                      borderColor: colors.foreground,
-                      clipPath:
-                        "polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)",
-                    }}
-                  >
-                    <div className="flex items-center justify-between gap-4">
-                      <div className="flex items-center gap-3 min-w-0 flex-1">
-                        {result.allocation !== undefined &&
-                        result.allocation > 0 ? (
-                          <CheckCircle2
-                            className="w-5 h-5 flex-shrink-0"
-                            style={{ color: colors.green }}
-                            strokeWidth={3}
-                          />
-                        ) : result.error ? (
-                          <XCircle
-                            className="w-5 h-5 flex-shrink-0"
-                            style={{ color: colors.error }}
-                            strokeWidth={3}
-                          />
-                        ) : (
-                          <XCircle
-                            className="w-5 h-5 flex-shrink-0"
-                            style={{ color: colors.mutedLight }}
-                            strokeWidth={3}
-                          />
-                        )}
-                        <div className="flex items-center gap-2 min-w-0 flex-1">
-                          <span
-                            className="font-mono text-sm font-bold truncate"
-                            style={{
-                              color: colors.foreground,
-                              filter: hideAddresses ? "blur(6px)" : "none",
-                              userSelect: hideAddresses ? "none" : "auto",
-                            }}
-                            title={
-                              hideAddresses
-                                ? "Address blurred for privacy"
-                                : result.wallet
-                            }
-                          >
-                            {result.wallet}
-                          </span>
-                          {result.rank && (
-                            <div className="flex items-center gap-1 flex-shrink-0">
-                              <span
-                                className="text-[10px] font-black uppercase px-1.5 py-0.5 border-2"
-                                style={{
-                                  backgroundColor: colors.white,
-                                  borderColor: colors.foreground,
-                                  color: colors.foreground,
-                                }}
-                                title="Overall rank"
-                              >
-                                #{result.rank.overall}
-                              </span>
-                              <span
-                                className="text-[10px] font-black uppercase px-1.5 py-0.5 border-2 flex items-center gap-1"
-                                style={{
-                                  backgroundColor:
-                                    result.rank.categoryType === "locked"
-                                      ? colors.pink
-                                      : colors.light,
-                                  borderColor: colors.foreground,
-                                  color: colors.foreground,
-                                }}
-                                title={`Rank among ${result.rank.categoryType} bids`}
-                              >
-                                {result.rank.categoryType === "locked" ? (
-                                  <Lock
-                                    className="w-2.5 h-2.5"
-                                    strokeWidth={3}
-                                  />
-                                ) : (
-                                  <LockOpen
-                                    className="w-2.5 h-2.5"
-                                    strokeWidth={3}
-                                  />
-                                )}
-                                #{result.rank.category}
-                              </span>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                      <div className="flex-shrink-0 text-right">
-                        {result.allocation !== undefined ? (
-                          <div className="flex flex-col items-end gap-0.5">
-                            <span
-                              className="text-lg font-black"
-                              style={{
-                                color:
-                                  result.allocation > 0 ? colors.green : colors.mutedLight,
-                              }}
-                            >
-                              {result.allocation.toLocaleString(undefined, {
-                                maximumFractionDigits: 2,
-                              })}{" "}
-                              MEGA
-                            </span>
-                            <div className="flex items-center gap-2">
-                              <span
-                                className="text-xs font-bold"
-                                style={{ color: colors.muted }}
-                              >
-                                $
-                                {calculateValueAtFdv(
-                                  result.allocation
-                                ).toLocaleString(undefined, {
-                                  maximumFractionDigits: 2,
-                                })}
-                                {result.bidAmount !== undefined &&
-                                  result.fillPercentage !== undefined && (
-                                    <span
-                                      style={{
-                                        color:
-                                          result.fillPercentage > 0
-                                            ? colors.pink
-                                            : colors.mutedLight,
-                                        marginLeft: "8px",
-                                      }}
-                                    >
-                                      {result.fillPercentage > 0
-                                        ? `(${result.fillPercentage.toFixed(
-                                            2
-                                          )}% filled)`
-                                        : `(0% filled)`}
-                                    </span>
-                                  )}
-                              </span>
-                              {result.lockup !== undefined && (
-                                <span
-                                  className="text-[10px] font-black uppercase px-1.5 py-0.5 border-2"
-                                  style={{
-                                    backgroundColor: result.lockup
-                                      ? colors.pink
-                                      : colors.light,
-                                    borderColor: colors.foreground,
-                                    color: colors.foreground,
-                                  }}
-                                >
-                                  {result.lockup ? "🔒 LOCKED" : "UNLOCKED"}
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        ) : (
-                          <span
-                            className="text-sm font-bold uppercase"
-                            style={{ color: colors.error }}
-                          >
-                            {result.error || "No allocation"}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* API Documentation */}
-      <div
-        style={{
-          clipPath:
-            "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-        }}
-      >
-        <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
-          <div
-            style={{
-              backgroundColor: colors.light,
-              clipPath:
-                "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-            }}
-          >
-            <button
-              onClick={() => setShowApiDocs(!showApiDocs)}
-              className="w-full px-4 py-3 flex items-center justify-between hover:bg-gray-200 transition-colors"
-            >
-              <div className="flex items-center gap-2">
-                <Code
-                  className="w-4 h-4"
-                  style={{ color: colors.foreground }}
-                  strokeWidth={3}
-                />
-                <span
-                  className="text-sm font-black uppercase"
-                  style={{ color: colors.foreground }}
-                >
-                  API Documentation
-                </span>
-              </div>
-              {showApiDocs ? (
-                <ChevronUp
-                  className="w-4 h-4"
-                  style={{ color: colors.foreground }}
-                  strokeWidth={3}
-                />
+              {isChecking ? (
+                <>
+                  <Loader2
+                    className="w-4 h-4 animate-spin"
+                    strokeWidth={3}
+                  />
+                  <span>CHECKING...</span>
+                </>
               ) : (
-                <ChevronDown
-                  className="w-4 h-4"
-                  style={{ color: colors.foreground }}
-                  strokeWidth={3}
-                />
+                <>
+                  <CheckCircle2 className="w-4 h-4" strokeWidth={3} />
+                  <span>CHECK ALLOCATIONS</span>
+                </>
               )}
             </button>
 
-            {showApiDocs && (
-              <div
-                className="px-4 pb-4 space-y-3 border-t-2"
-                style={{ borderColor: colors.foreground }}
-              >
-                <div className="pt-3">
-                  <p
-                    className="text-xs font-bold mb-2"
-                    style={{ color: colors.foreground }}
-                  >
-                    ENDPOINT
-                  </p>
-                  <code
-                    className="block px-3 py-2 text-xs font-mono rounded border-2"
-                    style={{
-                      backgroundColor: colors.white,
-                      color: colors.foreground,
-                      borderColor: colors.foreground,
-                    }}
-                  >
-                    POST https://megasale-check.xultra.fun/api/allocations/check
-                  </code>
-                </div>
-
-                <div>
-                  <p
-                    className="text-xs font-bold mb-2"
-                    style={{ color: colors.foreground }}
-                  >
-                    REQUEST BODY
-                  </p>
-                  <pre
-                    className="px-3 py-2 text-xs font-mono rounded border-2 overflow-x-auto"
-                    style={{
-                      backgroundColor: colors.white,
-                      color: colors.foreground,
-                      borderColor: colors.foreground,
-                    }}
-                  >
-                    {`{
-  "wallets": [
-    "0x1234567890123456789012345678901234567890",
-    "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd"
-  ]
-}`}
-                  </pre>
-                </div>
-
-                <div>
-                  <p
-                    className="text-xs font-bold mb-2"
-                    style={{ color: colors.foreground }}
-                  >
-                    RESPONSE
-                  </p>
-                  <pre
-                    className="px-3 py-2 text-xs font-mono rounded border-2 overflow-x-auto"
-                    style={{
-                      backgroundColor: colors.white,
-                      color: colors.foreground,
-                      borderColor: colors.foreground,
-                    }}
-                  >
-                    {`{
-  "success": true,
-  "count": 2,
-  "data": [
-    {
-      "walletAddress": "0x1234567890123456789012345678901234567890",
-      "usdAmount": 5000.00,
-      "megaAmount": 50050.05,
-      "hasAllocation": true,
-      "status": "ACTIVE",
-      "bidAmount": 186282,
-      "locked": false,
-      "rank": {
-        "overall": 123,
-        "category": 45,
-        "categoryType": "unlocked"
-      }
-    },
-    {
-      "walletAddress": "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd",
-      "usdAmount": 10000.00,
-      "megaAmount": 100100.10,
-      "hasAllocation": true,
-      "status": "ACTIVE",
-      "bidAmount": 186282,
-      "locked": true,
-      "rank": {
-        "overall": 67,
-        "category": 12,
-        "categoryType": "locked"
-      }
-    }
-  ]
-}`}
-                  </pre>
-                </div>
-
-                <div>
-                  <p
-                    className="text-xs font-bold mb-2"
-                    style={{ color: colors.foreground }}
-                  >
-                    EXAMPLE (JAVASCRIPT)
-                  </p>
-                  <pre
-                    className="px-3 py-2 text-xs font-mono rounded border-2 overflow-x-auto"
-                    style={{
-                      backgroundColor: colors.white,
-                      color: colors.foreground,
-                      borderColor: colors.foreground,
-                    }}
-                  >
-                    {`const response = await fetch(
-  'https://megasale-check.xultra.fun/api/allocations/check',
-  {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      wallets: ['0x1234567890123456789012345678901234567890']
-    })
-  }
-);
-const data = await response.json();`}
-                  </pre>
-                </div>
-              </div>
-            )}
+            <button
+              onClick={handleClear}
+              disabled={isChecking}
+              className="px-6 py-3 border-3 font-bold uppercase text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed hover:bg-destructive"
+              style={{
+                backgroundColor: colors.light,
+                borderColor: colors.foreground,
+                color: colors.foreground,
+                clipPath: getClipPath("md"),
+              }}
+            >
+              CLEAR
+            </button>
           </div>
         </div>
-      </div>
+      </BorderedBox>
+
+      {/* Results Section */}
+      {results.length > 0 && (
+        <BorderedBox cornerSize="xl" borderColor="pink" bgColor="dark" className="p-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+            <h3
+              className="text-lg font-black uppercase"
+              style={{ color: colors.background }}
+            >
+              Results ({results.length} wallet
+              {results.length > 1 ? "s" : ""})
+            </h3>
+
+            <div className="flex items-center gap-2">
+              {/* FDV Selector */}
+              <div className="flex items-center gap-1">
+                {FDV_PRESETS.map((preset) => (
+                  <button
+                    key={preset.value}
+                    onClick={() => setSelectedFdv(preset.value)}
+                    className="px-2 py-1.5 border-3 font-bold uppercase text-xs transition-colors"
+                    style={{
+                      backgroundColor:
+                        selectedFdv === preset.value
+                          ? colors.pink
+                          : "transparent",
+                      borderColor: colors.background,
+                      color:
+                        selectedFdv === preset.value
+                          ? colors.foreground
+                          : colors.background,
+                      clipPath: getClipPath("xs"),
+                    }}
+                  >
+                    {preset.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Privacy Toggle */}
+              <button
+                onClick={() => setHideAddresses(!hideAddresses)}
+                className="flex items-center gap-2 px-3 py-2 border-3 font-bold uppercase text-xs transition-colors hover:bg-muted"
+                style={{
+                  backgroundColor: hideAddresses
+                    ? colors.pink
+                    : "transparent",
+                  borderColor: colors.background,
+                  color: hideAddresses ? colors.foreground : colors.background,
+                  clipPath: getClipPath("sm"),
+                }}
+                title={hideAddresses ? "Show addresses" : "Hide addresses"}
+              >
+                {hideAddresses ? (
+                  <EyeOff className="w-4 h-4" strokeWidth={3} />
+                ) : (
+                  <Eye className="w-4 h-4" strokeWidth={3} />
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Total Summary */}
+          {totalAllocation > 0 && (
+            <div
+              className="mb-4 p-4 border-3"
+              style={{
+                backgroundColor: colors.green,
+                borderColor: colors.foreground,
+                clipPath: getClipPath("md"),
+              }}
+            >
+              <div className="flex items-center justify-between">
+                <span
+                  className="text-sm font-black uppercase"
+                  style={{ color: colors.white }}
+                >
+                  Total Allocation
+                </span>
+                <div className="text-right">
+                  <div
+                    className="text-2xl font-black"
+                    style={{ color: colors.white }}
+                  >
+                    {totalAllocation.toLocaleString(undefined, {
+                      maximumFractionDigits: 2,
+                    })}{" "}
+                    MEGA
+                  </div>
+                  <div
+                    className="text-sm font-bold"
+                    style={{ color: colors.light }}
+                  >
+                    $
+                    {calculateValueAtFdv(totalAllocation).toLocaleString(
+                      undefined,
+                      { maximumFractionDigits: 2 }
+                    )}{" "}
+                    @{" "}
+                    {
+                      FDV_PRESETS.find((p) => p.value === selectedFdv)
+                        ?.label
+                    }{" "}
+                    FDV
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Individual Results */}
+          <div className="space-y-2">
+            {results.map((result, index) => (
+              <AllocationResultCard
+                key={index}
+                result={result}
+                hideAddresses={hideAddresses}
+                calculateValueAtFdv={calculateValueAtFdv}
+              />
+            ))}
+          </div>
+        </BorderedBox>
+      )}
+
+      {/* API Documentation */}
+      <ApiDocumentation />
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { colors } from "@/lib/colors";
+import { getClipPath } from "@/lib/sizes";
+import { BorderedBox } from "@/components/ui/BorderedBox";
 
 interface Round {
   name: string;
@@ -36,21 +38,12 @@ export default function RoundSelector({
   const isCustomExpanded = selectedRounds.includes("custom");
 
   return (
-    <div
-      style={{
-        clipPath:
-          "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
-      }}
+    <BorderedBox
+      cornerSize="2xl"
+      borderColor="dark"
+      bgColor="dark"
+      className="p-6"
     >
-      <div style={{ backgroundColor: colors.foreground, padding: "2px" }}>
-        <div
-          className="p-6"
-          style={{
-            backgroundColor: colors.foreground,
-            clipPath:
-              "polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px)",
-          }}
-        >
           <h2
             className="text-lg font-black uppercase mb-2"
             style={{ color: colors.background }}
@@ -74,8 +67,7 @@ export default function RoundSelector({
                   : "bg-transparent border-background hover:bg-pink hover:border-foreground"
               }`}
               style={{
-                clipPath:
-                  "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                clipPath: getClipPath("lg"),
                 color: selectedRounds.includes("echo") ? colors.foreground : colors.background,
               }}
             >
@@ -107,8 +99,7 @@ export default function RoundSelector({
                   : "bg-transparent border-background hover:bg-pink hover:border-foreground"
               }`}
               style={{
-                clipPath:
-                  "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                clipPath: getClipPath("lg"),
                 color: selectedRounds.includes("fluffle")
                   ? colors.foreground
                   : colors.background,
@@ -135,21 +126,12 @@ export default function RoundSelector({
 
             {/* Sonar Round */}
             {isSonarExpanded ? (
-              <div
-                style={{
-                  clipPath:
-                    "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                }}
+              <BorderedBox
+                cornerSize="lg"
+                borderColor="pink"
+                bgColor="dark"
+                className="space-y-3 p-4"
               >
-                <div style={{ backgroundColor: colors.pink, padding: "2px" }}>
-                  <div
-                    className="space-y-3 p-4"
-                    style={{
-                      backgroundColor: colors.foreground,
-                      clipPath:
-                        "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                    }}
-                  >
                 <div className="flex items-center gap-4">
                   <div className="relative w-16 h-16 flex-shrink-0">
                     <Image
@@ -178,8 +160,7 @@ export default function RoundSelector({
                     className="h-8 w-8 p-0 border-3 border-foreground bg-destructive hover:bg-pink font-bold transition-colors"
                     style={{
                       color: colors.background,
-                      clipPath:
-                        "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
+                      clipPath: getClipPath("xs"),
                     }}
                   >
                     ✕
@@ -207,8 +188,7 @@ export default function RoundSelector({
                     style={{
                       backgroundColor: colors.light,
                       color: colors.foreground,
-                      clipPath:
-                        "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                      clipPath: getClipPath("sm"),
                     }}
                   />
                   <p
@@ -218,16 +198,13 @@ export default function RoundSelector({
                     Max: $186,282
                   </p>
                 </div>
-                  </div>
-                </div>
-              </div>
+              </BorderedBox>
             ) : (
               <button
                 onClick={() => onRoundToggle("sonar")}
                 className="w-full h-auto py-6 px-6 flex items-center gap-6 border-3 border-background hover:bg-pink hover:border-foreground font-bold transition-colors bg-transparent"
                 style={{
-                  clipPath:
-                    "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                  clipPath: getClipPath("lg"),
                   color: colors.background,
                 }}
               >
@@ -253,21 +230,12 @@ export default function RoundSelector({
 
             {/* Custom Round */}
             {isCustomExpanded ? (
-              <div
-                style={{
-                  clipPath:
-                    "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                }}
+              <BorderedBox
+                cornerSize="lg"
+                borderColor="pink"
+                bgColor="dark"
+                className="space-y-3 p-4"
               >
-                <div style={{ backgroundColor: colors.pink, padding: "2px" }}>
-                  <div
-                    className="space-y-3 p-4"
-                    style={{
-                      backgroundColor: colors.foreground,
-                      clipPath:
-                        "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
-                    }}
-                  >
                 <div className="flex items-center justify-between">
                   <div
                     className="text-xl font-black uppercase tracking-tight"
@@ -280,8 +248,7 @@ export default function RoundSelector({
                     className="h-8 w-8 p-0 border-3 border-foreground bg-destructive hover:bg-pink font-bold transition-colors"
                     style={{
                       color: colors.background,
-                      clipPath:
-                        "polygon(4px 0, 100% 0, 100% calc(100% - 4px), calc(100% - 4px) 100%, 0 100%, 0 4px)",
+                      clipPath: getClipPath("xs"),
                     }}
                   >
                     ✕
@@ -308,8 +275,7 @@ export default function RoundSelector({
                       style={{
                         backgroundColor: colors.light,
                         color: colors.foreground,
-                        clipPath:
-                          "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                        clipPath: getClipPath("sm"),
                       }}
                     />
                   </div>
@@ -333,8 +299,7 @@ export default function RoundSelector({
                       style={{
                         backgroundColor: colors.light,
                         color: colors.foreground,
-                        clipPath:
-                          "polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px)",
+                        clipPath: getClipPath("sm"),
                       }}
                     />
                     <p
@@ -345,16 +310,13 @@ export default function RoundSelector({
                     </p>
                   </div>
                 </div>
-                  </div>
-                </div>
-              </div>
+              </BorderedBox>
             ) : (
               <button
                 onClick={() => onRoundToggle("custom")}
                 className="w-full h-16 border-3 border-dashed border-background hover:border-foreground hover:bg-foreground/5 flex items-center justify-center transition-colors group"
                 style={{
-                  clipPath:
-                    "polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px)",
+                  clipPath: getClipPath("lg"),
                 }}
               >
                 <div
@@ -366,8 +328,6 @@ export default function RoundSelector({
               </button>
             )}
           </div>
-        </div>
-      </div>
-    </div>
+    </BorderedBox>
   );
 }
