@@ -22,7 +22,7 @@ const FEATURED_BRIDGES: Bridge[] = [
     name: "Rabbithole",
     description:
       "LiFi-powered aggregator with fast cross-chain swaps, Lombard BTC bridging, and Halliday fiat onramping. The all-in-one portal for getting onto MegaETH.",
-    url: "https://www.rabbithole.megaeth.com",
+    url: "https://rabbithole.megaeth.com",
     assets: "Onchain & Fiat",
     tags: ["Aggregator", "Fiat", "BTC"],
     featured: true,
@@ -64,7 +64,7 @@ const FEATURED_BRIDGES: Bridge[] = [
   {
     name: "Lombard",
     description: "BTC to BTC.b bridging on their own dedicated frontend.",
-    url: "https://www.lombard.finance/app/bridge/",
+    url: "https://lombard.finance/app/bridge/",
     assets: "BTC",
     tags: ["BTC"],
   },
